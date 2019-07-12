@@ -1,0 +1,45 @@
+[size=12][b]Village of the seers[/b][/size]
+
+This is 13 player game.
+
+There will be 2 teams, good and evil.
+
+Good wins when both of the wolves are dead.
+Evil wins when the wolves achieve parity with the remaining players. (see hunter rules for the one exception)
+
+g{[b][u]Team Good[/u][/b]}g
+
+[b]2 Hunters:[/b] If a hunter is left alone with a wolf, good will win instead of evil. Hunters may a view a player, living or dead, each night. The other hunter will be seen as "hunter". Any other player will be viewed as "unable to determine role". 
+
+[b]6 seers:[/b] view a player each night, including N0 to see if they are a wolf or not. There are 6 types of seers, and one of each is in the game.
+
+-True Seer: Gets correct results
+-Insane seer: gets incorrect results
+-Paranoid seer: always gets 'wolf' except when viewing the tinker/hunter
+-Niave seer: always gets 'not wolf', except when viewing the tinker/hunter.
+-Drunken Seer: gets 'wolf' when viewing a sorcerer, wolf cub, or hunter.
+-Unstable seer: gets 'wolf' when viewing a seer.
+
+Seer types are not known to player, but are revealed on death.
+
+r{[b][u]Team Evil[/u][/b]}r
+
+[b]2 Wolves:[/b] Know and can chat with each other, and kill one player each night. On N0, each wolf learn a random player that is "not evil." Note that the hunter/tinker is excluded from this view.
+
+[b]1 Wolf Cub:[/b] Knows the IDs of the wolves. Revealed on death as a random kind of seer, sorcerer, or hunter. When one of the wolves dies, joins wolf chat and counts for parity.  
+
+[b]2 Sorcerers:[/b] Each night, including N0, view a player to see if they are a seer. There are 2 types of sorcerers, and one of each is in the game:
+
+-Cunning Sorcerer: Always gets correct results
+-Insane sorcerer: Always gets incorrect results
+
+Sorcerer types are not known to player, but are revealed on death.
+Sorcerers have a chat room, [u]but may not view themselves or each other.[/u]
+
+[b]Seers and sorcerers cannot view themselves. Cassandra cannot enforce this, so it's on the honor system.
+
+It is against the spirit of the rules to discuss or coordinate N0 views.
+
+Other then that, it's standard rules.[/b]
+
+Dalestephenson came up with the idea for village of the seers games. Avin and Lardarse expanded on his ideas, and redhawke put this template into automod format. 

@@ -1,0 +1,56 @@
+13-Player - 2Wo 1So 1WC 1Se 1Hu 1Pr 1Ma 5Vi Ruleset
+
+I borrowed/stole many of these descriptions from melsana ;-)
+
+
+[b]Good Roles:[/b]
+
+[u]Seer[/u] - Each night receives a vision of a target player as 'wolf' or 'not wolf.' The seer receives a vision on Night 0 of one randomly chosen player that is 'not wolf.' Thereafter, the seer chooses which player to view.
+
+[u]Hunter[/u] - If only two players remain in the game and the hunter is one of those players, then the good team wins even if the other player is a werewolf.
+
+[u]Priest[/u] This is a passive priest.  As long as the priest is alive, there will be full role reveal on death.  If the priest dies, players will no longer learn the roles of their lynches and nightkills
+
+[u]Mason[/u] This dedicated parishioner is a close friend of the priest.  The Mason and the Priest have a chat together.
+
+[u]5 Villagers[/u] - Ordinary villagers with no special powers.
+
+
+[b]Evil Roles:[/b]
+
+[u]2 Werewolves[/u] - The werewolves know each other's identity, and may private message/chat without restriction. Each night the wolves choose one target player to kill. There is no kill on Night 0.
+
+[u]Sorcerer[/u] - Each night receives a vision of a target player as 'seer' or 'not seer.' The sorcerer receives a vision on Night 0 of one randomly chosen player that is 'not seer.' Thereafter, the sorcerer chooses which player to view.  Does not know the identity of the wolves.
+
+[u]Wolf Cub[/u] - The wolf cub does not know the identity of the wolves.  When a wolf is lynched the wolf cub will be promoted to full wolf status.  The cub will gain access to wolfchat and the ability to NK with the remaining wolf.  If viewed by the seer before this transformation the cub will appear as "not wolf."
+
+
+[b]Victory Conditions:[/b]
+
+[u]Good[/u] - All good players win if all werewolves are eliminated, or if the last two players remaining are the hunter and one werewolf. The sorcerer does not have to be eliminated in order for Good to win.
+
+[u]Evil[/u] - All evil players win if the wolves achieve parity: if at any time the number of wolves remaining equals the number of non-wolves remaining (including the sorcerer), evil wins. However, if one wolf is left with the hunter, then good wins. The sorcerer counts as a 'non-wolf' for these purposes.
+
+
+[b]Lynch Rules:[/b]
+
+Each day players vote for one player to be lynched. The player receiving the most votes is killed. If there is a tie between two or more players, the tied player with the <tiebreaker> is killed.
+
+Lynch time is <lynch> BGG time. Votes cast with this time-stamp are counted. Votes cast after this time are invalid. Votes made during the night phase are invalid.
+
+All votes must conform to the Cassandra Vote Tally System rules. (Will be
+posted once the game starts).  If all living players [vote nightfall] it will
+speed up the dusk.  
+
+
+[b]Night Orders:[/b]
+
+Wolves, Seer, Sorcerer, and Priest must all submit their night orders by <night> BGG time. They do this by using the Cassandra Game Order system in the Cassandra Chat System.
+
+The wolves' night kill choice is revealed with the DAWN post. The players' role and team are revealed based on if the passive priest is alive or not. 
+
+If all living players (including those with out night actions) click on the
+'Lock Game Actions' button it will speed up Dawn.  
+
+
+[b]Do not post the content of your Mod Chat room to the game thread. You may summarize, but direct copying is not allowed. Consider that like showing your card to the group in a face-to-face game[/b]

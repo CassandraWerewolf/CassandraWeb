@@ -1,0 +1,87 @@
+[COLOR=#CC9933]                                 [b][size=18]~ NO MERCY! ~[/size][/b][/COLOR]
+
+
+[COLOR=#003399][b]This village is not your regular peasant hole with some defenseless townspeople who are waiting to be slaughtered until their visionary finally gets lucky and tells them who the wolves are. 
+
+No! These guys are capable! 
+
+The visionary is not some backwater monastery reject, but a full seer who can look into the soul of his fellow townspeople and see them for what they are exactly...and he's currently training a talented pupil in the arts of his craft.
+There are also strong armsmen in town who will fight to the death and are capable of mortally wounding their opponents.
+
+'Good for them!' you'd think.
+
+Yes! But it was born of need, because the wolves in this town have managed to breed a cub who has been so hidden that he managed to train as a priest for years, greatly enhancing the knowledge that the beasts possess.
+And if that wasn't enough, recently a second visionary has moved into the village. This one however has far darker intentions than the other one, though he's just as capable as his counterpart.
+Finally, word on the street is that not all the armsmen can be fully trusted in this village.
+
+Mass conflict is waiting to happen with so many strong characters. The wolves and their allies smell blood and mercy shall not be granted.[/b][/COLOR]
+
+
+                              [COLOR=#003399][b]This template was designed by [url=http://www.boardgamegeek.com/user/Snaak]Snaak[/url][/b][/COLOR]
+
+
+[b][u]Roles (total 15):[/u][/b] 
+
+
+g{[b]Good Aligned (total 10):[/b]}g
+
+g{[u][b]1 Seer[/b][/u]}g - The Seer can target a player each night to view that player's full role. 
+
+g{[u][b]1 Aux Seer[/b][/u]}g - The Aux Seer can view a player each night for wolf friend/not wolf friend. The Aux Seer will receive a positive result when viewing the Sorcerer and Wolf Cub. There is also a 50% chance that either none or both Vigilantes will be viewed as 'wolf friend'.
+
+g{[u][b]1 Priest[/b][/u]}g - The Priest may target one dead player each night to view that player's role.
+
+g{[u][b]1 Hunter[/b][/u]}g - The Hunter will defeat evil parity if left alive with one Werewolf at game end.
+
+g{[u][b]1 Good Vigilante[/b][/u]}g - The Vigilante is brutal and can take a player with him when killed.
+
+g{[u][b]5 Normal Villagers[/b][/u]}g - These Villagers have no special ability.
+
+
+r{[b]Evil Aligned (total 5):[/b]}r
+
+r{[u][b]2 Werewolves[/b][/u]}r - The Werewolves can chat together and may kill one player each night
+
+r{[u][b]1 Wolf Cub[/b][/u]}r - The Wolf Cub will be promoted to Werewolf when one of the original Werewolves dies, he will then be able to kill one player each night and will also have a chatroom with the other Werewolf. Prior to being promoted the Wolf Cub may target one dead player each night to view that player's role. The Wolf Cub will learn the ID's of the Werewolves at game start.
+
+r{[u][b]1 Sorcerer[/b][/u]}r - The Sorcerer can target a player each night to view that player's full role.
+
+r{[u][b]1 Evil Vigilante[/b][/u]}r - The Vigilante is brutal and can take a player with him when killed.
+
+[b]The Aux Seer will receive a random negative N0 view. The Seer and Sorcerer will  receive a N0 view of a random villager.[/b]
+
+[b]None of the viewing roles will be able to distinguish between the two types of Vigilante.[/b] 
+
+
+[b][u]Role Reveal:[/u][/b]
+
+Roles or alignments will not be revealed upon death.       
+
+
+[b][u]Victory Conditions:[/u][/b]
+
+Good: All good aligned players will win when the Werewolves and the Wolf Cub are killed.
+
+Evil: All evil aligned players will win when parity is reached. The Werewolves and the Wolf Cub count towards parity. The Sorcerer and Evil Vigilante do not count towards parity. 
+
+
+[b][u]Lynch Rules:[/u][/b]
+
+Each day players vote for one player to be lynched. The player receiving the most votes is killed. If there is a tie between two or more players, the tied player with the <tiebreaker> is killed.
+
+
+[b][u]Deadlines:[/u][/b]
+
+Dusk is at <lynch> BGG time. Votes cast with this time-stamp are counted. Votes cast after this time are invalid. Votes made during the night phase are invalid.
+
+All votes must conform to the Cassandra Vote Tally System rules. (Will be posted once the game starts). If all living players vote nightfall it will speed up dusk.
+
+Dawn is at <night> BGG time. All night actions must be submitted in the Cassandra Chat System before this time.
+
+If all living players (including those without night actions) click on the 'Lock Game Actions' button it will speed up Dawn.  
+
+
+[b][u]Other Rules:[/u][/b]
+
+Do not post the content of your Mod Chat room to the game thread. You may summarize, but direct copying is not allowed. Consider that like showing your card to the group in a face-to-face game.
+ 

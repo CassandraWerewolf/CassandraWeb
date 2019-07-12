@@ -1,0 +1,24 @@
+This is a 7 player game.
+
+[b]Team evil:[/b]
+
+Evil wins at wolf parity.
+
+[u]1 Werewolf:[/u] Together with Sorcerer kills one player each night, but prefers to use mauling, slashing and eating. Has a chat room with the Sorceror and counts for parity.
+
+[u]1 Sorcerer:[/u] Together with Werewolf kills one player each night, but prefers to use magic, curses, and immolation. Has a chat room with the Werewolf and counts for parity.
+
+
+[b]Team Good:[/b]
+
+Team good wants the wolves dead.
+
+[u]1 Seer:[/u] Looks for the Werewolf.  But does not get a positive hit on the Sorceror.
+
+[u]1 Aux-Seer:[/u] Looks for the Sorceror.  But does not get a positive hit on the Werewolf.
+
+[u]1 White Hat :[/u] Hey, I can't do anything, but I got some originality, bitch.
+
+[u]2 Villagers :[/u] Armed with rusty pitchforks.
+
+[b]Standard BGG werewolf rules apply otherwise.[/b]

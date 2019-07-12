@@ -1,0 +1,38 @@
+[size=12]Reverse 9er[/size]
+(sure to delight, tease, and taunt. Created by redhawke.)
+
+[b][u]Evil Roles:[/b][/u]
+
+[b]3 Werewolves:[/b] Standard wolves. Have a chat room and can kill people at night. 
+
+[b]1 Sorcerer:[/b] Views for seer/not seer each night. Random negative N0 view.
+
+[b]1 Traitor:[/b] Wants evil to win.
+
+[b][u]Good Roles:[/b][/u]
+
+
+[b]1 Seer:[/b] Views for wolf/not wolf each night. Random negative N0 view.
+
+[b]2 Hunters:[/b] Have a chat room. Good wins if they can achieve parity with the wolves.
+
+[b]1 Vigilante: [/b] The Vigilante can kill 1 player each night.
+
+[b][u]Other Stuff: [/b][/u]
+
+One of the wolves and one of the hunters will be a tinker. A player who is a tinker will not know it. All views of him will be reversed.
+
+What this means is that the seer will see "wolf" when viewing the tinker hunter, and "not wolf" when viewing the tinker wolf. The sorcerer will see "seer" when viewing either the tinker hunter or the tinker wolf. 
+
+[b]Roles are NOT revealed on death in this game.[/b]
+
+[b][u]Victory Conditions:[/b][/u]
+
+Evil wins if the wolves achieve parity (hunters permitting).
+Good wins if all wolves die OR if there is a 2-2 or 1-1 hunter/wolf situation. 
+
+[b][u]Thoughts:[/b][/u]
+
+Evil starts out with voting majority in this game, but good has a nightkiller of their own. The two hunters make wolf parity a lot more difficult than normal. The tinker wolf and tinker hunter provide FUD for views and make true certainty almost impossible. Not revealing roles on death just compounds the issue. 
+
+Devilish? Yes. Fun? Hopefully. You should sign up.  

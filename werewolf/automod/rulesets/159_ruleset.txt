@@ -1,0 +1,30 @@
+[size=12]Valley of the Perfect Seers[/size]
+
+b{Of all the many small villages that exist in the hypothetical world we play werewolf in, those that exist in valleys have a long tradition of being outposts for seers, where seers can gather for rest, recuperation, and to hang out with other seers and discuss that latest wolf finding techniques. This valley village is no different. Here, though, only the best of the best seers come. No one is quite sure why. Some say   that the mystic wall that surrounds the town can only be breached by the most experienced of mages. Others say that the nature of the town brings to strong to it and repulses the weak. Still others say that Redhawke did this writeup, and that's how he decided it would be. 
+
+As is to be expected from a town existing in the werewolf universe, peace was not for long. A band a werewolves, summoned by an estranged mage, invaded the town. The power of the seers is great, but will the might of the werewolves prove greater still?}b
+
+[b][u]ROLES:[/u][/b]
+
+The following roles will be in the game. There are a bunch of roles that won't be in the game, but you can look those up somewhere else.
+
+g{[b][u]Team Good:[/u][/b]}g
+
+[b]3 Seers -[/b] Each seer will know the identity of one of the killers to begin with, but won't know which killer it is.
+
+[b]1 Priest - [/b]The priest will learn the roles of the recently departed each night.
+
+[b]3 Villagers - [/b]The villagers must decided who to trust.
+
+r{[b][u]Team Evil:[/u][/b]}r
+
+[b]1 Werewolf - [/b] A killer. Eats people (in the literal, non-sexual way) each night.
+[b]1 Sorcerer - [/b] A killer. Casts spells of death each night.
+[b]1 Cultist - [/b] A killer. Prefers the shotgun as a way of inflicting death.
+
+These 3 will each have a chat room and collectively kill 1 player each night. 
+
+[b]1 Traitor - [/b]Knows the identity of all 3 seers to start the game.
+
+[b]Roles are NOT revealed on death in this game.[/b]
+

@@ -1,0 +1,29 @@
+Lynch Time=<lynch>
+Night Order Deadline=<night>
+Tiebreaker=<tiebreaker>
+
+Wightwolf created this without prior thought, because he wanted to play another game before Christmas.
+
+Hope all goes well and that it isn't too screwy :)
+
+[size="18"][u]Roles[/u][/size]
+r{[b]Evil [/b]}r
+
+[b]1 Werewolf-[/b]
+    Knows the ID of the wolf cub. Each night he may submit a kill order. Counts for parity.
+
+[b]1 Wolf Cub-[/b] Starts know the ID of the werewolf. When the Werewolf dies, the cub gets promoted to full werewolf status. Counts for parity.
+
+[b]1 Traitor-[/b]
+An evil villager. No special powers.
+
+g{[b]Good[/b]}g
+
+[b]1 Seer-[/b] Each night may view for the Werewolf and Wolf Cub. Will get werewolf for both OR for the tinker. Gets random Night 0 view of not werewolf.
+
+[b]1 Hunter-[/b]If left alone with a Werewolf in the final 2, good will win. Shows as a villager on death.
+
+
+[b]1 Passive Priest-[/b]As long as he is alive, roles will be revealed on death.
+
+[b]3 Villagers-[/b] No special power except for their vote. One will be a tinker who will be viewed as wolf by the seer.

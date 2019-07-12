@@ -1,0 +1,15 @@
+[b]Victory Conditions[/b]
+
+Good wins by killing the werewolf, wolf cub, possessed villager, and evil priest.
+Evil wins if the wolf, wolf cub, possed villager, and evil priest achieve parity.
+
+
+Standard bgg werewolf rules apply otherwise. I'm sure you can look them up somewhere if you don't know them.
+
+I'm pretty sure that cassy will attach something to this that will tell you lynch times and whatnot, but just in case:
+
+Lynchtime: <lynch>
+Night Orders deadline: <night>
+Tiebreaker: <tiebreaker>
+
+That should do it. Did I forget anything?

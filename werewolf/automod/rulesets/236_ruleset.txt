@@ -1,0 +1,25 @@
+<i>Ate Player Game - Weird 8 setup</i>
+
+<u>Victory</u>
+
+<b>Good</b> - Kill all werewolves.
+<b>Evil</b> - Werewolf parity with village.
+
+
+<u>Roles</u>
+
+<b>2 Werewolves:</b> Kill each night.  Share chat.
+<b>2 Sorcs:</b>  View for seer each night.  Sees fellow sorc as seer.
+
+<b>2 Seers:</b> View for wolf each night.  sees other seer as wolf.
+<b>2 Vigilantes:</b> Can kill in the night.
+
+Vigs get only one kill per game, despite cassy giving you one each night.
+Also, DO NOT reveal the name of your chat room if you're a vigilante.
+
+
+<u>Other</u>
+
+Observe community werewolf roles regarding fair play, courteous play, encryption, multiple accounts, safeguarding game info outside this thread.
+
+Other rules (lynch time etc) please see scheduled details.

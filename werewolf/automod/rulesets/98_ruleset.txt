@@ -1,0 +1,65 @@
+b{Not so long ago (but not very recently either) in a land not too far away (but not too close either) there was a town. People you stick six feet under don't want to stay down in those parts, and have taken to walking around as zombies. Naturally, this place was known as GHOST TOWN.
+
+But a grave threat has arrisen to ghost town- werewolves. They care not for the dead, but are surely the gravest threat any of the living have ever known. 
+
+Look out people. This time, the dead are fighting back.}b
+
+[b]GHOST TOWN[/b]
+9 player game.
+Sign up at your own risk.
+Witten, produced, scripted, directed, and all other important sounding titles, by redhawke.
+
+r{[b]Warning: This is an experimental game testing an experimental mechanic. If you do not like experimental games that test experimental mechanics than I suggest you steer clear of this one.[/b]}r
+
+[b]Evil roles (total 3, for those who can't add)[/b]
+
+[u]2 Wolves[/u]- Chat with each other and kill someone each night. 
+
+[u]1 Sorcerer[/u]- views a player each to see if they are a seer or not. Random negative N0 view.
+
+[b]Good roles (total 6, again for those who can't add)[/b]
+
+[u]1 seer[/u]- views a player each to see if they are a wolf or not. Random negative N0 view.
+
+[u]5 Villagers[/u]- Try to vote out wolves and die vialently in the night. 
+
+--------
+
+Do I really need to explain all that? Is there seriously a werewolfer here who doesn't know what those roles are? Besides, I hate typing all that out.
+
+--------
+
+[b]Lynch rules[/b]
+
+Each day the person who ends the day with the most votes in lynched. A lynched person is dead. How to vote is explained in a post cassy will make when the game starts. Lynch time is <lynch>. Tiebreaker is <tiebreaker>. 
+
+I'm sure there will be someone to explain it to you if you're confused about it. 
+
+[b]Night rules[/b]
+
+Night orders are due by <night>. The seer and sorcerer get a view every night, and the wolves get to kill someone each night. A killed person is dead. [-]Don't post night view info before dawn. (that means YOU, seer and sorcerers.[/-] Actually, that rule is usually in place because people don't want dead seers sharing thier last view. I don't think that will matter here, personally...  
+
+[b]Death and consequences[/b]
+
+People who are lynched or nightkilled are dead.
+Dead people do not count for parity.
+Dead people cannot vote.
+Dead seers and sorcerer cannot view players, and dead wolves cannot kill.
+Roles are not revealed on death.  
+
+However, unlike most games, the dead may continue to post freely. Dead wolves can continue to contribute to wolf chat. The only rule is that they must bracket any posts with :zombie: s. 
+
+Example:
+
+[q="example"] :zombie: example :zombie: [/q]
+
+Other than that, the dead can post all they want. Hope you don't mind zombies. They're pretty common here in GHOST TOWN. 
+
+[b]Victory conditions[/b]
+
+Evil wins when the wolves have parity with non-wolves.
+Good wins when both wolves are dead. 
+
+I repeat my belief that saying that stuff isn't nessasary. Can we just say that standard bgg werewolf rules apply except where listed? 
+
+

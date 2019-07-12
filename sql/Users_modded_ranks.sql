@@ -1,0 +1,2 @@
+Create or Replace View Users_modded_ranks AS
+select a.user_id AS user_id,a.name AS name,a.games_moderated AS games_moderated,count(b.games_moderated) AS rank from (Users_modded_totals a join Users_modded_totals b) where ((a.games_moderated < b.games_moderated) or ((a.games_moderated = b.games_moderated) and (a.user_id = b.user_id))) group by a.user_id,a.name,a.games_moderated order by a.games_moderated desc,a.name

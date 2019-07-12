@@ -1,0 +1,101 @@
+[COLOR=#CC9933]                [b][size=18]~ UNIQUITY ~[/size][/b][/COLOR]
+
+
+[COLOR=#003399][b]We are all special.[/b][/COLOR]
+
+
+                              [COLOR=#003399][b]This template was designed by [url=http://www.boardgamegeek.com/user/Snaak]Snaak[/url][/b][/COLOR]
+
+
+[b]r{Disclaimer: this automod template is still in test phase. Balance is not guaranteed for any of the four possible setups. Suggestions to improve the roleset and other comments are welcome!}r[/b]
+
+
+[b][u]Roles (total 20):[/u][/b] 
+
+
+g{[b]Good Aligned (total 14):[/b]}g
+
+g{[u][b]1 Seer[/b][/u]}g - The Seer may target a player each night to view that player's full role. 
+
+g{[u][b]1 Passive Priest[/b][/u]}g - As long as the Priest is alive roles will be revealed on death.
+
+g{[u][b]1 Bodyguard[/b][/u]}g - The Bodyguard may protect a player at night. If this player is targeted by a kill ability, the Bodyguard will die instead.
+
+g{[u][b]1 Hunter[/b][/u]}g - The Hunter will defeat evil parity if left alive with one evil player at game end.
+
+g{[u][b]1 Random Role Seer[/b][/u]}g - The Random Role Seer will randomly view the full role of one of the players that voted for him that day.
+
+g{[u][b]1 Vigilante[/b][/u]}g - The Vigilante is brutal and may take a player with him when killed. He may also target a player each night to view for aux seer/not aux seer.  
+
+g{[u][b]1 Mason [/b][/u]}g - The Mason has a chatroom with the White Hat.
+
+g{[u][b]1 Mason [/b][/u]}g - The White Hat has a chatroom with the Mason. He will always be revealead as 'white hat' on death.
+
+g{[u][b]1 Werewolf Villager [/b][/u]}g - The Werewolf Villager may target a player each night to view for evil/not evil and will receive a positive result when viewing the Werewolf. The Werewolf Villager is not aware of the type of role he is viewing for.
+
+g{[u][b]1 Traitor Villager [/b][/u]}g - The Traitor Villager may target a player each night to view for evil/not evil and will receive a positive result when viewing the Traitor. The Traitor Villager is not aware of the type of role he is viewing for.
+
+g{[u][b]1 Wolf Cub Villager [/b][/u]}g - The Wolf Cub Villager may target a player each night to view for evil/not evil and will receive a positive result when viewing the Wolf Cub. The Wolf Cub Villager is not aware of the type of role he is viewing for.
+
+g{[u][b]1 Sorcerer Villager [/b][/u]}g - The Sorcerer Villager may target a player each night to view for evil/not evil and will receive a positive result when viewing the Sorcerer. The Sorcerer Villager is not aware of the type of role he is viewing for.
+
+g{[u][b]1 Cultist Villager [/b][/u]}g - The Cultist Villager may target a player each night to view for evil/not evil and will receive a positive result when viewing the Cultist. The Cultist Villager is not aware of the type of role he is viewing for.
+
+g{[u][b]1 Seer Villager [/b][/u]}g - The Seer Villager may target a player each night to view for evil/not evil and will receive a positive result when viewing the Seer. The Seer Villager is not aware of the type of role he is viewing for. He is also a Tinker, which means a view of him will be positive when he is viewed by the Vigilante or one of the other Villagers. He will be revealed on death as either  aux seer, wolf cub, sorcerer or cultist.
+
+
+r{[b]Evil Aligned (total 6):[/b]}r
+
+r{[u][b]1 Werewolf[/b][/u]}r - The Werewolf may kill one player each night. He is brutal and may take a player with him when killed. He also has a chat with the Traitor and the Aux Seer.
+
+r{[u][b]1 Traitor[/b][/u]}r - The Traitor may kill one player each night if the Werewolf and Wolf Cub are dead. He is tough and will survive one lynch or nightkill attempt. He also has a chat with the Werewolf and the Aux Seer.
+
+r{[u][b]1 Aux Seer[/b][/u]}r - The Aux Seer may target one dead player each night to view that player's full role. He also has a chat with the Werewolf and the Traitor.
+
+r{[u][b]1 Wolf Cub[/b][/u]}r - The Wolf Cub will be promoted to Werewolf when one of the original Werewolves dies, he will then be able to kill one player each night and will also have a chatroom with the Traitor and the Aux Seer. He is brutal and may take a player with him when killed.
+
+r{[u][b]1 Sorcerer[/b][/u]}r - The Sorcerer may target a player each night to view that player's full role. 
+
+r{[u][b]1 Cultist[/b][/u]}r - The Cultist will learn the Identity of the Werewolf, Traitor, Aux Seer, Wolf Cub and Sorcerer on N0.
+
+[b]The Seer and Sorcerer will receive a random view of a Villager on N0.[/b] 
+
+[b]The Villagers will receive a random negative N0 view of a non-villager.[/b]
+
+[b]The Vigilante will receive a random negative N0 view.[/b]
+
+[b]The Villagers will have their viewing types revealed on death as long as the Priest is alive. Other positive views of the Villagers will not distinguish between the viewing types.[/b]
+
+
+[b][u]Role Reveal:[/u][/b]
+
+Roles will be revealed on death as long as the Priest is alive.       
+
+
+[b][u]Victory Conditions:[/u][/b]
+
+Good: All good aligned players will win when the Werewolf, Traitor and Wolf Cub are killed.
+
+Evil: All evil aligned players will win when parity is reached. The Werewolf, Traitor and Wolf Cub count towards parity. The Aux Seer, Sorcerer and Cultist do not count towards parity. 
+
+
+[b][u]Lynch Rules:[/u][/b]
+
+Each day players vote for one player to be lynched. The player receiving the most votes is killed. If there is a tie between two or more players, the tied player with the <tiebreaker> is killed.
+
+
+[b][u]Deadlines:[/u][/b]
+
+Dusk is at <lynch> BGG time. Votes cast with this time-stamp are counted. Votes cast after this time are invalid. Votes made during the night phase are invalid.
+
+All votes must conform to the Cassandra Vote Tally System rules. (Will be posted once the game starts). If all living players vote nightfall it will speed up dusk.
+
+Dawn is at <night> BGG time. All night actions must be submitted in the Cassandra Chat System before this time.
+
+If all living players (including those without night actions) click on the 'Lock Game Actions' button it will speed up Dawn.  
+
+
+[b][u]Other Rules:[/u][/b]
+
+Do not post the content of your Mod Chat room to the game thread. You may summarize, but direct copying is not allowed. Consider that like showing your card to the group in a face-to-face game.
+ 

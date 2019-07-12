@@ -1,0 +1,52 @@
+All Reveal 7 player ruleset
+[size=3]Disclaimer: I have little experience designing all-reveal style templates. -redhawke[/size]
+
+[b]Good roles[/b]
+
+[u]Seer[/u]- views a player each night, including N0, to see if they are a wolf or not. 
+
+[u]Hunter[/u]- good wins if he is left alone with a wolf.
+
+[u]Bodyguard[/u]- targets a player each night, if they are targeted for a kill he is killed instead.
+
+[u]Villager[/u]- hunts wolves
+
+[b]Evil Roles[/b]
+
+[u]Werewolf[/u]- Kills a player each night.
+
+[u]Cultist[/u]- knows the ID of the wolf.
+
+[u]Sorcerer[/u]- views a player each night, including N0, to see if they are a seer or not.  
+
+[b]Victory Conditions:[/b]
+
+[u]Good[/u] - All good players win if the werewolf is eliminated, or left alobne with the hunter. 
+
+[u]Evil[/u] - All evil players win if the wolf achieves parity. 
+
+
+[b]Lynch Rules:[/b]
+
+Each day players vote for one player to be lynched. The player receiving the most votes is killed. If there is a tie between two or more players, the tied player with the <tiebreaker> is killed.
+
+Lynch time is <lynch> BGG time. Votes cast with this time-stamp are counted. Votes cast after this time are invalid. Votes made during the night phase are invalid.
+
+All votes must conform to the Cassandra Vote Tally System rules. (Will be
+posted once the game starts). If all living players vote night fall it will
+speed up the dusk.
+
+All plalyerswill be revealed as their true role upon death except the Hunter will be revealed as a villager.
+
+[b]Night Orders:[/b]
+
+Wolf, Sorcerer, and Seer must all submit their night orders by <night> BGG time. They do this by using the Cassandra Game Order system in the Cassandra Chat System.
+
+The wolf's night kill choice is revealed with the DAWN post. 
+
+If all living players (including those with out night actions) click on the
+'Lock Game Actions' button it will speed up Dawn.
+
+[b]Do not post the content of your Mod Chat room to the game thread. You may summarize, but direct copying is not allowed. Consider that like showing your card to the group in a face-to-face game[/b]
+
+[b]Do not use any text smaller than the default or in an invisible color[/b]

@@ -1,0 +1,10 @@
+[b]Rules:[/b]
+
+Roles Revealed On Death
+Both wolves are counted for parity
+
+[b]Roles[/b]
+
+2 Wolves: Know and can chat with each other, They kill one player each night.
+2 Masons: Know and can chat with each other, know each other to be innocent.
+3 Villagers: Don;t know anything trying to get rid of the wolves.

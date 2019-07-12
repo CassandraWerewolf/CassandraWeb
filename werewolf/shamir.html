@@ -1,0 +1,74 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>Shamir's Secret Sharing Algoritm</title>
+        <link rel="stylesheet" type="text/css" href="css/styles.css" />
+        <link rel="stylesheet" type="text/css" href="css/mycss.css" />
+               
+        <!--[if IE]>
+        <style type="text/css">
+        .clear {
+          zoom: 1;
+          display: block;
+        }
+        </style>
+        <![endif]-->
+        
+    </head>
+    <body>
+    	<div class="section" id="page"> <!-- Defining the #page section with the section tag -->
+            <div class="header"> <!-- Defining the header section of the page with the appropriate tag -->
+                <h1>Secret Sharing</h1>
+                <h3>Shamir's Algorithm</h3>
+            </div>
+            <div class="section" id="articles"> <!-- A new section with the articles -->
+
+				<!-- Article 1 start -->
+
+                <div class="article" id="article1">
+                    <div class="articleBody clear">
+                    <fieldset>
+			<p>
+                           <label for="num_shares">Number of Shares (&lt;50)</label>
+                           <textarea id="num_shares" rows="1" cols="3"></textarea>
+			</p>
+			<p>
+                           <label for="num_thresh">Shares Threshold (&lt;=Shares)</label>
+                           <textarea id="num_thresh" rows="1" cols="3"></textarea>
+			</p>
+			<p>
+                           <label for="ident">Identifier (Optional and &lt;=20 characters)</label>
+                           <textarea id="ident" rows="1" cols="20"></textarea>
+			</p>
+			<p>
+                           <label for="secret">Secret (&lt;255 charaters)</label>
+                           <textarea id="secret" cols="125" rows="3"></textarea>
+                        </p>
+			<p>
+                           <label for="shares_list">Shares (&lt;15000 characters)</label>
+                           <textarea id="shares_list" cols="125" rows="20"></textarea>
+                        </p>
+                        <button id="get_shares">Get Shares</button>
+                        <button id="get_secret">Get Secret</button>
+                        <button id="reset">Reset</button>
+                    </fieldset>
+
+                    </div>
+                    
+                </div>
+                
+				<!-- Article 1 end -->
+
+
+        <div class="footer"> <!-- Marking the footer section -->
+        </div>
+		</div> <!-- Closing the #page section -->
+        
+        <!-- JavaScript Includes -->
+        
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+        <script type="text/javascript" src="js/shamir.js"></script>
+    </body>
+</html>

@@ -1,0 +1,43 @@
+[b]Basics:[/b]
+
+This is a straightforward game including most of the roles commonly used in BGG Werewolf.
+
+Each day the players vote to lynch somebody.  Whoever gets the most votes will be killed.
+
+There then follows a short night period.  During the night the wolves choose one target to kill by entering orders in Cassandra, and other special roles will also enter orders.
+
+Good wins if both wolves are killed.  Evil wins if the number of wolves equals the number of non-wolves.  Also see the Hunter role below.
+
+Werewolves are also known as 'max evils' or 'maxes'.  Non-werewolf evil roles are also known as 'aux evils' or 'auxes'.
+
+[b]Evil Roles:[/b]
+
+Two Werewolves.  Share a chat and jointly control the night-kill.
+
+One Sorcerer.  Views for seers, gets a hit on the Seer and the Aux Seer.  Starts with a random non-seer view.
+
+One Cultist.  Starts the game knowing who the wolves are.
+
+[b]Good Roles:[/b]
+
+One Seer.  Views for wolves, gets a hit on both Werewolves.  Starts with a random non-wolf view.
+
+One Aux Seer.  Views for aux evils, gets a hit on the Sorcerer and the Cultist.  Starts with a random non-aux view.
+
+One Martyr.  May protect one person each night.  If that person is targeted by the night-kill, the Martyr dies instead.  Listed on Cassandra as a 'bodyguard'.
+
+One Hunter.  If the final two roles in the game are the Hunter and a Werewolf, the good team wins.
+
+Five Villagers.  No special abilities.
+
+[b]Other Details:[/b]
+
+Full role reveal on death.
+
+Deadline for voting is <lynch>.
+
+Deadline for night actions is <night>.
+
+Tied votes will be broken by <tiebreaker>.
+
+[b]Please be aware that the Martyr will be listed as a bodyguard on Cassandra due to system limitations.[/b]

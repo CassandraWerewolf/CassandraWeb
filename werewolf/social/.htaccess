@@ -1,0 +1,8 @@
+#AuthType Basic
+#AuthName "Cassandra"
+#AuthUserFile /var/www/passwds/cassandra
+#Require valid-user
+
+RewriteEngine on
+RewriteRule ^site/(.*)$ /social/site.php?site_name=$1
+RewriteRule ^user/(.*)$ /social/user.php?username=$1

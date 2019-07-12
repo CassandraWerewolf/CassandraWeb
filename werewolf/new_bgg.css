@@ -1,0 +1,199 @@
+html,body{font-family:verdana,"lucida grande",arial,sans-serif;font-size:12px;color:#000}strong{font-weight:bold}em{font-style:italic}select,textarea{border:solid 1px #b0b0b0}textarea{font-family:courier;font-size:10pt}h1,h2,h3,h4,h5{margin:5px
+0;font-weight:bold}h1{font-size:18px}h2{font-size:15px}h3{font-size:13px}p{margin:1em
+0}#container{margin:0px
+10px 5px 10px}#logo{float:left}ul,li,form{list-style-image:none;list-style-position:outside;list-style-type:none;margin:0;padding:0}.di{display:inline}.sf, table.sf
+td{font-size:10px}.smallerfont{font-size:9px;font-weight:normal}.mf, table.mf
+td{font-size:14px}.lf, table.lf
+td{font-size:20px}.fl{float:left}.fr{float:right}.tal{text-align:left}.tar{text-align:right}.tac{text-align:center}.vam{vertical-align:middle}.dn{display:none}.b{font-weight:bold}.clear-both{clear:both}.clear{clear:both}.selected{font-weight:bold}.dull{color:#b0b0b0}.nw{white-space:nowrap}.p5{padding:5px}.m5{margin:5px}.mt5{margin-top:5px}.ml10{margin-left:10px}.mb5{margin-bottom:5px}.ml5{margin-left:5px}.ml10{margin-left:10px}.error{color:red;font-weight:bold}.dullborder{border:solid 1px #b0b0b0}.subtitle{font-size:15px;font-weight:bold}a:link{text-decoration:none;color:#00f}a:visited{text-decoration:none;color:#008}a:hover{text-decoration:underline;color:red}a:link img,
+a:visited img,
+a:hover img,
+a:active
+img{text-decoration:none}.status{position:absolute;background:red;color:white;font-weight:bold}.objectlink A:visited,
+.objectlink A:link,
+.objectlink A:hover,
+.objectlink A:active{color:#000;font-weight:bold;font-size:12px}.forumlink A:visited,
+.forumlink A:link,
+.forumlink A:hover,
+.forumlink A:active{color:#222;font-size:10px}.togglebox{border:solid 1px #b0b0b0}.togglebox:hover{border:solid 1px white}.pages{font-size:85%;text-align:right;font-weight:normal;margin-top:3px;margin-bottom:3px}.pages a,
+.pages
+span{padding:0px
+3px 0px 3px;margin-right:2px;border:1px
+solid #b0b0b0;text-decoration:none}.geekdo_promos{margin-bottom:10px}#overDiv,
+#overDiv table
+td{padding:1px}.greybox{background-color:#f7f7f7;border:1px
+solid #ccc;padding:10px}.bluebox{background-color:#eceff6;border:1px
+solid #d4dae8;padding:10px}.infobox,.messagebox{background-color:#fff9d7;border:1px
+solid #e2c822;padding:10px}.errorbox{background-color:#ffebe8;border:1px
+solid #dd3c10;padding:10px}.positive,
+.positive a,.storepositive,.storeprice,.price{font-weight:bold;color:green}.price{font-size:12px}.approve{color:green}.skip{color:blue}.decline{color:red}.pulldown
+div{padding:1px}.geekinput,.geekinput_medium,.geekinput_large{border:1px
+solid #B0B0B0;padding:2px;font-size:9px}.columns_table
+td{padding-left:5px;padding-right:5px;vertical-align:top}.geekinput_medium{font-size:12px}.geekinput_large{font-size:18px}.rulesbox{border:1px
+dashed #9898E4;margin:5px
+10px 10px;padding:7px
+7px 0;width:330px}.geeksub_pulldown{width:150px;z-index:500;position:absolute;left: 		-150px;top:5px}.geeksub_pulldown_closer{text-align:right;font-weight:bold}.geeksub_pulldown_body{text-align:left;border:solid 1px #b0b0b0;background:#fff9d7;padding:5px;font-size:11px}.textad{border:solid 2px goldenrod;text-align:center;width:200px;padding:2px}.textad_sponsor{font-size:10px;margin:2px}.textad_title{font-size:18px;font-weight:bold}.textad_body{font-size:12px}.expandedtextad_title{font-size:12px;font-weight:bold}.expandedtextad_body{font-size:11px;text-align:left}#appbar_container{bottom:0;font-size:11px;height:25px;padding:0;position:fixed;right:0;width:100%;z-index:1000;}#appbar{position:relative;background-color:#eceff6;border:1px
+solid #b0b0b0;height:25px;margin-left:10px;margin-right:10px}#appbar_left{margin-left:10px}#appbar_left
+table{height:25px}#appbar_left table
+td{padding:0
+5px 0 0;vertical-align:middle}.avatarblock{width:120px;text-align:center}.avatarmenu table
+td{padding-bottom:2px}.avatarmenu_header{width:140px;padding:5px;background-color:#eceff6;border:1px
+solid #d4dae8;border-bottom:0px}.avatarmenu_body{background-color:#fff9d7;border:1px
+solid #e2c822;padding:5px;text-align:left;width:140px;line-height:20px}.avm_username{width:120px;overflow:hidden}.collection_pager{background:url(http://files.boardgamegeek.com/images/bg/menu_bg.gif) repeat-x;color:white}.collection_table
+th{font-weight:bold;text-align:center}.collection_table
+td{padding:2px;padding-bottom:10px;font-size:11px;border-left:1px solid #F2E8E5;border-top:1px solid #F2E8E5}.collectionmodule_table{margin-bottom:5px}.collectionmodule_table
+td{padding:4px
+4px 12px 4px;font-size:11px;border-left:1px solid #F2E8E5;border-top:1px solid #F2E8E5}.collectiontable_ownership
+td{padding:2px;border:0px}.collectiontable_version
+td{padding:2px;border:0px}.collectionmodule_table
+th{}.collectionstatus{list-style:none;margin:0;padding:0;text-indent:0}.collectionstatus
+li{padding:3px
+0 0 0}.ml20{margin-left:20px}.collfilter_table{border:solid 1px #b0b0b0;margin-bottom:1em}.collfilter_table
+td{white-space:nowrap;line-height:25px}.collection_filters{padding:0px;margin:5px;border:1px
+solid #b0b0b0}.collectionfilter_commandbar{background:lightsteelblue;padding:5px}.collectionfilter_body{background:white;padding:10px}.collection_handle,.item_handle{background:#B0C4DE;padding:5px;cursor:move;font-weight:bold;border-bottom:1px solid #b0b0b0}.collection_conditiontext,.collection_haspartslist,.collection_wantpartslist,.collection_privatecomment,.collection_wishlistcomment,.collection_comment,.collection_ownership{min-width:200px}.collection_plays{min-width:60px}.collection_rank{font-weight:bold;font-size:20px;min-width:55px}.collection_plays table
+td{white-space:nowrap}.collection_title{min-width:200px}.dblclick:hover{background-image:url('http://files.boardgamegeek.com/images/collection/dbl_click.gif');background-repeat:no-repeat;background-position:bottom left}.collection_status,.collection_version{width:200px;white-space:nowrap}.collection_thumbnail{width:100px;text-align:center}.collection_thumbnail
+img{margin-top:10px}.collection_status{width:100px}.collection_bggrating{min-width:60px}.collection_rating{width:64px}.collection_tags{width:200px}.collection_views
+td{background-color:#FFF}.collection_views_cell:hover{background-color:#FEFFAF;cursor:pointer}.collection_ownership_table
+td{border:0}.collection_commands{width:40px;text-align:left;white-space:nowrap}.hoveritem:hover{background-color:#AFA}.editfield:hover{background-color:#FEFFAF;cursor:pointer}.editfield_active{background-color:#FEFFAF}.rating{width:40px;height:32px;text-align:center}.rating
+span{font-size:12px;font-weight:bolder;top:8px;position:relative}.ratingtext{font-size:12px;font-weight:bolder;top:8px;position:relative}.select-free{position:absolute;z-index:500;width:450px;background:white;border:solid 2px #b0b0b0}.select-free
+.bd{border:solid 1px #aaa;padding:12px}.geekcollection_pager{background-image:url('http://files.boardgamegeek.com/images/bg/menu_bg.gif');background-repeat:repeat-x;color:white}.geekcollection_pager
+a{color:white}.owned,.wanted,.fortrade,.wishlist,.prevowned,.wanttoplay{font-size:10px}.wanttoplay{color:darkred}.wanted,.wanttobuy{color:darkgreen}.fortrade{color:red}.wishlist{color:purple}.preordered{color:#F60}.prevowned{color:#008}.forum_title{font-size:14px;font-weight:bold}.forum_table,.forum_index_table{background-color:#D1D1E1;color:#000;border:0px
+solid #88F;border-collapse:separate;border-spacing:1px}.forum_table td,
+.forum_index_table
+td{background-color:#F5F5FF;color:#000;padding:3px}.forum_table
+td.p5{padding:5px}.forum_index_table th,
+.forum_table
+th{background-color:lightsteelblue;color:#000;font-weight:bold;text-align:left;padding:3px}.forum_index_subject{font-weight:bold}.forum_path{font-size:15px;margin-bottom:5px;font-weight:bold}.forum_subject{font-size:15px;padding:2px
+0 2px 0;margin-bottom:5px}.threadcontrols{background:#EEE;border:solid 	1px #b0b0b0;padding:5px;font-size:11px;margin-bottom:10px}.threadcontrols_body{margin-left:110px}.obj_container{background:#F5F5FF;border:solid 1px #88F;margin-bottom:10px}.article_subject{font-size:10px;font-weight:bold;border-bottom:1px dotted #b0b0b0;margin-bottom:5px}.article_body{padding:5px}.article_edits{margin-top:10px}.article_selected{border:solid 2px #008}.article_subbed{border:solid 2px #A00}.quote{font-size:10px;margin-right:5px;margin-left:2em;margin-bottom:5px;padding:5px;border:solid #000 1px;background-color:#ddf}.quotetitle{font-size:10px;margin-left:2em;margin-right:5px;margin-top:5px;padding:5px;border:solid #000 1px;border-bottom:0;background-color:#88f;color:#fff;font-weight:bold}a.spoiler{color:#ddf;display:block}a.spoiler:hover{color:#000}.article_bottomcontrols
+td{padding:2px}.article_status{color:#444;background:#F5F5FF;font-size:10px}.recommend_article{padding:5px
+0 5px 0;border:solid 1px#b0b0b0;width:124px}.pager{text-align:right;margin-top:10px;margin-bottom:10px;font-size:11px}.pager_page{padding:3px
+5px;margin-right:2px;border:1px
+solid #DDF;background:#fff}.pager_page:hover{background:#CCF;border:1px
+solid #008}.pager_page_selected{padding:3px
+5px;margin-right:2px;background:#CCF;border:1px
+solid #008;font-weight:bold}.code{white-space:pre;font-family:courier}.calendar{width:400px;border:solid 1px #B0B0B0;font-size:11px;padding:1em}.day{background-color:#FFF;border:solid 1px #B0B0B0;text-align:center;height:35px}.linkedday{background-color:lightsteelblue;border:solid 1px #B0B0B0;text-align:center;height:35px}.geeklist_table{border-spacing:0}.geeklist_ajax_table{border-spacing:0;border:solid 1px #b0b0b0}.geeklist_title,td.geeklist_title{background:#D1DAEF;font-size:20px;font-weight:bolder;padding:5px;text-align:center}.geeklist_desc{margin:5px;padding:5px}.geeklist_item_desc{padding:5px}.geeklist_commands{font-size:10px;line-height:14px}.geeklist_tags{margin:10px}td.geeklist_item_title{background:#D1DAEF;font-size:18px;font-weight:bold;padding:5px}.listhandle{background:#D1DAEF;font-size:13px;cursor:move;padding:5px}.gm_messages{border-bottom:1px solid #b0b0b0}.gm_messages
+td{padding:2px}.gm_prefix{font-size:10px}.gm_nessageline{font-size:12px}.gm_label{color:darkgreen;font-size:10px}.gm_status{font-size:10px;background:red;color:white;font-weight:bold}.gm_date{font-size:10px;text-align:right}.gm_avatar{margin-left:50px;width:170px;height:170px;border:solid 1px #b0b0b0;background:white;position:absolute;display:none;overflow:hidden;text-align:center}.gm_controlbar{padding:3px;background:#E0E0EF;border:solid 1px #b0b0b0;margin-bottom:5px}.gm_command_menu{padding:3px;background:#E0E0EF;border:solid 1px #b0b0b0;margin-bottom:5px}.gm_subject{margin:5px
+0;padding:0
+0 5px 0;border-bottom:dotted 1px darkblue}.gm_message
+td{padding:5px}.gallery_caption{font-size:10px;text-align:center;width:225px}.gallery_title{font-size:20px;font-weight:bold;margin-bottom:5px}.imagesizebox{border:solid 1px #b0b0b0;padding:5px;margin:0
+5px 5px 5px;font-size:10px}.imagecaption{margin-top:1em;font-weight:bold}.geekcentral_module{margin-bottom:10px}.geekcentral_leftcol{padding-right:5px}.geekcentral_rightcol{padding-left:5px}.modulecommands{font-size:10px;font-weight:normal;white-space:nowrap}.module_title{font-weight:bold;white-space:nowrap;color:white;font-size:12px;padding:2px}.moduletable{border:solid 1px #b0b0b0}.moduletable
+th{font-size:12px;font-weight:bold;background-color:#22344B;color:white;text-align:left;padding:3px;background-image:url('http://files.boardgamegeek.com/images/bg/menu_bg_40.gif');background-repeat:repeat-x}.moduletable
+td{}.innermoduletable th,
+.itemmoduletable
+th{font-size:12px;font-weight:bold;background-color:#ACC5E4;color:black;text-align:center;background-image:none}.moduletable th
+a{color:lightblue}.moduletable th a.selected,.moduletable th a:visited.selected{color:yellow}.moduletable th a:visited{color:lightblue}.innermoduletable th
+a{color:darkblue}.innermoduletable
+td{font-size:12px;padding:3px}.hotitems_header{font-size:9px;white-space:nowrap;background:#FDD;height:20px}.hotitems{margin-top:10px}.hotitems
+th{background-image:url('http://files.boardgamegeek.com/images/bg/menu_bg_hot.gif');background-repeat:repeat-x}.hotitems,.recentitems{border-width:1px}.hotitems .innermoduletable td,
+.recentitems .innermoduletable
+td{font-size:11px}.hotitems .innermoduletable div,
+.recentitems .innermoduletable
+div{overflow:hidden;width:112px}.spotlight
+th{background:#91261e;color:#fff;background-image:url('http://files.boardgamegeek.com/images/bg/menu_bg_hot.gif');background-repeat:repeat-x}.pages,.geekpages{font-size:85%;text-align:right;font-weight:normal;margin-top:3px;margin-bottom:3px}.geekpages{margin:0}.pages a,
+.pages span,
+.geekpages a,
+.geekpages
+span{padding:0px
+3px 0px 3px;margin-right:2px;border:1px
+solid #b0b0b0;text-decoration:none}.modulelink .geekpages
+a{color:white}.pages a:hover{border-color:white}.pollresults{width:100%;border:1px
+solid #000;margin-bottom:20px;background-color:#FFF}.pollresults th,.pollresults
+td{padding:8px}.pollresults thead th,.pollresults tfoot
+td{background-color:#ddd}.pollresults tbody
+td{background-color:#eee}.pollresults
+.bargraph{border:1px
+solid #000;background:url('http://files.boardgamegeek.com/images/poll_gradient.gif')}.pollresults
+th.header{text-align:left}.pollresults
+th.leftfiller{background-color:#dee9f7}.pollresults
+th.percent{background-color:#cdd8e6;width:70px}.pollresults
+th.votes{background-color:#cdd8e6;width:60px}.pollresults
+th.uservote{width:40px}.pollresults
+th.correct{width:40px}.pollresults
+.voteimage{text-align:center}.pollresults
+td.percent{background-color:#dee9f7;text-align:right}.pollresults
+td.votes{background-color:#dee9f7;text-align:right}.pollresults
+td.columnlabel{background-color:#dee9f7}.pollresults
+td.rowlabel{text-align:right;width:200px}.pollresults
+.answered{background-color:#cdd8e6;text-align:right;white-space:nowrap}.pollresults
+th.answered{font-style:italic;font-weight:bold}.geekpoll{width:100%}.geekpollquestion{width:100%;border:1px
+solid #000;margin-bottom:5px}.geekpollinnerquestion{width:100%;margin-bottom:5px}.geekpoll
+td{background-color:transparent;padding:5px}.geekpoll
+th{text-align:left;background-color:#ddd;padding:5px;font-weight:bold}.moduletable .geekpoll
+th{background-image:url('http://files.boardgamegeek.com/images/bg/menu_bg_80.gif');background-repeat:repeat}.geekpoll
+td.selector{width:15px}.geekpoll
+td.choicelabel{text-align:left;width:100%;cursor:pointer}.geekpoll
+td.rowlabel{text-align:right;width:200px}.geekpoll
+tr.columnlabel{background-color:#dee9f7}.poll_create
+.title{text-align:left}.outerpoll{background-color:#eee;padding:5px}.recommendstatus{background:#fff;border:solid 	1px #88f;width:100px;height:80px;float:left;text-align:center;font-size:10px}.recommendbox_thumbs{margin:2px;text-align:center}.recommendbox_str{background:#292A6F;font-weight:bold;font-size:10px;padding:2px;color:#fff}.recommendbox_scorestr{margin-top:2px;font-size:20px;font-weight:bold}.recommendbox_thumbs{margin:2px;text-align:center}.recspy_recs
+a{color:#008000}.pollresults{width:100%;border:1px
+solid #000;margin-bottom:20px;background-color:#FFF}.pollresults th,.pollresults
+td{padding:8px}.pollresults thead th,.pollresults tfoot
+td{background-color:#ddd}.pollresults tbody
+td{background-color:#eee}.pollresults
+.bargraph{border:1px
+solid #000;background:url('http://files.boardgamegeek.com/images/poll_gradient.gif')}.pollresults
+th.header{text-align:left}.pollresults
+th.leftfiller{background-color:#dee9f7}.pollresults
+th.percent{background-color:#cdd8e6;width:70px}.pollresults
+th.votes{background-color:#cdd8e6;width:60px}.pollresults
+th.uservote{width:40px}.pollresults
+th.correct{width:40px}.pollresults
+.voteimage{text-align:center}.pollresults
+td.percent{background-color:#dee9f7;text-align:right}.pollresults
+td.votes{background-color:#dee9f7;text-align:right}.pollresults
+td.columnlabel{background-color:#dee9f7}.pollresults
+td.rowlabel{text-align:right;width:200px}.pollresults
+.answered{background-color:#cdd8e6;text-align:right;white-space:nowrap}.pollresults
+th.answered{font-style:italic;font-weight:bold}.geekpoll{width:100%}.geekpollquestion{width:100%;border:1px
+solid #000;margin-bottom:5px}.geekpollinnerquestion{width:100%;margin-bottom:5px}.geekpoll
+td{background-color:transparent;padding:5px}.geekpoll
+th{text-align:left;background-color:#ddd;padding:5px;font-weight:bold}.moduletable .geekpoll
+th{background-image:url('http://files.boardgamegeek.com/images/bg/menu_bg_80.gif');background-repeat:repeat}.geekpoll
+td.selector{width:15px}.geekpoll
+td.choicelabel{text-align:left;width:100%;cursor:pointer}.geekpoll
+td.rowlabel{text-align:right;width:200px}.geekpoll
+tr.columnlabel{background-color:#dee9f7}.poll_create
+.title{text-align:left}.outerpoll{background-color:#eee;padding:5px}.profile_block{color:#000;background:#fff;border:solid 1px #b0b0b0;padding:5px;margin-bottom:5px}.profile_title{font-size:15px;font-weight:bold;color:#008}.profile_block table
+td{padding:3px}.editprof_table
+td{padding:10px;border:solid 1px #b0b0b0}.recommendstatus{background:#fff;border:solid 	1px #88f;width:100px;height:80px;float:left;text-align:center;font-size:10px}.recommendbox_thumbs{margin:2px;text-align:center}.recommendbox_str{background:#292A6F;font-weight:bold;font-size:10px;padding:2px;color:#fff}.recommendbox_scorestr{margin-top:2px;font-size:20px;font-weight:bold}.recommendbox_thumbs{margin:2px;text-align:center}.recspy_recs
+a{color:#008000}.searchbox{border:solid 1px black}.searchbox_header{background:lightsteelblue;padding:5px;border-bottom:solid 1px black}.searchbox_inner{background:white;padding:1em}.searchbox_results{position:absolute;z-index:900;background-color:#fff9d7;border:1px
+solid #e2c822;padding:5px;width:300px;white-space:normal}a.tag{font-size:12px;font-weight:bold;color:darkgreen;margin-left:5px}.tagouter{margin-bottom:1em;background:#eee;padding:3px}a.tagobject{font-size:13px;font-weight:bold}#tagbar,#related-tagbar{float:right;border:0.5em solid #fff;border-width:0 1em 0.5em 0.33em;margin:0
+0 0 0;padding:0}#tagbar a:visited, #related-tagbar a:visited{color:#00f}#related-tagbar{border-width:0 0 0.33em 0.33em;margin:0
+0 0 0}.tagbar-inner{background-color:#EEF;font-size:10px;border:1px
+solid #008;border-width:1px 0 0 0;padding:1em}#related-tagbar .tagbar-inner{padding:1em
+1.5em 1em 0.5em}#tagbar ul, #related-tagbar
+ul{list-style-type:none;margin:0;padding:0}#tagbar li, #related-tagbar
+li{margin:0;padding:0}#tagbar h2, #related-tagbar
+h2{font-size:14px;margin:0
+0 5px 0}#tagbar h3, #related-tagbar
+h3{font-size:12px;margin:0
+0 5px 0}.menu_table{background-image:url('http://files.boardgamegeek.com/images/bg/menu_bg.gif');background-repeat:repeat-x;margin-bottom:10px}.tabOn,.tabOff,.geekmail_header{font-family:verdana;font-size:12px;font-weight:bold;width:70px;height:20px;float:left;display:inline;cursor:pointer;margin:0;border-style:solid;border-width:0 0 0 1px;border-color:#b0b0b0;background:#292A6F;color:white;text-align:center;padding-top:3px;background-image:url('http://files.boardgamegeek.com/images/bg/menu_bg.gif');background-repeat:repeat-x}.tabOff A:link,
+.tabOff A:hover,
+.tabOff A:visited{color:white}.tabOn A:link,
+.tabOn A:hover,
+.tabOn A:visited{color:black}.leftborder{border-left:solid 1px #b0b0b0}.tabOn{background:#E0E0EF;color:black;background-image:url('http://files.boardgamegeek.com/images/bg/menu_bg_on.gif');background-repeat:repeat-x}a.tag{font-size:12px;font-weight:bold;color:darkgreen;margin-left:5px}.tagouter{margin-bottom:1em;background:#eee;padding:3px}a.tagobject{font-size:13px;font-weight:bold}#tagbar,#related-tagbar{float:right;border:0.5em solid #fff;border-width:0 1em 0.5em 0.33em;margin:0
+0 0 0;padding:0}#tagbar a:visited, #related-tagbar a:visited{color:#00f}#related-tagbar{border-width:0 0 0.33em 0.33em;margin:0
+0 0 0}.tagbar-inner{background-color:#EEF;font-size:10px;border:1px
+solid #008;border-width:1px 0 0 0;padding:1em}#related-tagbar .tagbar-inner{padding:1em
+1.5em 1em 0.5em}#tagbar ul, #related-tagbar
+ul{list-style-type:none;margin:0;padding:0}#tagbar li, #related-tagbar
+li{margin:0;padding:0}#tagbar h2, #related-tagbar
+h2{font-size:14px;margin:0
+0 5px 0}#tagbar h3, #related-tagbar
+h3{font-size:12px;margin:0
+0 5px 0}.trade_table
+.alert{color:red;font-weight:bold}.trade_table
+.waiting{color:green;font-weight:bold}.trade_select
+.otherwant{font-weight:bold;background-color:#6f9}.thin_table{background-color:#D1D1E1;color:#000;border:1px
+solid #B0B0B0;border-collapse:separate;border-spacing:1px}.thin_table
+th{text-align:center}.thin_table
+td{padding:3px;background:white}.wiki
+ul{margin-left:1em}.wiki ul
+li{margin-left:1em;list-style-type:disc;display:list-item}.wiki ol
+li{list-style-type:decimal}.wiki ol ul
+li{list-style-type:square}.wikilink_new a:link,
+.wikilink_new a:visited,
+.wikilink_new a:hover{color:#105CB6}#toc{border:solid 1px #b0b0b0;padding:1em;background:#eee}table.diff{background:white}td.diff-otitle{background:#ccc}td.diff-ntitle{background:#ccc}td.diff-addedline{background:#cfc;font-size:94%}td.diff-deletedline{background:#ffa;font-size:94%}td.diff-context{background:#eee;font-size:94%}span.diffchange{color:red;font-weight:bold}div#mb_overlay{position:absolute;left:0;width:100%;background-color:#000;cursor:pointer}div#mb_center,div#mb_bottom{position:absolute;left:50%;overflow:hidden;background-color:#DDD}div#mb_center{background-color:#FFF}div#mb_contents{width:400px;height:400px;border:10px
+solid #DDD;overflow:auto;background-color:#FFF;visibility:hidden}.mb_loading{background:#DDD url('http://files.boardgamegeek.com/images/moodalbox/loading.gif') no-repeat center center}#mb_error{font-size:1.2em;color:#CD0000;font-weight:bold;text-align:center;padding:0.5em;font-family:Verdana,Helvetica,sans-serif}#mb_error
+em{font-size:0.8em}div#mb_bottom{font-family:Verdana,Helvetica,sans-serif;font-size:10px;color:#666;line-height:1.4em;text-align:left;border:10px
+solid #DDD;border-top-style:none}a#mb_close_link{display:block;float:right;width:66px;height:22px;background:transparent url('http://files.boardgamegeek.com/images/moodalbox/closelabel.gif') no-repeat center;margin:5px
+0}div#mb_caption{margin-right:71px}

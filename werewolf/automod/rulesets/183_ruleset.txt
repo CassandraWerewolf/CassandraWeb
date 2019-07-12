@@ -1,0 +1,20 @@
+[b]Good Roles[/b]
+
+[u]1 Seer:[/u] Gets a view of werewolf/not werewolf each night. Random negative N0 view. Reveals on death as mystic.
+
+
+[u]1 Aux Seer:[/u] Gets a view of wolf cub/not wolf cub each night. Random negative N0 view. Reveals on death as mystic.
+
+[u]1 Hunter:[/u] If left alone with a wolf or cub, good wins. Reveals on death as villager. Views for cultist/not cultist each night. Random negative N0 view.
+
+[u]3 villagers:[/u] One will be a tinker (all views of him return positive, doesn't know he's the tinker). One reveals on death as werewolf (doesn't know it, may be the tinker as well), the other reveal on death as villager.
+
+[b]Evil Roles[/b]
+
+[u]1 werewolf:[/u] Knows the ID of the cultist. Counts for parity. Kills 1 player each night. Reveals on death as werewolf.
+
+[u]1 wolf cub:[/u] Knows the ID of the werewolf. Counts for parity only after promotion. Reveals on death as werewolf. When the werewolf dies, gets the ability to kill each night. Additionally, gets a view each night for looker/not looker. EITHER the aux seer OR the seer will return positive, as will the tinker, but not both. He will not know which one he receives a positive hit on. Random negative N0 view.
+
+[u]1 Cultist:[/u] Knows the ID of the wolf cub to start. Reveals on death as mystic. Gets a view of hunter/not hunter each night (random negative N0 view).
+
+

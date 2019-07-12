@@ -1,0 +1,65 @@
+[b][size=12]The Cassandra Automatic Vote Tally System[/size][/b]
+
+Your Moderator has enabled the Cassandra Automatic Vote Tally system
+for this game. In order for it to function correctly, your votes will
+need to be formatted correctly. The following rules will explain what
+you will need to do:
+
+[u][b]Players[/b][/u]
+1. All votes must be bolded
+
+2. The entire vote statement must be bolded and enclosed in brackets: 
+[b][vote jmilum][/b]
+
+3. If your game allows, and you [b][vote nightfall][/b] your vote will 
+be locked. Your moderator may have disabled nightfall votes.
+
+4. Vote tallies will be automatically posted to the game thread
+regularly if the tally has changed. The Tally and Vote Logs (for each 
+game day) are also available on the Cassandra game page.
+
+5. If your vote is not counted be sure to check the Vote Log page and
+see if it was marked invalid and why.
+
+6. Case does not matter and simple typos will not cause the vote to fail.
+
+7. You may [b][vote no lynch][/b] if your game allows it.
+
+8. Non voting players will be listed in the tallies. This will only be
+correct if the Moderator notes which players have been killed (see below)
+
+9. Editing a vote post will invalidate the vote and it will not be counted.
+
+
+[u][b]Moderators[/b][/u]
+1. The moderator will need to post [b][Dawn][/b] when the day begins
+(after the night results are posted) and [b][Dusk][/b] when the lynch
+deadline has passed and the day is over. Votes will not be counted
+after [b][Dusk][/b] has been posted. They will be registered again
+after [b][Dawn][/b] is next posted.
+
+2. You may include a day number in the dawn and dusk post for
+informational purposes, but it will not be used by the system.
+Cassandra will increment an internal counter each time it sees
+[b][Dawn][/b] no matter what day is shown in a dawn post (i.e.
+[b][Dawn 3][/b] the three is allowed but ignored)
+
+3. After dusk has been posted, the Moderator may go to the game page
+on Cassandra to request a Final Tally to be posted before the normal
+scan period has elapsed (i.e. Game Y gets scanned at 45 min. after the
+hour, if it lynches at 7pm the moderator may request a tally to be
+posted from the game page before 7:45pm. it will also be posted
+regardless of whether or not it has been changed since the last
+posting) - Do this by clicking on the 'Force Vote Tally' link.
+
+4. You will need to note which players were killed via the lynch or at night by
+either posting [b][killed jmilum][/b] in the thread, or by going to the game
+page and editing the player list. When posting in the thread, be sure to post
+[b][dusk][/b] before posting the lynch kill, and post [b][dawn][/b] before
+posting the night kill.
+Example:
+A. lynch time has passed so post [b][dusk][/b]
+B. goto the game page and select a final tally to be posted
+C. check the final tally and post [b][killed melsana][/b]
+D. after the night deadline has passed post [b][dawn][/b]
+E. post the night kill with [b][killed kima][/b]

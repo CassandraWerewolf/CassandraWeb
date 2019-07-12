@@ -1,0 +1,17 @@
+<!DOCTYPE votelog [
+<!ELEMENT votelog (day*)>
+<!ATTLIST votelog game_id #REQUIRED>
+<!ELEMENT day (vote*,notvoting?)>
+<!ATTLIST day daynum #REQUIRED>
+<!ELEMENT vote (voter,votee?,timestamp,article_id,misc?)>
+<!ATTLIST vote type (vote | unvote) #REQUIRED>
+<!ATTLIST vote valid (Yes | No) #REQUIRED>
+<!ATTLIST vote edited (Yes | No) #REQUIRED>
+<!ELEMENT voter (#PCDATA)>
+<!ELEMENT votee (#PCDATA)>
+<!ELEMENT timestamp (#PCDATA)>
+<!ELEMENT article_id (#PCDATA)>
+<!ELEMENT misc (#PCDATA)>
+<!ELEMENT notvoting (notvoter*)>
+<!ELEMENT notvoter (#PCDATA)>
+]>

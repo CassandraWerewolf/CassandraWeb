@@ -1,0 +1,67 @@
+[b]RANDOM SELECTIONS[/b]
+Created by redhawke.
+
+The basic idea for this template is that no one has the least idea what the setup of the game will be like. 
+
+[b]The following roles will be in the game:[/b]
+
+[u]3 werewolves:[/u] The werewolves have a chat room and kill one player each night. They will know if a wolf cub exists in the game or not and who it is. One of the wolves is brutal and may kill another player in death. Another is tough and can survive 1 lynch or kill.
+
+[u]1 Passive Priest:[/u] As long as this priest of alive, roles are revealed on death. He is tough and can survive 1 lynch or kill.
+
+[u]1 Vigilante:[/u] When lynched or killed, can take another player with him. 
+
+[b]The following roles may or may not be in the game. Cassandra will randomly select which roles are in the game when it begins.[/b] 
+
+[b]Possible Good Roles:[/b]
+
+[u]0-11 Villagers:[/u] Tasty wolf treats. Among the villagers there may be a tinker (seer sees him as wolf, aux seer sees him as aux evil, sorcerer sees him as seer) and/or a white hat (revealed as villager on death even after the priest is dead). A villager may be either or neither, but not both.
+
+[u]0-1 Seer:[/u] Will view a player each night, and get 'wolf' when viewing a wolf or cub. Random negative N0 view. 
+
+[u]0-1 Aux Seer:[/u] Will view a player each night, and get 'aux evil' when viewing a cultist, or sorcerer, or traitor. Random negative N0 view. 
+
+[u]0-1 Random role seer:[/u] Each night will be told the exact role of a random player to vote for him that day. 
+
+[u]0-1 Hunter:[/u] Will defeat evil if left alone with a wolf or wolf cub.
+
+[u]0-1 Bodyguard:[/u] Will target a player each night to die in their place if they are targeted for a kill. 
+
+[u]0-2 Masons:[/u] Know and have a chat room with each other. Yes, it is possible for there to be a single mason in the game.
+
+[u]0-1 White Hat:[/u] Will be revealed as 'white hat' on death even if the priest is dead. Knows he is the white hat.
+
+[b]Possible Evil Roles:[/b]
+
+[u]0-1 Wolf Cub:[/u] Will be promoted to werewolf when a werewolf dies. 
+
+[u]0-1 Cultist:[/u] Knows the identity of the werewolves but not the cub.
+
+[u]0-1 Sorcerer:[/u] Will view a player each night, and get a result of 'seer' when viewing the seer, aux seer, or random role seer. Random negative N0 view. 
+
+[u]0-2 Traitors:[/u] Know and can chat with each other. Yes, it is possible for there to be only one traitor in the game.
+
+[b]Lynch Rules:[/b]
+
+Each day players vote for one player to be lynched. The player receiving the most votes is killed. If there is a tie between two or more players, the tied player with the <tiebreaker> is killed.
+
+Lynch time is <lynch> BGG time. Votes cast with this time-stamp are counted. Votes cast after this time are invalid. Votes made during the night phase are invalid.
+
+All votes must conform to the Cassandra Vote Tally System rules. (Will be
+posted once the game starts). If all living players vote night fall it will
+speed up the dusk.
+
+The player's role will be revealed upon lynch if the priest is alive.
+
+
+[b]Night Orders:[/b]
+
+All roles with night actions must all submit their night orders by <night> BGG time. They do this by using the Cassandra Game Order system in the Cassandra Chat System.
+
+The wolves' night kill choice is revealed with the DAWN post.
+
+If all living players (including those with out night actions) click on the
+'Lock Game Actions' button it will speed up Dawn.
+
+
+[b]Do not post the content of your Mod Chat room to the game thread. You may summarize, but direct copying is not allowed. Consider that like showing your card to the group in a face-to-face game[/b]

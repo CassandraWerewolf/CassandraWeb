@@ -1,0 +1,58 @@
+[b]Good Roles:[/b]
+
+[u]Seer[/u] - Each night receives a vision of a target player as 'wolf or 'not wolf.' The seer receives a vision on Night 0 of one randomly chosen player that is 'not wolf.' Thereafter, the seer chooses which player to view. Both Werewolves and Wolfcubs show as 'wolf' 
+
+[u]Priest[/u] - Each night receives the roles of all players that died in the previous cycle. The priest will see D1 on N1, N1+D2 on N2, etc. Wolfcubs are seen as what they were when they died. 
+
+[u]Random Role Seer[/u]- Each night this person is told the role of one person that voted for him/her (in the final vote). The person they see is randomly selected. This RRS is seen as a SEER to the sorcerer.
+
+[u]Hunter[/u] - If only two players remain in the game and the hunter is one of those players, then the good team wins even if the other player is a werewolf.
+
+[u]Bodyguard[/u] - Each night the bodyguard may choose to protect another player. If that player is targeted for the night kill, then the bodyguard will die instead.
+
+[u]5 Villagers[/u] - Ordinary villagers with no special powers.
+
+
+[b]Evil Roles:[/b]
+
+[u]2 Werewolves[/u] - The werewolves know each other's identity, and may private message/chat without restriction. Each night the wolves choose one target player to kill. There is no kill on Night 0.
+
+[u]2 Wolfcubs[/u] - The wolfcubs will know the identity of the werewolves but not of each other. When a wolf dies a wolfcub will be promoted to full werewolf status.
+
+[u]Sorcerer[/u] - Each night receives a vision of a target player as 'seer' or 'not seer.' The sorcerer receives a vision on Night 0 of one randomly chosen player that is 'not seer.' Thereafter, the sorcerer chooses which player to view. Both the Seer and the Random Role Seer are seen as 'seer'. The sorcerer wins if the wolves win, even if dead, but does not count as a werewolf for parity purposes (see below).
+
+[b]Attributes[/b]
+
+These are randomly assigned to a villager. It is possible for them to both be assigned to the same villager.
+
+[u]Tinker[/u] - Will appears as the wolf to a seer view. Will appear as a seer to a sorcerer view. The tinker does not know he/she is a tinker and will receive the PM of the villager.
+
+[u]White Hat[/u] - Will be revealed upon death or lynch as a VILLAGER. This villager does not know his or her status as the White Hat.
+
+[b]Victory Conditions:[/b]
+
+[u]Good[/u] - All good players win if all werewolves are eliminated, or if the last two players remaining are the hunter and one werewolf. The sorcerer does not have to be eliminated in order for Good to win.
+
+[u]Evil[/u] - All evil players win if the wolves achieve parity: if at any time the number of wolves remaining equals the number of non-wolves remaining (including the sorcerer), evil wins. Howver, if one wolf is left with the hunter, then good wins. The sorcerer counts as a 'non-wolf' for these purposes.
+
+
+[b]Lynch Rules:[/b]
+
+Each day players vote for one player to be lynched. The player receiving the most votes is killed. If there is a tie between two or more players, the tied player with the longest held last vote is killed.
+
+Lynch time is <lynch> BGG time. Votes cast with this time-stamp are counted. Votes cast after this time are invalid. Votes made during the night phase are invalid.
+
+All votes must conform to the Cassandra Vote Tally System rules. (Will be posted once the game starts). If all living players vote night fall it will speed up the dusk. If two player recieve the same amount of votes, the tie will be broken by <tiebreaker>
+
+The player's role will not be revealed upon lynch or kill.
+
+
+[b]Night Orders:[/b]
+
+Wolves, Seer, bodygaurd, and Sorcerer must all submit their night orders by <night> BGG time. They do this by using the Cassandra Game Order system in the Cassandra Chat System.
+
+The wolves' night kill choice is revealed with the DAWN post. The player's role will not be revealed.
+
+If all living players (including those without night actions) click on the 'Lock Game Actions' button it will speed up Dawn.
+
+[b]Do not post the content of your Mod Chat room to the game thread. You may summarize, but direct copying is not allowed. Consider that like showing your card to the group in a face-to-face game[/b]

@@ -1,0 +1,7 @@
+#AuthType Basic
+#AuthName "Cassandra"
+#AuthUserFile /var/www/passwds/cassandra
+#Require valid-user
+
+RewriteEngine on
+RewriteRule ^template/(.*)$ /automod/template.php?template_id=$1

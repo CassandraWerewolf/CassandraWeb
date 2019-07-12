@@ -1,0 +1,72 @@
+[COLOR=#CC9933]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[b][size=18]~ EXOTIC ELEVEN ~[/size][/b][/COLOR]
+
+
+[COLOR=#003399][b]11 (eleven) is the natural number following 10 and preceding 12. It is the first number which cannot be represented by a human counting his or her eight fingers and two thumbs additively (although it can be represented in a variety of other ways using human bodily parts, such as counting additively with the twenty digits including the toes, using the thumb to count the finger phalanges of one hand additively up to twelve, or using the fingers in one hand to count up to fifteen binarily). Eleven is the smallest positive integer requiring three syllables in English, and it is also the largest prime number with a single-morpheme name in this language.[/b][/COLOR]
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[COLOR=#003399][b]This template was designed by [url=http://www.boardgamegeek.com/user/Snaak]Snaak[/url][/b][/COLOR]
+
+
+[b][u]Roles (total 11):[/u][/b] 
+
+
+g{[b]Good Aligned (total 8):[/b]}g
+
+g{[u][b]1 Seer[/b][/u]}g - The Seer can target a player each night to view for werewolf/not werewolf. The Seer receives a positive result when viewing the Werewolf, the Wolf Cub or one of the Random Role Seers.
+
+g{[u][b]1 Hunter[/b][/u]}g - The Hunter will defeat evil parity if left alive with either the Werewolf or the Wolf Cub at game end.
+
+g{[u][b]1 Random Role Seer[/b][/u]}g - Each dawn the Random Role Seer will randomly receive a view of the full role of one of the players that voted for him in the final tally of the day before.
+
+g{[u][b]5 Villagers[/b][/u]}g - The Villagers have no special abilities. 
+
+
+r{[b]Evil Aligned (total 3):[/b]}r
+
+r{[u][b]1 Werewolf[/b][/u]}r - The Werewolf has a chat with the evil Random Role Seer and they may kill one player each night.
+
+r{[u][b]1 Random Role Seer[/b][/u]}r - Each dawn the Random Role Seer will randomly receive a view of the full role of one of the players that voted for him in the final tally of the day before. The Random Role Seer has a chat with the Werewolf and they may kill one player each night.
+
+r{[u][b]1 Wolf Cub[/b][/u]}r - The Wolf Cub knows the identity of the Werewolf. When the Werewolf is killed, the Wolf Cub will be promoted to a full Werewolf and receives the chat and kill abilities of the Werewolf. Before promotion, the Wolf Cub may target one player each night to view for seer/not seer. The Wolf Cub receives a positive view only when viewing the 'normal' Seer (not when viewing one of the Random Role Seers.)
+
+[b][u]N0 Views:[/u][/b]
+
+The Seer will receive a random view on N0, possible targets are restricted to Hunter and Villager.
+
+The Wolf Cub will receive a random view on N0, possible targets are restricted to Random Role Seer, Hunter and Villager.
+
+
+[b][u]Role Reveal:[/u][/b]
+
+All Good roles will be revealed on death. 
+
+All Evil roles will be revealed on death as werewolf. 
+
+One of the Villagers wears a Rainbow Hat but doesn't know this. He will be revealed on death as either villager, werewolf, seer, hunter or random role seer.        
+
+
+[b][u]Victory Conditions:[/u][/b]
+
+Good: All good aligned players will win when the Werewolf and Wolf Cub are killed.
+
+Evil: All evil aligned players will win when parity is reached. The Werewolf and Wolf Cub count towards parity. The evil Random Role Seer does not count towards parity.
+
+
+[b][u]Lynch Rules:[/u][/b]
+
+Each day players vote for one player to be lynched. The player receiving the most votes is killed. If there is a tie between two or more players, the tied player with the <tiebreaker> is killed.
+
+
+[b][u]Deadlines:[/u][/b]
+
+Dusk is at <lynch> BGG time. Votes cast with this time-stamp are counted. Votes cast after this time are invalid. Votes made during the night phase are invalid.
+
+All votes must conform to the Cassandra Vote Tally System rules. (Will be posted once the game starts). If all living players vote nightfall it will speed up dusk.
+
+Dawn is at <night> BGG time. All night actions must be submitted in the Cassandra Chat System before this time.
+
+If all living players (including those without night actions) click on the 'Lock Game Actions' button it will speed up Dawn.  
+
+
+[b][u]Other Rules:[/u][/b]
+
+Do not post the content of your Mod Chat room to the game thread. You may summarize, but direct copying is not allowed. Consider that like showing your card to the group in a face-to-face game.

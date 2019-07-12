@@ -1,0 +1,84 @@
+[COLOR=#bb8800][c]          [/c][b][size=18]~ ALTERNATIVE 9-PLAYER ~[/size][/b][/COLOR]
+
+
+[COLOR=#7722bb][b]After lots of lycanthrope infestations in recent years the people of this village have employed two seers. Their identity is unknown. One is specialized in rooting out the bigger werewolves, while the other one has dedicated his life to the extermination of the younger, more sneaky, wolf cubs. Every day, one of them reports his findings to a spokesman, who then informs the villagers.
+All went well for a while and the villagers were able to lynch all the wolves before they became a huge threat. But because of that, the local gravedigger saw his livelihood in great danger with people no longer dying in the night and he decided to betray the village. He became a spy for the werewolves and now works with them to find out out who the secret seers are.
+Can you stop the Traitor and his wolves from taking over the village?[/b][/COLOR]
+
+
+[COLOR=#bb8800][c]                  [/c][b]This template was designed by [url=http://www.boardgamegeek.com/user/Snaak]Snaak[/url][/b][/COLOR]
+
+
+
+[COLOR=#7722bb][b][u]Roles (total 9):[/u][/b][/COLOR]
+
+
+[COLOR=#118822][b]Good Aligned (6/9):[/b][/COLOR]
+
+[COLOR=#118822][u][b]1 Seer[/b][/u][/COLOR] - The Seer can view each night for werewolf/not werewolf and will receive a positive result when viewing the Werewolf only. The Seer has a mason chatroom and there is a 50% chance that the Mason is also in this chatroom. 
+
+[COLOR=#118822][u][b]1 Aux Seer[/b][/u][/COLOR] - The Aux Seer can view each night for evil/not evil and will receive a positive result when viewing the Traitor or Wolf Cub. The Aux Seer has a mason chatroom and there is a 50% chance that the Mason is also in this chatroom. 
+
+[COLOR=#bb8800][b]Clarification: The Seer will only receive a positive result when viewing the Werewolf. The Seer will never receive a positive result when viewing the Wolf Cub, whether the Wolf Cub is promoted or not. The Aux Seer will receive a positive result when viewing the Wolf Cub (promoted or not) or the Traitor.[/b][/COLOR]
+ 
+[COLOR=#118822][u][b]1 Mason[/b][/u][/COLOR] - The Mason has a chatroom with either the Seer or the Aux Seer.
+
+[COLOR=#118822][u][b]3 Villagers[/b][/u][/COLOR] - These Villagers have no special ability.
+
+
+[COLOR=#bb0011][b]Evil Aligned (3/9):[/b][/COLOR]
+
+[COLOR=#bb0011][u][b]1 Werewolf[/b][/u][/COLOR] - The werewolf may kill one player each night and has a chatroom with the Traitor.
+
+[COLOR=#bb0011][u][b]1 Traitor[/b][/u][/COLOR] - The Traitor can view each night for special/not special and will receive a positive result when viewing the Seer, Aux Seer or Mason. The Traitor has a chatroom with the Werewolf.
+
+[COLOR=#bb0011][u][b]1 Wolf Cub[/b][/u][/COLOR] - The Wolf Cub will be promoted to Werewolf when the original Werewolf dies, he will then be able to kill one player each night and will also have a chatroom with the Traitor if this player is still alive. The Wolf Cub learns the identity of the Werewolf at the start of the game.
+
+
+[COLOR=#7722bb][b][u]N0 Views:[/u][/b][/COLOR]
+
+The Seer will receive a random view on N0, valid targets are Villager, Traitor, Wolf Cub & Aux Seer.
+
+The Aux Seer will receive a random view on N0, valid targets are Werewolf, Seer & Villager.
+
+The Traitor will receive a random view on N0, valid targets are Villager & Wolf Cub.
+ 
+
+[COLOR=#7722bb][b][u]Role Reveal:[/u][/b][/COLOR]
+
+All lynched and nightkilled players will have their [u]alignment[/u] revealed upon death.       
+
+
+[COLOR=#7722bb][b][u]Victory Conditions:[/u][/b][/COLOR]
+
+Good: All good aligned players will win when the Werewolf and the Wolf Cub are killed.
+
+Evil: All evil aligned players will win when parity is reached. The Werewolf and the Wolf Cub count towards parity. The Traitor does not count towards parity.
+
+
+[COLOR=#7722bb][b][u]Lynch Rules:[/u][/b][/COLOR]
+
+Each day players vote for one player to be lynched. The player receiving the most votes is killed. If there is a tie between two or more players, the tied player with the <tiebreaker> is killed.
+
+
+[COLOR=#7722bb][b][u]Miscellaneous Rules:[/u][/b][/COLOR]
+
+Players that do not post in the game for 24 hours (not counting weekends) will be automatically put up for replacement.
+
+You may not quote from modchat or masonchat. Paraphrasing is allowed.
+
+You may not make out of game promises to other players in order to try and influence their actions.
+
+If you experience a technical problem during the game or you have a question that you cannot post in the thread, you may send a geekmail to [b][url=http://www.boardgamegeek.com/user/melsana]Melsana[/url][/b], [b][url=http://www.boardgamegeek.com/user/jmilum]jmilum[/url][/b] or [b][url=http://www.boardgamegeek.com/user/avin]Avin[/url][/b] to ask them for help, unless they are playing in the game themselves.  
+
+
+[COLOR=#7722bb][b][u]Deadlines:[/u][/b][/COLOR]
+
+Dusk is at <lynch> BGG time. Votes cast with this time-stamp are counted. Votes cast after this time are invalid. Votes made during the night phase are invalid.
+
+All votes must conform to the Cassandra Vote Tally System rules that will be posted once the game starts. If all living players vote nightfall it will speed up dusk.
+
+Dawn is at <night> BGG time. All night actions must be submitted in the Cassandra Chat System before this time.
+
+If all living players (including those without night actions) click on the 'Lock Game Actions' button it will speed up Dawn.
+ 

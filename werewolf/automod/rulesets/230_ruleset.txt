@@ -1,0 +1,36 @@
+[b]-- 7 Up! --[/b]
+
+
+[b]Good Roles:[/b]
+
+[b]Seer[/b] - Each night views a target player for wolf/not wolf. The seer chooses a vision each night, he gets a random non werewolf view in N0.
+
+[b]Hunter[/b] - If only two players remain in the game and the hunter is one of those players, then the good team wins. 
+
+[b]3 Villagers[/b] - Ordinary villagers with no special powers.
+
+
+[b]Evil Roles:[/b]
+
+[b]1 Werewolf[/b] - Each night chooses one target player to kill. There is no kill on Night 0.
+
+[b]1 Sorcerer Mason[/b] - Each night views a target player for seer/not seer. [b]He shares a chatroom with the Werewolf[/b], but does not count for evil parity. He gets a random non seer view in N0.
+
+
+
+[b]Victory Conditions:[/b]
+
+[u]Good[/u] - All good players win if the werewolf is eliminated, or if the last two players remaining are the hunter and the werewolf.
+
+[u]Evil[/u] - All evil players win if the werewolf achieves parity. However, if the wolf is left with the hunter, then good wins.
+
+
+
+Lynch: <lynch>
+
+Night Action Deadline: <night>
+
+Tie-breaker: <tiebreaker>
+
+
+[b]Do not post the content of your Mod Chat room to the game thread. You may summarize, but direct copying is not allowed.[/b]

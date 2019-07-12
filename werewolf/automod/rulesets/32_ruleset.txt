@@ -1,0 +1,48 @@
+[b]Good Roles:[/b]
+
+[u]Seer[/u] - Each night receives a vision of a target player as 'wolf or 'not wolf.' The seer receives a vision on Night 0 of one randomly chosen player that is 'not wolf.' Thereafter, the seer chooses which player to view. 
+
+[u]Passive Priest[/u] - Good roles will be revealed as long as the priest is alive, evil roles will only show as "Evil" while the priest is alive. 
+
+[u]Hunter[/u] - If only two players remain in the game and the hunter is one of those players, then the good team wins even if the other player is a werewolf.
+
+[u]3 Villagers[/u] - Ordinary villagers with no special powers.
+
+
+[b]Evil Roles:[/b]
+
+[u]2 Werewolves[/u] - The werewolves know each other's identity, and may private message/chat without restriction. Each night the wolves choose one target player to kill. There is no kill on Night 0.
+
+[u]Sorcerer[/u] - Each night receives a vision of a target player as 'seer' or 'not seer.' The sorcerer receives a vision on Night 0 of one randomly chosen player that is 'not seer.' Thereafter, the sorcerer chooses which player to view. The sorcerer wins if the wolves win, even if dead, but does not count as a werewolf for parity purposes (see below).
+
+[b]Victory Conditions:[/b]
+
+[u]Good[/u] - All good players win if all werewolves are eliminated, or if the last two players remaining are the hunter and one werewolf. The sorcerer does not have to be eliminated in order for Good to win.
+
+[u]Evil[/u] - All evil players win if the wolves achieve parity: if at any time the number of wolves remaining equals the number of non-wolves remaining (including the sorcerer), evil wins. However, if one wolf is left with the hunter, then good wins. The sorcerer counts as a 'non-wolf' for these purposes.
+
+[b]Turbo Lynch Rules:[/b]
+
+Each day players vote once for a player to be lynched. The vote must then be automatically nightfalled (to accommodate turbo play). So, when you vote you must do the following:
+[b][vote kristiefix]
+[vote nightfall][/b]
+The player receiving the most votes is killed, and if a player has clear majority they are lynched and it is automatically night.
+
+Lynch time is <lynch> BGG time, if a clear majority has not been reached prior to then. Votes cast with this time-stamp are counted. Votes cast after this time are invalid. Votes made during the night phase are invalid.
+
+All votes must conform to the Cassandra Vote Tally System rules. (Will be posted once the game starts). If two players receive the same amount of votes, the tie will be broken by <tiebreaker>
+
+While the priest is alive: the player's role will be revealed upon lynch or kill if they are good, the player's alignment (Evil) will be revealed upon lynch of kill if they are evil.
+
+[b]Night Orders:[/b]
+All players have night orders in this game!
+
+Villagers, hunter, and priest must all lock their game action once [b][Dusk][/b] has been posted.
+
+[i]To lock game actions:[/i]
+
+Wolves, Seer, and Sorcerer must all submit their night orders by <night> BGG time. In turbo, the submitted action then needs to be locked (need above). They do this by using the Cassandra Game Order system in the Cassandra Chat System.
+
+The wolves' night kill choice is revealed with the DAWN post. The player's role will not be revealed.
+
+[b]Do not post the content of your Mod Chat room to the game thread. You may summarize, but direct copying is not allowed. Consider that like showing your card to the group in a face-to-face game[/b]

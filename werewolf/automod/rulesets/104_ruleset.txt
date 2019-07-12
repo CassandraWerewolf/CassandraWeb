@@ -1,0 +1,75 @@
+ [COLOR=#CC9933]                [b][size=18]~ WEDSENSESUCKSMONKEYBUTT~[/size][/b][/COLOR]
+
+
+[COLOR=#003399][b]As if a village haunted by just werewolves is not enough, these citizens suffer the wrath of the evil WEBSENSE. Even before the werewolves start their bloodbath they have been able to infiltrate this village and stop us from playing. Fortunately, some of the villagers have managed to learn of ways to defend themselves against this onslaught of evil...but will it be enough?[/b][/COLOR]
+
+
+                              [COLOR=#003399][b]This template was designed by [url=http://cassandrawerewolf.com/player/Redhawke]Redhawke[/url], who based it on woodjh's Transformers game.[/b][/COLOR]
+
+
+[b]r{Disclaimer: this automod template is still in test phase. Balance is not guaranteed. Suggestions to improve the roleset and other comments are welcome!}r[/b]
+
+
+[b][u]Roles (total 15):[/u][/b] 
+
+
+g{[b]Good Aligned (total 10)[/b]}g
+
+g{[u][b]1 Seer[/b][/u]}g - The Seer can view each night for wolf/not wolf and will hit 'wolf' when viewing a werewolf (duh?).
+
+g{[u][b]1 Bodyguard[/b][/u]}g - The Bodyguard may protect a player at night. If this player is targeted by a kill ability, the Bodyguard will die instead.
+
+g{[u][b]1 Aux Seer[/b][/u]}g - The Aux Seer can view each night for wolf cub/not wolf cub and will hit 'wolf cub' when viewing a werewolf (again, duh).
+
+g{[u][b]1 Hunter[/b][/u]}g - The Hunter can win for good if left alone with a werewolf.
+
+g{[u][b]1 Vigilante[/b][/u]}g - The vigilante can kill another player when lynched or killed. He must submit the order prior to dying.
+
+g{[u][b]5 White Hats[/b][/u]}g - These are the Villagers of the game. They have no special ability besides being revealed on death. (revealed on death as, 'poor werewolfer blocked by websense')
+
+
+r{[b]Evil Aligned (total 5):[/b]}r
+
+r{[u][b]2 Werewolves[/b][/u]}r - The Werewolves can chat together and may kill one player each night. One of them is a white hat wolf (revealed on death as, 'evil websense admin dude'), but they don't know which of them it is.
+
+r{[u][b]1 Sorcerer[/b][/u]}r -The Sorcerer can view each night for seer/not seer. He will not see anything if viewing the aux seer. 
+
+r{[b][u]1 Wolf Cub[/b][/u]}r - The Cub knows the identity of both wolves and will be promoted to full wolf on the death of one of the wolves. The wolf cub is tough (will survive a single lynch or kill). 
+
+r{[b][u]1 Cultist[/u][/b]}r - Knows the identity of the wolf cub and sorcerer.
+
+[b]The Seers and Sorcerer will receive a random negative N0 view.[/b]
+
+
+[b][u]Role Reveal:[/u][/b]
+
+Nothing will be revealed on death unless a white hat or the white hatted wolf dies.       
+
+
+[b][u]Victory Conditions:[/u][/b]
+
+Good: All good aligned players will win when the Werewolves and the wolf cub are killed.
+
+Evil: All evil aligned players will win when parity is reached. The Werewolves and the Wolf Cub count towards parity. The Sorcerer and cultist do not count towards parity. 
+
+
+[b][u]Lynch Rules:[/u][/b]
+
+Each day players vote for one player to be lynched. The player receiving the most votes is killed. If there is a tie between two or more players, the tied player with the <tiebreaker> is killed.
+
+
+[b][u]Deadlines:[/u][/b]
+
+Dusk is at <lynch> BGG time. Votes cast with this time-stamp are counted. Votes cast after this time are invalid. Votes made during the night phase are invalid.
+
+All votes must conform to the Cassandra Vote Tally System rules. (Will be posted once the game starts). If all living players vote nightfall it will speed up dusk.
+
+Dawn is at <night> BGG time. All night actions must be submitted in the Cassandra Chat System before this time.
+
+If all living players (including those without night actions) click on the 'Lock Game Actions' button it will speed up Dawn.  
+
+
+[b][u]Other Rules:[/u][/b]
+
+Do not post the content of your Mod Chat room to the game thread. You may summarize, but direct copying is not allowed. Consider that like showing your card to the group in a face-to-face game.
+

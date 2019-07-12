@@ -1,0 +1,39 @@
+g{[b][size=18]The Summoning of the Wolf[/size][/b]}g
+
+
+b{This small village has peacefully existed for as long as its residents can remember, nestled almost as nature would have it between a  deep calm river and towering cliffs of craggy rock.  The cliffs have long been explored and forgotten, but something has been missed.  A relic of great importance that still has a life of its past.  Long ago, this village was conquered by a band of evil werewolves and their servants, until a band of wandering humans overtook them, better equipped to know the difference between human and dog.  But as time wore on, people, distracted by other things and quick to call things fantasy, seemed to forget.
+
+Now, with werewolves now only a fantasy everywhere, their legacy has only been preserved by various wandering bands of cultists who can only search for the old evil magicks to reclaim the dominance of old.  Such  a group has settled in this village, blending in with the others.  They have waited.  They have searched.  And they have worked.  Now, two of them have culminated their work and have summoned a great werewolf of old to kill villagers once again and conquer the village and take it for its own.  The cultists, however, may have underestimated this village.  For perhaps they have not completely forgotten the past.  In addition, the work of these cultists may not have gone completely unnoticed by a  certain old man of the village who believes the legends and knows what the future may contain.  }b
+
+---------------
+
+[b][u]Roles (total 7):[/u][/b] 
+
+
+g{[b]Good Aligned (total 4):[/b]}g
+
+g{[u][b]1 Aux-Seer (Old Man)[/b][/u]}g - The Aux-Seer can target a player each night to learn if that player is a cultist or not. The Aux-Seer gets a random N0 negative view. 
+
+g{[u][b]2 Villagers[/b][/u]}g - The Villagers know nothing and can do nothing except attempt the vote out the evil before them.
+
+
+g{[u][b]1 White Hat[/b][/u]}g - Villager who knows nothing and can do nothing except attempt the vote out the evil before them, but is named.
+
+
+r{[b]Evil Aligned (total 3):[/b]}r
+
+r{[u][b]1 Werewolf[/b][/u]}r - The Werewolf can kill one player each night.  When the Werewolf dies, good wins.  Only the Werewolf counts for parity.  Does not know the ID of any of the cultists.
+
+r{[u][b]2 Cultists[/b][/u]}r - Each cultist knows the identity of the Werewolf.  Neither know the identity of each other, nor have a chat room together.  [b]One elder cultist will reveal as villager on death.[/b]  Both reveal as "cultist" to Aux-Seer.  
+
+
+[b][u]Role Reveal:[/u][/b]
+
+Roles will be revealed on death.  One cultist (elder) reveals as villager on death.    
+
+
+[b][u]Victory Conditions:[/u][/b]
+
+Good: All good aligned players will win when the Werewolf are killed.
+
+Evil: All evil aligned players will win when parity is reached. The Werewolves count towards parity. The Cultists do not count towards parity.

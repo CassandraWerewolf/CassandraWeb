@@ -1,0 +1,50 @@
+5 Player Game Ruleset
+
+[b]Good Roles:[/b]
+
+[u]Seer[/u] - Each night receives a vision of a target player as 'wolf' or 'not wolf.' The seer chooses a vision each night including N0.
+
+[u]Hunter[/u] - If only two players remain in the game and the hunter is one of those players, then the good team wins even if the other player is a werewolf.
+
+[u]Villager[/u] - Ordinary villager with no special powers.
+
+
+[b]Evil Roles:[/b]
+
+[u]Werewolf[/u] - Each night the wolf choose one target player to kill. Learns the role of one good aligned player during Night 0.  There is no kill on Night 0.
+
+[u]Sorcerer[/u] - Each night receives a vision of a target player as 'seer' or 'not seer.' The sorcerer chooses a vision each night including N0. The sorcerer wins if the wolf wins, but does not count as a werewolf for parity purposes (see below).
+
+
+[b]Victory Conditions:[/b]
+
+[u]Good[/u] - All good players win if the werewolf is eliminated, or if the last two players remaining are the hunter and the werewolf. The sorcerer does not have to be eliminated in order for Good to win.
+
+[u]Evil[/u] - All evil players win if the wolf achieve parity: if at any time the number of wolves remaining equals the number of non-wolves remaining (including the sorcerer), evil wins. Howver, if one wolf is left with the hunter, then good wins. The sorcerer counts as a 'non-wolf' for these purposes.
+
+
+[b]Lynch Rules:[/b]
+
+Each day players vote for one player to be lynched. The player receiving the most votes is killed. If there is a tie between two or more players, the tied player with the <tiebreaker> is killed.
+
+Lynch time is <lynch> BGG time. Votes cast with this time-stamp are counted. Votes cast after this time are invalid. Votes made during the night phase are invalid.
+
+All votes must conform to the Cassandra Vote Tally System rules. (Will be
+posted once the game starts). If all living players vote night fall it will
+speed up the dusk.
+
+Neither the player's role or team is revealed upon lynch.
+
+
+[b]Night Orders:[/b]
+
+Wolf, Seer, and Sorcerer must all submit their night orders by <night> BGG time. They do this by using the Cassandra Game Order system in the Cassandra Chat System.
+
+The wolf's night kill choice is revealed with the DAWN post. The players' role and team are not revealed. 
+
+If all living players (including those with out night actions) click on the
+'Lock Game Actions' button it will speed up Dawn.
+
+
+[b]Do not post the content of your Mod Chat room to the game thread. You may summarize, but direct copying is not allowed. Consider that like showing your card to the group in a face-to-face game[/b]
+

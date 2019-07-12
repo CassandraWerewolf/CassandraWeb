@@ -1,0 +1,92 @@
+[COLOR=#CC9933]                [b][size=18]~ POLITICS AS USUAL ~[/size][/b][/COLOR]
+
+
+[COLOR=#003399][b]Have you ever wondered...
+
+...why can't we just string up elected officials we don't like?
+...why the seer doesn't reveal and tell us which of the candidates is the wolf? 
+...why the two party election is so much like a claim/counterclaim situation? 
+...why we can't just leave them both alive and let the hunter take care of them? 
+...was that a brutal wolf we just all voted for? 
+...WHY REAL LIFE CAN'T  BE MORE LIKE WEREWOLF??? 
+
+Yeah, me neither.[/b][/COLOR]
+
+
+                              [COLOR=#003399][b]This template was designed by [url=http://www.boardgamegeek.com/user/Redhawke]Redhawke[/url][/b][/COLOR]
+
+
+[b]r{Disclaimer: this automod template is still in test phase. Balance is not guaranteed. Suggestions to improve the roleset are welcome! Other comments will result in mocking laughter from my side of the computer screen.}r[/b]
+
+
+[b][u]Roles (total 11):[/u][/b] 
+
+
+g{[b]Good Aligned (total 8):[/b]}g
+
+g{[u][b]1 Hunter[/b][/u]}g - The Hunter will defeat evil parity if left alone with a werewolf or wolf cub. The hunter may view for werewolf/not werewolf each night and will see "werewolf" when viewing a wolf cub or tinker. The hunter may kill a player of his choice when lynched or killed.
+
+g{[u][b]1 Bodyguard[/b][/u]}g - Martyr type. The Bodyguard may protect a player at night. If this player is targeted by a kill ability, the Bodyguard will die instead.
+
+g{[u][b]1 Priest[/b][/u]}g - As long as the priest is alive, alignment is revealed on death. The priest views for wolf cub /not wolf cub each night and gets a positive hit on the cubs and the tinker. The priest has a chat with the mason.
+
+g{[u][b]1 Mason[/b][/u]}g - The mason has a chat with the priest. 
+
+g{[u][b]4 Villagers[/b][/u]}g - Villagers will have powers, but they will not be aware of these powers until certain events occur in the game.
+
+g{[b]-1 White Hat Villager[/b]}g - This Villager will be revealed upon death as 'villager', even if the priest is dead, but will not know he is the White Hat.
+
+g{[b]-1 Tough Villager[/b]}g - This Villager will survive one lynch or nightkill but will not know he is tough. He will become self-aware if he loses his tough.
+
+g{[b]-1 Possessed Villager[/b]}g - This villager will be revealed as "evil" on death. He counts for evil parity. This means that good must eliminate him to win. 
+
+g{[b]-1 Priestly Villager[/b]}g - See below.
+
+r{All villagers, including the tough, white hat, and possessed, will be permitted to view 1 dead player each night. The priestly villager will learn his target's exact role. All other villagers will always see "villager".
+
+Also, one of the villagers (white hat, tough, possessed, or priestly) will be a tinker. All views of them will return positive.}r
+
+r{[b]Evil Aligned (total 3):[/b]}r
+
+All members of team evil, except for the tough cub, count for parity.
+
+r{[u][b]1 Werewolf[/b][/u]}r - The werewolf can kill 1 player each night and will know at the start of the game who his cubs are (but not which is which) as well as one player who is a villager. The werewolf is brutal and can kill one other person when lynched or killed. The wolf will have a chat room in cassy in which he may leave notes for promoted cubs to read.
+
+r{[u][b]2 Wolfcubs[/b][/u]}r - The wolfcubs know who the wolf is and can chat together. Each has a viewing power. One will be able to view a living or dead player for special/not special each night and will get a result of "special" if viewing the mason or bodyguard. The other will be tough (survive 1 lynch or kill) and can view a living or dead player for special/not speical each night, getting a result of "special" on either the priest or the hunter, but not both. When the wolf dies, a random cub will get the kill ability. When that cub dies, the other will get the kill ability.
+
+Note that the cubs will not know which of them has the tough ability.
+
+[b]All viewing roles will receive a random negative N0 view.[/b]
+
+
+[b][u]Role Reveal:[/u][/b]
+
+All lynched and nightkilled players will have their [u]alignment[/u] revealed upon death as long as the priest is alive. If the priest dies nothing will be revealed on death.       
+
+
+[b][u]Victory Conditions:[/u][/b]
+
+Good: All good aligned players will win when the Werewolf, the non-tough cub, and the Possessed Villager are killed.
+
+Evil: All evil aligned players will win when parity is reached. The Werewolf, the non-tough cub, and the Possessed Villager count towards parity. The Tough cub does not count towards parity. 
+
+
+[b][u]Lynch Rules:[/u][/b]
+
+Each day players vote for one player to be lynched. The player receiving the most votes is killed. If there is a tie between two or more players, the tied player with the <tiebreaker> is killed.
+
+
+[b][u]Deadlines:[/u][/b]
+
+Dusk is at <lynch> BGG time. Votes cast with this time-stamp are counted. Votes cast after this time are invalid. Votes made during the night phase are invalid.
+
+All votes must conform to the Cassandra Vote Tally System rules. (Will be posted once the game starts). If all living players vote nightfall it will speed up dusk.
+
+Dawn is at <night> BGG time. All night actions must be submitted in the Cassandra Chat System before this time.
+
+If all living players (including those without night actions) click on the 'Lock Game Actions' button it will speed up Dawn.  
+
+
+[b][u]Other Rules:[/u][/b]
+
+Do not post the content of your Mod Chat room to the game thread. You may summarize, but direct copying is not allowed. Consider that like showing your card to the group in a face-to-face game.

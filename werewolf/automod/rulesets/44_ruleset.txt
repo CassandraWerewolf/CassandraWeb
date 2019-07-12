@@ -1,0 +1,63 @@
+[size=24][COLOR=#b8860b][b][Center]APOCALYPSE[/center][/b][/COLOR][/size]
+
+[b][size=10][Center]This template was loosely based on [url=http://www.boardgamegeek.com/user/woodjh]woodjh[/url]'s [url=http://cassandrawerewolf.com/game/316196]Homeland[/url] game.[/center][/size][/b]
+
+
+r{Disclaimer: this automod template is still in test phase. Balance is not guaranteed. Suggestions to improve the roleset and other comments are welcome!}r
+
+
+[u][b]The Roles:[/b][/u]
+
+r{[b][u]Evil[/u][/b]}r
+
+r{[b]1 Werewolf[/b]}r
+
+The Werewolf may target one player to kill each night. The Werewolf counts for parity. The Werewolf receives a random view of one of the 3 Priests on N0, he will not learn the alignment of the Priest. The Werewolf is tough and will survive one lynch or nightkill attempt.
+
+r{[b]2 Evil Priests[/b]}r
+
+The Evil Priests may target one player each night to kill. This kill is in addition to the Werewolf's kill. The Evil Priests receive the full roles of deceased players each dawn. The Evil Priests share a chatroom together. 
+
+r{[b]1 Sorcerer[/b]}r
+
+The Sorcerer may target one player each night to view for seer/not seer. The Sorcerer receives a positive result when viewing either the Seer or the Aux Seer but he will not be able to distinguish between the two. The Sorcerer receives a random negative view on N0.
+
+
+g{[b][u]Good[/u][/b]}g
+
+g{[b]1 Seer[/b]}g
+
+The Seer may target one player each night to view that player's full role. The Seer will receive a view of a random Villager on N0.
+
+g{[b]1 Aux Seer[/b]}g
+
+The Aux Seer may target one player each night to view for priest/not priest. The Aux Seer receives a positive result when viewing any of the three Priests but will not learn that Priest's alignment. The Aux Seer receives a random negative view on N0.
+
+g{[b]2 Hunters[/b]}g
+
+If one of the Hunters is alive at game end with the Werewolf or one of the Evil Priests he will defeat evil parity and end the game in a victory for Team Good. The Hunters share a chatroom together.
+
+g{[b]1 Good Priest[/b]}g
+
+The Good Priest receives the full roles of deceased players each dawn.
+
+g{[b]1 Vigilante[/b]}g
+
+The Vigilante is brutal and may kill one other player upon lynch or nightkill.
+
+g{[b]5 Villagers[/b]}g
+
+The Villagers have no special abilities. One Villager is a White Hat and will always be revealed as 'villager'. The White Hat is not aware.
+
+
+[u][b]Miscellaneous Rules, General Information & Deadlines:[/b][/u]
+
+:chalice: This game has alignment reveal only on death.
+:chalice: This game uses <tiebreaker> as a tiebreaker.
+:chalice: Dusk is at <lynch> BGG time. Votes cast with this time-stamp are counted. Votes cast after this time are invalid. Votes made during the night phase are invalid.
+:chalice: Dawn is at <night> BGG time. All night actions must be submitted in the Cassandra Chat System before this time.
+:chalice: You may not quote from modchat. Paraphrasing is allowed.
+:chalice: Players that do not post in the game for 24 hours (not counting weekends) will automatically be put up for replacement.
+:chalice: Votes must conform to the Cassy protocol. Edited vote posts are invalidated.
+:chalice: If the majority of living players vote nightfall in such a way that the other players cannot change the lynch victim after that, it will speed up Dusk. 
+:chalice: If all living players (including those without night actions) click on the 'Lock Game Actions' button it will speed up Dawn. 

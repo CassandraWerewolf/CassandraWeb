@@ -1,0 +1,885 @@
+html, body { padding: 0; margin: 0; list-style: none;}
+
+P,TD,TH,BODY,INPUT {
+	color:#000000;
+	font-family: 	Verdana, Helvetica, Arial, sans-serif;
+	font-size:12px;
+}
+
+body
+{
+	/*background-color: #404E82;*/
+	background:    #fff;
+	font-family: 	Verdana, Helvetica, Arial, sans-serif;
+	margin-top: 	0px;
+	padding: 0px;
+	white-space: 	normal;
+}
+
+.bggtitle
+{
+	padding-left:10px;
+	padding-right:10px;
+	font-size:16px;
+	font-variant:small-caps;
+	font-weight:bold;
+	background:#002899;
+}
+
+#leftcontent
+{
+	position: absolute;
+	left:  	 	5px;
+	margin-top: 5px;
+	width: 	 120px;
+}
+
+#centercontent
+{
+	margin-left: 125px;
+	min-width:   811px;
+}
+
+#rightcontent
+{
+	float: left;
+	margin-top: 6px;
+	width:160px;
+	background:#fff;
+	border:1px solid #b0b0b0;
+}
+
+input {padding: 1px; }
+
+a:link {
+	text-decoration:none;
+	color:#0000FF;
+}
+
+a:visited
+{
+	text-decoration:none;
+	color:#008;
+}
+
+a:hover
+{
+	text-decoration:underline;
+	color:red;
+}
+
+.nav {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+
+.nav a {
+	font-weight: 			bold;
+	text-decoration: 		none;
+	color: 					white;
+}
+
+.nav li li a {
+	display: 		block;
+	font-weight: 	normal;
+	color: 			darkblue;
+	padding: 		0.2em 10px;
+}
+
+.nav li li a:hover {
+	padding: 0.2em 5px;
+	border: 5px solid #404E82;
+	border-width: 0 5px;
+}
+
+.nav li {
+	float: left;
+	position: relative;
+	width: 90px;
+	text-align: center;
+	cursor: default;
+	background-color: #404E82;
+	padding-top:			2px;
+	padding-bottom:		2px;
+}
+
+.nav li a:hover
+{
+	color:goldenrod;
+}
+
+.nav li ul {
+	display: none;
+	position: absolute;
+	top: 100%;
+	left: 0;
+	font-weight: normal;
+	background: url(images/menubgclear2.gif) bottom left no-repeat;
+	padding: 5px 0 10px 0;
+	border-right: solid 1px #404E82;
+}
+
+li>ul {
+	top: auto;
+	left: auto;
+}
+
+.nav li li {
+	display: 			block;
+	float: 				none;
+	background-color: transparent;
+	border: 				0;
+	font-size: 			10px;
+	text-align:			left;
+}
+
+.nav li:hover ul, .nav li.over ul {
+	display: block;
+}
+
+
+.subnav li
+{
+	background-color: white;
+}
+
+.subnav li a
+{
+	font-size:11px;
+	background-color: white;
+	color: blue;
+}
+
+.subnav li a:hover
+{
+	color:red;
+}
+
+.subnav li li
+{
+	background-color: transparent;
+}
+
+.subnav li li a
+{
+	background-color: transparent;
+}
+
+.nav li li a:hover {
+	color: inherit;
+}
+
+.smallfont
+{
+	font-size:10px;
+}
+
+.largefont
+{
+	font-size:	 20px;
+	font-weight: bold;
+}
+
+.smallerfont
+{
+	font-size:   9px;
+	font-weight: normal;
+}
+
+.t_border
+{
+   background-color: #D1D1E1;
+	color:            #000000;
+	border:           1px solid #8888FF;
+}
+
+.t_border th
+{
+	text-align:center;
+}
+
+
+.t_border2
+{
+   background-color: #8888FF;
+	color:            #FFFFFF;
+	border:           1px solid #8888FF;
+}
+
+.t_cell
+{
+	background-color: #F5F5FF;
+	color:            #000000;
+	font-size:			12px;
+}
+
+.group_cell
+{
+	background-color: #D1D1E1;
+	color:            #000000;
+	border-top:       solid 1px #8888FF;
+	border-bottom:    solid 1px #8888FF;
+}
+
+.group_index
+{
+	background-color: #ACC5E4;
+}
+
+.group_index td
+{
+	background-color: white;
+}
+
+.group_index th
+{
+	background-color: #ACC5E4;
+}
+
+.forum_index
+{
+	background-color: #ACC5E4;
+}
+
+.forum_index td
+{
+	background-color: white;
+}
+
+.forum_index th
+{
+	background-color: #ACC5E4;
+}
+
+.thread
+{
+	clear:	both;
+}
+
+.thread_subject
+{
+	font-size: 		14px;
+	font-weight: 	bold;
+	margin-bottom: 1em;
+}
+
+.post
+{
+	margin-bottom: 10px;
+	background-color: #ACC5E4;
+}
+
+.post td
+{
+	background-color: white;
+}
+
+.post_subject
+{
+	font-weight: bold;
+}
+
+.group_title
+{
+	font-size: 		12px;
+	font-weight: 	bold;
+}
+
+.group_desc
+{
+	font-size: 		11px;
+}
+
+.forum_title
+{
+	font-size: 		12px;
+	font-weight: 	bold;
+	margin-left:   10px;
+}
+
+.forum_desc
+{
+	font-size: 		10px;
+	margin-left: 	20px;
+}
+
+.forum_date
+{
+	font-size: 10px;
+	font-weight: bold;
+}
+
+.forum_subject
+{
+	font-size:   10px;
+	font-weight: bold;
+}
+
+.post_subject
+{
+	font-weight: bold;
+	font-size: 9px;
+}
+
+.path
+{
+	font-size:11px;
+	font-weight: bold;
+}
+
+.g_cell
+{
+	background-color: #F5F5FF;
+	color:            #000000;
+   padding:          20px;
+}
+
+A.spoiler
+{
+   color:            #ccf;
+   display:				block;
+}
+
+A.spoiler:hover
+{
+    color: 					#000;
+}
+
+A.roll:link
+{
+   color:            #777777;
+   background-color: #777777;
+}
+
+A.roll:hover
+{
+   color:            #FFFFFF;
+   background-color: #777777;
+   text-decoration:  none;
+}
+
+.auction_table
+{
+   background-color: #D1D1E1;
+	color:            #000000;
+	border:           1px solid #B0B0B0;
+}
+
+.auction_table td
+{  padding:          5px;
+   background-color: white;
+}
+
+.auction_table input
+{
+	padding:2px;
+}
+
+.smallfont_table, .thin_table
+{
+	background-color: #D1D1E1;
+	color:            #000000;
+	border:           1px solid #B0B0B0;
+}
+
+.thin_table th, .smallfont_table th
+{
+	text-align:       center;
+}
+.smallfont_table th
+{
+	font-size: 11px;
+}
+
+.thin_table td
+{
+   padding:          3px;
+   background-color: white;
+}
+
+.smallfont_table td
+{
+ 	background:       white;
+   padding:          1px;
+   font-size:			11px;
+}
+
+.moduletable {	border: 1px solid #B0B0B0; }
+.moduletable td {	font-size:10px; }
+.moduletable th {
+	font-size: 12px;
+	font-weight: bold;
+	background-color: #4c6099;
+	color: white;
+	text-align: left;
+	padding:2px;
+}
+
+.innermoduletable th {
+	font-size: 12px;
+	font-weight: bold;
+	background-color:#ACC5E4;
+	color:black;
+	text-align:center
+}
+
+.innermoduletable td { font-size:11px; }
+
+.spotlight th {background:#91261e; color:#fff;}
+.innerspotlight th {background: #c6afaf; color:#000}
+
+.hotgames th { background: #91261e; }
+.recentgames th { background: #002899; }
+
+.hotgames A
+{
+	/*color:#BB0000;*/
+}
+
+.modulelink A
+{
+	color: lightblue;
+}
+
+.modulelink_active A
+{
+	color: red;
+}
+
+.iconborder
+{
+	border: solid 1px #B0B0B0;
+	margin:5px;
+	padding:2px;
+}
+
+div.overview
+{
+	background-color:#FFF;
+	color:#000;
+	border:solid 1px #B0B0B0;
+	margin-bottom: 5px;
+}
+
+.title
+{
+	padding:			2px;
+	font-weight:	bold;
+	font-size:		15px;
+	color:			#008;
+}
+
+div.simplebox
+{
+	margin:5px;
+}
+
+div.simplebox2
+{
+	margin:5px;
+}
+
+div.geekstore
+{
+	margin:5px;
+}
+
+div.geekstore table
+{
+   background-color: #D1D1E1;
+	color:            #000000;
+	border:           1px solid #8888FF;
+}
+
+div.geekstore td
+{
+   padding:          5px;
+   background-color: white;
+}
+
+.storeheader_bar
+{
+	font-size:12px;
+	text-align:center;
+	font-weight:bold;
+	border:solid 1px #008;
+	padding:5px;
+	margin-bottom:.5em;
+}
+
+.storeheader_subcommands
+{
+	font-size:10px;
+	text-align:center;
+	font-weight:bold;
+	margin-bottom:0.5em;
+}
+
+.storeresultmessage
+{
+	font-size:12px;
+	font-weight:bold;
+	text-align:center;
+	color:green;
+}
+
+.storepositive
+{
+	font-weight:bold;
+	color:green;
+}
+
+.storeneutral
+{
+	font-weight:bold;
+	color:gray;
+}
+
+.storeitem, .storeheader
+{
+	font-weight:bold;
+	font-size:14px;
+}
+
+.storeprice
+{
+	color:red;
+	font-weight:bold;
+}
+
+
+div.messagecenter
+{
+	background-color:#FFF;
+	border:solid #000 1px;
+	margin-left:0.5em;
+	margin-right:0.5em;
+	padding:5px;
+}
+
+div.messagecenter_message_body {
+background-color:#FFF;
+color:#000;
+padding:5px;
+}
+
+div.messagecenter_message_commands {
+text-align:left;
+font-weight:bold;
+}
+
+div.messagecenter_foldername {
+font-weight:bold;
+text-align:center;
+margin:0.5em;
+}
+
+div.newmessage
+{
+	background-color:#FFF;
+	color:#000;
+	padding:5px;
+	margin:1em;
+	border:solid #000 1px;
+}
+
+div.messagecenter_commands {
+background-color:#FFF;
+color:#000;
+padding:5px;
+margin:1em;
+border:solid #000 1px;
+text-align:center;
+}
+
+.messageheader {
+font-size:10px;
+font-weight:bold;
+text-align:center;
+background-color:#008;
+color:#fff;
+}
+
+.messagecommands {
+font-size:10px;
+font-weight:bold;
+text-align:center;
+background-color:#eee;
+}
+
+.messageindexsubject {
+font-size:10px;
+}
+
+.messageindexfromhighlight {
+font-size:10px;
+text-align:center;
+background-color:#ccc;
+}
+
+.messageindexsubjecthighlight {
+font-size:10px;
+background-color:#ccc;
+}
+
+.pager
+{
+	text-align: right;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	font-size: 11px;
+}
+
+.pager_page
+{
+    padding: 		3px 5px;
+    margin-right: 2px;
+    border: 		1px solid #DDDDFF;
+    background: 	#fff;
+}
+
+.pager_page:hover
+{
+    background: 	#CCCCFF;
+    border: 		1px solid #000088;
+}
+
+.pager_page_selected
+{
+    padding: 		3px 5px;
+    margin-right: 2px;
+    background: 	#CCCCFF;
+    border: 		1px solid #000088;
+    font-weight:  bold;
+}
+
+.quote
+{
+	font-size:10px;
+	margin-right:5px;
+	margin-left:2em;
+	margin-bottom:5px;
+	border:solid #000 1px;
+	background-color:#ccf;
+}
+
+.quotetitle
+{
+	font-size:10px;
+	padding:5px;
+	background-color:#88f;
+	color:#fff;
+	font-weight:bold;
+}
+
+.gamesection
+{
+	margin: 				0 5px 5px 5px;
+	padding: 			5px;
+	border: 				solid 1px #B0B0B0;
+	background-color: white;
+}
+
+.toplink
+{
+	font-size: 		10px;
+	font-weight: 	normal;
+	float:			right;
+}
+
+div.addcontent
+{
+	margin:0.5em;
+}
+
+.textad
+{
+	border:     solid 1px goldenrod;
+	text-align: center;
+	width:      200px;
+}
+
+.textad_title
+{
+	font-size: 18px;
+	font-weight: bold;
+	text-align: center;
+}
+
+.textad_body
+{
+	font-size: 12px;
+	text-align: center;
+}
+
+.expandedtextad
+{
+	border: 	solid 1px goldenrod;
+	padding: 2px;
+	width:   200px;
+}
+
+.expandedtextad_title
+{
+	font-size: 		12px;
+	font-weight:	bold;
+}
+
+.expandedtextad_body
+{
+	font-size: 11px;
+}
+
+#recommendinfo_top, #recommendinfo_bot
+{
+	padding: 5px;
+	margin:  5px;
+	border: 	solid 1px #B0B0B0;
+	height: 	30px;
+	width:   300px;
+	font-size: 10px;
+	text-align: center;
+}
+
+.navmenuheader
+{
+	font-size:15px;
+	font-weight:bold;
+	text-align:center;
+	background-color: #CCCCFF;
+	border: solid 1px #B0B0B0;
+	width:100%;
+	margin-bottom:2px;
+	padding: 5px 0 5px 0;
+}
+
+.error
+{
+	color:red;
+	font-weight:bold;
+}
+
+.menu
+{
+	color: 				#000;
+	background-color: #FFF2BF;
+	border-width:		0px 1px 1px 1px;
+	border-color:		#B0B0B0;
+	border-style:		solid;
+	position: 			absolute;
+	margin:				0;
+	padding:				10px;
+	display: 			none;
+	list-style: 		none;
+	white-space: 		nowrap;
+	z-index:				1000;
+}
+
+.menu ul
+{
+  	list-style: 	none;
+ 	margin:			0;
+ 	padding:			0;
+}
+
+.menu ul li
+{
+	list-style: 	none;
+	margin:			0;
+	padding:			0;
+}
+
+.menu ul li a
+{
+	color: 				blue;
+	font-size: 			11px;
+	font-weight:		bold;
+	text-decoration: 	none;
+	list-style: 		none;
+	margin:				0;
+	padding:				0;
+}
+
+.menu li a:hover
+{
+	text-decoration: 	none;
+  	background-color: #000088;
+  	color: 				#FFF;
+}
+
+.calendar
+{
+	width:400px;
+	border: solid 1px #B0B0B0;
+	font-size:11px;
+	padding:1em;
+}
+
+.day
+{
+	background-color:#FFF;
+	border: solid 1px #B0B0B0;
+	text-align:center;
+	height:35px;
+}
+
+.linkedday {
+	background-color:lightsteelblue;
+	border: solid 1px #B0B0B0;
+	text-align:center;
+	height:35px;
+}
+
+.geekinput {
+	border: 1px solid #B0B0B0;
+	padding:2px;
+	font-size:9px;
+}
+
+.messagebox {
+	text-align:center;
+	padding: 1em;
+	margin:1em;
+	border: solid 1px #b0b0b0;
+	width: 500px;
+}
+
+.img-shadow {
+  float:left;
+  background: url(images/shadowAlpha.png) no-repeat bottom right !important;
+  background: url(images/shadow.gif) no-repeat bottom right;
+  margin: 5px 0 0 5px !important;
+  margin: 5px 0 0 5px;
+  }
+
+.img-shadow img {
+  display: block;
+  position: relative;
+  background-color: #fff;
+  border: 1px solid #a9a9a9;
+  margin: -6px 6px 6px -6px;
+  padding: 2px;
+  }
+  
+.forum_table
+{
+   background-color: #D1D1E1;
+	color:            #000000;
+	border:           1px solid #8888FF;
+}
+
+.forum_table td
+{
+	background-color: #F5F5FF;
+	color:            #000000;
+}
+
+.hideDiv {
+  visibility: hidden;
+  display: none;
+}
+
+.showDiv {
+  display: inline;
+}

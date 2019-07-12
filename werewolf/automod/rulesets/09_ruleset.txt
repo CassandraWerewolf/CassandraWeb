@@ -1,0 +1,20 @@
+<b><u>Evil</u></b><br>
+<b>Brutal Wolf</b> - may kill any other player on death<br>
+<b>Standard Wolf</b><br>
+<b>Sorcerer</b> - views for seer<br>
+<b>Cultist</b> - learns the identity of the wolves Night Zero<br><br>
+
+<u>Good</u><br>
+<b>Seer</b> - views for evil (gets a hit on any evil, but does not learn the specific role)<br>
+<b>Bodyguard</b> - (martyr type) may choose a player each night, if that player is killed, the they will die instead<br>
+<b>Vigilante</b> - may kill any other player on death<br>
+<b>6 Villagers</b><br><br>
+
+<b><u>Rules</u></b><br>
+- standard rules<br>
+- lynch deadline - <lynch><br>
+- night action deadline - <night><br>
+- tiebreak - <tiebreaker><br>
+- alignment reveal only on death.<br>
+- seer and sorcerer receive random negative night zero views<br>
+

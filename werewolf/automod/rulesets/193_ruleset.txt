@@ -1,0 +1,22 @@
+b{[b][size=24]Special 9-Player Ruleset[/size][/b]}b
+
+[size=14]g{[b]Good Roles:[/b]}g[/size]
+g{[b]Seer[/b]}g: [i]Each night receives a vision of a target player as 'wolf' or 'not wolf.' The seer g{[b]WILL NOT[/b]}g receive a vision on Night 0.[/i]
+
+g{[b]Priest[/b]}g: [i]Each night receives a vision of a target deceased player. The vision tells the priest that deceased player's exact role. The priest does not receive any vision on Night 0. Thereafter, the priest chooses one deceased player to view.[/i]
+
+g{[b]Hunter[/b]}g:  [i]If only two players remain in the game and the hunter is one of those players, then the good team wins even if the other player is a werewolf.[/i]
+
+g{[b]3 Villagers[/b]}g: [i]Ordinary villagers with no special powers. One of the Villagers will be an unaware Tinker.[/i]
+
+
+[size=14]r{[b]Evil Roles:[/b]}r[/size]
+r{[b]2 Werewolves[/b]}r: [i]The werewolves know each other's identity, and may private message/chat without restriction. Each night the wolves choose one target player to kill. There is no kill on Night 0.[/i]
+
+r{[b]Sorcerer[/b]}r: [i]Each night receives a vision of a target player as 'seer' or 'not seer.' The sorcerer r{[b]WILL NOT[/b]}r receive a vision on Night 0. The sorcerer wins if the wolves win, but does not count as a werewolf for parity purposes.[/i]
+
+
+[size=14]b{[b]Victory Conditions:[/b]}b[/size]
+g{[b]Good[/b]}g: [i]All good players win if all werewolves are eliminated, or if the last two players remaining are the hunter and one werewolf. The sorcerer does not have to be eliminated in order for Good to win.[/i]
+
+r{[b]Evil[/b]}r: [i]All evil players win if the wolves achieve parity: if at any time the number of wolves remaining equals the number of non-wolves remaining (including the sorcerer), evil wins. Howver, if one wolf is left with the hunter, then good wins. The sorcerer counts as a 'non-wolf' for these purposes.[/i]

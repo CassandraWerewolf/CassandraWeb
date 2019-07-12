@@ -1,0 +1,51 @@
+Testing 11-Player Ruleset
+
+[b]Good Roles:[/b]
+
+[u]Seer[/u] - Each night receives a vision of a target player as 'werewolf' or 'not werewolf.' The seer receives a vision on Night 0 of one randomly chosen player that is 'not werewolf.' Thereafter, the seer chooses which player to view. Even after the wolf cub has been promoted they will see the wolf cub as 'not a werewolf'
+
+[u]Aux Seer[/u] - Each night receives a vision of a target player as 'witch or wolf cub' or 'not witch or wolf cub'.  The aux seer can not tell the difference between the good witch and the evil witch. The aux seer receives a vision on Night 0 of one randomly chosen player that is 'not witch or wolf cub'. Thereafter, the aux seer chooses which player to view. Even after the wolf cub has been promoted they will see the wolf cub as 'witch or wolf cub'.
+
+[u]Witch[/u] - This is the good witch.  They will be viewed by the Aux seer as 'witch or wolf cub'.  They can block any night order except the wolf kill.  They can also block a brutal kill.  If the brutal kill happens at lynch their order must be submitted prior to lynch and their order will be locked so they can not choose to block a different player during the night.  If their orders are on the lynch target at lynch time their orders will be locked until the next dawn.
+
+[u]4 Villagers[/u] - Ordinary villagers with no special powers, or so most of them think.  One of the villagers will have a brutal ability and of course will know it.  One of the villagers will be tough, but won't know it until he survives a lynch or kill attempt (he will be told specifically that he survived a kill attempt).  One of the villagers will be a latent seer. They will not know they are the latent seer until either the seer or the aux seer dies.  Then they will gain that players abilities. They will not learn the information that the dead seer died with, nor will they receive the views submitted by the seer the night of their death.  If however the seer is lynched the latent seer will be able to submit orders during the night phase.  One random villager (possibly the one with the brutal, tough or the latent) will unknowingly be a tinker.
+
+[b]Evil Roles:[/b]
+
+[u]2 Werewolves[/u] - The werewolves know each other's identity, and may private message/chat without restriction. Each night the wolves choose one target player to kill. There is no kill on Night 0.  One of the wolves will have a brutal ability.
+
+[u]Wolf Cub[/u] - The wolf cub will start the game not knowing any thing other than that he is a cub.  They will be viewed by the Aux seer as 'witch or wolf cub'. As soon as one werewolf is killed he will be promoted to the full powers and chat room as the werewolf. 
+
+[u]Witch[/u] - This is the evil witch. They will be viewed by the Aux seer as 'witch or wolf cub'. Each night chooses one player to block their night actions.  Can not block the wolf kill. The Witch wins if the wolves win, but does not count as a werewolf for parity purposes.  If their orders are on the lynch target at lynch time their orders will be locked until the next dawn.
+
+
+[b]Victory Conditions:[/b]
+
+[u]Good[/u] - All good players win if all werewolves and the wolf cub are eliminated. The witch does not have to be eliminated in order for Good to win.
+
+[u]Evil[/u] - All evil players win if the wolves achieve parity: if at any time the number of active wolves (doesn't count unpromoted wolf cub) remaining equals the number of non-wolves remaining (including the witch), evil wins. 
+
+[b]Lynch Rules:[/b]
+
+Each day players vote for one player to be lynched. The player receiving the most votes is killed. If there is a tie between two or more players, the tied player with the <tiebreaker> is killed.
+
+Lynch time is <lynch> BGG time. Votes cast with this time-stamp are counted. Votes cast after this time are invalid. Votes made during the night phase are invalid.
+
+All votes must conform to the Cassandra Vote Tally System rules. (Will be
+posted once the game starts).  If all living players vote night fall it will
+speed up the dusk.  
+
+The player's role but not team is revealed upon lynch.
+
+
+[b]Night Orders:[/b]
+
+Wolves, Seer, Aux Seer, and Witches must all submit their night orders by <night> BGG time. They do this by using the Cassandra Game Order system in the Cassandra Chat System.
+
+The wolves' night kill choice is revealed with the DAWN post. Only the players role is revealed.
+
+If all living players (including those with out night actions) click on the
+'Lock Game Actions' button it will speed up Dawn.  
+
+
+[b]Do not post the content of your Mod Chat room to the game thread. You may summarize, but direct copying is not allowed. Consider that like showing your card to the group in a face-to-face game[/b]

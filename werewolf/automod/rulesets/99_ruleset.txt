@@ -1,0 +1,69 @@
+[COLOR=#CC9933]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[b][size=18]~ 8 PLAYER BLOODBATH ~[/size][/b][/COLOR]
+
+
+[COLOR=#003399][b]In a small village somewhere deep in the woods, a recent unexplained phenomenon has had an enormous impact on the people who lived there. Almost all villagers were suddenly aware that they possessed psychic powers enabling them to look into the souls of their fellow vilagers and read their deepest thoughts. In some it manifested more strongly than it others. After their initial confusion the consensus was that they had been blessed and they started to continue their normal lives. Nobody knew however, that some of them had started to change in other ways too. That is, until the bloodbath began...[/b][/COLOR]
+
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[COLOR=#003399][b]This template was designed by [url=http://www.boardgamegeek.com/user/Snaak]Snaak[/url][/b][/COLOR]
+
+
+[b]r{Disclaimer: this automod template is still in test phase. Balance is not guaranteed. Suggestions to improve the roleset and other comments are welcome!}r[/b]
+
+
+[b][u]Roles (total 8):[/u][/b] 
+
+
+g{[b]Good Aligned (total 5):[/b]}g
+
+g{[u][b]1 Seer[/b][/u]}g - The Seer can target a player each night to view that player's alignment. The Seer is brutal. 
+
+g{[u][b]1 Passive Priest[/b][/u]}g - As long as the Priest is alive roles will be revealed on death.
+
+g{[u][b]2-3 Villagers[/b][/u]}g - The Villagers can target a player each night to view for traitor/not traitor.
+
+g{[u][b]0-1 Hunter[/b][/u]}g - The Hunter will defeat evil parity if left alive with one Werewolf at game end.
+
+
+r{[b]Evil Aligned (total 3):[/b]}r
+
+r{[u][b]2 Werewolves[/b][/u]}r - The Werewolves can chat together and may kill one player each night. One Werewolf will receive a vision of one player who is not the seer on N0. The other werewolf will receive a vision of one player who is not the Priest on N0.
+
+r{[u][b]1 Paranoid Traitor[/b][/u]}r - The Traitor can target a player each night to view for werewolf/not werewolf. The traitor will receive a positive result when viewing a Werewolf, the Seer or the Priest.
+
+[b]The Seer & Traitor will receive a random negative view on N0 (not Evil & not Werewolf), The Villagers will not receive a N0 view[/b]
+
+[b]The chances of a Hunter being in the game are 50%[/b]
+
+
+[b][u]Role Reveal:[/u][/b]
+
+Roles will be revealed on death as long as the Priest is alive.       
+
+
+[b][u]Victory Conditions:[/u][/b]
+
+Good: All good aligned players will win when the Werewolves are killed.
+
+Evil: All evil aligned players will win when parity is reached. The Werewolves count towards parity. The Traitor does not count towards parity.
+
+
+[b][u]Lynch Rules:[/u][/b]
+
+Each day players vote for one player to be lynched. The player receiving the most votes is killed. If there is a tie between two or more players, the tied player with the <tiebreaker> is killed.
+
+
+[b][u]Deadlines:[/u][/b]
+
+Dusk is at <lynch> BGG time. Votes cast with this time-stamp are counted. Votes cast after this time are invalid. Votes made during the night phase are invalid.
+
+All votes must conform to the Cassandra Vote Tally System rules. (Will be posted once the game starts). If all living players vote nightfall it will speed up dusk.
+
+Dawn is at <night> BGG time. All night actions must be submitted in the Cassandra Chat System before this time.
+
+If all living players (including those without night actions) click on the 'Lock Game Actions' button it will speed up Dawn.  
+
+
+[b][u]Other Rules:[/u][/b]
+
+Do not post the content of your Mod Chat room to the game thread. You may summarize, but direct copying is not allowed. Consider that like showing your card to the group in a face-to-face game.
+ 

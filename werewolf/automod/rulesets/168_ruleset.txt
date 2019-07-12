@@ -1,0 +1,25 @@
+It was another gloriously gloomy day.  The sun was not shining, the birds were not singing and breakfast was soggy.  The residents of Gloomville went about their business like it was any other day, always making sure to keep a frown upon their downcast faces.  Shuffling along the cracking sidewalk, riding rickety old unicycles or jumping from the third story of the courthouse (and highest part of town), the citizens were quite content with their depressed existence, thank you very much.
+
+The trouble began when bartender Mean Engless found something scribbled on a bit of napkin at the counter of his bar.  He squinted at it, and slowly sounded out the words.  Before he could help himself he had let out a short chortle, and then to his extreme horror and the horror of everyone in hearing distance, an actual right as rain (which was very right indeed) laugh.
+
+'Ahahahaaaaeerrrrrr....' it went, before he coughed several times and made a break for the door.  He never made it, for he slipped on an abandoned banana peel.  The next day found himself sentenced to twenty-three years in a traveling circus as a clown. 
+
+But it was only the beginning, as there were those among the citizens of Gloomville who were not gloomy at all.   
+
+Only alignment (Happy=Evil, Gloomy=Good) is revealed at death.
+
+4 Residents of Gloomville (Villagers)
+1 Tinker:  Viewed as Evil by the Seer and as the Seer by the Sorcerer.
+1 Reveals as Happy:  When lynched or killed will be revealed as the wrong alignment.  
+2-3 Vanilla:  No powers.
+
+Note:  The Tinker may be the villager that reveals as Happy.
+
+1 Funny Business Investigation Agent (Seer): Each night may pick a player.  Gets a positive hit on both the Werewolf and Sorcerer, but because the seer only receives alignment it does not know which is which.
+
+1 Comic (Werewolf):  Counts for parity.  Reveals as 'Happy.'  Each night picks a player to kill.  Does not know the identity of the Sorcerer.
+
+1 Monkey (Sorcerer):  Counts for parity.  Reveals as 'Happy.'  Knows the ID of the werewolf but does not have a chat.  Each night (including N0) may view for the seer.
+
+
+

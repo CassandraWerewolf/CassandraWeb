@@ -1,0 +1,5 @@
+17 4 * * * /opt/werewolf/werewolf_backup.sh > /dev/null
+* * * * * /opt/werewolf/run_collect_posts.sh > /dev/null
+* * * * * /usr/local/bin/php /home/ww/werewolf/process_physics.php > /dev/null
+#* * * * * /opt/werewolf/run_automod.sh > /dev/null
+#1 20 * * 1-5 /opt/werewolf/post_dusk.sh 1352

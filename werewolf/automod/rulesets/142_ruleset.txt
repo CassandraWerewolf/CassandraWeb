@@ -1,0 +1,25 @@
+This is a 7 player game.
+
+[b]Team evil:[/b]
+
+Evil wins at wolf parity.
+
+[u]2 Werewolves:[/u] Kill 1 player each night. Have a chat room.
+
+[u]Sorcerer:[/u] Looks for the seer each night. Chooses a N0 view.
+
+
+[b]Team Good:[/b]
+
+Team good wants the wolves dead.
+
+[u]Seer:[/u] looks for the wolves each night. Chooses a N0 view.
+
+[u]Hunter:[/u] defeats a wolf if left alone with one.
+
+[u]Priest:[/u] gets a view of a dead player's role each night.
+
+[u]Villager:[/u] tasty wolf treat.
+
+[b]Standard BGG werewolf rules apply otherwise.[/b]
+

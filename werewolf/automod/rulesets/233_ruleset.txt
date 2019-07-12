@@ -1,0 +1,60 @@
+*This is a thematic version of Werewolf taking place in the [thing=37111][/thing] universe. The story does not involve any original characters and should be assumed to be taking place in an alternate universe*[/i][/COLOR]
+
+[size=12][b]Story:[/b][/size]
+
+[COLOR=#660066][i]This story takes place immediately after the Battlestar Galactica, Colonial One and the rest of the small human fleet escapes by jumping to a distant, unexplored area of the galaxy.
+
+The Cylons have been unrelenting in following the fleet. After each jump the fleet makes, a Cylon Basestar arrives minutes afterwards. The Admiral has been advised that a transmitter beacon has been detected on the [b]Freighter 212[/b]. Some of this crew must be traitors... or even cylons. 
+
+The scientists of the fleet have built a cylon detector and they have taken DNA samples of the entire crew aboard the freighter. Unfortunately it will take about a week to run all the tests. 
+
+The Admiral has decided that the freighter will be left behind on the next jump and they will return for it after the tests have completed. 
+
+[b]You are one of the crew of this small freighter.[/b] The crew have become paranoid, wanting to airlock anyone at the slightest suspicion. The cylons aboard, aware of their deadline, need to quietly assassinate the crew so they can take over the Freighter before the fleet returns.[/i][/COLOR] 
+
+
+[size=12][b]Crew:[/b][/size]
+
+[b][u][COLOR=#990000]2 Cylons[/COLOR][/u][/b] [COLOR=#A0A0A0](werewolves)[/COLOR] - The cylons know each other's identity, and may private message/chat without restriction. Each night the cylons choose one target player to kill. There is no kill on Night 0. [i]One of the cylons is brutal and may kill another player if killed. [/i]
+
+[b][u][COLOR=#990000]1 Cylon Sympathizer[/COLOR][/u][/b] [COLOR=#A0A0A0](sorcerer)[/COLOR] - The Cylon Sympathizer knows the identity of the cylons and wins with them, even if dead. Each night, he may view a player to see if they are the in the Secret Quorum or not. He gets a random negative N0 view. 
+
+[b][u][COLOR=#009900]1 [/COLOR][COLOR=#008800]S[/COLOR][COLOR=#118800]l[/COLOR][COLOR=#227700]e[/COLOR][COLOR=#336600]e[/COLOR][COLOR=#445500]p[/COLOR][COLOR=#554400]e[/COLOR][COLOR=#663300]r [/COLOR][COLOR=#772200]C[/COLOR][COLOR=#881100]y[/COLOR][COLOR=#990000]l[/COLOR][COLOR=#990000]o[/COLOR][COLOR=#990000]n[/COLOR][/u][/b] [COLOR=#A0A0A0](wolf cub)[/COLOR] - This person thinks they are an Ordinary Crew. Once a Cylon has been killed this person will be activated and becomes a Cylon. 
+
+[b][u][COLOR=#009900]5 Ordinary Crew[/COLOR][/u] [/b][COLOR=#A0A0A0](villagers)[/COLOR] - Ordinary crew with no special powers.
+
+[b][u][COLOR=#009900]1 Brutal Crew[/COLOR][/u][/b] [COLOR=#A0A0A0](brutal villager)[/COLOR] - This crew member can select (before death) one member of the crew to 'shoot in the head' if they are killed. 
+
+[b]Secret Quorum members:[/b]
+
+Secret Quorum members roles are not revealed upon death. It is only revealed that they were Secret Quorum members. Secret Quorum members know each other's identity but unlike the Cylons have [b]no[/b] private message/chat abilities.
+
+[b][u][COLOR=#009900]Seer[/COLOR][/u][/b] - Each night receives a vision of a target player and learns the players nature (cylon/not cylon). The seer receives a vision on Night 0 of one randomly chosen player that is not a cylon. Thereafter, the seer chooses which player to view.
+
+[b][u][COLOR=#009900]Hunter[/COLOR][/u][/b] - If only two players remain in the game and the hunter is one of those players, then the good team wins even if the other player is a cylon. 
+ 
+[b][u][COLOR=#009900]Martyr[/COLOR][/u][/b]- Each night, may choose to protect one player, and if that player is targeted for death by the cylons, the martyr will die in his place. [i] He may not protect the same player on consecutive nights.[/i]
+
+[size=12][b]Victory Conditions:[/b][/size]
+
+[u]Good[/u] - All good players win if all cylons are eliminated, or if the last two players remaining are the hunter and one cylon. 
+
+[u]Evil[/u] - All evil players win if the Cylons achieve parity: if at any time the number of Cylons remaining equals the number of non-cylons remaining, evil wins. However, if one cylon is left with the hunter, then good wins. 
+
+
+[size=12][b]Lynch Rules:[/b][/size]
+
+Each day players vote for one player to be airlocked. The player receiving the most votes is killed. If there is a tie between two or more players, the tied player with the longest held last vote is killed.
+
+Lynch time is <lynch> BGG time. Votes cast with this time-stamp are counted. Votes cast after this time are invalid. Votes made during the night phase are invalid.
+
+All votes must conform to the Cassandra Vote Tally System rules. (Will be posted once the game starts). If there is a tie in the lynch votes, it will be broken by <tiebreaker>.
+
+Roles will be revealed on death EXCEPT for Secret Quorum members. Upon the death of a Secret Quorum member it is only revealed that they were Secret Quorum members. 
+
+
+[size=12][b]Night Orders:[/b][/size]
+
+Cylons, Cylon Sympathizer, Seer and Martyr must all submit their night orders by  <night>  BGG time. They do this by using the Cassandra Game Order system in the Cassandra Chat System.
+
+The Cylons' night kill choice is revealed with the DAWN post. 

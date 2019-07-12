@@ -1,0 +1,64 @@
+[COLOR=#CC9933][b][size=18]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;~ FEEDING THE CUBS ~[/size][/b][/COLOR]
+
+
+[COLOR=#003399][b]A Werewolf and her two little Cubs wander into the village. The cubs are starving and the Werewolf takes great risks to try and feed her young ones. Because of this, some smart villagers have been able to spot her and a hunt is unleashed. The Werewolf however is extremely aggressive and she will protect her cubs to death. Meanwhile a seer who specializes in rooting out cute little Wolf Cubs is secretly trying to find her young ones...[/b][/COLOR]
+
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[COLOR=#003399][b]This template was designed by [url=http://www.boardgamegeek.com/user/Snaak]Snaak[/url][/b][/COLOR]
+
+
+[b]r{Disclaimer: this automod template is still in test phase. Balance is not guaranteed. Suggestions to improve the roleset and other comments are welcome!}r[/b]
+
+
+[b][u]Roles (total 10):[/u][/b] 
+
+
+g{[b]Good Aligned (total 7):[/b]}g
+
+g{[u][b]1 Aux Seer[/b][/u]}g - The Aux Seer can target a player each night to view for Cute Little Wolf Cub/Not Cute Little Wolf Cub. The Aux Seer will only get a positive result when viewing one of the two Wolf Cubs.
+
+g{[u][b]1 Hunter/Priest[/b][/u]}g - The Hunter/Priest defeats evil parity and can view one dead player each night to see that player's exact role. b{(This role is named Hunter in Cassie)}b
+
+g{[u][b]5 Villagers[/b][/u]}g - The Villagers can target a player each night to view for Wolfmother/Not Wolfmother. One Villager is guaranteed to receive a positive result when viewing the Werewolf. Two Villagers are guaranteed to never get a positive result. The other two Villagers may or may not get a positive result when viewing the Werewolf. 
+b{(Clarification: 1 villager that is able to get a positive result is guaranteed to be in the game. The other 4 villagers are randomly chosen from a pool of 6 Villager Roles, 2 of which are able to get a positive result and 4 of which are never able to get a positive result.)}b 
+
+r{[b]Evil Aligned (total 3):[/b]}r
+
+r{[u][b]1 Werewolf[/b][/u]}r - The Werewolf can kill one player each night. The Werewolf knows the ID of the Wolf Cubs. The Werewolf is brutal.
+
+r{[u][b]2 Wolf Cubs[/b][/u]}r - The Wolf Cubs know each other's ID's and know the ID of the Werewolf. When the Werewolf dies one of the cubs will be promoted to Werewolf and will be able to kill a player each night. If the first Wolf Cub dies, the other Wolf Cub will be promoted as well.
+
+[b]The Seer receives a random negative view on N0. Villagers do not get a N0 view.[/b]
+
+
+[b][u]Role Reveal:[/u][/b]
+
+Roles will not be revealed on death.       
+
+
+[b][u]Victory Conditions:[/u][/b]
+
+Good: All good aligned players will win when the Wolf Cubs are killed.
+
+Evil: All evil aligned players will win when parity is reached. The Wolf Cubs count towards parity. The Werewolf [u]does not[/u] count towards parity. 
+
+
+[b][u]Lynch Rules:[/u][/b]
+
+Each day players vote for one player to be lynched. The player receiving the most votes is killed. If there is a tie between two or more players, the tied player with the <tiebreaker> is killed.
+
+
+[b][u]Deadlines:[/u][/b]
+
+Dusk is at <lynch> BGG time. Votes cast with this time-stamp are counted. Votes cast after this time are invalid. Votes made during the night phase are invalid.
+
+All votes must conform to the Cassandra Vote Tally System rules. (Will be posted once the game starts). If all living players vote nightfall it will speed up dusk.
+
+Dawn is at <night> BGG time. All night actions must be submitted in the Cassandra Chat System before this time.
+
+If all living players (including those without night actions) click on the 'Lock Game Actions' button it will speed up Dawn.  
+
+
+[b][u]Other Rules:[/u][/b]
+
+Do not post the content of your Mod Chat room to the game thread. You may summarize, but direct copying is not allowed. Consider that like showing your card to the group in a face-to-face game.

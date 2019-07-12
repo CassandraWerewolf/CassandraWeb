@@ -1,0 +1,60 @@
+[COLOR=#CC9933]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[b][size=18]~ BASIC 13-PLAYER ~[/size][/b][/COLOR]
+
+
+[COLOR=#003399][b]This template was based on [url=http://www.boardgamegeek.com/user/le_cygne]le_cygne's[/url] [url=http://www.boardgamegeek.com/thread/313128]'Swan Village'[/url] who based it on [url=http://www.boardgamegeek.com/user/melissa]melissa's[/url] game [url=http://www.boardgamegeek.com/thread/113917]'The wolves of LupusLanding.'[/url] The roleset was then turned into an auto-mod template by [url=http://www.boardgamegeek.com/user/Snaak]Snaak[/url][/b][/COLOR]
+
+
+[b][u]Roles (total 13):[/u][/b] 
+
+
+g{[b]Good Aligned (total 9):[/b]}g
+
+g{[u][b]1 Seer[/b][/u]}g - Every night, the Seer can view another player. The result of the vision will be werewolf/not werewolf. Both the Werewolves and the Wolf Cub will be seen as 'werewolf.' The seer receives a random non-werewolf view on Night 0.
+
+g{[u][b]1 Passive Priest[/b][/u]}g - As long as the Priest is alive roles will be revealed on death.
+
+g{[u][b]1-2 Hunters[/b][/u]}g - A Hunter will defeat evil parity if left alive with one Werewolf at game end.
+
+g{[u][b]5-6 Villagers[/b][/u]}g - The Villagers have no special abilities.
+
+
+r{[b]Evil Aligned (total 4):[/b]}r
+
+r{[u][b]2 Werewolves[/b][/u]}r - The Werewolves can chat together and may kill one player each night.
+
+r{[u][b]1 Wolf Cub[/b][/u]}r - Neither the Werewolves nor the Wolf Cub know the identity of the others. When a Werewolf is killed, the Wolf Cub will be promoted to a full Werewolf with chat rights. The Wolf Cub does not count for parity until promoted to full Werewolf.
+
+r{[u][b]1 Sorcerer[/b][/u]}r - Every night, the Sorcerer can view another player. The result of the vision will be seer/not seer. The Sorcerer receives a random non-seer view on Night 0.
+
+
+[b][u]Role Reveal:[/u][/b]
+
+Roles will be revealed on death as long as the Priest is alive.
+
+
+[b][u]Victory Conditions:[/u][/b]
+
+Good: All good aligned players will win when the Werewolves and Wolf Cub are killed.
+
+Evil: All evil aligned players will win when parity is reached. The Werewolves count towards parity. The Wolf Cub does not count towards parity unless promoted to full Werewolf.
+
+
+[b][u]Lynch Rules:[/u][/b]
+
+Each day players vote for one player to be lynched. The player receiving the most votes is killed. If there is a tie between two or more players, the tied player with the <tiebreaker> is killed.
+
+
+[b][u]Deadlines:[/u][/b]
+
+Dusk is at <lynch> BGG time. Votes cast with this time-stamp are counted. Votes cast after this time are invalid. Votes made during the night phase are invalid.
+
+All votes must conform to the Cassandra Vote Tally System rules. (Will be posted once the game starts). If all living players vote nightfall it will speed up dusk.
+
+Dawn is at <night> BGG time. All night actions must be submitted in the Cassandra Chat System before this time.
+
+If all living players (including those without night actions) click on the 'Lock Game Actions' button it will speed up Dawn.  
+
+
+[b][u]Other Rules:[/u][/b]
+
+Do not post the content of your Mod Chat room to the game thread. You may summarize, but direct copying is not allowed. Consider that like showing your card to the group in a face-to-face game. 

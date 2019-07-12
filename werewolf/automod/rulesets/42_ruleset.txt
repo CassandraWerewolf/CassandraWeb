@@ -1,0 +1,82 @@
+[COLOR=#CC9933]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[b][size=18]~ THE SORCERER SHOW ~[/size][/b][/COLOR]
+
+
+[COLOR=#003399][b]As if a village haunted by just werewolves is not enough, these citizens suffer the wrath of a very strong sorcerer who helps the werewolves eliminate all villagers for his own dark purposes and nobody knows what his real powers are. Even before the werewolves start their bloodbath he has already managed to possess one unaware villager with his evil presence. Fortunately, some of the villagers have managed to learn of ways to defend themselves against this onslaught of evil...but will it be enough?[/b][/COLOR]
+
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[COLOR=#003399][b]This template was designed by [url=http://www.boardgamegeek.com/user/Snaak]Snaak[/url][/b][/COLOR]
+
+
+[b]r{Disclaimer: this automod template is still in test phase. Balance is not guaranteed for any of the four possible setups. Suggestions to improve the roleset and other comments are welcome!}r[/b]
+
+
+[b][u]Roles (total 11):[/u][/b] 
+
+
+g{[b]Good Aligned (total 8):[/b]}g
+
+g{[u][b]1 Seer[/b][/u]}g - The Seer can view each night for evil/not evil and will hit 'evil' when viewing a werewolf or sorcerer.
+
+g{[u][b]1 Bodyguard[/b][/u]}g - The Bodyguard may protect a player at night. If this player is targeted by a kill ability, the Bodyguard will die instead.
+
+g{[u][b]1 White Hat[/b][/u]}g - This Villager will be revealed upon death as 'villager' but will not know he is the White Hat.
+
+g{[u][b]1 Tough Villager[/b][/u]}g - This Villager will survive one lynch or nightkill but will not know he is tough.
+
+g{[u][b]1 Possessed Villager[/b][/u]}g - The Possessed Villager counts for evil parity but is not aware of this. He will be seen as 'evil' by the Seer, 'seer' by the Seer Sorcerer, 'wolf' by the Wolf Sorcerer and 'special' by the Special Sorcerer. He will be revelead as 'evil aligned player' on death.
+
+b{(Clarification: The Possessed Villager (PV) will be seen as a normal villager role in Cassandra, nothing indicates the possessedness. The alignment of the PV is Good. This means that even though this role counts for Evil Parity and thus has to be killed before Good can win, the player with this role will win (or lose) with Team Good. The PV is also a Tinker, which means that every view of this player will be inverted. Instead of negative, all viewing roles will get a positive view on the PV, thus resulting in 'is a werewolf' or 'is a seer' for instance. The only exception to this is the Random Role Sorcerer, who views every role for what they are without attributes, thus the PV will be seen as 'villager' by this role. Finally, because of the fact that the PV is a Tinker, he cannot be a NO view for any role in the game.)
+}b
+g{[u][b]3 Normal Villagers[/b][/u]}g - These Villagers have no special ability.
+
+
+r{[b]Evil Aligned (total 3):[/b]}r
+
+r{[u][b]2 Werewolves[/b][/u]}r - The Werewolves can chat together and may kill one player each night.
+
+r{[u][b]1 Sorcerer[/b][/u]}r - The Sorcerer will be randomly chosen from one of the following four variants:
+
+r{[b]Seer Sorcerer[/b]}r - This Sorcerer can view each night for seer/not seer.
+
+r{[b]Wolf Sorcerer[/b]}r - This Sorcerer can view each night for wolf/not wolf.
+
+r{[b]Special Sorcerer[/b]}r - This Sorcerer can view each night for special/not special and will hit 'special' when viewing a werewolf, seer or bodyguard.
+
+r{[b]Random Role Sorcerer[/b]}r - At night, this Sorcerer will randomly view the full role of one of the players that voted for him that day. [i](This Sorcerer will be named Seer in Cassandra.)[/i]
+
+[b]All 4 sorcerer roles are tough (will survive one lynch or nightkill)[/b]
+
+[b]The Seer and all Sorcerers (except for the Random Role Sorcerer) will receive a random negative N0 view.[/b]
+
+
+[b][u]Role Reveal:[/u][/b]
+
+All lynched and nightkilled players will have their [u]alignment[/u] revealed upon death.       
+
+
+[b][u]Victory Conditions:[/u][/b]
+
+Good: All good aligned players will win when the Werewolves and the Possessed Villager are killed.
+
+Evil: All evil aligned players will win when parity is reached. The Werewolves and the Possessed Villager count towards parity. The Sorcerers do not count towards parity. 
+
+
+[b][u]Lynch Rules:[/u][/b]
+
+Each day players vote for one player to be lynched. The player receiving the most votes is killed. If there is a tie between two or more players, the tied player with the <tiebreaker> is killed.
+
+
+[b][u]Deadlines:[/u][/b]
+
+Dusk is at <lynch> BGG time. Votes cast with this time-stamp are counted. Votes cast after this time are invalid. Votes made during the night phase are invalid.
+
+All votes must conform to the Cassandra Vote Tally System rules. (Will be posted once the game starts). If all living players vote nightfall it will speed up dusk.
+
+Dawn is at <night> BGG time. All night actions must be submitted in the Cassandra Chat System before this time.
+
+If all living players (including those without night actions) click on the 'Lock Game Actions' button it will speed up Dawn.  
+
+
+[b][u]Other Rules:[/u][/b]
+
+Do not post the content of your Mod Chat room to the game thread. You may summarize, but direct copying is not allowed. Consider that like showing your card to the group in a face-to-face game.

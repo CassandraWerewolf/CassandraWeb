@@ -1,0 +1,27 @@
+This is a quickly designed game designed to help me debug the Brutal and Tough codes.
+
+Every player will either be tough or brutal, to hopefully allow all possible variations of issues to occur.  Since errors could (and probably will) occur, don't take the outcome of this game too serious, but I will try to correct errors as best as I can.
+
+[b]Evil:[/b]
+
+Werewolves = There will be two.  One will be Brutal the other Tough.
+
+Sorcerer = Looks for Seer, is Tough.
+
+[b]Good:[/b]
+
+Seer = Looks for Werewolves, is Tough.
+
+Hunter = Wins on parity, is Brutal.
+
+Bodyguard = Martyr type BG, but is Tough.
+
+3 Villager = 2 are Brutal, 1 is Tough.
+
+------
+
+I'm assuming you've played before and know the rest of the rules type stuff
+
+Lynch: <lynch>
+Night Actions: <night>
+Tie Breaker: <tiebreaker>

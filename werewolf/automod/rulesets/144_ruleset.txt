@@ -1,0 +1,65 @@
+This is a random-evil 15-player roles set:
+
+[size=14][b]Guaranteed to be in the game:[/b][/size]
+
+[b]Evil[/b]
+[u]Werewolf[/u] - Three of these. Typical Wolves.
+
+[b]Good[/b]
+[u]Seer[/u] - Typical Seer, views each night for Wolf/Not Wolf
+
+[u]Passive Priest[/u] - Players' alignments (good or evil) will be revealed upon death as long as the Passive Priest is alive; begins the game knowing who the Seer is
+
+[u]Parity Hunter[/u] - If he or she survives to parity with one Wolf, the Village wins
+
+[u]Tinker[/u] - Shows as Wolf to the Seer, as Seer to the Sorcerer and as Villager to Aux Seer
+
+[u]White Hat Villager[/u] - Will be revealed as the White Hat Villager upon death.
+
+[u]Aux Seer[/u] - Views each night for Sorcerer, Cultist, Traitor and/or Wolf Cub, views the Tinker as Villager.
+
+[u]4 Villagers[/u] - Tasty Wolf treats
+
+[size=14][b]Possible Roles[/b][/size]
+
+[b]Evil[/b]
+[u]Sorcerer[/u] - Typical Sorcerer, views each night for Seer/Not Seer. Will get a positive result on Seer and Aux Seer
+
+[u]Cultist[/u] - Knows identity of Wolves and is Brutal (will kill another player if killed)
+
+[u]Traitor[/u] - Knows identity of Wolves and counts toward parity
+
+[u]Wolf Cub[/u] - Promoted to Wolf status if a Werewolf is killed
+
+Two of these will be present each time this set is run.
+
+[b]Victory Conditions:[/b]
+
+[u]Good[/u] - All good players win if all werewolves are eliminated, or if the last two players remaining are the hunter and one werewolf. The sorcerer does not have to be eliminated in order for Good to win.
+
+[u]Evil[/u] - All evil players win if the wolves achieve parity: if at any time the number of wolves remaining equals the number of non-wolves remaining (including the sorcerer), evil wins. However, if one wolf is left with the hunter, then good wins. The sorcerer counts as a 'non-wolf' for these purposes.
+
+
+[b]Lynch Rules:[/b]
+
+Each day players vote for one player to be lynched. The player receiving the most votes is killed. If there is a tie between two or more players, the tied player with the <tiebreaker> is killed.
+
+Lynch time is <lynch> BGG time. Votes cast with this time-stamp are counted. Votes cast after this time are invalid. Votes made during the night phase are invalid.
+
+All votes must conform to the Cassandra Vote Tally System rules. (Will be
+posted once the game starts).  If all living players vote night fall it will
+speed up the dusk.  
+
+Neither the player's role or team is revealed upon lynch.
+
+
+[b]Night Orders:[/b]
+
+Wolves, Seer, Sorcerer, and Priest must all submit their night orders by <night> BGG time. They do this by using the Cassandra Game Order system in the Cassandra Chat System.
+
+The wolves' night kill choice is revealed with the DAWN post. The players' role and team are not revealed. 
+
+If all living players (including those with out night actions) click on the
+'Lock Game Actions' button it will speed up Dawn.  
+
+[b]Do not post the content of your Mod Chat room to the game thread. You may summarize, but direct copying is not allowed. Consider that like showing your card to the group in a face-to-face game[/b]

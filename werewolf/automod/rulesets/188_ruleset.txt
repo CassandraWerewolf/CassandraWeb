@@ -1,0 +1,65 @@
+This game will be a throwback to the short games of yesteryear.  I had an absolute blast playing in them, and I hope you will, too.
+
+9 players.  No theme -- we don't need no stinkin' theme!  There are bad monsters looking to rip out your throats.  That's good enough.  The game will start as soon as it has filled.  It will not be played over the weekend.
+
+[b]Rule #1: If you cannot be around to play this game, then please do not sign up.[/b]
+
+
+[b]Important Times[/b]
+
+- Lynch will be at <lynch> BGG time.
+
+- Night orders are due by <night> BGG time.  Failure to submit night orders will result in a forfeiture of your action for that night.  Don't pull a &quot;Royalwulf&quot; and forget to submit.  Enter your orders early, and revise them as often as you like.
+
+
+[b]Posting and Private Messages[/b]
+
+- Only the wolves have a chat room.  All other players have a &quot;mod chat&quot; with Cassie, in which some of you will be submitting orders (priest, seer, sorcerer) using the order system.
+
+- NO POSTING TO THE THREAD AT NIGHT.  You are all on the honor system here.
+
+- No posting after death, not even the obligatory zombie post.  Again, you're on the honor system since this is an auto-mod game.
+
+- THIS IS A META-INFORMATION-FREE GAME.  Do not make reference to players' behavior in prior games.  No saying, &quot;So-and-so acted the same way in such-and-such game when she was evil,&quot; or &quot;so-and-so always acts this way.&quot;  No targeted behavioral data mining via Cassie.  If you do such things in your spare time in the privacy of your own home, then that's your decision.  Just don't try to use these arguments to convince someone else on the public thread.  You can publicly state that you have &quot;a hunch,&quot; and leave it at that.  Your &quot;hunch&quot; is just as valid as anyone else's.
+
+You can make generalizations based upon your own experience, such as &quot;Wolves usually throw a distancing vote on each other early on D1.&quot;  My intent is for you all to spend your time playing [i]this[/i] game, and not trying to profile each other using information from outside of this thread.
+
+- The use of scripts is [b]allowed[/b].  If you care enough about contributing to this game to pre-load some content that otherwise would not be posted, then go ahead and do so.  If you mess it up (for example, having contextually-outdated content in your post) and you get voted out for it in retaliation, then you'll have only yourself to blame.  As a progenitor-moderator, I'd rather have more participation than less.
+
+
+[b]Voting[/b]
+
+- The deadline minute will count.  Votes posted at <lynch> will affect the tally.  Votes posted one minute later will not.
+
+- Players may vote for nightfall.  If a majority of players vote for nightfall such that the outcome is assured, then it will be done. You cannot change your vote, or unvote nightfall once you have done so.
+
+- Any ties will be broken by the <tiebreaker>.
+
+
+[b]Roles[/b]
+
+[u]Good[/u]
+
+[b]Seer[/b]: may view one person each night to learn wolf/non-wolf.  Receives a random, negative, N0 view.
+
+[b]Priest[/b]:  may view one deceased person each night to learn his or her role.  EXCEPTION: Will view the hunter as &quot;villager.&quot;
+
+[b]Hunter[/b]: if the hunter finds himself in the final two with a wolf, then the hunter kills the wolf, and the village wins.  If viewed by the priest, will be revealed as &quot;villager.&quot;
+
+[b]White Hat[/b]: when killed or lynched, will be revealed in the public thread as &quot;white hat.&quot;  This player is unaware of her own status as the white hat.
+
+[b]Villager (2)[/b]: standard [-]wolf bait[/-] players unfettered from any special abilities other than their keen senses of deduction, and possessing their powerful votes!
+
+
+[u]Evil[/u]
+
+[b]Wolves (2)[/b]: may submit the name of one person who will be killed each night.  Have unrestricted PM rights with each other, day and night.
+
+[b]Sorceror[/b]:  may view one person each night to learn seer/non-seer.  Receives a random, negative N0 view.  Wins if the wolves win, loses if they are both killed.
+
+
+[b]Victory Conditions[/b]
+
+The village wins if they lynch both Wolves.
+
+Evil wins if the number of the Wolves reaches parity with the number of non-Wolf players (including the Sorceror).

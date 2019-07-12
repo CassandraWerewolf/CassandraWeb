@@ -1,0 +1,56 @@
+[b]Good Roles:[/b]
+
+[u]Seer[/u] - Each night receives a vision of a target player as 'good' or 'evil.' The seer receives a vision on Night 0 of one randomly chosen player that is 'good.' Thereafter, the seer chooses which player to view. 
+
+[u]Hunter[/u] - If only two players remain in the game and the hunter is one of those players, then the good team wins even if the other player is a werewolf. The hunter is tough and will survive 1 death of any sort. 
+
+
+[u]Bodyguard[/u] - The Bodyguard protects 1 player each night. If they are targeted for a kill, the bodyguard will die in their place. When lynched or killed, the bodyguard can take someone else out with him.
+
+[u]Priest[/u] - Has a chat with the mason. Learns the exact roles of the recently departed each night.  
+
+[u]Mason[/u] This dedicated parishioner is a close friend of the priest.  The Mason and the Priest have a chat together.
+
+[u]4 Villagers[/u] - Ordinary villagers with no special powers. 
+
+
+[b]Evil Roles:[/b]
+
+[u]Werewolf[/u] - The werewolf knows the identity of the evil priest, and the two may private message/chat without restriction. Each night the wolf and evil priest choose one target player to kill. There is no kill on Night 0. When lynched, the wolf can take another player out with him.
+
+[u]Evil Priest[/u] - The evil priest knows the identity of the werewolf, and the two may private message/chat without restriction. Each night the wolf and evil priest choose one target player to kill. There is no kill on Night 0. The evil priest will learn the exact roles of the recently departed each night.
+
+[u]Sorcerer[/u] - Each night receives a vision of a target player as 'seer' or 'not seer.' The sorcerer receives a vision on Night 0 of one randomly chosen player that is 'not seer.' Thereafter, the sorcerer chooses which player to view.  The sorcerer knows the identity of the wolf cub. The sorcerer can kill another player when lynched or killed.
+
+[u]Wolf Cub[/u] - The wolf cub knows the identity of the Sorcerer and the Werewolf.  When the Werewolf is lynched the wolf cub will be promoted to full wolf status.  The cub will gain access to wolfchat and the ability to NK with the evil priest (if still alive). The wolf cub counts for parity before promotion.
+
+
+[b]Victory Conditions:[/b]
+
+[u]Good[/u] - All good players win if the werewolf, evil priest, and wolf cub are eliminated, or if the last two players remaining are the hunter and one of the werewolf, wolf cub, or evil priest. The sorcerer does not have to be eliminated in order for Good to win.
+
+[u]Evil[/u] - All evil players win if the werewolf, evil priest, and wolf cub achieve parity: if at any time their number equals the number of all other player remaining (including the sorcerer), evil wins. However, if one is left with the hunter, then good wins. The sorcerer counts as a good player for these purposes.
+
+
+[b]Lynch Rules:[/b]
+
+Each day players vote for one player to be lynched. The player receiving the most votes is killed. If there is a tie between two or more players, the tied player with the <tiebreaker> is killed and their side (good or evil) is revealed.
+
+Lynch time is <lynch> BGG time. Votes cast with this time-stamp are counted. Votes cast after this time are invalid. Votes made during the night phase are invalid.
+
+All votes must conform to the Cassandra Vote Tally System rules. (Will be
+posted once the game starts).  If all living players [vote nightfall] it will
+speed up the dusk.  
+
+
+[b]Night Orders:[/b]
+
+Wolves, Seer, Sorcerer, and Priest must all submit their night orders by <night> BGG time. They do this by using the Cassandra Game Order system in the Cassandra Chat System.
+
+The wolves' night kill choice is revealed with the DAWN post. The players' side is revealed as well. 
+
+If all living players (including those with out night actions) click on the
+'Lock Game Actions' button it will speed up Dawn.  
+
+
+[b]Do not post the content of your Mod Chat room to the game thread. You may summarize, but direct copying is not allowed. Consider that like showing your card to the group in a face-to-face game[/b]

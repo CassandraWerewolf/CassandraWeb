@@ -1,0 +1,31 @@
+This is a game with a lone wolf, inspired by Kima's Batman vs. Joker series and Kristiefix's Bourne game.
+
+When in doubt, standard BGG WW rules apply.
+
+[b]Team Evil:[/b]
+
+[u]1 Random Role Seer:[/u] The wolf of this game. May kill 1 player each night. On N0 he will be told the identity of his traitors and a random person who is not a seer. Also, each night following that he will be told the name of someone who voted for him and will be told if they are a seer or not. Tinkers will show up as seer to this view. He is tough and will survive the first lynch or kill.
+
+[u]1 Cultist:[/u] Knows the identity of the random role seer. Each night, he may view a player, living or dead, to see if they are the hunter or not. Random negative N0 view. Tinkers will show as hunter.
+
+[u]2 Traitors:[/u] Aux evils who count for parity (but need not be eliminated for good to win) and are able to chat with each other. One of them is brutal and may kill another player on death.
+
+[u]1 Sorcerer:[/u] Views a player, living or dead, each night, receiving a result of 'good' or 'evil'. Random 'good' N0 view. 
+
+[b]Team Good:[/b]
+
+[u]2 Seers:[/u] Views a player each night, with a result of 'good' or 'evil'. Random  N0 view. One of them will receive true results, and one will receive untrue results. 
+
+[u]1 Hunter:[/u] If left alone with the werewolf, good wins. Knows the identity of one of the seers. Is brutal; can kill someone else when killed.
+
+[u]1 Priest:[/u] Learns the exact roles of the recently departed each night.
+
+[u]1 Bodygaurd:[/u] Protects 1 player each night. If they are targeted for a kill that night, the bodygaurd dies instead. 
+
+[u]5 Villagers:[/u] Everyone else is a villager. There will be one or two tinkers. (show as evil to seer and sorcerer, but don't know it.) One villager, possibly a tinker, will be a white hat. (revealed as villager on death, but doesn't know it) Another villager, possibly a tinker or a white hat (or both!) will be tough and will survive the first lynch or kill. (but again, won't know it until it happens). 
+
+[b]Other stuff:[/b]
+
+-Good wins when the random role seer dies.
+-Evil wins when the random role seer plus the traitors achieve parity, hunter permitting.
+-Roles will NOT be revealed on death.

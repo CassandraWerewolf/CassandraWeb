@@ -1,0 +1,46 @@
+7 Player Game Ruleset
+
+[b]Good Roles:[/b]
+
+[u]Seer[/u] - Each night receives a vision of a target player role. The seer chooses a vision each night, he gets a random non werewolf view in N0.
+
+[u]Brutal Hunter[/u] - If only two players remain in the game and the hunter is one of those players, then the good team wins. If he gets killed or lynched, he kills another player.
+
+[u]3 Villagers[/u] - Ordinary villagers with no special powers.
+
+
+[b]Evil Roles:[/b]
+
+[u]2 Werewolves[/u] - Each night the werewolves choose one target player to kill. There is no kill on Night 0.
+
+[b]Victory Conditions:[/b]
+
+[u]Good[/u] - All good players win if both werewolves are eliminated, or if the last two players remaining are the hunter and a werewolf.
+
+[u]Evil[/u] - All evil players win if the werewolves achieve parity: if at any time the number of werewolves remaining equals the number of non-wolves remaining, evil wins. However, if one wolf is left with the hunter, then good wins.
+
+
+[b]Lynch Rules:[/b]
+
+Each day players vote for one player to be lynched. The player receiving the most votes is killed. If there is a tie between two or more players, the tied player with the <tiebreaker> is killed.
+
+Lynch time is <lynch> BGG time. Votes cast with this time-stamp are counted. Votes cast after this time are invalid. Votes made during the night phase are invalid.
+
+All votes must conform to the Cassandra Vote Tally System rules. (Will be
+posted once the game starts). If all living players vote night fall it will
+speed up the dusk.
+
+The player's role is revealed upon lynch.
+
+
+[b]Night Orders:[/b]
+
+Werewolves, Seer and Hunter must all submit their night orders by <night> BGG time (The hunter must also submit his order by <lynch> BGG time in case he is going to be lynched). They do this by using the Cassandra Game Order system in the Cassandra Chat System.
+
+The werewolves night kill choice is revealed with the DAWN post. The players' role is revealed. 
+
+If all living players (including those with out night actions) click on the
+'Lock Game Actions' button it will speed up Dawn.
+
+
+[b]Do not post the content of your Mod Chat room to the game thread. You may summarize, but direct copying is not allowed. Consider that like showing your card to the group in a face-to-face game[/b]
