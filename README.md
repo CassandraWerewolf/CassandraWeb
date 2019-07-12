@@ -1,4 +1,4 @@
-# CassandraProject
+# Cassandra Web
 
 To run:
 
