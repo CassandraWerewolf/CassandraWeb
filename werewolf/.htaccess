@@ -4,12 +4,13 @@
 #Require valid-user
 
 RewriteEngine on
-RewriteRule ^player/(.*)/games_played$ /show_user_games_played.php?player=$1
-RewriteRule ^player/(.*)/games_modded$ /show_user_games_modded.php?player=$1
-RewriteRule ^player/(.*)/with$ /show_played_with.php?player=$1
-RewriteRule ^player/(.*)/with/(.*)$ /show_played_with.php?player=$1&player2=$2
-RewriteRule ^player/(.*)$ /show_player_stats.php?player=$1
-RewriteRule ^profile/(.*)$ /show_player_profile.php?player=$1
+RewriteRule ^player/(.*)/games_played$ /players/show_user_games_played.php?player=$1
+RewriteRule ^player/(.*)/games_modded$ /players/show_user_games_modded.php?player=$1
+RewriteRule ^player/(.*)/with$ /players/show_played_with.php?player=$1
+RewriteRule ^player/(.*)/with/(.*)$ /players/show_played_with.php?player=$1&player2=$2
+RewriteRule ^player/(.*)$ /players/show_player_stats.php?player=$1
+RewriteRule ^profile/(.*)$ /players/show_player_profile.php?player=$1
+
 RewriteRule ^game/(.*)/votes$ /show_game_votes.php?thread_id=$1
 RewriteRule ^game/(.*)/votes/xml$ /show_game_votes_xml.php?thread_id=$1
 RewriteRule ^game/(.*)/tally_inverted$ /show_game_tally_inverted.php?thread_id=$1
@@ -19,6 +20,7 @@ RewriteRule ^game/(.*)/chat/room=(.*)$ /game_chat.php?thread_id=$1&go_to_room=$2
 RewriteRule ^game/(.*)/chat/tab=(.*)$ /game_chat.php?thread_id=$1&tab=$2
 RewriteRule ^game/(.*)/(.*)$ /get_user_post.php?thread_id=$1&player=$2
 RewriteRule ^game/(.*)$ /show_game_stats.php?thread_id=$1
+
 RewriteRule ^cc_game/(.*)/(.*)$ /get_user_post.php?thread_id=$1&player=$2
 RewriteRule ^cc_game/(.*)$ /cc_show_game_stats.php?thread_id=$1
 RewriteRule ^chat/$ chat.php
