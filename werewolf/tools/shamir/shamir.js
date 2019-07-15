@@ -23,7 +23,7 @@ function get_shares(name) {
 	var ident = $("#ident").val();
 	var secret = $("#secret").val();
 
-	$.getJSON('php/shamir.php', 
+	$.getJSON('shamir.php', 
 		{'function'   : name,
 		 'num_shares' : num_shares,
 		 'num_thresh' : num_thresh,
@@ -40,7 +40,7 @@ function get_secret(name) {
 	var num_thresh = $("#num_thresh").val();
 	var shares_list = $("#shares_list").val();
 
-	$.getJSON('php/shamir.php', 
+	$.getJSON('shamir.php', 
 		{'function'   : name,
 		 'num_thresh' : num_thresh,
 		 'shares_list': shares_list},

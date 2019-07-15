@@ -25,7 +25,7 @@ function reset() {
 function get_pkeys(name) {
 	var priv_key = $("#priv_key").val();
 
-	$.getJSON('php/rsa.php', 
+	$.getJSON('rsa.php', 
 		{'function' : name, 
 		'priv_key' : priv_key },
 		function(data) {
@@ -40,7 +40,7 @@ function rsa_pub_enc(name) {
 	var pub_key = $("#pub_key").val();
 	var plain_text = $("#plain_text").val();
 
-	$.getJSON('php/rsa.php', 
+	$.getJSON('rsa.php', 
 		{'function' : name, 
 		'pub_key' : pub_key,
         'plain_text' : plain_text },
@@ -55,7 +55,7 @@ function rsa_priv_dec(name) {
 	var priv_key = $("#priv_key").val();
 	var cipher_text = $("#cipher_text").val();
 
-	$.getJSON('php/rsa.php', 
+	$.getJSON('rsa.php', 
 		{'function' : name, 
 		'priv_key' : priv_key,
         'cipher_text' : cipher_text },
