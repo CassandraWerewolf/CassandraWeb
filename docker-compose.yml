@@ -16,6 +16,7 @@ services:
       MYSQL_DATABASE: werewolf
       MYSQL_USER: dbuser
       MYSQL_PASSWORD: userpassword
+      BGG_PASSWORD: nopassword
     build:
       context: .
       dockerfile: ./php/Dockerfile
@@ -31,6 +32,6 @@ services:
       MYSQL_USER: dbuser
       MYSQL_PASSWORD: userpassword
     volumes:
-      - ./data:/var/lib/mysql
       - ./sql/werewolf_schema.sql:/docker-entrypoint-initdb.d/werewolf1.sql
       - ./sql/werewolf_data.sql:/docker-entrypoint-initdb.d/werewolf2.sql
+      - ./sql/werewolf_routines.sql:/docker-entrypoint-initdb.d/werewolf3.sql
