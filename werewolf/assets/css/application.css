@@ -1,1 +1,5 @@
+/* Styles imported from BGG */
 @import 'bgg.css';
+
+/* Footer */
+@import 'footer.css';
