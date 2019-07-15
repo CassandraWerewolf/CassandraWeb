@@ -1,7 +1,8 @@
 <?php
 header("Content-type: image/png");
 
-include_once("php/db.php");
+include_once "../../setup.php";
+include_once(ROOT_PATH . "php/db.php");
 
 // Set the enviroment variable for GD
 putenv('GDFONTPATH=' . realpath('.'));
