@@ -1,5 +1,4 @@
 <?php
-
 session_start();
 
 //Test to see if idenity of visitor can be determined.
@@ -11,6 +10,7 @@ if ( isset($_SESSION['uid']) || isset($_COOKIE['cassy_uid']) ||isset( $_REQUEST[
   include_once("php/accesscontrol.php");
 }
 
+include_once "setup.php";
 require_once('Cache/Lite.php');
 include_once("menu.php");
 include_once("php/common.php");
@@ -24,7 +24,8 @@ $cache = init_cache();
 
 echo "<html> <head> <title>BGG Werewolf Stats</title>";
 ?>
-<link rel='stylesheet' type='text/css' href='assets/css/application.css'>
+<link rel='stylesheet' type='text/css' href='/assets/css/application.css'>
+<?php if ($theme != 'default') { echo "<link rel='stylesheet' type='text/css' href='/assets/css/themes/{$theme}.css'>"; } ?>
 </head>
 <body>
 <?php display_menu() ?>

@@ -115,7 +115,7 @@ a:hover
 	top: 100%;
 	left: 0;
 	font-weight: normal;
-	background: url(images/menubgclear2.gif) bottom left no-repeat;
+	background: url(/assets/images/menubgclear2.gif) bottom left no-repeat;
 	padding: 5px 0 10px 0;
 	border-right: solid 1px #404E82;
 }
@@ -847,8 +847,8 @@ div.addcontent
 
 .img-shadow {
   float:left;
-  background: url(images/shadowAlpha.png) no-repeat bottom right !important;
-  background: url(images/shadow.gif) no-repeat bottom right;
+  background: url(/assets/images/shadowAlpha.png) no-repeat bottom right !important;
+  background: url(/assets/images/shadow.gif) no-repeat bottom right;
   margin: 5px 0 0 5px !important;
   margin: 5px 0 0 5px;
   }
