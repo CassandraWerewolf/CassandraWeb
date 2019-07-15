@@ -339,11 +339,6 @@ while ( $game = mysql_fetch_array($result) ) {
 	<tr><td>
 		<a href='show_games_missing_info.php'>Games with missing data</a>
 	</td>
-<!--
-	<tr><td>
-		<a href='chat_with_us.html'>Need Help?  Have Suggestions?  Want to Chat with an Administator?</a>
-	</td></tr>
--->
 	<td>
 		<a href='fun_stats.php'>Fun Statistics</a>
 	</td></tr>

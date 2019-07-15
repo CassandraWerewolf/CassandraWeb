@@ -260,9 +260,6 @@ foreach($list as $row) {
 		<a href='<?=$site;?>/password.php'>Change Password</a>
 	</td></tr>
 	<tr><td>
-		<a href='<?=$site;?>/chat_with_us.html'>Need Help?  Have Suggestions?  Want to Chat with an Administator?</a>
-	</td></tr>
-	<tr><td>
 		<a href='<?=$site;?>/fun_stats.php'>Fun Statistics</a>
 	</td></tr>
 	<tr><td>

@@ -40,7 +40,7 @@ exit;
 </head>
 <body>
 <h1>Adding My Google Werewolf Calendar Guide</h1>
-<p>You can skip to the section that pertains to your current situation.  I've started from the basics and worked up.  If you need any help please <a href='/chat_with_us.html'>ask.</a></p>
+<p>You can skip to the section that pertains to your current situation.  I've started from the basics and worked up.</p>
 <h3>Creating a Google Account</h3>
 <ol>
 <li>Go to <a href='http://www.google.com/calendar' target='gcal'>Google Calendars</a></li>
