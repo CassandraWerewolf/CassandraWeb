@@ -1,11 +1,13 @@
 <?php
-    include "php/accesscontrol.php";
-	include_once "php/db.php";
-	include_once "php/common.php";
-	include_once "menu.php";
+	include_once "../setup.php";
+
+	include      ROOT_PATH . "/php/accesscontrol.php";
+	include_once ROOT_PATH . "/php/db.php";
+	include_once ROOT_PATH . "/php/common.php";
+	include_once ROOT_PATH . "/menu.php";
 	require_once 'HTML/Table.php';
 
-    $here = "/";
+	$here = "/";
 	$pagename = "show_player_stats.php";
 	$game = "/game/";
 
@@ -13,15 +15,15 @@
 	if ( $player == "" ) {
 ?>
 <html>
-<head>
-<script language='javascript'>
-<!--
-window.history.back();
-//-->
-</script>
-</head>
+	<head>
+		<script language='javascript'>
+		<!--
+		window.history.back();
+		//-->
+		</script>
+	</head>
 <body>
-Please hit your browsers back button.
+	Please hit your browsers back button.
 </body>
 </html>
 <?php
@@ -33,9 +35,9 @@ Please hit your browsers back button.
 	$sql = sprintf("select id from Users where name=%s",quote_smart($player));
 	$result = mysql_query($sql);
 	if ( mysql_num_rows($result) != 0 ) {
-	  $user_id = mysql_result($result,0,0);
+		$user_id = mysql_result($result,0,0);
 	} else {
-      $user_id = 0;
+		$user_id = 0;
 	}
 ?>
 <html>

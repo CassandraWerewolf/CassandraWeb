@@ -1,9 +1,11 @@
 <?php
 // This page will be used for players to input personal data - ie stuff that was in the "get to know your fellow ww player thread
 
-include "php/accesscontrol.php";
-include_once "edit_profile_functions.php";
-include_once "menu.php";
+include_once "../setup.php";
+
+include ROOT_PATH . "/php/accesscontrol.php";
+include_once ROOT_PATH . "/edit_profile_functions.php";
+include_once ROOT_PATH . "/menu.php";
 
 
 $here = "/";
@@ -42,12 +44,12 @@ if ( $edit && mysql_num_rows($result_bio) == 0 ) {
 <title></title>
 <script language='javascript'>
 <!--
-location.href='<?=$here;?>add_profile.php'
+location.href='<?=$here;?>players/add_profile.php'
 //-->
 </script>
 </head>
 <body>
-<p>Please go <a href='<?=$here;?>add_profile.php'>add your profile</a>.</p>
+<p>Please go <a href='<?=$here;?>players/add_profile.php'>add your profile</a>.</p>
 <?php
 exit;
 }

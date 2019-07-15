@@ -1,7 +1,9 @@
 <?php
-    include "php/accesscontrol.php";
-	include_once "php/db.php";
-	include_once "menu.php";
+	include_once "../setup.php";
+
+	include ROOT_PATH . "/php/accesscontrol.php";
+	include_once ROOT_PATH . "/php/db.php";
+	include_once ROOT_PATH . "/menu.php";
 	require_once 'HTML/Table.php';
 
 	$game = "/game/";
