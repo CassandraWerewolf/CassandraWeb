@@ -198,7 +198,7 @@ $game = mysql_fetch_array($result);
 <head>
 <title>Cassandra Physics System - Configuration</title>
 <link rel='stylesheet' type='text/css' href='/assets/css/application.css'>
-<script src='/color_picker.js'></script>
+<script src='/assets/js/color_picker.js'></script>
 <script language='javascript'>
 <!--
 var game_id = '<?=$game_id;?>';

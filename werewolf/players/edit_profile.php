@@ -1,8 +1,9 @@
 <?php
+include_once "../setup.php";
 
-include_once "php/accesscontrol.php";
+include_once ROOT_PATH . "/php/accesscontrol.php";
 include_once "edit_profile_functions.php";
-include_once "php/bgg.php";
+include_once ROOT_PATH . "/php/bgg.php";
 
 if ( ! isset($_REQUEST['q']) ) {
 clear_editSpace($username);

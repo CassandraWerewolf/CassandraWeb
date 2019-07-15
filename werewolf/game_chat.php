@@ -161,7 +161,7 @@ var current_tab = "<?=$tab;?>";
 </script>
 <script src="/game_chat.js"></script>
 <script src="/configure_chat.js"></script>
-<script src='/color_picker.js'></script>
+<script src='/assets/js/color_picker.js'></script>
 </head>
 <?php
 if ( isset($_REQUEST['full']) ) {

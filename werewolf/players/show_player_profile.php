@@ -4,7 +4,7 @@
 include_once "../setup.php";
 
 include ROOT_PATH . "/php/accesscontrol.php";
-include_once ROOT_PATH . "/edit_profile_functions.php";
+include_once "edit_profile_functions.php";
 include_once ROOT_PATH . "/menu.php";
 
 
@@ -44,12 +44,12 @@ if ( $edit && mysql_num_rows($result_bio) == 0 ) {
 <title></title>
 <script language='javascript'>
 <!--
-location.href='<?=$here;?>players/add_profile.php'
+location.href='/players/add_profile.php'
 //-->
 </script>
 </head>
 <body>
-<p>Please go <a href='<?=$here;?>players/add_profile.php'>add your profile</a>.</p>
+<p>Please go <a href='/players/add_profile.php'>add your profile</a>.</p>
 <?php
 exit;
 }
@@ -58,8 +58,8 @@ exit;
 <html>
 <head>
 <title>Profile for <?=$player;?></title>
-<link rel='stylesheet' type='text/css' href='<?=$here;?>assets/css/application.css'>
-<link rel='stylesheet' type='text/css' href='<?=$here;?>hint.css'>
+<link rel='stylesheet' type='text/css' href='/assets/css/application.css'>
+<link rel='stylesheet' type='text/css' href='/assets/css/hint.css'>
 <script language='javascript'>
 <!--
 var player = '<?=$player;?>'
@@ -70,11 +70,11 @@ var myURL = '<?=$_SERVER['REQUEST_URI'];?>'
 <?php
 if ( $edit ) {
 ?>
-<script src='<?=$here;?>color_picker.js'></script>
-<script src='<?=$here;?>edit_profile.js'></script>
-<script src='<?=$here;?>ajax.js'></script>
-<script src='<?=$here;?>hint.js'></script>
-<script src='<?=$here;?>validation.js'></script>
+<script src='/assets/js/color_picker.js'></script>
+<script src='/players/edit_profile.js'></script>
+<script src='/assets/js/ajax.js'></script>
+<script src='/assets/js/hint.js'></script>
+<script src='/assets/js/validation.js'></script>
 <?php
 }
 ?>
@@ -153,7 +153,7 @@ if ( $edit ) {
 <table class='forum_table'>
 <tr><th>Edit</td><tr>
 <tr><td><div id='edit_space' style='text-align:center'><?php clear_editSpace($player);?></div>
-<img id='busy' style='visibility:hidden' src='<?=$here;?>images/ajax_busy.gif' />
+<img id='busy' style='visibility:hidden' src='/assets/images/ajax_busy.gif' />
 </td></tr>
 </table>
 <?php

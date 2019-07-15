@@ -46,8 +46,8 @@ if ( mysql_num_rows($result) == 1 ) {
 <?php
 if ( $user_id == $uid ) {
 ?>
-<link rel='stylesheet' type='text/css' href='/hint.css'>
-<script src='/hint.js'></script>
+<link rel='stylesheet' type='text/css' href='/assets/css/hint.css'>
+<script src='/assets/js/hint.js'></script>
 <script language='javascript'>
 <!--
 var user_id = "<?=$user_id;?>";

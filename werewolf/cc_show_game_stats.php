@@ -83,7 +83,7 @@ if ( $game['id'] == "" || $game['id'] == 0 )  {$game['title'] = "Invalid Game";}
 <head>
 <title><?=$game['title'];?></title>
 <link rel='stylesheet' type='text/css' href='/assets/css/application.css'>
-<link rel='stylesheet' type='text/css' href='/hint.css'>
+<link rel='stylesheet' type='text/css' href='/assets/css/hint.css'>
 <script language='javascript'>
 <!--
 var thread_id = '<?=$game_thread_id;?>'
@@ -125,7 +125,7 @@ function go_replace(user_id, action) {
 
 //-->
 </script>
-<script src='/hint.js'></script>
+<script src='/assets/js/hint.js'></script>
 <script src='/cc_control.js'></script>
 <?php
 $open_comment = "><!--";
@@ -134,13 +134,13 @@ if ( $edit )  {
 ?>
 <script src='/edit_game.js'></script>
 <script src='/mod_control.js'></script>
-<script src='/validation.js'></script>
+<script src='/assets/js/validation.js'></script>
 <?php
 $open_comment = "";
 $close_comment = "";
 }
 ?>
-<script src='/ajax.js'></script>
+<script src='/assets/js/ajax.js'></script>
 </head>
 <body>
 <?php display_menu(); ?>
@@ -302,7 +302,7 @@ if ( $edit ) {
 <table class='forum_table' width='100%'>
 <tr><th> 
 Edit 
-<img id='busy' style='visibility:hidden' src='/images/ajax_busy.gif' />
+<img id='busy' style='visibility:hidden' src='/assets/images/ajax_busy.gif' />
 </th></tr>
 <tr><td align='center'><div id='edit_space'><?php clear_editSpace(); ?></div></td></tr>
 </table></div>

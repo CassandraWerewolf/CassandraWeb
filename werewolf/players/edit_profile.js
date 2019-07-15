@@ -7,7 +7,7 @@ if ( myURL == "/profile/"+player || myURL == "/dev_profile/"+player ) {
 } else {
   var dir = ""
 }
-dir = "/";
+dir = "/players/";
 
 function clear_edit() {
 show_busy()
