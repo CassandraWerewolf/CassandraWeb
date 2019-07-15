@@ -314,7 +314,7 @@ while ( $game = mysql_fetch_array($result) ) {
 		<div class="cassy-links-section">
 			<h3>Tools</h3>
 			<ul>
-				<li><a href='/tools/aes/'>AES Encryption App</a></li>
+				<!-- <li><a href='/tools/aes/'>AES Encryption App</a></li> -->
 				<li><a href='/tools/rsa/'>RSA Encryption App</a></li>
 				<li><a href='/tools/shamir/'>Shamir Secret Sharing App</a></li>
 				<li><a href='/tools/bookmarklets/'>Bookmarklets</a></li>
