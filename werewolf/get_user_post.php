@@ -60,7 +60,7 @@ $user_id = mysql_result($result,0,0);
 <html>
 <head>
 <title>Cassandra Files for <?=$player;?> in "<?=$game_name;?>" <?=$last_dumped;?></title>
-<link rel='stylesheet' type='text/css' href='/bgg.css'>
+<link rel='stylesheet' type='text/css' href='/assets/css/application.css'>
 </head>
 <body>
 <?php display_menu(); ?>

@@ -10,7 +10,7 @@
 <html>
 <head>
 <title>Games</title>
-<link rel='stylesheet' type='text/css' href='/bgg.css'>
+<link rel='stylesheet' type='text/css' href='/assets/css/application.css'>
 </head>
 <body>
 <?php display_menu(); ?>

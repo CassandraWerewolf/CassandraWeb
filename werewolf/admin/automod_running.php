@@ -14,7 +14,7 @@ $result = mysql_query($sql);
 <html>
 <head>
 <title>Cassandra Running Automod Games</title>
-<link rel='stylesheet' type='text/css' href='../bgg.css'>
+<link rel='stylesheet' type='text/css' href='../assets/css/application.css'>
 <script language='javascript'>
 <!--
 function reset_game(game_id) {

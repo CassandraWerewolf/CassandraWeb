@@ -42,7 +42,7 @@ if ( mysql_num_rows($result) != 0 ) {
 <html>
 <head>
 <title>Player Stats for <?=$player;?></title>
-<link rel='stylesheet' type='text/css' href='/bgg.css'>
+<link rel='stylesheet' type='text/css' href='/assets/css/application.css'>
 </head>
 <body>
 <?php display_menu(); ?>

@@ -20,7 +20,7 @@ $user = mysql_fetch_array($result);
 <html>
 <head>
 <title> <?=$user['name']?> and Social Networks</title>
-<link rel='stylesheet' type='text/css' href='/bgg.css'>
+<link rel='stylesheet' type='text/css' href='/assets/css/application.css'>
 </head>
 <body>
 <?php display_menu(); ?>

@@ -63,7 +63,7 @@ exit;
 <html>
 <head>
 <title>Add a Profile for <?=$username;?></title>
-<link rel='stylesheet' type='text/css' href='/bgg.css'>
+<link rel='stylesheet' type='text/css' href='/assets/css/application.css'>
 </head>
 <body>
 <?php display_menu();?>

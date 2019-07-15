@@ -34,7 +34,7 @@ exit;
 <html>
 <head>
 <title>Compose GeekMail</title>
-<link rel='stylesheet' type='text/css' href='/bgg.css'>
+<link rel='stylesheet' type='text/css' href='/assets/css/application.css'>
 </head>
 <body>
 <?php 

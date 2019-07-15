@@ -113,7 +113,7 @@ $deadline_speed = array('Standard'=>'Standard', 'Fast'=>'Fast');
 <html>
 <head>
 <title>AutoMod Game Setup</title>
-<link rel='stylesheet' type='text/css' href='/bgg.css'>
+<link rel='stylesheet' type='text/css' href='/assets/css/application.css'>
 <script language='javascript'>
 <!--
 function  validate_form() {

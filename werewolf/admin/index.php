@@ -6,7 +6,7 @@ include_once "../menu.php";
 <html>
 <head>
 <title>Admin Index Page</title>
-<link rel='stylesheet' type='text/css' href='../bgg.css'>
+<link rel='stylesheet' type='text/css' href='../assets/css/application.css'>
 </head>
 <body>
 <?php display_menu();?>

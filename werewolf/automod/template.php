@@ -66,7 +66,7 @@ if ( $owner && $template['mode'] == "Edit" ) { $edit = true; }
 <html>
 <head>
 <title>AutoMod Template: <?=$template['name'];?></title>
-<link rel='stylesheet' type='text/css' href='/bgg.css'>
+<link rel='stylesheet' type='text/css' href='/assets/css/application.css'>
 <script language='javascript' src='/automod/edit_script.js'></script>
 </head>
 <body>

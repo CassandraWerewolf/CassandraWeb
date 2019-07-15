@@ -58,7 +58,7 @@ if ( isset($_REQUEST['game_id']) ) {
 <html>
 <head>
 <title><?=$pgTitle;?></title>
-<link rel='stylesheet' type='text/css' href='<?=$here;?>bgg.css'>
+<link rel='stylesheet' type='text/css' href='<?=$here;?>assets/css/application.css'>
 <script src='validation.js'></script>
 <script language='javascript'>
 <!--

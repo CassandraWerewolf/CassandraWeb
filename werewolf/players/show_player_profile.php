@@ -58,7 +58,7 @@ exit;
 <html>
 <head>
 <title>Profile for <?=$player;?></title>
-<link rel='stylesheet' type='text/css' href='<?=$here;?>bgg.css'>
+<link rel='stylesheet' type='text/css' href='<?=$here;?>assets/css/application.css'>
 <link rel='stylesheet' type='text/css' href='<?=$here;?>hint.css'>
 <script language='javascript'>
 <!--

@@ -59,7 +59,7 @@ while ( $row = mysql_fetch_array($result) ) {
 <html>
 <head>
 <title>GeekMail: <?=$subject;?></title>
-<link rel='stylesheet' type='text/css' href='/bgg.css'>
+<link rel='stylesheet' type='text/css' href='/assets/css/application.css'>
 </head>
 <body>
 <?php

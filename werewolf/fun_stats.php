@@ -20,7 +20,7 @@ if ( isset($_GET['limit']) ) {
 <html>
 <head>
 <title>Fun Statistics</title>
-<link rel='stylesheet' type='text/css' href='/bgg.css'>
+<link rel='stylesheet' type='text/css' href='/assets/css/application.css'>
 <script language='javascript'>
 <!--
 

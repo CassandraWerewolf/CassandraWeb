@@ -15,7 +15,7 @@ if ( isset($_REQUEST['order']) ) { $order = $_REQUEST['order']; }
 <html>
 <head>
 <title>Cassandra Competition Main Page</title>
-<link rel='stylesheet' type='text/css' href='/bgg.css'>
+<link rel='stylesheet' type='text/css' href='/assets/css/application.css'>
 </head>
 <body>
 <?php display_menu(); ?>

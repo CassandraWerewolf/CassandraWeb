@@ -17,7 +17,7 @@ $status = mysql_result($result,0,2);
 <html>
 <head>
 <title>Communications for <?=$title;?> (Alpha)</title>
-<link rel='stylesheet' type='text/css' href='/bgg.css'>
+<link rel='stylesheet' type='text/css' href='/assets/css/application.css'>
 <style type=text/css media=screen>
 .chat_time {
   font-style: italic;

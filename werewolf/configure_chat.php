@@ -86,7 +86,7 @@ $game = mysql_fetch_array($result);
 <html>
 <head>
 <title>Cassandra Communications System - Configuration</title>
-<link rel='stylesheet' type='text/css' href='/bgg.css'>
+<link rel='stylesheet' type='text/css' href='/assets/css/application.css'>
 <script src='/color_picker.js'></script>
 <script language='javascript'>
 <!--

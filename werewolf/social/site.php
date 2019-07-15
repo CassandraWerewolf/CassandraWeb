@@ -15,7 +15,7 @@ $site = mysql_fetch_array($result);
 <html>
 <head>
 <title>WW on <?=$site['site_name']?></title>
-<link rel='stylesheet' type='text/css' href='/bgg.css'>
+<link rel='stylesheet' type='text/css' href='/assets/css/application.css'>
 </head>
 <body>
 <?php print display_menu(); ?>

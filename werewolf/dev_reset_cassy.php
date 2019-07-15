@@ -23,7 +23,7 @@ if ( mysql_num_rows($request) != 1 ) {
 <html>
 <head>
 <title>Cassy Rest Page</title>
-<link rel='stylesheet' type='text/css' href='/bgg.css'>
+<link rel='stylesheet' type='text/css' href='/assets/css/application.css'>
 </head>
 <body>
 <h1>Cassy Reset Page</h1>

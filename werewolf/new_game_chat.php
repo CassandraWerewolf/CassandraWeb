@@ -58,7 +58,7 @@ if ( $status == "Finished" ) {
 <html>
 <head>
 <title>Communications for <?=$title;?></title>
-<link rel='stylesheet' type='text/css' href='/bgg.css'>
+<link rel='stylesheet' type='text/css' href='/assets/css/application.css'>
 <script language='javascript'>
 <!--
 function change_rooms() {
@@ -109,7 +109,7 @@ print "</div>\n";
 <html>
 <head>
 <title>Communications for <?=$title;?></title>
-<link rel='stylesheet' type='text/css' href='/bgg.css'>
+<link rel='stylesheet' type='text/css' href='/assets/css/application.css'>
 <script src='/new_game_chat.js' ></script>
 <script language='javascript'>
 <!--

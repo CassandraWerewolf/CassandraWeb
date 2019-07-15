@@ -15,7 +15,7 @@ $result = mysql_query($sql);
 <html>
 <head>
 <title>Cassandra User ID's</title>
-<link rel='stylesheet' type='text/css' href='../bgg.css'>
+<link rel='stylesheet' type='text/css' href='../assets/css/application.css'>
 </head>
 <body>
 <?php display_menu();?>

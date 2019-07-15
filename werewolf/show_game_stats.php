@@ -78,7 +78,7 @@ if ( $game['id'] == "" || $game['id'] == 0 )  {$game['title'] = "Invalid Game";}
 <html>
 <head>
 <title><?=$game['title'];?></title>
-<link rel='stylesheet' type='text/css' href='<?=$here;?>bgg.css'>
+<link rel='stylesheet' type='text/css' href='<?=$here;?>assets/css/application.css'>
 <link rel='stylesheet' type='text/css' href='<?=$here;?>hint.css'>
 <script language='javascript'>
 <!--

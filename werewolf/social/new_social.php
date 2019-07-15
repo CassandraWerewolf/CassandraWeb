@@ -29,7 +29,7 @@ location.href='/social/'
 <html>
 <head>
 <title>Add a New Social Site Connection</title>
-<link rel='stylesheet' type='text/css' href='/bgg.css'>
+<link rel='stylesheet' type='text/css' href='/assets/css/application.css'>
 </head>
 <body>
 <?php print display_menu(); ?>

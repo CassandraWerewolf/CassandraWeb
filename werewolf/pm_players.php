@@ -25,7 +25,7 @@ if ( isset($_POST['submit']) ) {
 <html>
 <head>
 <title>PM Players</title>
-<link rel='stylesheet' type='text/css' href='/bgg.css'>
+<link rel='stylesheet' type='text/css' href='/assets/css/application.css'>
 </head>
 <body>
 <?php print geekmail_form($to); ?>

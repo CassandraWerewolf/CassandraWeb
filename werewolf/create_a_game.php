@@ -66,7 +66,7 @@ exit;
 <html>
 <head>
 <title>Add a New Game - Sign-up Mode</title>
-<link rel='stylesheet' type='text/css' href='<?=$here;?>bgg.css'>
+<link rel='stylesheet' type='text/css' href='<?=$here;?>assets/css/application.css'>
 <script src='validation.js'></script>
 <script language='javascript'>
 <!--

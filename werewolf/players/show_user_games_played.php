@@ -42,7 +42,7 @@ if ( mysql_num_rows($result) == 1 ) {
 <html>
 <head>
 <title>Games Played Stats for <?=$player;?></title>
-<link rel='stylesheet' type='text/css' href='/bgg.css'>
+<link rel='stylesheet' type='text/css' href='/assets/css/application.css'>
 <?php
 if ( $user_id == $uid ) {
 ?>

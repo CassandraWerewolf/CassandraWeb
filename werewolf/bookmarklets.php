@@ -7,7 +7,7 @@ include_once "menu.php";
 <html>
 <head>
 <title>Bookmarklets</title>
-<link rel='stylesheet' type='text/css' href='/bgg.css'>
+<link rel='stylesheet' type='text/css' href='/assets/css/application.css'>
 </head>
 <body>
 <?php print display_menu(); ?>

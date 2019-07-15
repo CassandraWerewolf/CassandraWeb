@@ -10,7 +10,7 @@ include "menu.php";
 <html>
 <head>
 <title>BGG Werewolf Time Zones</title>
-<link rel='stylesheet' type='text/css' href='/bgg.css'>
+<link rel='stylesheet' type='text/css' href='/assets/css/application.css'>
 <link rel='stylesheet' type='text/css' href='/hint.css'>
 <script src="/hint.js"></script>
 <script language='javascript'>

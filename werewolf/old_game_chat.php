@@ -71,7 +71,7 @@ if ( $status == "Finished" ) {
   <html>
   <head>
   <title>Communications for <?=$title;?></title>
-  <link rel='stylesheet' type='text/css' href='/bgg.css'>
+  <link rel='stylesheet' type='text/css' href='/assets/css/application.css'>
   <script language='javascript'>
   <!--
   function change_rooms() {
@@ -125,7 +125,7 @@ else {
   <html>
   <head>
   <title>Communications for <?=$title;?></title>
-  <link rel='stylesheet' type='text/css' href='/bgg.css'>
+  <link rel='stylesheet' type='text/css' href='/assets/css/application.css'>
   <script src='/old_game_chat.js' ></script>
   <script language='javascript'>
   game_id = '<?=$game_id;?>';

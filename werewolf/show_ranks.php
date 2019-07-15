@@ -11,7 +11,7 @@ $site = '';
 <html>
 <head>
 <title>BGG Werewolf Player and Moderator Ranks</title>
-<link rel='stylesheet' type='text/css' href='<?=$site;?>/bgg.css'>
+<link rel='stylesheet' type='text/css' href='<?=$site;?>/assets/css/application.css'>
 </head>
 <body>
 <?php display_menu(); ?>

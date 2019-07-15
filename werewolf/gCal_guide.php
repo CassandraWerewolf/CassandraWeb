@@ -36,7 +36,7 @@ exit;
 <html>
 <head>
 <title>Google Calendar Guide</title>
-<link rel='stylesheet' type='text/css' href='/bgg.css'>
+<link rel='stylesheet' type='text/css' href='/assets/css/application.css'>
 </head>
 <body>
 <h1>Adding My Google Werewolf Calendar Guide</h1>

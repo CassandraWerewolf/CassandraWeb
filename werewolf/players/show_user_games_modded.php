@@ -29,7 +29,7 @@ Please hit your browsers back button.
 <html>
 <head>
 <title>Moderator Stats for <?=$player;?></title>
-<link rel='stylesheet' type='text/css' href='/bgg.css'>
+<link rel='stylesheet' type='text/css' href='/assets/css/application.css'>
 <?php
 
 $sql = sprintf("select id from Users where name=%s",quote_smart($player));

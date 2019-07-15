@@ -9,7 +9,7 @@ include "menu.php";
 <html>
 <head>
 <title>Players with Profiles</title>
-<link rel='stylesheet' type='text/css' href='/bgg.css'>
+<link rel='stylesheet' type='text/css' href='/assets/css/application.css'>
 </head>
 <body>
 <?php display_menu();?>
