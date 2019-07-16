@@ -11,7 +11,7 @@ include_once "php/common.php";
 include_once "php/bgg.php";
 include_once "HTML/Table.php";
 include_once "google_calendar_functions.php";
-include_once "moderator_control_functions.php";
+// include_once "moderator_control_functions.php";
 
 
 dbConnect();
