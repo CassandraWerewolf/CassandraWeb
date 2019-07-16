@@ -1,18 +1,19 @@
 <?php
+include_once "../setup.php";
 
-include "php/accesscontrol.php";
-include_once "php/db.php";
-include_once "php/common.php";
-include_once "timezone_functions.php";
-include_once "edit_game_functions.php";
-include_once "google_calendar_functions.php";
-include_once "menu.php";
-include_once "autocomplete.php";
+include      ROOT_PATH . "/php/accesscontrol.php";
+include_once ROOT_PATH . "/php/db.php";
+include_once ROOT_PATH . "/php/common.php";
+include_once ROOT_PATH . "/timezone_functions.php";
+include_once ROOT_PATH . "/edit_game_functions.php";
+include_once ROOT_PATH . "/google_calendar_functions.php";
+include_once ROOT_PATH . "/menu.php";
+include_once ROOT_PATH . "/autocomplete.php";
 
-checkLevel($level,1);
+checkLevel($level,2);
 
 $game_thread_id = $_REQUEST['thread_id'];
-$pagename = "show_game_stats.php";
+$pagename = "cc_show_game_stats.php";
 $posts = "${here}game/$game_thread_id/";
 $player = "${here}player/";
 $game_page = "${here}game/";
@@ -126,7 +127,7 @@ function go_replace(user_id, action) {
 //-->
 </script>
 <script src='/assets/js/hint.js'></script>
-<script src='/cc_control.js'></script>
+<script src='/competition/cc_control.js'></script>
 <?php
 $open_comment = "><!--";
 $close_comment = "--";
@@ -264,7 +265,7 @@ print "</td></tr>\n";
 <tr><td align='center'><div>
 <?php
 if ( $CC_info['user_id'] == "" ) {
-  print "<a href='${here}cc_claim.php?game_id=".$game['id']."'>Claim this game</a>";
+  print "<a href='/competition/cc_claim.php?game_id=".$game['id']."'>Claim this game</a>";
 } else {
   print "This game has been claimed by ".$CC_info['name'].". <br />";
   if ( $CC_info['expire'] == 'open') {
@@ -284,8 +285,8 @@ if ( $CC_info['user_id'] == "" ) {
 	print "<tr><td style='font-weight:bold' align='right'>Type of Error:</td><td>".$CC_info['type_error']."</td></tr>";
 	print "<tr><td style='font-weight:bold' align='right'>Description of Error:</td><td>".$CC_info['desc_error']."</td></tr>";
 	print "<tr><td colspan='2' align='center'>";
-	print "<a href='${here}cc_mod.php?game_id=".$game['id']."&action=accept'>[Accept]</a> ";
-	print "<a href='${here}cc_mod.php?game_id=".$game['id']."&action=deny'>[Deny]</a> ";
+	print "<a href='/competition/cc_mod.php?game_id=".$game['id']."&action=accept'>[Accept]</a> ";
+	print "<a href='/competition/cc_mod.php?game_id=".$game['id']."&action=deny'>[Deny]</a> ";
 	print "</td></tr>";
 	print "</table>";
   }

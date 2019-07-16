@@ -1,8 +1,9 @@
 <?php
 
-include_once "php/accesscontrol.php";
-include_once "php/db.php";
-include_once "menu.php";
+include_once "../setup.php";
+include_once ROOT_PATH . "/php/accesscontrol.php";
+include_once ROOT_PATH . "/php/db.php";
+include_once ROOT_PATH . "/menu.php";
 
 dbConnect();
 
@@ -37,7 +38,7 @@ while ( $row = mysql_fetch_array($result) ) {
 <br />
 <table class='forum_table'>
 <?php
-$here = "/cassy_competition.php";
+$here = '/competition/';
 $format = 'Can\\\'t be challenged until %a. %b %e, %Y at %l:%i%p';
 $sql = sprintf("select Games.id, number, title, thread_id, user_id, if(timestampdiff(HOUR,claim_time,now())>=72,if(challenger_id is null,if(timestampdiff(HOUR,claim_time,now())>=96,'Can be challenged by anyone','Can be challenged by other teams'), challenger_id),date_format(date_add(claim_time, interval 3 day),'%s')) as status from Games left join CC_info on Games.id=CC_info.game_id where Games.status = 'Finished' and Games.automod_id is null and end_date < '2007-08-06 12:31:29' order by %s",$format,quote_smart($order));
 $result = mysql_query($sql);

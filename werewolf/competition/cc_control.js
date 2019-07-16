@@ -1,12 +1,7 @@
 var xmlHttp
 var element
 
-if ( myURL == "/cc_game/"+thread_id ) {
-  var dir = "../"
-} else {
-  var dir = ""
-}
-
+var dir = "/competition/"
 
 function show_challenge() {
 element="cc_space"
