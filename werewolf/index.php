@@ -315,8 +315,8 @@ while ( $game = mysql_fetch_array($result) ) {
 				<li><a href='show_active.php'>Active players and moderators</a></li>
 				<li><a href='show_cassandra_files.php'>Current games</a></li>
 				<li><a href='show_games_missing_info.php'>Games with missing data</a></li>
-				<li><a href='automod'>Create your own Automod Template</a></li>
-				<li><a href='fun_stats.php'>Fun Statistics</a></li>
+				<li><a href='/automod/'>Create your own Automod Template</a></li>
+				<li><a href='/stats/'>Fun Statistics</a></li>
 				<li><a href='change_log.html' title='Last Updated: <?php echo date("l, d-M-Y", filemtime('change_log.html'));?>'>Change Log</a></li>
 			</ul>
 		</div>
@@ -329,7 +329,7 @@ while ( $game = mysql_fetch_array($result) ) {
 				<li><a href='ranks.php'>Player and moderator Ranks</a></li>
 				<li><a href='http://boardgamegeek.com/thread/225928'>Player Picture Thread</a> (<a href='game/225928'>By Player</a>)</li>
 				<li><a href='timezones.php'>Player Timezone Chart</a></li>
-				<li><a href='social'>Find WW players Elsewhere</a></li>
+				<li><a href='/social/'>Find WW players Elsewhere</a></li>
 				<?php if ( isset($username) ) { ?><li><a href='https://discord.gg/ftUvN3k' target="_blank">Discord Chat</a></li><?php } ?>
 			</ul>
 		</div>
@@ -340,8 +340,8 @@ while ( $game = mysql_fetch_array($result) ) {
 				<li><a href='/tools/rsa/'>RSA Encryption App</a></li>
 				<li><a href='/tools/shamir/'>Shamir Secret Sharing App</a></li>
 				<li><a href='/tools/bookmarklets/'>Bookmarklets</a></li>
-				<li><a href='balance'>Game Balance Creator</a></li>
-				<li><a href='admin'>Admin Pages</a></li>
+				<li><a href='/balance/'>Game Balance Creator</a></li>
+				<li><a href='/admin/'>Admin Pages</a></li>
 			</ul>
 		</div>
 	</div>

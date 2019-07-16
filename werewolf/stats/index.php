@@ -1,9 +1,10 @@
 <?php
+include_once "../setup.php";
 
-include_once "php/accesscontrol.php";
-include_once "php/db.php";
-include_once "menu.php";
-include_once "php/common.php";
+include_once ROOT_PATH . "/php/accesscontrol.php";
+include_once ROOT_PATH . "/php/db.php";
+include_once ROOT_PATH . "/menu.php";
+include_once ROOT_PATH . "/php/common.php";
 
 dbConnect();
 
@@ -52,7 +53,7 @@ myTopRadio = new Array (
 	  mytop = myTopRadio[i].value
 	}
   }
-  location.href='/fun_stats.php?stat='+stat_id+'&limit='+mytop
+  location.href='index.php?stat='+stat_id+'&limit='+mytop
 }
 
 function update_div(obj) {
