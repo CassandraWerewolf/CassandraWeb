@@ -121,23 +121,23 @@ function go_replace(user_id, action) {
 
 //-->
 </script>
-<script src='<?=$here;?>/assets/js/hint.js'></script>
+<script src='/assets/js/hint.js'></script>
 <?php
 print time_dropdown_js();
 $open_comment = "><!--";
 $close_comment = "--";
 if ( $edit )  {
 ?>
-<script src='<?=$here;?>/assets/js/color_picker.js'></script>
+<script src='/assets/js/color_picker.js'></script>
 <script src='<?=$here;?>edit_game.js'></script>
 <script src='<?=$here;?>mod_control.js'></script>
-<script src='<?=$here;?>/assets/js/validation.js'></script>
+<script src='/assets/js/validation.js'></script>
 <?php
 $open_comment = "";
 $close_comment = "";
 }
 ?>
-<script src='<?=$here;?>/assets/js/ajax.js'></script>
+<script src='/assets/js/ajax.js'></script>
 </head>
 <body>
 <?php display_menu(); ?>
