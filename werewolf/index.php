@@ -1,5 +1,4 @@
 <?php
-
 session_start();
 
 //Test to see if idenity of visitor can be determined.
@@ -11,6 +10,7 @@ if ( isset($_SESSION['uid']) || isset($_COOKIE['cassy_uid']) ||isset( $_REQUEST[
   include_once("php/accesscontrol.php");
 }
 
+include_once "setup.php";
 require_once('Cache/Lite.php');
 include_once("menu.php");
 include_once("php/common.php");
@@ -24,11 +24,33 @@ $cache = init_cache();
 
 echo "<html> <head> <title>BGG Werewolf Stats</title>";
 ?>
-<link rel='stylesheet' type='text/css' href='bgg.css'>
+<link rel='stylesheet' type='text/css' href='/assets/css/application.css'>
+<?php if ($theme != 'default') { echo "<link rel='stylesheet' type='text/css' href='/assets/css/themes/{$theme}.css'>"; } ?>
 </head>
 <body>
 <?php display_menu() ?>
 <center>
+
+<?php if ($show_funding_message) { ?>
+	<div style="padding: 0 20%;">
+		<h1>2019 Fundraiser</h1>
+		To provide high performance and high availablity and continuously backed up web site Cassandra is hosted on Amazon AWS. This cost money and we hope that our community will help contibute to that cost.<br>
+		<h3 style="margin: 5px 0">Goal: $60/month</h3><br>
+		<h5 style="margin: 5px 0">$2/month from 30 or more people</h3><br>
+		<div style="float: left; padding: 0 0 0 28%;">
+		<a href="https://www.paypal.me/CassandraWerewolf/24">
+		<img alt="donate button" src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif" border="0">
+		</div>
+		<div style="float: left; margin: 5px;">
+		<h3>OR</h3>
+		</div>	
+		<div style="float: left">
+		<a href="https://www.patreon.com/bePatron?u=10619201" data-patreon-widget-type="become-patron-button">Become a Patron!</a><script async src="https://c6.patreon.com/becomePatronButton.bundle.js"></script>
+		</a>
+		</div>
+		<div style="clear: both;"></div>
+	</div>
+<?php } ?>
 
 <h1>BGG Werewolf Stats</h1>
 
@@ -280,92 +302,53 @@ while ( $game = mysql_fetch_array($result) ) {
 <tr>
 </table>
 
-<br />
+</center>
 
 <!-- <img src='games_started_graph.php'> -->
+<footer>
+	<div class="cassy-links">
+		<div class="cassy-links-section">
+			<h3>Cassandra</h3>
+			<ul>
+				<li><a href='signup.php'>Get a Password</a></li>
+				<li><a href='password.php'>Change Password</a></li>
+				<li><a href='show_active.php'>Active players and moderators</a></li>
+				<li><a href='show_cassandra_files.php'>Current games</a></li>
+				<li><a href='show_games_missing_info.php'>Games with missing data</a></li>
+				<li><a href='/automod/'>Create your own Automod Template</a></li>
+				<li><a href='/stats/'>Fun Statistics</a></li>
+				<li><a href='change_log.html' title='Last Updated: <?php echo date("l, d-M-Y", filemtime('change_log.html'));?>'>Change Log</a></li>
+			</ul>
+		</div>
+		<div class="cassy-links-section">
+			<h3>Community</h3>
+			<ul>
+				<li><a href='secrecy_pledge.html'>Our Pledge</a> - Please Read</li>
+				<li><a href='wotw.php'>Wolf of the Week List</a></li>
+				<li><a href='wolfy_awards.php'>Wolfy Awards</a></li>
+				<li><a href='ranks.php'>Player and moderator Ranks</a></li>
+				<li><a href='http://boardgamegeek.com/thread/225928'>Player Picture Thread</a> (<a href='game/225928'>By Player</a>)</li>
+				<li><a href='timezones.php'>Player Timezone Chart</a></li>
+				<li><a href='/social/'>Find WW players Elsewhere</a></li>
+				<?php if ( isset($username) ) { ?><li><a href='https://discord.gg/ftUvN3k' target="_blank">Discord Chat</a></li><?php } ?>
+			</ul>
+		</div>
+		<div class="cassy-links-section">
+			<h3>Tools</h3>
+			<ul>
+				<!-- <li><a href='/tools/aes/'>AES Encryption App</a></li> -->
+				<li><a href='/tools/rsa/'>RSA Encryption App</a></li>
+				<li><a href='/tools/shamir/'>Shamir Secret Sharing App</a></li>
+				<li><a href='/tools/bookmarklets/'>Bookmarklets</a></li>
+				<li><a href='/balance/'>Game Balance Creator</a></li>
+				<li><a href='/admin/'>Admin Pages</a></li>
+			</ul>
+		</div>
+	</div>
+	<div class="cassy-load-time"><?php $timer->end_time(); echo number_format($timer->elapsed_time(), 3) . " seconds"; ?></div>
+</footer>
 
-<table class='forum_table' cellpadding='2'>
-	<tr><th colspan='2'>Other Abilities</th></tr>
-	<tr><td>
-		<a href='signup.php'>Get a Password</a>
-	</td>
-	<td>
-		<a href='password.php'>Change Password</a>
-	</td></tr>
-	<tr><td>
-<a href='wotw.php'>Wolf of the Week List</a>
-	</td>
-	<td>
-<a href='social'>Find WW players Elsewhere</a>
-	</td></tr>
-	<tr><td>
-<a href='automod'>Create your own Automod Template</a>
-	</td>
-	<td>
-		<a href='aes.html'>AES Encryption App</a>
-	</td></tr>
-	<tr><td>
-		<a href='rsa.html'>RSA Encryption App</a>
-	</td>
-	<td>
-		<a href='shamir.html'>Shamir Secret Sharing App</a>
-	</td></tr>
-	<tr><td>
-<a href='bookmarklets.php'>Bookmarklets</a>
-	</td>
-	<td>
-	<?php if ( isset($username) ) { ?><a href='https://discord.gg/ftUvN3k' target="_blank">Discord Chat</a><?php } ?>
-    </td>
-	</tr>
-	<tr><td>
-		<a href='show_games_missing_info.php'>Games with missing data</a>
-	</td>
-<!--
-	<tr><td>
-		<a href='chat_with_us.html'>Need Help?  Have Suggestions?  Want to Chat with an Administator?</a>
-	</td></tr>
--->
-	<td>
-		<a href='fun_stats.php'>Fun Statistics</a>
-	</td></tr>
-	<tr><td>
-		<a href='ranks.php'>Player and moderator Ranks</a>
-	</td>
-	<td>
-		<a href='http://boardgamegeek.com/thread/225928'>Player Picture Thread</a> (<a href='game/225928'>By Player</a>)
-	</td></tr>
-	<tr><td>
-		<a href='timezones.php'>Player Timezone Chart</a>
-	</td>
-	<td>
-		<a href='show_cassandra_files.php'>Current games in the Cassandra Files System </a>
-	</td></tr>
-	<tr><td>
-		<a href='show_active.php'>Currently active players and moderators</a>
-	</td>
-	<td>
-<a href='wolfy_awards.php'>Wolfy Awards</a>
-	</td></tr>
-	<tr><td>
-<a href='balance'>Game Balance Creator</a>
-	</td>
-	<td>
-		<a href='change_log.html'>Change Log</a> - Last Updated: <?php echo date("l, d-M-Y", filemtime('change_log.html'));?> 
-	</td/></tr>
-	<tr><td>
-		<a href='secrecy_pledge.html'>Our Pledge</a> - Please Read
-	</td/>
-	<td>
-		<a href='admin'>Admin Pages</a>
-	</td/></tr>
-</table>
 
-<?php
-
-$timer->end_time();
-echo number_format($timer->elapsed_time(), 3) . " seconds";
-?>
-</center>
 </body>
 </html>
 

@@ -35,7 +35,7 @@ location.href='/automod/template/<?=$template_id;?>'
 <html>
 <head>
 <title>Create New Automod Template</title>
-<link rel='stylesheet' type='text/css' href='/bgg.css'>
+<link rel='stylesheet' type='text/css' href='/assets/css/application.css'>
 </head>
 <body>
 <?php print display_menu(); ?>

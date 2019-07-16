@@ -39,7 +39,7 @@ if ( $moderator || ($level <= 2 && $status == 'Finished') ) {
 
 if ( $game['id'] == "" || $game['id'] == 0 )  {$game['title'] = "Invalid Game";}
 
-$css = "<link rel='stylesheet' type='text/css' href='$domain/hint.css'>\n";
+$css = "<link rel='stylesheet' type='text/css' href='/assets/css/hint.css'>\n";
 $javascript .= "<script language='javascript'>\n";
 $javascript .= "<!--\n";
 $javascript .= "var domain = '$domain'\n";
@@ -48,12 +48,12 @@ $javascript .= "var thread_id = '".$game['thread_id']."'\n";
 $javascript .= "var currentStatus = '".$game['status']."'\n";
 $javascript .= "//-->\n";
 $javascript .= "</script>\n";
-$javascript .= "<script src='$domain/hint.js'></script>\n";
+$javascript .= "<script src='/assets/js/hint.js'></script>\n";
 $javascript .= "<script src='$domain/game_page.js'></script>\n";
 if ( $edit )  {
 # $javascript .= "<script src='$domain/edit_game.js'></script>\n";
 # $javascript .= "<script src='$domain/mod_control.js'></script>\n";
-  $javascript .= "<script src='$domain/validation.js'></script>\n";
+  $javascript .= "<script src='/assets/js/validation.js'></script>\n";
 }
 
 $extra = $css.$javascript;

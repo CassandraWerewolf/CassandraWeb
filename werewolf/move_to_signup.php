@@ -55,8 +55,8 @@ $game = mysql_fetch_array($result);
 <html>
 <head>
 <title>Move Scheduled Game to Sign-up Mode</title>
-<link rel='stylesheet' type='text/css' href='<?=$here;?>bgg.css'>
-<script src='validation.js'></script>
+<link rel='stylesheet' type='text/css' href='<?=$here;?>assets/css/application.css'>
+<script src='/assets/js/validation.js'></script>
 <script language='javascript'>
 <!--
 function validate_form() {

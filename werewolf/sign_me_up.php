@@ -38,7 +38,7 @@ if ( $_GET['action'] == "add" ) {
 <html>
 <head>
 <title>Sign Me Up</title>
-<link rel='stylesheet' type='text/css' href='/bgg.css'>
+<link rel='stylesheet' type='text/css' href='/assets/css/application.css'>
 <script language='javascript'>
 <!--
 function bgg_pwd_note() {

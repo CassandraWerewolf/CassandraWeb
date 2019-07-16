@@ -1,0 +1,30 @@
+footer {
+  background: #F5F5FF;
+}
+
+.cassy-links {
+  width: 100%;
+  margin-right: auto;
+  margin-left: auto;
+  display: grid;
+}
+
+.cassy-links-section ul, 
+.cassy-links-section li {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+@media (min-width: 768px) {
+  .cassy-links {
+    max-width: 720px;
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+}
+
+.cassy-load-time {
+  text-align: center;
+  padding: 15px 0;
+  font-size: .875em;
+}

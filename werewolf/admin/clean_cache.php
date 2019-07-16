@@ -11,7 +11,7 @@ $cache = init_cache();
 <html>
 <head>
 <title>Cache cleaning</title>
-<link rel='stylesheet' type='text/css' href='../bgg.css'>
+<link rel='stylesheet' type='text/css' href='../assets/css/application.css'>
 </head>
 <body>
 <?php display_menu();?>

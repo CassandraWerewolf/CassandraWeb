@@ -15,7 +15,7 @@ include_once "../php/google_calendar.php";
 <html>
 <head>
 <title>Reset the Calendar with Database data</title>
-<link rel='stylesheet' type='text/css' href='/bgg.css'>
+<link rel='stylesheet' type='text/css' href='/assets/css/application.css'>
 </head>
 <body>
 <h1>Reseting the Calendar</h1>

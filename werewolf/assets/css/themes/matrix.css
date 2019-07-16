@@ -1,0 +1,12 @@
+p,
+td,
+th,
+body,
+input {
+	color: red;
+}
+
+body {
+	background-image: url('/assets/images/matrix.jpg');
+	background-repeat: repeat;
+}

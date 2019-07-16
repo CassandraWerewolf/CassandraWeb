@@ -49,7 +49,7 @@ if ( mysql_num_rows($result) == 1 ) {
 <html>
 <head>
 <title>Votes from <?=$title;?></title>
-<link rel='stylesheet' type='text/css' href='<?=$here;?>bgg.css'>
+<link rel='stylesheet' type='text/css' href='<?=$here;?>assets/css/application.css'>
 <script language='javascript'>
 <!--
 

@@ -83,7 +83,7 @@ function timezone_chart($time="utc_timestamp()",$game_id="") {
   $table->updateCellAttributes($time_row,$bgg_col,"style='font-weight:bold; background-color:white'");
 
   $output = $table->toHTML();
-  $output .= "Don't see your name? - Go fill out your <a href='/add_profile.php'>profile</a>.\n";
+  $output .= "Don't see your name? - Go fill out your <a href='/players/add_profile.php'>profile</a>.\n";
 
   return $output;
 }

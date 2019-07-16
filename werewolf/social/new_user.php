@@ -56,7 +56,7 @@ location.href='/social/'
 <html>
 <head>
 <title>Add Your Information for <?=$site['site_name']?></title>
-<link rel='stylesheet' type='text/css' href='/bgg.css'>
+<link rel='stylesheet' type='text/css' href='/assets/css/application.css'>
 </head>
 <body>
 <?php print display_menu(); ?>

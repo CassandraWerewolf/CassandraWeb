@@ -83,7 +83,7 @@ if ( $status == "Finished" ) {
   <html>
   <head>
   <title>Communications for <?=$title;?></title>
-  <link rel='stylesheet' type='text/css' href='/bgg.css'>
+  <link rel='stylesheet' type='text/css' href='/assets/css/application.css'>
   <script language='javascript'>
   <!--
   function change_rooms() {
@@ -150,7 +150,7 @@ if ( isset($_GET['go_to_room']) ) {
 <html>
 <head>
 <title>Communications for <?=$title;?></title>
-<link rel='stylesheet' type='text/css' href='/bgg.css'>
+<link rel='stylesheet' type='text/css' href='/assets/css/application.css'>
 <script language='javascript'>
 <!--
 var user_id = "<?=$uid;?>";
@@ -161,7 +161,7 @@ var current_tab = "<?=$tab;?>";
 </script>
 <script src="/game_chat.js"></script>
 <script src="/configure_chat.js"></script>
-<script src='/color_picker.js'></script>
+<script src='/assets/js/color_picker.js'></script>
 </head>
 <?php
 if ( isset($_REQUEST['full']) ) {
