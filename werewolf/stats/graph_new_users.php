@@ -1,5 +1,7 @@
 <?php
-	require_once("php/db.php");
+	include_once "../setup.php";
+
+	require_once(ROOT_PATH . "/php/db.php");
 	require_once("jpgraph/jpgraph.php");    
 	require_once("jpgraph/jpgraph_bar.php"); 
 	require_once("jpgraph/jpgraph_line.php"); 	
