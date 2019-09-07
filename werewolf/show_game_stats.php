@@ -528,7 +528,7 @@ if ( $game['automod_id'] != "") {
 <?php
 if ( $game['auto_vt'] != "No" ) {
 ?>
-<a href='<?=$posts;?>tally'>Vote Tally</a> : <a href='<?=$posts;?>tally_inverted'>Inverted Tally</a> : <a href='<?=$posts;?>votes'>Vote Log</a> : <a href='<?=$posts;?>votes/xml'>XML</a> <br />
+<a href='<?=$posts;?>tally'>Vote Tally</a> : <a href='<?=$posts;?>tally_inverted'>Inverted Tally</a> : <a href='<?=$posts;?>votes'>Vote Log</a> : <a href='<?=$posts;?>votes/xml'>XML</a> : <a href='http://gamedecay.com/voteviewer.html?g=<?=$game_thread_id;?>'>VoteViewer</a> <br />
 <?php 
 }
 #print "Number of Chat rooms: $chats<br />";
