@@ -4,7 +4,6 @@
 
 <table class='games-counts forum_table' border='0'>
     <tr>
-        <th>Game #'s</th>
         <th>Total</th>
         <th>Won by Evil</th>
         <th>Won by Good</th>
@@ -12,7 +11,6 @@
         <th>In Progress</th>
     </tr>
     <tr>
-        <td></td>
         <?php foreach ( $games->get_stats() as $type => $count ) { ?>
             <td><a href='show_games.php?type=<?php echo $type ?>'><?php echo $count ?></a></td>
         <?php } ?>
@@ -226,6 +224,6 @@
         <a href='create_a_game.php'>Add a Game in Signup</a>
         <br />
         <a href='automod/new.php'>Add an Auto-Mod Game</a>
-        
+
     </div>
 </div>
