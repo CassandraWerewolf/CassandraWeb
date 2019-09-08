@@ -1,0 +1,12 @@
+.games-counts {
+  margin: 0 auto 30px;
+}
+
+.games-index {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-column-gap: 30px;
+}
+.games-index--section {
+  margin-bottom: 15px;
+}

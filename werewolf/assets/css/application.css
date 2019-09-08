@@ -1,5 +1,11 @@
 /* Styles imported from BGG */
 @import 'bgg.css';
 
-/* Footer */
-@import 'footer.css';
+/* Base styles, reset */
+@import 'layout/base.css';
+
+/* Layout sections */
+@import 'layout/footer.css';
+
+/* Our components */
+@import 'components/games.css';
