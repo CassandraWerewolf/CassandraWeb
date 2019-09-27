@@ -1,5 +1,5 @@
-  </div> <!-- end .content -->
-   
+    </div> <!-- end .content -->
+  </div> <!-- end .content-wrap -->
    <!-- <img src='games_started_graph.php'> -->
     <footer>
       <div class="cassy-links">

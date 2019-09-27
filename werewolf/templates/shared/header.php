@@ -4,6 +4,7 @@
     <link rel='stylesheet' type='text/css' href='/assets/css/application.css'>
     <?php if ($theme != 'default') { echo "<link rel='stylesheet' type='text/css' href='/assets/css/themes/{$theme}.css'>"; } ?>
   </head>
-  <body>
+  <body class="body">
     <?php display_menu() ?>
-    <div class='content'>
+    <div class='content-wrap'>
+      <div class='content'>

@@ -1,3 +1,10 @@
+body.body {
+  background: #F5F5FF;
+}
+
+.content-wrap {
+  background: #FFFFFF;
+}
 .content {
   width: 960px;
   padding: 30px;
