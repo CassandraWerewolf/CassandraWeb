@@ -58,21 +58,4 @@ if ( isset($username) ) {
 -->
 <?php
 }
-
-function display_mobile_header(){
-  global $username;
-?>
-  <div class='header'>Welcome <?=$username;?></div>
-<?php
-}
-
-function display_mobile_footer(){
-?>
-<div class='footer'>
-<a href='/logout.php'><input class='footer' type='button' value='Log Out' /></a>
-<a href='http://www.boardgamegeek.com/forum/76/forum/1'><input class='footer' type='button' value='BGG - WW' /></a>
-<a href=''><input class='footer' type='button' value='Full Site' /></a>
-  </div>
-<?php
-}
 ?>
