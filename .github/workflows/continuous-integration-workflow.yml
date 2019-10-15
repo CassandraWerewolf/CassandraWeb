@@ -4,9 +4,9 @@ on: [push]
 
 jobs:
   build:
-
+    name: Testing Workflow
     runs-on: ubuntu-latest
-    
+
     steps:
     - uses: actions/checkout@v1
     - name: Run a one-line script
