@@ -6,9 +6,14 @@ body.body {
   background: #FFFFFF;
 }
 .content {
-  width: 960px;
-  padding: 30px;
   margin: 0 auto;
+  padding: 10px;
+}
+@media (min-width: 768px) {
+  .content {
+    max-width: 960px;
+    padding: 30px;
+  }
 }
 
 .page-title {
