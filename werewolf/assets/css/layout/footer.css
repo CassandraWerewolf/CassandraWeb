@@ -3,7 +3,7 @@ footer {
 }
 
 .cassy-links {
-  width: 100%;
+  padding: 0 10px;
   margin-right: auto;
   margin-left: auto;
   display: grid;
