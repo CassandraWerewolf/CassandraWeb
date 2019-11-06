@@ -5,7 +5,7 @@ function display_menu(){
   global $username;
 ?>
 
-<script language='javascript'>
+<script language="javascript">
 <!--
 function view_menu_player() {
   player = document.getElementById("player_name_menu").value
@@ -20,52 +20,52 @@ function view_menu_game() {
   game = document.getElementById("game_id_menu").value
   location.href = "/game/"+game
 }
+function show_menu_search_form() {
+  document.getElementById("menu_search_form_label").style.display = "none";
+  document.getElementById("menu_search_form").style.display = "inline-block";
+}
 //-->
 </script>
 
-<table border='0' width='100%' style='background:#F5F5FF; color:#000000' >
-  <form name="view_menu">
-    <tr>
-      <?php if ( isset($username) ) { ?>
-        <td align='center'>
-          <b>Welcome <a href='/player/<?=$username;?>'><?=$username;?></a></b><br />
-          <a href='/logout.php'>Log Out</a>
-        </td>
-      <?php } else { ?>
-        <td align='center'><a href='/index.php?login=true'>Log In</a></td>
-      <?php } ?>
-      <td align='center'><a href="/">Cassy Home</a><br />
-        <a href="http://www.boardgamegeek.com/forum/76/forum/1">BGG WW Forum</a><br />
-      </td>
-      <td>
-        <table>
-          <tr>
-            <td>Player:</td>
-            <td><?php print player_autocomplete_form("menu"); print player_autocomplete_js("menu")?></td>
-            <td>
-              <select id="page_type"><option selected value="player">Stats</option><option value='all_games'>Games</option><option value="profile">Profile</option><option value='social/user'>Social</option></select>
-            </td>
-            <td><a href='javascript:view_menu_player()'>Go</a></td>
-          </tr>
-        </table>
-      </td>
-      <!-- <td>
-        <table border='0'>
-          <tr>
-            <td>Game:</td>
-            <td><?php print game_autocomplete_form("menu"); print game_autocomplete_js("menu");?></td>
-            <td><a href="javascript:view_menu_game()">Go</a></td>
-          </tr>
-        </table>
-      </td> -->
-      <?php if ( isset($username) ) { ?>
-        <td>
-          <a href="https://discord.gg/ftUvN3k" target="_blank"><img src="https://img.shields.io/discord/143256979564003328.svg?colorA=8888FF&colorB=d1d1d1" alt="Discord chat"></a>
-        </td>
-      <?php } ?>
-    </tr>
-  </form>
-</table>
+<nav role="navigation" class="menu">
+  <ul class="menu-links">
+    <li>
+      <a href="/">Cassy Home</a>
+    </li><li>
+      <a href="http://www.boardgamegeek.com/forum/76/forum/1">BGG WW Forum</a>
+    </li><li>
+      <a href="javascript:show_menu_search_form()" id="menu_search_form_label">Search</a>
+      <span id="menu_search_form" class="menu-form" style="display: none">
+        <label>Player:</label>
+        <?php print player_autocomplete_form("menu"); print player_autocomplete_js("menu")?>
+        <select id="page_type"><option selected value="player">Stats</option><option value="all_games">Games</option><option value="profile">Profile</option><option value="social/user">Social</option></select>
+        <a href="javascript:view_menu_player()">Go</a>
+      </span>
+    </li>
+    <!-- 
+      <li>
+      <table border="0">
+        <tr>
+          <td>Game:</td>
+          <td><?php // print game_autocomplete_form("menu"); print game_autocomplete_js("menu");?></td>
+          <td><a href="javascript:view_menu_game()">Go</a></td>
+        </tr>
+      </table>
+      </li>
+    -->
+  </ul>
+  <ul class="menu-profile">
+    <?php if ( isset($username) ) { ?>
+      <li>
+        <strong>Welcome, <a href="/player/<?=$username;?>"><?=$username;?></a></strong>
+      </li><li>
+        <a href="/logout.php">Log Out</a>
+      </li>
+    <?php } else { ?>
+      <li><a href="/index.php?login=true">Log In</a></li>
+    <?php } ?>
+  </ul>
+</nav>
 <?php
 }
 ?>

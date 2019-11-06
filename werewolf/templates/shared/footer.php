@@ -26,7 +26,11 @@
             <li><a href='http://boardgamegeek.com/thread/225928'>Player Picture Thread</a> (<a href='game/225928'>By Player</a>)</li>
             <li><a href='timezones.php'>Player Timezone Chart</a></li>
             <li><a href='/social/'>Find WW players Elsewhere</a></li>
-            <?php if ( isset($username) ) { ?><li><a href='https://discord.gg/ftUvN3k' target="_blank">Discord Chat</a></li><?php } ?>
+            <?php if ( isset($username) ) { ?>
+              <li>
+                <a href="https://discord.gg/ftUvN3k" target="_blank"><img src="https://img.shields.io/discord/143256979564003328.svg?colorA=8888FF&colorB=d1d1d1" alt="Discord chat"></a>
+              </li>
+            <?php } ?>
           </ul>
         </div>
         <div class="cassy-links-section">

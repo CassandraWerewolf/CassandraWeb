@@ -760,54 +760,6 @@ div.addcontent
 	font-weight:bold;
 }
 
-.menu
-{
-	color: 				#000;
-	background-color: #FFF2BF;
-	border-width:		0px 1px 1px 1px;
-	border-color:		#B0B0B0;
-	border-style:		solid;
-	position: 			absolute;
-	margin:				0;
-	padding:				10px;
-	display: 			none;
-	list-style: 		none;
-	white-space: 		nowrap;
-	z-index:				1000;
-}
-
-.menu ul
-{
-  	list-style: 	none;
- 	margin:			0;
- 	padding:			0;
-}
-
-.menu ul li
-{
-	list-style: 	none;
-	margin:			0;
-	padding:			0;
-}
-
-.menu ul li a
-{
-	color: 				blue;
-	font-size: 			11px;
-	font-weight:		bold;
-	text-decoration: 	none;
-	list-style: 		none;
-	margin:				0;
-	padding:				0;
-}
-
-.menu li a:hover
-{
-	text-decoration: 	none;
-  	background-color: #000088;
-  	color: 				#FFF;
-}
-
 .calendar
 {
 	width:400px;

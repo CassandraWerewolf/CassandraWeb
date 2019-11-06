@@ -5,6 +5,7 @@
 @import 'layout/base.css';
 
 /* Layout sections */
+@import 'layout/menu.css';
 @import 'layout/footer.css';
 
 /* Our components */

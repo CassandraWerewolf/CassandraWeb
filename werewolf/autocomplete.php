@@ -7,9 +7,8 @@ $agent->init();
 
 function player_autocomplete_form($id) {
 $output = "<form name='myform$id'>\n";
-$output .= "<table border='0'>\n";
-$output .= "<tr><td><input type='text' name='player_name_$id' id='player_name_$id' onkeyup='getPlayer_$id();return false;' autocomplete='off' /></td></tr>\n";
-$output .= "<tr><td><select id='player_matches_$id' style='position:absolute; visibility: hidden; z-index:1' onchange='player_matchSelected_$id(this);'></select></td></tr></table>\n";
+$output .= "<input type='text' name='player_name_$id' id='player_name_$id' onkeyup='getPlayer_$id();return false;' autocomplete='off' />\n";
+$output .= "<select id='player_matches_$id' style='position:absolute; visibility: hidden; z-index:1' onchange='player_matchSelected_$id(this);'></select>\n";
 $output .= "<input type='hidden' id='player_id_$id' value='' />\n";
 $output .= "</form>\n";
 return $output;
