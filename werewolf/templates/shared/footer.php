@@ -40,7 +40,6 @@
             <li><a href='/tools/rsa/'>RSA Encryption App</a></li>
             <li><a href='/tools/shamir/'>Shamir Secret Sharing App</a></li>
             <li><a href='/tools/bookmarklets/'>Bookmarklets</a></li>
-            <li><a href='/balance/'>Game Balance Creator</a></li>
             <li><a href='/admin/'>Admin Pages</a></li>
           </ul>
         </div>
