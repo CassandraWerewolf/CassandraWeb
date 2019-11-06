@@ -9,6 +9,9 @@
     grid-column-gap: 30px;
   }
 }
+.games-index-column {
+  margin-bottom: 15px;
+}
 .games-index--section {
   margin-bottom: 15px;
 }

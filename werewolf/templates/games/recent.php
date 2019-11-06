@@ -19,7 +19,7 @@
 
 
 <div class='games-index'>
-    <div class='games-index--progress'>
+    <div class='games-index-column games-index-column--progress'>
         
         <?php if ( count($games_in_fast_progress) > 0 ) {?>
             <table width='100%' class='games-index--section forum_table' cellpadding='2'>
@@ -97,7 +97,7 @@
 
     </div>
 
-    <div class='games-index--signup'>
+    <div class='games-index-column games-index-column--signup'>
 
         <table width='100%' class='games-index--section forum_table' cellpadding='2'>
             <tr>
