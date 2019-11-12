@@ -117,7 +117,7 @@ class Games
         $games = [];
         while ( $game_data = mysql_fetch_array($result) ) {
             $games[] = [
-                'info' => "<a href='/games/".$game_data['thread_id']."'>".$game_data['title']."</a>",
+                'info' => "<a href='/game/".$game_data['thread_id']."'>".$game_data['title']."</a>",
                 'moderator' => $game_data['mod_name']
             ];
         }
