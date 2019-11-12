@@ -13,7 +13,6 @@ if ( isset($_SESSION['uid']) || isset($_COOKIE['cassy_uid']) ||isset( $_REQUEST[
 require_once 'setup.php';
 require_once('Cache/Lite.php');
 include_once("menu.php");
-include_once("php/common.php");
 
 // CONTROLLER
 require_once('src/Games/Games.php');
