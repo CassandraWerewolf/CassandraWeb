@@ -3,6 +3,8 @@
 #AuthUserFile /var/www/passwds/cassandra
 #Require valid-user
 
+Redirect 301 /show_games_missing_info.php /show_games.php?type=missing_info
+
 RewriteEngine on
 RewriteRule ^player/(.*)/games_played$ /players/show_user_games_played.php?player=$1
 RewriteRule ^player/(.*)/games_modded$ /players/show_user_games_modded.php?player=$1

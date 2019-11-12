@@ -15,3 +15,7 @@
 .games-index--section {
   margin-bottom: 15px;
 }
+
+.games-list {
+  width: 100%;
+}
