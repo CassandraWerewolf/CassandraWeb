@@ -15,10 +15,6 @@ require_once('Cache/Lite.php');
 include_once("menu.php");
 include_once("php/common.php");
 
-require("timer.php");
-$timer = new BC_Timer;
-$timer->start_time();
-
 // CONTROLLER
 require_once('src/Games/Games.php');
 $games = new Games();

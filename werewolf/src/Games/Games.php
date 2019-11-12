@@ -1,9 +1,13 @@
 <?php
+include_once 'php/common.php';
+
 class Games 
 {
     // -------------------------------------------------------------------------
     // Setup
     // -------------------------------------------------------------------------
+
+    const FILTER_TYPES = ['all', 'evil', 'good', 'other', 'in_progress', 'missing_winner', 'missing_roles'];
 
     private $cache;
     private $games_notifications;
@@ -33,8 +37,8 @@ class Games
 
         $counts = [
             'all' => $games_all,
-            'good' => $games_won_by_good,
             'evil' => $games_won_by_evil,
+            'good' => $games_won_by_good,
             'other' => $games_won_by_other,
             'in_progress' => $games_in_progress,
         ];
@@ -63,6 +67,50 @@ class Games
         $result = mysql_query($sql);
 
         return $this->process_game_data($result);
+    }
+
+    // TODO: Eliminate N+1 sql query inside this function
+    // See the get_game function called from common
+    public function filter_games_by_type($type) {
+        $sql = "SELECT Games.id, winner FROM Games WHERE status='Finished' ";
+
+        if($type == 'all') {
+            $sql .= " OR status='In Progress'"; 
+            $title = "All Games";
+        } else if($type == 'evil') {
+            $sql .= " AND winner = 'evil'"; 
+            $title = "All Games Won by Evil";
+        } else if($type == 'good') {
+            $sql .= " AND winner = 'good'"; 
+            $title = "All Games Won by Good";
+        } else if($type == 'other') {
+            $sql .= " AND winner = 'other'"; 
+            $title = "All Other Type Games";
+        } else if ($type == 'in_progress') {
+            $sql = "SELECT Games.id, winner FROM Games WHERE status='In Progress'";
+            $title = "Games In Progress";
+        } else if($type == 'missing_winner') {
+            $sql .= " AND winner = ''"; 
+            $title = "Finished Games With Missing Winner";
+        } else if($type == 'missing_roles') {
+            $sql = "SELECT g.id, u.id AS mod_id, u.name AS mod_name, CONCAT(g.number, ') ', g.title, ' - ', u.name) AS title, g.thread_id FROM Games g, Players p, Moderators m, Users u WHERE p.game_id = g.id AND (p.role_id = 1 OR p.side IS NULL) AND m.game_id = g.id AND m.user_id = u.id AND g.status = 'Finished' AND g.winner != 'Other' GROUP BY g.number ";
+            $title = "Finished Games With Missing Role Info";
+        }
+        $sql .= " ORDER BY Games.number";
+
+        $result = mysql_query($sql);
+        $games = [];
+        while ( $game_data = mysql_fetch_array($result) ) {
+            $games[] = [
+                'info' => get_game($game_data['id'],"num, complex, title, mod"),
+                'winner' => $game_data['winner']
+            ];
+        }
+
+        return [
+            'title' => $title,
+            'games' => $games
+        ];
     }
 
     public function games_in_fast_signup() {

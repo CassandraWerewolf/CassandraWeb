@@ -8,4 +8,9 @@ $theme = 'default';
 // Periodically we will ask for donations in a fundraiser.
 // Setting this to true will show a message on the main Cassy index.
 $show_funding_message = false;
+
+// Start timer, used in footer to calculate load time
+require("timer.php");
+$timer = new BC_Timer;
+$timer->start_time();
 ?>
