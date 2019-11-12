@@ -1,16 +1,9 @@
 version: '3'
 services:
   web:
-    image: nginx:latest
+    image: php5:cassy
     ports:
       - "5000:80"
-    volumes:
-      - ./werewolf:/var/www/html
-      - ./site.conf:/etc/nginx/conf.d/default.conf
-    depends_on:
-      - mysql
-  php:
-    image: php5:cassy
     environment:
       MYSQL_HOST: mysql
       MYSQL_DATABASE: werewolf
@@ -24,6 +17,8 @@ services:
       - ./werewolf:/var/www/html
       - ./php/php.conf:/usr/local/etc/php-fpm.d/php.conf
       - ./php/php.ini:/usr/local/etc/php/php.ini
+    depends_on:
+      - mysql
   mysql:
     image: mysql:5.6
     environment:
