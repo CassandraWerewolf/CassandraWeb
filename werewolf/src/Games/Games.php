@@ -87,7 +87,7 @@ class Games
             $sql .= " AND winner = 'other'"; 
             $title = "All Other Type Games";
         } else if ($type == 'in_progress') {
-            $sql = "SELECT Games.id, winner FROM Games WHERE status='In Progress'";
+            $sql = "SELECT Games.id, phase, day FROM Games WHERE status='In Progress'";
             $title = "Games In Progress";
         }
         $sql .= " ORDER BY Games.number";
@@ -97,6 +97,8 @@ class Games
         while ( $game_data = mysql_fetch_array($result) ) {
             $games[] = [
                 'info' => get_game($game_data['id'],"num, complex, title, mod"),
+                'phase' => $game_data['phase'],
+                'day' => $game_data['day'],
                 'winner' => $game_data['winner']
             ];
         }
