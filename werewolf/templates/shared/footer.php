@@ -9,7 +9,6 @@
             <li><a href='/signup.php'>Get a Password</a></li>
             <li><a href='/password.php'>Change Password</a></li>
             <li><a href='/show_active.php'>Active players and moderators</a></li>
-            <li><a href='/show_cassandra_files.php'>Current games</a></li>
             <li><a href='/show_games.php?type=missing_info'>Games with missing data</a></li>
             <li><a href='/automod/'>Create your own Automod Template</a></li>
             <li><a href='/stats/'>Fun Statistics</a></li>
