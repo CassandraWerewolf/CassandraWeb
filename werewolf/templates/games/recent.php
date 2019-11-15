@@ -122,7 +122,6 @@
                             (<?php echo ($game['num_players'] == $game['max_players'] ? "Full" : $game['num_players']) ?>/<?php echo $game['max_players'] ?>)
                         </span>
                     </td>
-                    <td><?php echo ($game['swf'] == 'Yes' ? "When Full" : $game['start']) ?></td>
                     <td>
                         <?php 
                             echo implode(
@@ -133,6 +132,7 @@
                             ), ', ');
                         ?>
                     </td>
+                    <td><?php echo ($game['swf'] == 'Yes' ? "When Full" : $game['start']) ?></td>
                     <td><?php echo $game['day_length'] ?></td>
                     <td><?php echo $game['night_length'] ?></td>
                 </tr>
@@ -162,17 +162,17 @@
                             (<?php echo ($game['num_players'] == $game['max_players'] ? "Full" : $game['num_players']) ?>/<?php echo $game['max_players'] ?>)
                         </span>
                     </td>
-                    <td><?php echo $game['start'] ?></td>
                     <td>
                         <?php 
                             echo implode(
                                 array_map(
                                     function($mod) { return "<a href='/player/$mod'>$mod</a>"; },
                                     array_values($game['mods']
-                                )
-                            ), ', ');
-                        ?>
+                                    )
+                                ), ', ');
+                                ?>
                     </td>
+                    <td><?php echo $game['start'] ?></td>
                     <td><?php echo $game['lynch_time'] ?></td>
                     <td><?php echo $game['na_deadline'] ?></td>
                 </tr>
