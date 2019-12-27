@@ -17,5 +17,4 @@ jobs:
         echo test, and deploy your project.
     - name: Build docker container
       run: |
-        cd $GITHUB_WORKSPACE/php
-        docker build .
+        docker-compose build
