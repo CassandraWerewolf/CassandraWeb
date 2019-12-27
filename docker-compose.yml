@@ -1,7 +1,7 @@
 version: '3'
 services:
   web:
-    image: cassandraproject/nginx:latest
+    image: cassandraproject/web:latest
     build:
       context: .
       dockerfile: ./nginx/Dockerfile
@@ -13,7 +13,7 @@ services:
     depends_on:
       - mysql
   php:
-    image: cassandraproject/web:latest
+    image: cassandraproject/php:latest
     environment:
       MYSQL_HOST: mysql
       MYSQL_DATABASE: werewolf
@@ -26,8 +26,6 @@ services:
       dockerfile: ./php/Dockerfile
     volumes:
       - ./werewolf:/var/www/html
-      - ./php/php.conf:/usr/local/etc/php-fpm.d/php.conf
-      - ./php/php.ini:/usr/local/etc/php/php.ini
   mysql:
     image: mysql:5.6
     environment:
