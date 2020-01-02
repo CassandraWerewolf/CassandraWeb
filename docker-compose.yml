@@ -16,6 +16,7 @@ services:
       dockerfile: ./php/Dockerfile
     volumes:
       - ./werewolf:/var/www/html
+      - ./bin:/opt/werewolf
     depends_on:
         - mysql
   mysql:

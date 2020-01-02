@@ -1,0 +1,4 @@
+* * * * * /opt/werewolf/run_collect_posts.sh > /dev/null 2>&1
+* * * * * /usr/bin/php /var/www/html/process_physics.php > /dev/null 2>&1
+* * * * * /opt/werewolf/run_automod.sh > /dev/null
+0 0 * * 0 . $HOME/.profile; /opt/werewolf/create_cookie.pl $BGG_USERNAME $BGG_PASSWORD /opt/werewolf/cookie.cassandra > /dev/null
