@@ -32,7 +32,7 @@ do
 	thread_id=`/bin/echo "$thread_sql $game;" | $MYSQL_PROG`
 	article=`/bin/echo "$article_sql $game;" | $MYSQL_PROG`
 
-	if [ "$article" == "NULL" ]
+	if [ "$article" = "NULL" ]
 	then
 		article=0
 	fi
