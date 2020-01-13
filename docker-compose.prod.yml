@@ -1,0 +1,53 @@
+version: '3'
+services:
+  web:
+    image: cassandraproject/web:latest
+    ports:
+      - "80:80"
+      - "443:443"
+    environment:
+      MYSQL_HOST: mysql
+      MYSQL_DATABASE: werewolf
+      MYSQL_USER: dbuser
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      BGG_USERNAME: ${BGG_USERNAME}
+      BGG_PASSWORD: ${BGG_PASSWORD}
+      TZ: 'America/Chicago'
+    volumes:
+      - /etc/certs:/etc/letsencrypt/live
+      - /etc/certs_archive:/etc/letsencrypt/archive
+    depends_on:
+      - mysql
+  scripts:
+    image: cassandraproject/web:latest
+    environment:
+      MYSQL_HOST: mysql
+      MYSQL_DATABASE: werewolf
+      MYSQL_USER: dbuser
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      BGG_USERNAME: ${BGG_USERNAME}
+      BGG_PASSWORD: ${BGG_PASSWORD}
+      TZ: 'America/Chicago'
+    deploy:
+      restart_policy:
+        delay: 10s
+    command:
+        - /bin/bash
+        - -c
+        - |
+          /opt/werewolf/run_collect_posts.sh > /dev/null 2>&1
+          /usr/bin/php /var/www/html/process_physics.php > /dev/null 2>&1
+          /opt/werewolf/run_automod.sh > /dev/null
+  mysql:
+    image: mysql:5.6
+    command: --group-concat-max-len=65535
+    volumes:
+      - mysql-data:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_DATABASE: werewolf
+      MYSQL_USER: dbuser
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      TZ: 'America/Chicago'
+volumes:
+  mysql-data:
