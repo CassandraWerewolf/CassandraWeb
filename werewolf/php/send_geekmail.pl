@@ -35,6 +35,6 @@ $message{subject}=$subject;
 $message{body}=$body;
 
 $agent->post($login_url, \%login);
-$agent->post($mail_url, \%message);
+$agent->post($mail_url, \%message, Referer => 'https://boardgamegeek.com/geekmail');
 
 exit;
