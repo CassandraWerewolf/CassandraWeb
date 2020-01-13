@@ -20,7 +20,7 @@ RUN mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini"
 RUN mkdir -p /etc/letsencrypt/live/cassandrawerewolf.com
 RUN openssl genrsa -out /etc/letsencrypt/live/cassandrawerewolf.com/privkey.pem 4096
 RUN openssl req -new -key /etc/letsencrypt/live/cassandrawerewolf.com/privkey.pem -out /etc/letsencrypt/live/cassandrawerewolf.com/cert.csr -nodes -subj \
-    "/C=PT/ST=World/L=World/O=cassandrawerewolf.com/OU=cassyproject/CN=cassandrawerewolf.com/EMAIL=admin@cassandrawerewolf.com"
+    "/C=PT/ST=World/L=World/O=cassandrawerewolf.com/OU=cassyproject/CN=cassandrawerewolf.com"
 RUN openssl x509 -req -days 365 -in /etc/letsencrypt/live/cassandrawerewolf.com/cert.csr -signkey /etc/letsencrypt/live/cassandrawerewolf.com/privkey.pem -out /etc/letsencrypt/live/cassandrawerewolf.com/fullchain.pem
 
 COPY ./php/sites /etc/apache2/sites-enabled
