@@ -58,7 +58,7 @@ function show_menu_search_form() {
     <?php if ( isset($username) ) { ?>
       <li>
         <strong>Welcome, <a href="/player/<?=$username;?>"><?=$username;?></a></strong>
-      </li><li>
+      </li><li class="menu-profile--log-out">
         <a href="/logout.php">Log Out</a>
       </li>
     <?php } else { ?>

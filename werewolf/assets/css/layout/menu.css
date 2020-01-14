@@ -31,6 +31,10 @@
   display: inline-block;
 }
 
+.menu-profile--log-out {
+  float: right;
+}
+
 @media (min-width: 768px) {
   .menu {
     display: flex;
@@ -43,5 +47,8 @@
   }
   .menu ul li a {
     display: inline-block;
+  }
+  .menu-profile--log-out {
+    float: none;
   }
 }
