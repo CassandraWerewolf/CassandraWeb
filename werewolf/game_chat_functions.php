@@ -73,7 +73,7 @@ function display_tabs($active,$mod) {
     if ( $tab_num == $active ) {
       #$bgcolor = '#D1D1E1';
       $bgcolor = '#F5F5FF';
-    } 
+    }
     $output .= "<span onClick='switch_tab(\"$tab_num\")' style='background-color:$bgcolor; border:1px solid #8888FF; padding:3px;'>$tab_name</span>";
   }
 
@@ -105,7 +105,6 @@ function mod_controls() {
   $output = "<a href='javascript:show_broadcast()'>[Broadcast Message]</a> ";
   $output .= "<a href='javascript:show_room_edit()'>[Edit Room]</a> ";
   $output .= "<a href='javascript:show_room_add()'>[Add A Room]</a> ";
-  #$output .= "<a href='javascript:show_goa()'>[Modify Game Orders]</a> ";
   $output .= "<br /><br />";
   $output .= "<div id='mod_control_div'></div>";
 
@@ -154,8 +153,8 @@ function game_orders($user_id,$game_id) {
   $result = mysql_query($sql);
   $day = mysql_result($result,0,0);
   $output .= "<b>Game Orders for Day $day:</b> (Please refresh this tab before performing the actions to make sure they are up to date.)<br />";
-  if ( !$mod ) { 
-    $output .= game_order_input($user_id,$game_id,$day); 
+  if ( !$mod ) {
+    $output .= game_order_input($user_id,$game_id,$day);
     $output .= phys_order_input($user_id,$game_id);
   }
   $output .= "<br /><table><tr>";
@@ -165,14 +164,60 @@ function game_orders($user_id,$game_id) {
   $output .= "<td valign='top'>".game_order_sumary($user_id,$game_id,$day)."</td>";
   if ( $mod ) { $output .= "<td valign='top'>".locked_list($game_id)."</td>"; }
   $output .= "</tr></table><br />";
+
   $output .= "<b>Game Orders Log</b><br />";
-  for ( $d=$day; $d>=0; $d-- ) {
-    $output .= "<span>Day $d</span><br />";
-    $output .= game_order_log($user_id,$game_id,$d);
-  }
+  $output .= game_order_logx($user_id,$game_id,$mod);
 
   return $output;
 }
+
+function game_order_logx($user_id,$game_id,$mod) {
+  $group = "";
+  $output = "";
+  if ( ! $mod ) {
+    $sql = sprintf("select ga_group from Players, Players_all where Players.user_id=Players_all.original_id and Players.game_id=Players_all.game_id and Players.game_id=%s and Players_all.user_id=%s",quote_smart($game_id),quote_smart($user_id));
+	  $result = mysql_query($sql);
+    if ( mysql_num_rows($result) == 0 ) {
+	     $group = "";
+	  } else {
+	     $group = mysql_result($result,0,0);
+	  }
+  }
+  if ($mod)
+  {
+    $sql = sprintf("select p.id as user_id, p.name as user, ga_group, Roles.`type`, `desc`, if(cancel is null, concat(coalesce(concat(if(target_id=0,'Lynch Victim',t.name),' '),''),user_text),'canceled') as target, last_updated, Game_orders.day as day from Game_orders left join Users t on t.id=Game_orders.target_id, Users p, Roles, Players_all, Players where Game_orders.user_id=p.id and Players_all.original_id=Players.user_id and Players_all.user_id=Game_orders.user_id and Players_all.game_id=Game_orders.game_id and Players.game_id=Players_all.game_id and Roles.id=Players.role_id and Game_orders.game_id=%s order by last_updated desc",quote_smart($game_id));
+  } else {
+    if ($group != "")
+    {
+      $sql = sprintf("select p.id as user_id, p.name as user, ga_group, Roles.`type`, `desc`, if(cancel is null, concat(coalesce(concat(if(target_id=0,'Lynch Victim',t.name),' '),''),user_text),'canceled') as target, last_updated, Game_orders.day as day from Game_orders left join Users t on t.id=Game_orders.target_id, Users p, Roles, Players_all, Players where Game_orders.user_id=p.id and Players_all.original_id=Players.user_id and Players_all.user_id=Game_orders.user_id and Players_all.game_id=Game_orders.game_id and Players.game_id=Players_all.game_id and Roles.id=Players.role_id and Game_orders.game_id=%s and (p.id=%s or ga_group=%s) order by last_updated desc",quote_smart($game_id), quote_smart($user_id), quote_smart($group));
+    } else {
+      $sql = sprintf("select p.id as user_id, p.name as user, ga_group, Roles.`type`, `desc`, if(cancel is null, concat(coalesce(concat(if(target_id=0,'Lynch Victim',t.name),' '),''),user_text),'canceled') as target, last_updated, Game_orders.day as day from Game_orders left join Users t on t.id=Game_orders.target_id, Users p, Roles, Players_all, Players where Game_orders.user_id=p.id and Players_all.original_id=Players.user_id and Players_all.user_id=Game_orders.user_id and Players_all.game_id=Game_orders.game_id and Players.game_id=Players_all.game_id and Roles.id=Players.role_id and Game_orders.game_id=%s and p.id=%s order by last_updated desc",quote_smart($game_id), quote_smart($user_id));
+    }
+  }
+  $result = mysql_query($sql);
+  $count = mysql_num_rows($result);
+  if ( $count == 0 ) { return; }
+  $day = -1;
+  while ( $row = mysql_fetch_array($result) ) {
+    if ($day != $row['day'])
+    {
+      if ($day != -1)
+      {
+        $output .= "</table>";
+      }
+      $day = $row['day'];
+      $output .= "<span>Day $day</span><br />";
+      $output .= "<table border='1'><tr><th>Player</th><th>Role</th><th>Action</th><th>Target</th><th>Time Stamp</th></tr>";
+    }
+    if ( $mod || $row['user_id'] == $user_id || ( $group != "" && $group == $row['ga_group']) ) {
+      $output .= "<tr><td>".$row['user']."</td><td>".$row['type']."</td><td>".$row['desc']."</td><td>".$row['target']."</td><td>".$row['last_updated']."</td></tr>\n";
+	  }
+  }
+  $output .= "</table>";
+
+  return $output;
+}
+
 
 function phys_order_input($user_id,$game_id) {
   $output = "";
@@ -183,9 +228,9 @@ function phys_order_input($user_id,$game_id) {
     $orig_user = mysql_result($result,0,0);
     $loc_id = mysql_result($result,0,1);
   }
-  
-  if ($loc_id) {  
-    #movements	
+
+  if ($loc_id) {
+    #movements
     $sql = sprintf("select e.id as id, e.name as name FROM Loc_exits l, Exits e where e.id=l.exit_id and l.loc_from_id = %s and (e.template_id is null or e.template_id in (select distinct template_id from Items i where i.game_id=%s and i.owner_type='user' and i.owner_ref_id=%s))", quote_smart($loc_id), quote_smart($game_id), quote_smart($orig_user));
     $result = mysql_query($sql);
     if ( mysql_num_rows($result) > 0 ) {
@@ -200,7 +245,7 @@ function phys_order_input($user_id,$game_id) {
       if (mysql_num_rows($result_limit) > 0 ) {
         $opt_limit = "(";
         $opt_limit .= mysql_result($result_limit,0,0);
-        $opt_limit .= " moves left)";      
+        $opt_limit .= " moves left)";
       }
       $output .= "<br /><form id='move_action' method='post' action ='/game_action.php'>";
       $output .= "<input type='hidden' id='ga_user_id' name='user_id' value='$user_id' />";
@@ -213,32 +258,32 @@ function phys_order_input($user_id,$game_id) {
       $output .= "<input type='submit' name='submit_move' value='Submit' /><input type='submit' name='cancel_move' value='Cancel Previous Order' /></td>";
       $output .= "</form>";
     }
-    
+
     #items in loc
     $sql = sprintf("select id, name FROM Items where game_id=%s and owner_type='loc' and owner_ref_id=%s and visibility in ('conceal','obvious')",quote_smart($game_id),quote_smart($loc_id));
     $result = mysql_query($sql);
     if ( mysql_num_rows($result) > 0 ) {
-      $output .= "<br /><form id='remote_item_action' method='post' action ='/game_action.php'>"; 
-      $output .= "<input type='hidden' id='ga_user_id' name='user_id' value='$user_id' />";
-      $output .= "<input type='hidden' id='ga_game_id' name='game_id' value='$game_id' />";    
-      $output .= "Visible Items:<br /><select name='rem_item'>";  
-      while ($item = mysql_fetch_array($result)) {
-        $output .= "<option value='". $item['id'] ."' >". $item['name'] ."</option>";
-      }  
-      $output .= "</select>";
-      $output .= "<input type='submit' name='submit_pickup' value='Pick Up' /><input type='submit' name='cancel_pickup' value='Cancel Pickup' />";
-      $output .= "</form>";                  
-    }    
-  }
-  
-  # items in inv
-  $sql_inv = sprintf("select id, name, mobility FROM Items where game_id=%s and owner_type='user' and owner_ref_id=%s", quote_smart($game_id), quote_smart($orig_user));  
-  $result_inv = mysql_query($sql_inv);
-  if (mysql_num_rows($result_inv) > 0) {
-      $output .= "<br /><form id='inv_item_action' method='post' action ='/game_action.php'>"; 
+      $output .= "<br /><form id='remote_item_action' method='post' action ='/game_action.php'>";
       $output .= "<input type='hidden' id='ga_user_id' name='user_id' value='$user_id' />";
       $output .= "<input type='hidden' id='ga_game_id' name='game_id' value='$game_id' />";
-      $output .= "<input type='hidden' id='ga_loc_id' name='loc_id' value='$loc_id' />";    
+      $output .= "Visible Items:<br /><select name='rem_item'>";
+      while ($item = mysql_fetch_array($result)) {
+        $output .= "<option value='". $item['id'] ."' >". $item['name'] ."</option>";
+      }
+      $output .= "</select>";
+      $output .= "<input type='submit' name='submit_pickup' value='Pick Up' /><input type='submit' name='cancel_pickup' value='Cancel Pickup' />";
+      $output .= "</form>";
+    }
+  }
+
+  # items in inv
+  $sql_inv = sprintf("select id, name, mobility FROM Items where game_id=%s and owner_type='user' and owner_ref_id=%s", quote_smart($game_id), quote_smart($orig_user));
+  $result_inv = mysql_query($sql_inv);
+  if (mysql_num_rows($result_inv) > 0) {
+      $output .= "<br /><form id='inv_item_action' method='post' action ='/game_action.php'>";
+      $output .= "<input type='hidden' id='ga_user_id' name='user_id' value='$user_id' />";
+      $output .= "<input type='hidden' id='ga_game_id' name='game_id' value='$game_id' />";
+      $output .= "<input type='hidden' id='ga_loc_id' name='loc_id' value='$loc_id' />";
       $output .= "Your Items:<br />";
       $p_loc = get_player_loc_info($game_id);
       if ($loc_id) {
@@ -252,7 +297,7 @@ function phys_order_input($user_id,$game_id) {
         $item_name = $item['name'];
         $item_id = $item['id'];
         $output .= "$item_name: ";
-        $output .= "<input type='radio' name='item_$item_id' value='keep'> Keep ";      
+        $output .= "<input type='radio' name='item_$item_id' value='keep'> Keep ";
         if ($item['mobility'] != 'fixed' && ($item['mobility'] == 'nonphys' || count($p_in_loc) > 0)) {
           $p_to_use = $item['mobility'] == 'nonphys' ? $p_loc : $p_in_loc;
           $output .= "<input type='radio' name='item_$item_id' value='pass'>Pass to: <select name='target_$item_id'>";
@@ -267,9 +312,9 @@ function phys_order_input($user_id,$game_id) {
         $output .= "<br />";
       }
       $output .= "<input type='submit' name='submit_inv' value='Submit' /><input type='submit' name='cancel_inv' value='Cancel' />";
-      $output .= "</form>";             
+      $output .= "</form>";
   }
-  
+
   return $output;
 }
 
@@ -368,7 +413,7 @@ function game_order_sumary($user_id,$game_id,$day) {
   $result = mysql_query($sql);
   $done_groups[] = "";
   while ( $player = mysql_fetch_array($result) ) {
-    #If the player is part of a group 
+    #If the player is part of a group
     if ( $player['ga_group'] != "" ) {
       if ( ! array_search($player['ga_group'],$done_groups) ) {
         # Group needs to be processed.
@@ -410,8 +455,8 @@ function game_order_log($user_id,$game_id,$day) {
   if ( ! $mod ) {
     $sql = sprintf("select ga_group from Players, Players_all where Players.user_id=Players_all.original_id and Players.game_id=Players_all.game_id and Players.game_id=%s and Players_all.user_id=%s",quote_smart($game_id),quote_smart($user_id));
 	$result = mysql_query($sql);
-    if ( mysql_num_rows($result) == 0 ) { 
-	  $group = ""; 
+    if ( mysql_num_rows($result) == 0 ) {
+	  $group = "";
 	} else {
 	  $group = mysql_result($result,0,0);
 	}
@@ -472,7 +517,6 @@ function chat_room_list($user_id,$game_id) {
 	if ( $room['max_post'] != "" ) {
 	  $output .= "<span>&nbsp;&nbsp;&nbsp;</span>(RPL: ".$room['max_post'].", Remaining: ".$room['remaining_post'].")<br />\n";
    }
-   #$output .= "<div style='padding-left:10px;'>".list_players($room['id'],false)."</div>";
   }
   $output .= "<input type='button' id='read_all' name='read_all' value='Mark all rooms as read' onClick='mark_as_read()' /></td></tr>";
 
@@ -502,12 +546,12 @@ function display_chat_room($room_id,$user_id) {
   $num_messages = mysql_result($result,0,0);
 
   $output = "";
-  $output .= "<table><tr>"; 
+  $output .= "<table><tr>";
   $read_only = false;
   if ( $room_id == 0 ) {
     $output .= "<td>Please Select a Room</td>";
   } else {
-    $output .= "<td valign='top' style='width:250px;'><b style='font-size:12pt;'>".$room['name']."</b> ($num_messages)<br />\n";    
+    $output .= "<td valign='top' style='width:250px;'><b style='font-size:12pt;'>".$room['name']."</b> ($num_messages)<br />\n";
     if ( $room['lock'] != 'Off' || $user['lock'] != 'Off' ) {
       $output .= "(read only)<br />\n";
       $read_only = true;

@@ -1,44 +1,48 @@
 <?php // bgg.php - Functions used to communicate with BGG
 
-function send_geekmail($to, $subject, $message, $from="Cassandra Project", $password=getenv('BGG_PASSWORD') ) {
+function send_geekmail($to, $subject, $message, $from="Cassandra Project", $password="" ) {
 
-system("/var/www/html/php/send_geekmail.pl \"$from\" \"$password\" \"$to\" \"$subject\" \"$message\" > /dev/null &", $retval);
+  $password = $password ?: getenv('BGG_PASSWORD');
+  system("/var/www/html/php/send_geekmail.pl \"$from\" \"$password\" \"$to\" \"$subject\" \"$message\" > /dev/null &", $retval);
 
 }
 
-function reply_thread($thread_id, $body, $player="Cassandra Project", $password=getenv('BGG_PASSWORD') ) {
+function reply_thread($thread_id, $body, $player="Cassandra Project", $password="" ) {
 
-$article_id = system ("/var/www/html/php/post_thread.pl \"$player\" \"$password\" \"reply\" \"$thread_id\" \"$body\"", $retval);
+  $password = $password ?: getenv('BGG_PASSWORD');
+  $article_id = system ("/var/www/html/php/post_thread.pl \"$player\" \"$password\" \"reply\" \"$thread_id\" \"$body\"", $retval);
 
 return $article_id;
 }
 
-function reply_thread_quick($thread_id, $body, $player="Cassandra Project", $password=getenv('BGG_PASSWORD') ) {
+function reply_thread_quick($thread_id, $body, $player="Cassandra Project", $password="" ) {
 
-system ("/var/www/html/php/post_thread.pl \"$player\" \"$password\" \"reply\" \"$thread_id\" \"$body\" > /dev/null &", $retval);
-
-}
-
-function edit_post($article_id, $body, $player="Cassandra Project", $password=getenv('BGG_PASSWORD')) {
-
-system ("/var/www/html/php/post_thread.pl \"$player\" \"$password\" \"edit\" \"$article_id\" \"$body\" >/dev/null &", $retval);
+  $password = $password ?: getenv('BGG_PASSWORD');
+  system ("/var/www/html/php/post_thread.pl \"$player\" \"$password\" \"reply\" \"$thread_id\" \"$body\" > /dev/null &", $retval);
 
 }
 
-function create_thread($title,$message,$forum_id='76', $player="Cassandra Project", $password=getenv('BGG_PASSWORD')) {
+function edit_post($article_id, $body, $player="Cassandra Project", $password="" ) {
 
-$article_id = system ("/var/www/html/php/post_thread.pl \"$player\" \"$password\" \"new\" \"$forum_id\" \"$message\" \"$title\"" , $retval);
+  $password = $password ?: getenv('BGG_PASSWORD');
+  system ("/var/www/html/php/post_thread.pl \"$player\" \"$password\" \"edit\" \"$article_id\" \"$body\" >/dev/null &", $retval);
 
-$thread_id = system ("/var/www/html/php/get_thread_id.pl \"$player\" \"$password\" \"$article_id\"", $retval);
+}
+
+function create_thread($title,$message,$forum_id='76', $player="Cassandra Project", $password="" ) {
+
+  $password = $password ?: getenv('BGG_PASSWORD');
+
+  $article_id = system ("/var/www/html/php/post_thread.pl \"$player\" \"$password\" \"new\" \"$forum_id\" \"$message\" \"$title\"" , $retval);
+  $thread_id = system ("/var/www/html/php/get_thread_id.pl \"$player\" \"$password\" \"$article_id\"", $retval);
 
 return $thread_id;
 }
 
 function is_bgg_user($username) {
 
-$result = system ("/var/www/html/php/check_bgg_user.pl \"$username\"", $retval);
-
-return $result;
+  $result = system ("/var/www/html/php/check_bgg_user.pl \"$username\"", $retval);
+  return $result;
 }
 
 function edit_playerlist_post($game_id) {

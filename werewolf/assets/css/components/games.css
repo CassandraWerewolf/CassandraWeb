@@ -5,7 +5,7 @@
 @media (min-width: 768px) {
   .games-index {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 40% 1fr;
     grid-column-gap: 30px;
   }
 }
