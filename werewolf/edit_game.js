@@ -36,7 +36,7 @@ show_busy()
       count++
     }
   }
-  var url="//edit_game.php?&q=s_moderator&modlist="+str+"&game_id="+game_id
+  var url="/edit_game.php?&q=s_moderator&modlist="+str+"&game_id="+game_id
   xmlHttp=GetXmlHttpObject(stateChanged)
   xmlHttp.open("GET", url , false)
   xmlHttp.send(null)
