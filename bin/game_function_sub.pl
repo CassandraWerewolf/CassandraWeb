@@ -406,7 +406,7 @@ sub check_players($$$) {
   @player_list = get_player_list($game_id, "update_time <= date_sub('$now', interval 1 week)");
   foreach my $player ( @player_list ) {
     my $name = user_name($player);
-    system("/opt/werewolf/send_geekmail.pl \"$bgg_user\" \"$bgg_pswd\" \"$name\" \"$subject\", \"$message\"" );
+    system("/var/www/html/bgg/send_geekmail.pl \"$bgg_user\" \"$bgg_pswd\" \"$name\" \"$subject\", \"$message\"" );
     my $sth = $dbh->prepare("update Players set need_to_confirm=1 where user_id=? and game_id=?");
     $sth->execute($player,$game_id);
   }

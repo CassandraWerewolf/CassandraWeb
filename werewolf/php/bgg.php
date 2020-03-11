@@ -1,10 +1,8 @@
 <?php // bgg.php - Functions used to communicate with BGG
 
 function send_geekmail($to, $subject, $message, $from="Cassandra Project", $password="" ) {
-
   $password = $password ?: getenv('BGG_PASSWORD');
-  system("/var/www/html/php/send_geekmail.pl \"$from\" \"$password\" \"$to\" \"$subject\" \"$message\" > /dev/null &", $retval);
-
+  system("/var/www/html/bgg/send_geekmail.pl \"$from\" \"$password\" \"$to\" \"$subject\" \"$message\" > /dev/null &", $retval);
 }
 
 function reply_thread($thread_id, $body, $player="Cassandra Project", $password="" ) {
