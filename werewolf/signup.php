@@ -32,7 +32,7 @@ if ( !mysql_query($sql) ) {
 $to = $bggid;
 $subject = "Cassandra Project Password";
 $message = "Welcome to Cassandra Werewolf.\n\nYou can now log in and edit your data, and have access to some very cool, fun, and useful tools for playing BGG Werewolf.\n\nYour username is $bggid \n and your password is = $newpass\n\nPlease [url=https://cassandrawerewolf.com/password.php]login and change[/url] it to something easier to remember. Feel free to swing by [url=https://boardgamegeek.com/thread/1897478]this thread[/url] and say hi.\n\nEnjoy,\nMelsana, Pilotbob\n";
-send_geekmail($to, $subject, $message);
+    $bgg_cassy->send_geekmail($to, $subject, $message);
 ?>
 <html>
 <head>

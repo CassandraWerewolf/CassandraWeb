@@ -1,11 +1,31 @@
 <?php // bgg.php - Functions used to communicate with BGG
 
-function send_geekmail($to, $subject, $message, $from="Cassandra Project", $password="" ) {
-  $password = $password ?: getenv('BGG_PASSWORD');
-  system("/var/www/html/bgg/send_geekmail.pl \"$from\" \"$password\" \"$to\" \"$subject\" \"$message\" > /dev/null &", $retval);
+class BGG 
+{
+    protected $username;
+    private $password;
+    private $geekauth;
+
+    public function __construct() {
+        
 }
 
-function reply_thread($thread_id, $body, $player="Cassandra Project", $password="" ) {
+    public static function auth($username, $password) {
+        $instance = new self();
+        $instance->username = $username;
+        $instance->password = $password;
+        $instance->geekauth = '';
+        return $instance;
+    }
+
+    function send_geekmail($to, $subject, $message) {
+        system("/var/www/html/bgg/send_geekmail.pl \"$this->username\" \"$this->password\" \"$to\" \"$subject\" \"$message\" > /dev/null &", $retval);
+    }
+}
+
+$cassy_username = 'Cassandra Project';
+$cassy_password = getenv('BGG_PASSWORD');
+$bgg_cassy = BGG::auth($cassy_username, $cassy_password);
 
   $password = $password ?: getenv('BGG_PASSWORD');
   $article_id = system ("/var/www/html/php/post_thread.pl \"$player\" \"$password\" \"reply\" \"$thread_id\" \"$body\"", $retval);

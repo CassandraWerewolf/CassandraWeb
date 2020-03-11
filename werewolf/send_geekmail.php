@@ -9,9 +9,8 @@ include_once "php/bgg.php";
 include_once "menu.php";
 
 if ( isset($_POST['submit']) ) {
-
-send_geekmail($_POST['to'],$_POST['subject'],$_POST['message'],$username,$_POST['bggpwd']);
-
+    $bgg_user = BGG::auth($username,$_POST['bggpwd']);
+    $bgg_user->send_geekmail($_POST['to'],$_POST['subject'],$_POST['message']);
 ?>
 <html>
 <head>
