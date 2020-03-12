@@ -30,6 +30,10 @@ class BGG
     function reply_thread_quick($thread_id, $body) {
         system("/var/www/html/bgg/reply_thread.pl \"$this->geekauth\" \"$thread_id\" \"$body\"", $retval);
     }
+
+    function edit_post($article_id, $body) {
+        system("/var/www/html/bgg/edit_article.pl \"$this->geekauth\" \"$article_id\" \"$body\" >/dev/null &", $retval);
+    }
 }
 
 
@@ -37,16 +41,6 @@ $cassy_username = 'Cassandra Project';
 $cassy_password = getenv('BGG_PASSWORD');
 $bgg_cassy = BGG::auth($cassy_username, $cassy_password);
 
-
-return $article_id;
-}
-
-function reply_thread_quick($thread_id, $body, $player="Cassandra Project", $password="" ) {
-
-  $password = $password ?: getenv('BGG_PASSWORD');
-  system ("/var/www/html/php/post_thread.pl \"$player\" \"$password\" \"edit\" \"$article_id\" \"$body\" >/dev/null &", $retval);
-
-}
 
 function create_thread($title,$message,$forum_id='76', $player="Cassandra Project", $password="" ) {
 
@@ -86,7 +80,7 @@ function edit_playerlist_post($game_id) {
     $body .= "\n To sign up for this game go to \n";
     $body .= "http://cassandrawerewolf.com/game/$thread_id\n";
 
-    edit_post($player_list_id, $body);
+    $bgg_cassy->edit_post($player_list_id, $body);
   }
 }
 
