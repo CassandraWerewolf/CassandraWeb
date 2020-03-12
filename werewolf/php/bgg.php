@@ -2,7 +2,7 @@
 // This class is used to communicate with BGG
 class BGG 
 {
-    const SCRIPT_PATH = "/var/www/html/bgg/";
+    const SCRIPT_PATH = "/opt/werewolf/bgg/";
 
     protected $username;
     private $password;
