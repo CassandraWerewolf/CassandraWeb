@@ -1,7 +1,9 @@
-<?php // bgg.php - Functions used to communicate with BGG
-
+<?php 
+// This class is used to communicate with BGG
 class BGG 
 {
+    const SCRIPT_PATH = "/var/www/html/bgg/";
+
     protected $username;
     private $password;
     private $geekauth;
@@ -13,33 +15,35 @@ class BGG
         $instance = new self();
         $instance->username = $username;
         $instance->password = $password;
-        $instance->geekauth = system("/var/www/html/bgg/authenticate.pl \"$username\" \"$password\"", $retval);
+        $instance->geekauth = system(self::SCRIPT_PATH . "authenticate.pl \"$username\" \"$password\"", $retval);
         return $instance;
     }
 
     function send_geekmail($to, $subject, $message) {
-        system("/var/www/html/bgg/send_geekmail.pl \"$this->username\" \"$this->password\" \"$to\" \"$subject\" \"$message\" > /dev/null &", $retval);
+        system(self::SCRIPT_PATH . "send_geekmail.pl \"$this->username\" \"$this->password\" \"$to\" \"$subject\" \"$message\" > /dev/null &", $retval);
     }
 
     function reply_thread($thread_id, $body) {
-        $json_response = system("/var/www/html/bgg/reply_thread.pl \"$this->geekauth\" \"$thread_id\" \"$body\"", $retval);
+        $json_response = system(self::SCRIPT_PATH . "reply_thread.pl \"$this->geekauth\" \"$thread_id\" \"$body\"", $retval);
         $article = json_decode($json_response, true);
         return $article['id'];
     }
 
     function reply_thread_quick($thread_id, $body) {
-        system("/var/www/html/bgg/reply_thread.pl \"$this->geekauth\" \"$thread_id\" \"$body\"", $retval);
+        system(self::SCRIPT_PATH . "reply_thread.pl \"$this->geekauth\" \"$thread_id\" \"$body\"", $retval);
     }
 
     function edit_post($article_id, $body) {
-        system("/var/www/html/bgg/edit_article.pl \"$this->geekauth\" \"$article_id\" \"$body\" >/dev/null &", $retval);
+        system(self::SCRIPT_PATH . "edit_article.pl \"$this->geekauth\" \"$article_id\" \"$body\" >/dev/null &", $retval);
+    }
+
+    function is_bgg_user($username) {
+        $result = system(self::SCRIPT_PATH . "check_bgg_user.pl \"$username\"", $retval);
+        return $result;
     }
 }
 
 
-$cassy_username = 'Cassandra Project';
-$cassy_password = getenv('BGG_PASSWORD');
-$bgg_cassy = BGG::auth($cassy_username, $cassy_password);
 
 
 function create_thread($title,$message,$forum_id='76', $player="Cassandra Project", $password="" ) {
@@ -50,12 +54,6 @@ function create_thread($title,$message,$forum_id='76', $player="Cassandra Projec
   $thread_id = system ("/var/www/html/php/get_thread_id.pl \"$player\" \"$password\" \"$article_id\"", $retval);
 
 return $thread_id;
-}
-
-function is_bgg_user($username) {
-
-  $result = system ("/var/www/html/php/check_bgg_user.pl \"$username\"", $retval);
-  return $result;
 }
 
 // -----------------------------------------------------------------------------

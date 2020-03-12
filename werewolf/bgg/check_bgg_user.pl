@@ -4,25 +4,20 @@
 use strict;
 use WWW::Mechanize;
 
-my $mech;
-my $user;
 my $url='http://boardgamegeek.com/user'; 
 
 die "\nUsage $0 user\n\n" unless ($#ARGV == 0);
-$user = shift;
+my $user = shift;
 
 $url = "$url/$user";
 
-$mech = WWW::Mechanize->new(autocheck => 1);
+my $mech = WWW::Mechanize->new(autocheck => 1);
 $mech->get($url);
 
-if($mech->content() =~ /User\: $user not found/g)
-{
-	print "false";
+if($mech->content() =~ /Error: User does not exist./g) {
+    print "false";
+} else {
+    print "true";
 }
-else
-{
-	print "true";
-}	
 
 exit;
