@@ -4,34 +4,30 @@
 use strict;
 use LWP::UserAgent;
 
-# set variables
-my $agent;
-my %message;
-my $geekauth;
-my $id;
-my $body;
-my $response;
-my $usage="\nUsage $0 geekauth id \"body\"\n\n";
+my $usage="\nUsage $0 geekauth thread_id article_id \"body\"\n\n";
 my $url='https://api.geekdo.com/api/articles';
 
 # parse arguments
 die $usage unless ($#ARGV >= 2);
-$geekauth = shift;
-$id = shift;
-$body = shift;
+my $geekauth = shift;
+my $thread_id = shift;
+my $article_id = shift;
+my $body = shift;
 $body =~ s/\\\'/\'/g;
 
 # CREATE USER AGENT 
-$agent = LWP::UserAgent->new(cookie_jar => {});
+my %message;
+my $agent = LWP::UserAgent->new(cookie_jar => {});
 
-# compose the data
+# compose the request
+my %message;
 $message{rollsEnabled}=0;
-$message{threadid}=$id;
-$message{replytoid}='34242817';
+$message{threadid}=$thread_id;
+$message{replytoid}=$article_id;
 $message{body}=$body;
 
-# send data
-$response = $agent->post(
+# send request
+my $response = $agent->post(
     $url, \%message, Referer => 'https://boardgamegeek.com/', Authorization => "GeekAuth $geekauth"
 );
 print $response->content;
