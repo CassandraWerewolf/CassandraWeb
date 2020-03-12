@@ -7,14 +7,13 @@ class BGG
     private $geekauth;
 
     public function __construct() {
-        
 }
 
     public static function auth($username, $password) {
         $instance = new self();
         $instance->username = $username;
         $instance->password = $password;
-        $instance->geekauth = '';
+        $instance->geekauth = system("/var/www/html/bgg/authenticate.pl \"$username\" \"$password\"", $retval);
         return $instance;
     }
 
