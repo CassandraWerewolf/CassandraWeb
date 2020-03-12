@@ -41,20 +41,19 @@ class BGG
         $result = system(self::SCRIPT_PATH . "check_bgg_user.pl \"$username\"", $retval);
         return $result;
     }
+
+    function create_thread($title,$message,$forum_id='8') {
+        $article_id = system(self::SCRIPT_PATH . "create_thread.pl \"$this->username\" \"$this->password\" \"$forum_id\" \"$message\" \"$title\"" , $retval);
+        $thread_json = system(self::SCRIPT_PATH . "get_thread_info.pl \"$article_id\"", $retval);
+        $thread = json_decode($thread_json, true);
+        return $thread['source']['id'];
+    }
 }
 
-
-
-
-function create_thread($title,$message,$forum_id='76', $player="Cassandra Project", $password="" ) {
-
-  $password = $password ?: getenv('BGG_PASSWORD');
-
-  $article_id = system ("/var/www/html/php/post_thread.pl \"$player\" \"$password\" \"new\" \"$forum_id\" \"$message\" \"$title\"" , $retval);
-  $thread_id = system ("/var/www/html/php/get_thread_id.pl \"$player\" \"$password\" \"$article_id\"", $retval);
-
-return $thread_id;
-}
+# Set a $bgg_cassy variable for use around the app
+$cassy_username = getenv('BGG_USERNAME');
+$cassy_password = getenv('BGG_PASSWORD');
+$bgg_cassy = BGG::auth($cassy_username, $cassy_password);
 
 // -----------------------------------------------------------------------------
 // Other related BGG methods

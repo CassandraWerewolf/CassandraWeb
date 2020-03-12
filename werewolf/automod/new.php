@@ -62,7 +62,7 @@ if ( isset($_POST['submit']) ) {
   $message = preg_replace('/<lynch>/',$lynch,$message);
   $message = preg_replace('/<night>/',$night,$message);
   $s_title = stripslashes($title);
-  $thread_id = create_thread($s_title,$message,'76');
+  $thread_id = $bgg_cassy->create_thread($s_title,$message,'76');
   $body = "This post is where the player list will be updated as players sign up using Cassandra.  http://cassandrawerewolf.com/game/$thread_id";
   $player_list_id = $bgg_cassy->reply_thread($thread_id,$body);
 
