@@ -29,7 +29,7 @@ if ( isset($_POST['submit']) ) {
   $message = "$username has Challenged ".$info['name']."'s data for ".$info['number'].") ".$info['title'].".\n\n";
   $message .= "Reason: ".$_POST['doe'];
   $message .= "\n\nhttp://cassandrawerewolf.com/cc_game/".$info['thread_id'];
-  reply_thread_quick('163595',$message);
+  $bgg_cassy->reply_thread_quick('163595',$message);
   error("Your challenge has been recorded");
 }
 

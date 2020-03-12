@@ -108,7 +108,8 @@ if ( isset($_REQUEST['submit']) ) {
 $thread_id = $_REQUEST['thread_id'];
 $message = $_REQUEST['message'];
 print "<!--";
-reply_thread_quick($_REQUEST['thread_id'],$message,$username,$_REQUEST['bggpwd']);
+$user_cassy = BGG::auth($username, $_REQUEST['bggpwd']);
+$user_cassy->reply_thread_quick($_REQUEST['thread_id'],$message);
 print "-->";
 
 ?>
