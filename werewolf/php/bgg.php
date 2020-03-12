@@ -7,7 +7,7 @@ class BGG
     private $geekauth;
 
     public function __construct() {
-}
+    }
 
     public static function auth($username, $password) {
         $instance = new self();
@@ -20,26 +20,28 @@ class BGG
     function send_geekmail($to, $subject, $message) {
         system("/var/www/html/bgg/send_geekmail.pl \"$this->username\" \"$this->password\" \"$to\" \"$subject\" \"$message\" > /dev/null &", $retval);
     }
+
+    function reply_thread($thread_id, $body) {
+        $json_response = system("/var/www/html/bgg/reply_thread.pl \"$this->geekauth\" \"$thread_id\" \"$body\"", $retval);
+        $article = json_decode($json_response, true);
+        return $article['id'];
+    }
+
+    function reply_thread_quick($thread_id, $body) {
+        system("/var/www/html/bgg/reply_thread.pl \"$this->geekauth\" \"$thread_id\" \"$body\"", $retval);
+    }
 }
+
 
 $cassy_username = 'Cassandra Project';
 $cassy_password = getenv('BGG_PASSWORD');
 $bgg_cassy = BGG::auth($cassy_username, $cassy_password);
 
-  $password = $password ?: getenv('BGG_PASSWORD');
-  $article_id = system ("/var/www/html/php/post_thread.pl \"$player\" \"$password\" \"reply\" \"$thread_id\" \"$body\"", $retval);
 
 return $article_id;
 }
 
 function reply_thread_quick($thread_id, $body, $player="Cassandra Project", $password="" ) {
-
-  $password = $password ?: getenv('BGG_PASSWORD');
-  system ("/var/www/html/php/post_thread.pl \"$player\" \"$password\" \"reply\" \"$thread_id\" \"$body\" > /dev/null &", $retval);
-
-}
-
-function edit_post($article_id, $body, $player="Cassandra Project", $password="" ) {
 
   $password = $password ?: getenv('BGG_PASSWORD');
   system ("/var/www/html/php/post_thread.pl \"$player\" \"$password\" \"edit\" \"$article_id\" \"$body\" >/dev/null &", $retval);
@@ -61,6 +63,10 @@ function is_bgg_user($username) {
   $result = system ("/var/www/html/php/check_bgg_user.pl \"$username\"", $retval);
   return $result;
 }
+
+// -----------------------------------------------------------------------------
+// Other related BGG methods
+// -----------------------------------------------------------------------------
 
 function edit_playerlist_post($game_id) {
   $sql = sprintf("select status, thread_id, player_list_id from Games where id=%s",quote_smart($game_id));
@@ -121,7 +127,7 @@ function notify_moderator($game_id,$action="",$username="") {
 
   $message .= "\nGo to Game: http://www.boardgamegeek.com/thread/$thread_id\n";
 
-  send_geekmail($to, $subject, $message) ;
+  $bgg_cassy->send_geekmail($to, $subject, $message) ;
 }
 
 function geekmail_form($to="",$subject="",$message="") {
@@ -152,4 +158,3 @@ function geekmail_form($to="",$subject="",$message="") {
 
   return $output;
 }
-

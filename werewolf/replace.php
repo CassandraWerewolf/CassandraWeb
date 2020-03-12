@@ -56,7 +56,7 @@ if ( $action == "replace_me" ) {
 	}
   }
   $message = "r{ We are looking for a player to replace $user_name.  Please go to http://cassandrawerewolf.com/game/".$game['thread_id']." to replace the player. }r";
-  reply_thread($game['thread_id'], $message);
+  $bgg_cassy->reply_thread($game['thread_id'], $message);
   error("You have sucessfully requested a replacement");
 } else if ( $action == "I_replace" ) {
   if ( $uid == $user_id || $mod) {
@@ -78,7 +78,7 @@ if ( $action == "replace_me" ) {
 	  }
   	}
     $message = "r{ $user_name no longer needs to be replaced.}r";
-    reply_thread($game['thread_id'], $message);
+    $bgg_cassy->reply_thread($game['thread_id'], $message);
 	error("You are no longer requesting a replacement");
   } 
   # Check to make sure player is not already in the game
@@ -106,7 +106,7 @@ if ( $action == "replace_me" ) {
     $bgg_cassy->send_geekmail($to, $subject, $message);
   }
   $message = "r{ $username has replaced $user_name.  If you have (un)voted $user_name since the last Cassandra vote tally, please [b][unvote all][/b] and revote your current choice just to make sure Cassy counts it correctly.}r";
-  reply_thread($game['thread_id'], $message);
+  $bgg_cassy->reply_thread($game['thread_id'], $message);
   error ("You have now replaced the player");
   #exit;
 } else {

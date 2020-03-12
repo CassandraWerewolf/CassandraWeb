@@ -64,7 +64,7 @@ if ( isset($_POST['submit']) ) {
   $s_title = stripslashes($title);
   $thread_id = create_thread($s_title,$message,'76');
   $body = "This post is where the player list will be updated as players sign up using Cassandra.  http://cassandrawerewolf.com/game/$thread_id";
-  $player_list_id = reply_thread($thread_id,$body);
+  $player_list_id = $bgg_cassy->reply_thread($thread_id,$body);
 
   $sql = sprintf("select * from AM_template where id=%s",quote_smart($_POST['template']));
   $result = mysql_query($sql);
