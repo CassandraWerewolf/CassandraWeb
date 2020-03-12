@@ -67,7 +67,6 @@ while ( my $game = $sth_game->fetchrow_hashref() ) {
 	  }
 	  $message .= "Vote Log Page: http://cassandrawerewolf.com/game/".$thread_id."/votes\n";
 	  $message .= "Vote Tally Page: http://cassandrawerewolf.com/game/".$thread_id."/tally\n";
-	  #system("/opt/werewolf/post_thread.pl \"$bgg_user\" \"$bgg_pswd\" reply $thread_id \"$message\"");
 	  system("$post_script \"$cassy_cookie\" reply $thread_id \"$message\"");
 	  # Activate Game Communications System
 	  print "Activate Communication System\n";
@@ -177,7 +176,6 @@ while ( my $game = $sth_game->fetchrow_hashref() ) {
 	  print "Start Game\n";
 	  if ( $template->{'random_n0'} eq "yes" ) {
 	    $message = get_phase_change_message($game->{'id'},'day',1);
-	    #system("/opt/werewolf/post_thread.pl \"$bgg_user\" \"$bgg_pswd\" reply $thread_id \"$message\"");
 	    system("$post_script \"$cassy_cookie\" reply $thread_id \"$message\"");
 		update_phase_change($game->{'id'});
 		update_state($game->{'id'},'Day');
@@ -185,7 +183,6 @@ while ( my $game = $sth_game->fetchrow_hashref() ) {
 	  } else {
 	    my $nighttime = next_deadline($game->{'id'},'night',1);
         $message = "It is Night 0.  If you have N0 orders please do that now.  Dawn will be posted $nighttime";
-	    #system("/opt/werewolf/post_thread.pl \"$bgg_user\" \"$bgg_pswd\" reply $thread_id \"$message\"");
 	    system("$post_script \"$cassy_cookie\" reply $thread_id \"$message\"");
 		update_state($game->{'id'},'Night');
 	  }
@@ -335,7 +332,6 @@ while ( my $game = $sth_game->fetchrow_hashref() ) {
 		   }
 		}
 	  }
-	  #system("/opt/werewolf/post_thread.pl \"$bgg_user\" \"$bgg_pswd\" reply $thread_id \"$message\"");
 	  system("$post_script \"$cassy_cookie\" reply $thread_id \"$message\"");
 	  my $sth_collect = $dbh->prepare("update Post_collect_slots set last_dumped=Null where game_id=?");
 	  $sth_collect->execute($game->{'id'});
@@ -345,7 +341,6 @@ while ( my $game = $sth_game->fetchrow_hashref() ) {
       print "Post Dusk\n";
 	  my $message = get_phase_change_message($game->{'id'},'night',1);
 	  update_phase_change($game->{'id'});
-	  #system("/opt/werewolf/post_thread.pl \"$bgg_user\" \"$bgg_pswd\" reply $thread_id \"$message\"");
 	  system("$post_script \"$cassy_cookie\" reply $thread_id \"$message\"");
 	  $mech->get('http://52.55.166.81/vote_tally.php?action=retrieve&game_id='.$game->{'id'});
 	  update_state($game->{'id'},'lynch');
@@ -416,7 +411,6 @@ while ( my $game = $sth_game->fetchrow_hashref() ) {
 		  }
 		}
 	  }
-	  #system("/opt/werewolf/post_thread.pl \"$bgg_user\" \"$bgg_pswd\" reply $thread_id \"$message\"");
 	  system("$post_script \"$cassy_cookie\" reply $thread_id \"$message\"");
 	  update_state($game->{'id'},'Night');
 	  my $sth_collect = $dbh->prepare("update Post_collect_slots set last_dumped=Null where game_id=?");
@@ -430,20 +424,17 @@ while ( my $game = $sth_game->fetchrow_hashref() ) {
 	if ( $num_wolves == 0 ) {
       # Good wins.  They have killed all the wolves.
 	  my $message = "Game Over.\nVillage has killed all the wolves.";
-	  #system("/opt/werewolf/post_thread.pl \"$bgg_user\" \"$bgg_pswd\" reply $thread_id \"$message\"");
 	  system("$post_script \"$cassy_cookie\" reply $thread_id \"$message\"");
 	  set_game_status($game->{'id'},'Finished','Good');
 	} elsif ( $num_nonw == $num_wolves ) {
       # Wolves have reached Parity.  Is the Hunter blocking their victory?
 	  if ( $num_wolves == $num_hunters ) {
 	    my $message ="Game Over.\nHunter kills the final wolf.";
-	    #system("/opt/werewolf/post_thread.pl \"$bgg_user\" \"$bgg_pswd\" reply $thread_id \"$message\"");
 	    system("$post_script \"$cassy_cookie\" reply $thread_id \"$message\"");
 	    set_game_status($game->{'id'},'Finished','Good');
 	  } else {
         # Hunter is not alive, so Wolves win.
 	    my $message = "Game Over.\nWolves have reached parity.";
-	    #system("/opt/werewolf/post_thread.pl \"$bgg_user\" \"$bgg_pswd\" reply $thread_id \"$message\"");
 	    system("$post_script \"$cassy_cookie\" reply $thread_id \"$message\"");
 	    set_game_status($game->{'id'},'Finished','Evil');
 	  }
