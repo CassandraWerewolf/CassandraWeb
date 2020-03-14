@@ -16,7 +16,7 @@ my @post = <>;
 my $body = join('', @post);
 
 # authenticate
-my $geekauth = `/opt/werewolf/bgg/authenticate.pl $username $password`;
+my $geekauth = `/opt/werewolf/bgg/authenticate.pl "$username" $password`;
 
 # reply to thread now that we have geekauth
 print system(('/opt/werewolf/bgg/reply_thread.pl', $geekauth, $thread_id, $article_id, $body));
