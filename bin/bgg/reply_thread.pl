@@ -1,5 +1,7 @@
 #!/usr/bin/perl -w
 
+# reply_thread.pl with geekauth
+
 # load modules
 use strict;
 use LWP::UserAgent;
@@ -16,7 +18,6 @@ my $body = shift;
 $body =~ s/\\\'/\'/g;
 
 # CREATE USER AGENT 
-my %message;
 my $agent = LWP::UserAgent->new(cookie_jar => {});
 
 # compose the request

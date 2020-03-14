@@ -5,23 +5,19 @@ use strict;
 use LWP::UserAgent;
 use HTTP::Cookies;
 
-# set variables
-my $agent;
-my %message;
-my $username;
-my $password;
 my $usage="\nUsage $0 username password\n\n";
 my $url='https://boardgamegeek.com/login';
 
 # parse arguments
 die $usage unless ($#ARGV >= 1);
-$username = shift;
-$password = shift;
+my $username = shift;
+my $password = shift;
 
 # CREATE USER AGENT 
-$agent = LWP::UserAgent->new(cookie_jar => {});
+my $agent = LWP::UserAgent->new(cookie_jar => {});
 
 # compose the data
+my %message;
 $message{username}=$username;
 $message{password}=$password;
 
