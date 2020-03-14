@@ -15,9 +15,8 @@ class BGG
         $instance = new self();
         $instance->username = $username;
         $instance->password = $password;
-        ob_start();
-        $instance->geekauth = system(self::SCRIPT_PATH . "authenticate.pl \"$username\" \"$password\"", $retval);
-        ob_end_clean();
+        exec(self::SCRIPT_PATH . "authenticate.pl \"$username\" \"$password\"", $output);
+        $instance->geekauth = $output[0];
         return $instance;
     }
 
@@ -35,8 +34,8 @@ class BGG
 
     public function reply_thread($thread_id, $body) {
         $article_id = self::get_article_id_by_thread_id($thread_id);
-        $json_response = system(self::SCRIPT_PATH . "reply_thread.pl \"$this->geekauth\" \"$thread_id\" \"$article_id\" \"$body\"", $retval);
-        $article = json_decode($json_response, true);
+        exec(self::SCRIPT_PATH . "reply_thread.pl \"$this->geekauth\" \"$thread_id\" \"$article_id\" \"$body\"", $response);
+        $article = json_decode($response[0], true);
         return $article['id'];
     }
 
@@ -56,19 +55,19 @@ class BGG
     // No oauth required functions
 
     public function is_bgg_user($username) {
-        $result = system(self::SCRIPT_PATH . "check_bgg_user.pl \"$username\"", $retval);
-        return $result;
+        exec(self::SCRIPT_PATH . "check_bgg_user.pl \"$username\"", $output);
+        return $output[0];
     }
 
     public function get_thread_id_by_article_id($article_id) {
-        $thread_json = system(self::SCRIPT_PATH . "retrieve_thread.pl \"$article_id\"", $retval);
-        $thread = json_decode($thread_json, true);
+        exec(self::SCRIPT_PATH . "retrieve_thread.pl \"$article_id\"", $response);
+        $thread = json_decode($response[0], true);
         return $thread['source']['id'];
     }
 
     public function get_article_id_by_thread_id($thread_id) {
-        $thread_json = system(self::SCRIPT_PATH . "retrieve_articles.pl \"$thread_id\"", $retval);
-        $thread = json_decode($thread_json, true);
+        exec(self::SCRIPT_PATH . "retrieve_articles.pl \"$thread_id\"", $response);
+        $thread = json_decode($response[0], true);
         return $thread['articles'][0]['id'];
     }
 }
