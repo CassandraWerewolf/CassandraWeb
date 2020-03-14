@@ -15,7 +15,9 @@ class BGG
         $instance = new self();
         $instance->username = $username;
         $instance->password = $password;
+        ob_start();
         $instance->geekauth = system(self::SCRIPT_PATH . "authenticate.pl \"$username\" \"$password\"", $retval);
+        ob_end_clean();
         return $instance;
     }
 
@@ -66,9 +68,7 @@ class BGG
 }
 
 # Set a $bgg_cassy variable for use around the app
-$cassy_username = getenv('BGG_USERNAME');
-$cassy_password = getenv('BGG_PASSWORD');
-$bgg_cassy = BGG::auth($cassy_username, $cassy_password);
+$bgg_cassy = BGG::auth(getenv('BGG_USERNAME'), getenv('BGG_PASSWORD'));
 
 // -----------------------------------------------------------------------------
 // Other related BGG methods
