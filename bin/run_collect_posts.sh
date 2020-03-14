@@ -1,7 +1,6 @@
 #!/bin/bash
 
 PROG_DIR=/opt/werewolf
-#PROG=$PROG_DIR/collect_posts.sh
 PROG=$PROG_DIR/collect_posts_fast.sh
 LOCKFILE=/tmp/collect_posts.lock
 
