@@ -36,7 +36,7 @@ $action = $_GET['action'];
 	  $message .= "Vote Log Page: http://cassandrawerewolf.com/game/".$game['thread_id']."/votes\n";
 	  $message .= "Vote Tally Page: http://cassandrawerewolf.com/game/".$game['thread_id']."/tally\n";
       print "<!--\n";
-      $bgg_cassy->reply_thread($game['thread_id'],$message);
+      BGG::authAsCassy()->reply_thread($game['thread_id'],$message);
       print "-->\n";
     } elseif ($action == "retrieve" ) {
       $sql = sprintf("update Games set updated_tally=1 where id=%s",quote_smart($game_id));

@@ -12,6 +12,7 @@ dbConnect();
 
 
 if ( isset($_POST['submit']) ) {
+  $bgg_cassy = BGG::authAsCassy();
   $_POST['title'] = safe_html($_POST['title']);
   $title = "Auto-mod: ".$_POST['title'];
   $message = file_get_contents("rulesets/".$_POST['template']."_ruleset.txt");

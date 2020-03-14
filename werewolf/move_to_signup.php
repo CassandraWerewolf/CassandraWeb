@@ -20,7 +20,7 @@ if ( ! is_moderator($uid,$game_id) ) {
 if ( isset($_POST['submit']) ) {
   # Post a Cassandra Player List to Thread.
   $body = "This post is where the player list will be updated as players sign up using Cassandra.  /game/".$_POST['thread_id'];
-  $player_list_id = $bgg_cassy->reply_thread($_POST['thread_id'],$body);
+  $player_list_id = BGG::authAsCassy()->reply_thread($_POST['thread_id'],$body);
   if ( $player_list_id == "" ) { error("Please check your thread_id"); }
   $lynch_db = $_POST['lynch'].":00:00";
   $night_db = $_POST['night'].":00:00";

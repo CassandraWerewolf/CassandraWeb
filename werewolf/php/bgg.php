@@ -21,54 +21,57 @@ class BGG
         return $instance;
     }
 
+    public static function authAsCassy() {
+        $username = getenv('BGG_USERNAME');
+        $password = getenv('BGG_PASSWORD');
+        return self::auth($username, $password);
+    }
+
     // Auth required functions
 
-    function send_geekmail($to, $subject, $message) {
+    public function send_geekmail($to, $subject, $message) {
         system(self::SCRIPT_PATH . "send_geekmail.pl \"$this->username\" \"$this->password\" \"$to\" \"$subject\" \"$message\" > /dev/null &", $retval);
     }
 
-    function reply_thread($thread_id, $body) {
+    public function reply_thread($thread_id, $body) {
         $article_id = self::get_article_id_by_thread_id($thread_id);
         $json_response = system(self::SCRIPT_PATH . "reply_thread.pl \"$this->geekauth\" \"$thread_id\" \"$article_id\" \"$body\"", $retval);
         $article = json_decode($json_response, true);
         return $article['id'];
     }
 
-    function reply_thread_quick($thread_id, $body) {
+    public function reply_thread_quick($thread_id, $body) {
         self::reply_thread($thread_id, $body);
     }
 
-    function edit_post($article_id, $body) {
+    public function edit_post($article_id, $body) {
         system(self::SCRIPT_PATH . "edit_article.pl \"$this->geekauth\" \"$article_id\" \"$body\" >/dev/null &", $retval);
     }
 
-    function create_thread($title,$message,$forum_id='8') {
+    public function create_thread($title,$message,$forum_id='8') {
         $article_id = system(self::SCRIPT_PATH . "create_thread.pl \"$this->username\" \"$this->password\" \"$forum_id\" \"$message\" \"$title\"" , $retval);
         return self::get_thread_id_by_article_id($article_id);
     }
     
     // No oauth required functions
 
-    function is_bgg_user($username) {
+    public function is_bgg_user($username) {
         $result = system(self::SCRIPT_PATH . "check_bgg_user.pl \"$username\"", $retval);
         return $result;
     }
 
-    function get_thread_id_by_article_id($article_id) {
+    public function get_thread_id_by_article_id($article_id) {
         $thread_json = system(self::SCRIPT_PATH . "retrieve_thread.pl \"$article_id\"", $retval);
         $thread = json_decode($thread_json, true);
         return $thread['source']['id'];
     }
 
-    function get_article_id_by_thread_id($thread_id) {
+    public function get_article_id_by_thread_id($thread_id) {
         $thread_json = system(self::SCRIPT_PATH . "retrieve_articles.pl \"$thread_id\"", $retval);
         $thread = json_decode($thread_json, true);
         return $thread['articles'][0]['id'];
     }
 }
-
-# Set a $bgg_cassy variable for use around the app
-$bgg_cassy = BGG::auth(getenv('BGG_USERNAME'), getenv('BGG_PASSWORD'));
 
 // -----------------------------------------------------------------------------
 // Other related BGG methods
@@ -92,7 +95,7 @@ function edit_playerlist_post($game_id) {
     $body .= "\n To sign up for this game go to \n";
     $body .= "http://cassandrawerewolf.com/game/$thread_id\n";
 
-    $bgg_cassy->edit_post($player_list_id, $body);
+    BGG::authAsCassy()->edit_post($player_list_id, $body);
   }
 }
 
@@ -133,7 +136,7 @@ function notify_moderator($game_id,$action="",$username="") {
 
   $message .= "\nGo to Game: http://www.boardgamegeek.com/thread/$thread_id\n";
 
-  $bgg_cassy->send_geekmail($to, $subject, $message) ;
+  BGG::authAsCassy()->send_geekmail($to, $subject, $message) ;
 }
 
 function geekmail_form($to="",$subject="",$message="") {

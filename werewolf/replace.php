@@ -16,6 +16,8 @@ $cache->remove('game-'.$game_id,'front');
 
 $mod = is_moderator($uid,$game_id);
 
+$bgg_cassy = $bgg_cassy;
+
 $rep = false;
 $sql = sprintf("select * from Replacements where user_id=%s and game_id=%s and replace_id=%s",quote_smart($user_id),quote_smart($game_id),quote_smart($uid));
 $result = mysql_query($sql);
