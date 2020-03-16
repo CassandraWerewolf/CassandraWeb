@@ -12,10 +12,10 @@ RUN apt-get update && apt-get install -y \
     python-sqlalchemy \
     python-dateutil \
     cpanminus \
-    cpanm JSON \
     certbot \
     python-certbot-apache
 RUN cpanm String::Trigram
+RUN cpanm JSON
 RUN printf '[PHP]\ndate.timezone = "America/Chicago"\n' > $PHP_INI_DIR/conf.d/tzone.ini
 RUN mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini"
 RUN mkdir -p /etc/letsencrypt/live/cassandrawerewolf.com
