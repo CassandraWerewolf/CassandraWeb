@@ -3,6 +3,7 @@
 # load modules
 use strict;
 use LWP::UserAgent;
+use JSON;
 
 my $usage="\nUsage $0 geekauth id \"body\"\n\n";
 my $url='https://api.geekdo.com/api/articles';
@@ -23,10 +24,13 @@ my $header = [
     'Content-Type' => 'application/json', 
     'Authorization' => "GeekAuth $geekauth"
 ];
-my $data = '{"body":"' . $body . '","rollsEnabled":false}';
+
+my %data;
+$data{rollsEnabled}=0;
+$data{body}=$body;
 
 # send request
-my $request = HTTP::Request->new('PATCH', "$url/$id", $header, $data);
+my $request = HTTP::Request->new('PATCH', "$url/$id", $header, encode_json(\%data));
 my $response = $agent->request($request);
 print $response->content;
 

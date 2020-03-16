@@ -12,6 +12,7 @@ RUN apt-get update && apt-get install -y \
     python-sqlalchemy \
     python-dateutil \
     cpanminus \
+    cpanm JSON \
     certbot \
     python-certbot-apache
 RUN cpanm String::Trigram
