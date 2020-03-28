@@ -21,7 +21,8 @@ if ( isset($_REQUEST['submit']) ) {
   while ( $thread_id = mysql_fetch_array($result) ) {
     $message = $_REQUEST['message'];
     print "<!--";
-      reply_thread_quick($thread_id['thread_id'],$message,$username,$_REQUEST['bggpwd']);
+    $bgg_user = BGG::auth($username, $_REQUEST['bggpwd']);
+    $bgg_user->reply_thread_quick($thread_id['thread_id'],$message);
     print "-->";
   }
 ?>

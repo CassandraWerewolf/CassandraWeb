@@ -1,6 +1,0 @@
-
-r{Please limit posts made after you have been killed, since there is no
-moderator on duty to police such things, it would be better to refrain}r
-
-b{[b]Notice:[/b]
-The Automod system is in Beta Testing.  There may be unexpected or strange errors or results or things may change from game to game, so make sure you always read the rules.  Please direct any concerns, questions, or improvment suggestions to Melsana or Jmilum.  }b

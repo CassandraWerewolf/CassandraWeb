@@ -396,7 +396,6 @@ sub check_players($$$) {
     $message .= "\n".scalar(@player_list)." players are signed up.\n";
     $message .= "\n To sign up for this game go to \n";
     $message .= "http://cassandrawerewolf.com/game/$thread_id\n";
-    #system("/opt/werewolf/post_thread.pl \"$bgg_user\" \"$bgg_pswd\" \"edit\" \"$player_list_id\" \"$message\"");
     system("/opt/werewolf/post_thread_cookie.pl \"/opt/werewolf/cookie.cassandra\" \"edit\" \"$player_list_id\" \"$message\"");
   }
 
@@ -406,7 +405,7 @@ sub check_players($$$) {
   @player_list = get_player_list($game_id, "update_time <= date_sub('$now', interval 1 week)");
   foreach my $player ( @player_list ) {
     my $name = user_name($player);
-    system("/opt/werewolf/send_geekmail.pl \"$bgg_user\" \"$bgg_pswd\" \"$name\" \"$subject\", \"$message\"" );
+    system("/var/www/html/bgg/send_geekmail.pl \"$bgg_user\" \"$bgg_pswd\" \"$name\" \"$subject\", \"$message\"" );
     my $sth = $dbh->prepare("update Players set need_to_confirm=1 where user_id=? and game_id=?");
     $sth->execute($player,$game_id);
   }
@@ -454,7 +453,6 @@ sub check_player_activity($$) {
       $sth->execute($player,$game_id);
       my $user_name = user_name($player);
       my $message = $message = "r{ We are looking for a player to replace $user_name.  Please go to http://cassandrawerewolf.com/game/".$game_thread." to replace the player. }r";
-      #system("/opt/werewolf/post_thread.pl \"$bgg_user\" \"$bgg_pswd\" reply $game_thread \"$message\"");
       system("/opt/werewolf/post_thread_cookie.pl \"/opt/werewolf/cookie.cassandra\" \"reply\" $game_thread \"$message\"");
     }
   }

@@ -896,7 +896,7 @@ function vote_tally_submit($game_id,$action,$tiebreaker) {
     }
     $message .= "Vote Log Page: http://cassandrawerewolf.com/game/".$game['thread_id']."/votes\n";
     $message .= "Vote Tally Page: http://cassandrawerewolf.com/game/".$game['thread_id']."/tally\n";
-    reply_thread($game['thread_id'],$message);
+    BGG::authAsCassy()->reply_thread($game['thread_id'],$message);
   } elseif ($action == "retrieve" ) {
     $sql = sprintf("update Games set updated_tally=1 where id=%s",quote_smart($game_id));
     $result = mysql_query($sql);

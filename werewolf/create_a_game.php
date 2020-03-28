@@ -15,7 +15,7 @@ $deadline_speed = array('Standard'=>'Standard', 'Fast'=>'Fast');
 if ( isset($_POST['submit']) ) {
   # Post a Cassandra Player List to Thread.
   $body = "This post is where the player list will be updated as players sign up using Cassandra.  http://cassandrawerewolf.com/game/".$_POST['thread_id'];
-  $player_list_id = reply_thread($_POST['thread_id'],$body);
+  $player_list_id = BGG::authAsCassy()->reply_thread($_POST['thread_id'],$body);
   if ( $player_list_id == "" ) { error("Please check your thread_id"); }
   if ( $_POST['swf'] == 'on' ) {
     $swf = "Yes";

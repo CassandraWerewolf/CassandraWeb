@@ -1,49 +1,80 @@
-<?php // bgg.php - Functions used to communicate with BGG
+<?php 
+// This class is used to communicate with BGG
+class BGG 
+{
+    const SCRIPT_PATH = "/opt/werewolf/bgg/";
 
-function send_geekmail($to, $subject, $message, $from="Cassandra Project", $password="" ) {
+    protected $username;
+    private $password;
+    private $geekauth;
 
-  $password = $password ?: getenv('BGG_PASSWORD');
-  system("/var/www/html/php/send_geekmail.pl \"$from\" \"$password\" \"$to\" \"$subject\" \"$message\" > /dev/null &", $retval);
+    public function __construct() {
+    }
 
+    public static function auth($username, $password) {
+        $instance = new self();
+        $instance->username = $username;
+        $instance->password = $password;
+        exec(self::SCRIPT_PATH . "authenticate.pl \"$username\" \"$password\"", $output);
+        $instance->geekauth = $output[0];
+        return $instance;
+    }
+
+    public static function authAsCassy() {
+        $username = getenv('BGG_USERNAME');
+        $password = getenv('BGG_PASSWORD');
+        return self::auth($username, $password);
+    }
+
+    // Auth required functions
+
+    public function send_geekmail($to, $subject, $message) {
+        system(self::SCRIPT_PATH . "send_geekmail.pl \"$this->username\" \"$this->password\" \"$to\" \"$subject\" \"$message\" > /dev/null &", $retval);
+    }
+
+    public function reply_thread($thread_id, $body) {
+        $article_id = self::get_article_id_by_thread_id($thread_id);
+        exec(self::SCRIPT_PATH . "reply_thread.pl \"$this->geekauth\" \"$thread_id\" \"$article_id\" \"$body\"", $response);
+        $article = json_decode($response[0], true);
+        return $article['id'];
+    }
+
+    public function reply_thread_quick($thread_id, $body) {
+        self::reply_thread($thread_id, $body);
+    }
+
+    public function edit_post($article_id, $body) {
+        system(self::SCRIPT_PATH . "edit_article.pl \"$this->geekauth\" \"$article_id\" \"$body\" >/dev/null &", $retval);
+    }
+
+    public function create_thread($title,$message,$forum_id='8') {
+        $article_id = system(self::SCRIPT_PATH . "create_thread.pl \"$this->username\" \"$this->password\" \"$forum_id\" \"$message\" \"$title\"" , $retval);
+        return self::get_thread_id_by_article_id($article_id);
+    }
+    
+    // No oauth required functions
+
+    public function is_bgg_user($username) {
+        exec(self::SCRIPT_PATH . "check_bgg_user.pl \"$username\"", $output);
+        return $output[0];
+    }
+
+    public function get_thread_id_by_article_id($article_id) {
+        exec(self::SCRIPT_PATH . "retrieve_thread.pl \"$article_id\"", $response);
+        $thread = json_decode($response[0], true);
+        return $thread['source']['id'];
+    }
+
+    public function get_article_id_by_thread_id($thread_id) {
+        exec(self::SCRIPT_PATH . "retrieve_articles.pl \"$thread_id\"", $response);
+        $thread = json_decode($response[0], true);
+        return $thread['articles'][0]['id'];
+    }
 }
 
-function reply_thread($thread_id, $body, $player="Cassandra Project", $password="" ) {
-
-  $password = $password ?: getenv('BGG_PASSWORD');
-  $article_id = system ("/var/www/html/php/post_thread.pl \"$player\" \"$password\" \"reply\" \"$thread_id\" \"$body\"", $retval);
-
-return $article_id;
-}
-
-function reply_thread_quick($thread_id, $body, $player="Cassandra Project", $password="" ) {
-
-  $password = $password ?: getenv('BGG_PASSWORD');
-  system ("/var/www/html/php/post_thread.pl \"$player\" \"$password\" \"reply\" \"$thread_id\" \"$body\" > /dev/null &", $retval);
-
-}
-
-function edit_post($article_id, $body, $player="Cassandra Project", $password="" ) {
-
-  $password = $password ?: getenv('BGG_PASSWORD');
-  system ("/var/www/html/php/post_thread.pl \"$player\" \"$password\" \"edit\" \"$article_id\" \"$body\" >/dev/null &", $retval);
-
-}
-
-function create_thread($title,$message,$forum_id='76', $player="Cassandra Project", $password="" ) {
-
-  $password = $password ?: getenv('BGG_PASSWORD');
-
-  $article_id = system ("/var/www/html/php/post_thread.pl \"$player\" \"$password\" \"new\" \"$forum_id\" \"$message\" \"$title\"" , $retval);
-  $thread_id = system ("/var/www/html/php/get_thread_id.pl \"$player\" \"$password\" \"$article_id\"", $retval);
-
-return $thread_id;
-}
-
-function is_bgg_user($username) {
-
-  $result = system ("/var/www/html/php/check_bgg_user.pl \"$username\"", $retval);
-  return $result;
-}
+// -----------------------------------------------------------------------------
+// Other related BGG methods
+// -----------------------------------------------------------------------------
 
 function edit_playerlist_post($game_id) {
   $sql = sprintf("select status, thread_id, player_list_id from Games where id=%s",quote_smart($game_id));
@@ -63,7 +94,7 @@ function edit_playerlist_post($game_id) {
     $body .= "\n To sign up for this game go to \n";
     $body .= "http://cassandrawerewolf.com/game/$thread_id\n";
 
-    edit_post($player_list_id, $body);
+    BGG::authAsCassy()->edit_post($player_list_id, $body);
   }
 }
 
@@ -104,7 +135,7 @@ function notify_moderator($game_id,$action="",$username="") {
 
   $message .= "\nGo to Game: http://www.boardgamegeek.com/thread/$thread_id\n";
 
-  send_geekmail($to, $subject, $message) ;
+  BGG::authAsCassy()->send_geekmail($to, $subject, $message) ;
 }
 
 function geekmail_form($to="",$subject="",$message="") {
@@ -135,4 +166,3 @@ function geekmail_form($to="",$subject="",$message="") {
 
   return $output;
 }
-

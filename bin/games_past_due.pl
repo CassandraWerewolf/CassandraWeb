@@ -35,6 +35,6 @@ while ( $game = $sth_game->fetchrow_hashref() ) {
 	$sth_status = $dbh->"update Games set expired=0, status='Unknown' where game_id=?");
 	$sth_status->execute($game->{'id'});
   }
-  system("/var/www/html/cassandra/jeremy/werewolf/php/send_geekmail.pl \"$bgg_user\" \"$bgg_pswd\" \"$to\" \"$subject\" \"$message\"");
+  system("/var/www/html/bgg/send_geekmail.pl \"$bgg_user\" \"$bgg_pswd\" \"$to\" \"$subject\" \"$message\"");
 }
 

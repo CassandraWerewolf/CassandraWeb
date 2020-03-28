@@ -9,8 +9,8 @@ POST_PROG=$PROG_DIR/post_thread_pipe.pl
 TALLY_PROG=$PROG_DIR/get_tally.pl
 INV_TALLY_PROG=$PROG_DIR/get_tally_inverted.pl
 TALLY_FILE=/tmp/tmp_tally.$$
-USER='Cassandra Project'
-PASS=${BGG_PASSWORD}
+USER=$BGG_USERNAME
+PASS=$BGG_PASSWORD
 
 pid=$$
 
@@ -55,7 +55,7 @@ do
 			echo "---------------------" >> $TALLY_FILE
 			echo >> $TALLY_FILE
 			$INV_TALLY_PROG $game >> $TALLY_FILE
-			$POST_PROG "$USER" $PASS reply $thread_id < $TALLY_FILE
+			$POST_PROG "$USER" $PASS $thread_id $article < $TALLY_FILE
 			/bin/echo "$set_tally_sql $game;" | $MYSQL_PROG
 			rm $TALLY_FILE
 		fi

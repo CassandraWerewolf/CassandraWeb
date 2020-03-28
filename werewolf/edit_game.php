@@ -403,7 +403,7 @@ case 's_moderator':
    } 
 	 // Check to see if the username is a valid BGG username
 	 print "<!--\n";
-	 $bgg_result = is_bgg_user($_REQUEST['user_id']);
+	 $bgg_result = (new BGG)->is_bgg_user($_REQUEST['user_id']);
 	 print "-->\n";
 	 if ( $bgg_result == "true" ) {
        $sql = sprintf("insert into Users (id, name) values ( NULL, %s ) ",quote_smart($_REQUEST['user_id']));

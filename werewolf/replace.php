@@ -16,6 +16,8 @@ $cache->remove('game-'.$game_id,'front');
 
 $mod = is_moderator($uid,$game_id);
 
+$bgg_cassy = BGG::authAsCassy();
+
 $rep = false;
 $sql = sprintf("select * from Replacements where user_id=%s and game_id=%s and replace_id=%s",quote_smart($user_id),quote_smart($game_id),quote_smart($uid));
 $result = mysql_query($sql);
@@ -52,11 +54,11 @@ if ( $action == "replace_me" ) {
 	$subject = "Player needs to be replaced";
     $message = "$user_name has requested to be replaced in ".$game['title'];
 	if( $to != "" ) {
-      send_geekmail($to, $subject, $message);
+      $bgg_cassy->send_geekmail($to, $subject, $message);
 	}
   }
   $message = "r{ We are looking for a player to replace $user_name.  Please go to http://cassandrawerewolf.com/game/".$game['thread_id']." to replace the player. }r";
-  reply_thread($game['thread_id'], $message);
+  $bgg_cassy->reply_thread($game['thread_id'], $message);
   error("You have sucessfully requested a replacement");
 } else if ( $action == "I_replace" ) {
   if ( $uid == $user_id || $mod) {
@@ -74,11 +76,11 @@ if ( $action == "replace_me" ) {
   	  $subject = "Player no longer needs to be replaced";
       $message = "$user_name has removed the requested to be replaced in ".$game['title'];
 	  if ( $to != "" ) {
-        send_geekmail($to, $subject, $message);
+        $bgg_cassy->send_geekmail($to, $subject, $message);
 	  }
   	}
     $message = "r{ $user_name no longer needs to be replaced.}r";
-    reply_thread($game['thread_id'], $message);
+    $bgg_cassy->reply_thread($game['thread_id'], $message);
 	error("You are no longer requesting a replacement");
   } 
   # Check to make sure player is not already in the game
@@ -103,10 +105,10 @@ if ( $action == "replace_me" ) {
   $subject = "Player no longer needs to be replaced";
   $message = "$username has replaced $user_name in ".$game['title'];
   if ( $to != "" ) {
-    send_geekmail($to, $subject, $message);
+    $bgg_cassy->send_geekmail($to, $subject, $message);
   }
   $message = "r{ $username has replaced $user_name.  If you have (un)voted $user_name since the last Cassandra vote tally, please [b][unvote all][/b] and revote your current choice just to make sure Cassy counts it correctly.}r";
-  reply_thread($game['thread_id'], $message);
+  $bgg_cassy->reply_thread($game['thread_id'], $message);
   error ("You have now replaced the player");
   #exit;
 } else {
