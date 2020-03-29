@@ -7,16 +7,18 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v2
       - name: Docker login
         run: docker login -u ${{ secrets.DOCKER_USER }} -p ${{ secrets.DOCKER_PASSWORD }}
       - name: Build
         run: docker-compose build
       - name: Tags
         run: |
-          docker tag cassandraproject/web cassandraproject/web:${{ github.sha }}
-          docker tag cassandraproject/web cassandraproject/web:bobtest
-      - name: Push
+          docker tag cassandraproject/web cassandraproject/web:${{ github.ref }}
+      - name: Push Branch Tag
         run: |
-          docker push cassandraproject/web:${{ github.sha }}
-          docker push cassandraproject/web:bobtest
+          docker push cassandraproject/web:${{ github.ref }}
+      - name: Push Latest Tag
+        if: github.ref == 'refs/heads/master'
+        run: |
+          docker push cassandraproject/web:latest
