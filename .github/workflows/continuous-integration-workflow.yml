@@ -16,7 +16,7 @@ jobs:
         run: |
           docker tag cassandraproject/web cassandraproject/web:${{ github.sha }}
           docker tag cassandraproject/web cassandraproject/web:bobtest
-      - name: push
+      - name: Push
         run: |
           docker push cassandraproject/web:${{ github.sha }}
           docker push cassandraproject/web:bobtest
