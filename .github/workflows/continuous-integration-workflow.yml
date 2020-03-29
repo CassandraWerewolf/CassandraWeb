@@ -1,20 +1,22 @@
-name: CI
+name: Cassandra Web CI/CD
 
 on: [push]
 
 jobs:
-  build:
-    name: Testing Workflow
+  ci:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v1
-    - name: Run a one-line script
-      run: echo Hello, world!
-    - name: Run a multi-line script
-      run: |
-        echo Add other actions to build,
-        echo test, and deploy your project.
-    - name: Build docker container
-      run: |
-        docker-compose build
+      - uses: actions/checkout@v1
+      - name: Docker login
+        run: docker login -u ${{ secrets.DOCKER_USER }} -p ${{ secrets.DOCKER_PASSWORD }}
+      - name: Build
+        run: docker-compose build
+      - name: Tags
+        run: |
+          docker tag cassandraproject/web cassandraproject/web:${{ github.sha }}
+          docker tag cassandraproject/web cassandraproject/web:bobtest
+      - name: push
+        run: |
+          docker push cassandraproject/web cassandraproject/web:${{ github.sha }}
+          docker push cassandraproject/web cassandraproject/web:bobtest
