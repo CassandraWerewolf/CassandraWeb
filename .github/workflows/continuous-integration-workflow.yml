@@ -28,3 +28,4 @@ jobs:
           name: cassandraproject/web
           username: ${{ secrets.DOCKER_USER }}
           password: ${{ secrets.DOCKER_PASSWORD }}
+          dockerfile: ./php/Dockerfile
