@@ -17,11 +17,11 @@ if ( isset($_POST['login']) ) {
   $result = mysql_query($sql);
   $uid = mysql_result($result,0,0);
   if ( $_POST['remember'] == "on" ) {
-    setcookie('cassy_uid', $uid, time()+60*60*24*365, '/', '', true, true);
-    setcookie('cassy_pwd', $pwd, time()+60*60*24*365, '/', '', true, true);
+    setcookie('cassy_uid', $uid, time()+60*60*24*365, '/; samesite=none', '', true, true);
+    setcookie('cassy_pwd', $pwd, time()+60*60*24*365, '/; samesite=none', '', true, true);
   } else {
-    setcookie('cassy_uid', $uid, 0, '/', '', true, true);
-    setcookie('cassy_pwd', $pwd, 0, '/', '', true, true);
+    setcookie('cassy_uid', $uid, 0, '/; samesite=none', '', true, true);
+    setcookie('cassy_pwd', $pwd, 0, '/; samesite=none', '', true, true);
   }
 } else {
   $uid = (isset($_SESSION['uid']) ? $_SESSION['uid'] : (isset($_COOKIE['cassy_uid']) ? $_COOKIE['cassy_uid'] : null));
