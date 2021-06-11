@@ -32,7 +32,7 @@ function show_menu_search_form() {
     <li>
       <a href="/">Cassy Home</a>
     </li><li>
-      <a href="http://www.boardgamegeek.com/forum/76/forum/1">BGG WW Forum</a>
+      <a href="https://boardgamegeek.com/forum/58">BGG WW Forum</a>
     </li><li>
       <a href="javascript:show_menu_search_form()" id="menu_search_form_label">Search</a>
       <span id="menu_search_form" class="menu-form" style="display: none">
