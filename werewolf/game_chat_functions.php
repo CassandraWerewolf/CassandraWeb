@@ -533,6 +533,12 @@ function format_options() {
 }
 
 function display_chat_room($room_id,$user_id) {
+  //Verify that the user is allowed to access this room
+  $sql = sprintf("select true as result from Chat_rooms, Chat_users where Chat_rooms.id=Chat_users.room_id and user_id=%s and id=%s",quote_smart($user_id),quote_smart($room_id));
+  $result = mysql_query($sql);
+  if(!mysql_fetch_array($result)) $room_id = 0;
+  //If the user illegally tries to gain access to a room they shouldn't be in, they get redirected to room 0. The dropdown won't update but that's fine because this should only happen when the user is trying to cheat.
+  
   $sql = sprintf("select * from Chat_rooms where id=%s",quote_smart($room_id));
   $result = mysql_query($sql);
   $room = mysql_fetch_array($result);

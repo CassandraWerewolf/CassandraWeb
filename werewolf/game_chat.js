@@ -171,11 +171,14 @@ function change_room(myroom_id) {
     document.getElementById('change_room').value = myroom_id
   }
   agent.call('','display_chat_room','change_chat_room',myroom_id,user_id)
+  //The below is somewhat broken by this commit, but seems to be redundant
+  /*
   if ( myroom_id == 0 ) {
     document.getElementById('player_list').style.visibility='hidden'
   } else {
     document.getElementById('player_list').style.visibility='visible'
   }
+  */
   switch_tab(current_tab)
 }
 
