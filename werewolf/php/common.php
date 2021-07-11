@@ -339,7 +339,7 @@ function is_player($user_id,$game_id) {
 }
 
 function get_enum_array($field,$table) {
-  $sql = "show columns from $table where field='$field'";
+  $sql = sprintf("show columns from %s where field='%s'",quote_smart($table),quote_smart($field));
   $result = mysql_query($sql);
   while ($row=mysql_fetch_row($result)) {
     foreach(explode("','",substr($row[1],6,-2)) as $v) {

@@ -39,7 +39,7 @@ if ( $state == 'open' ) {
   sort($newidlist);
   $game_id = $_REQUEST['gameid'];
 
-  $sql = "select user_id from Games, Moderators where Games.id = Moderators.game_id and Games.id = $game_id";
+  $sql = sprintf("select user_id from Games, Moderators where Games.id = Moderators.game_id and Games.id = %s",quote_smart($game_id));
   $result = mysql_query($sql);
   while ( $row = mysql_fetch_array($result) ) {
     $oldidlist[] = $row['user_id'];
@@ -56,7 +56,7 @@ if ( $state == 'open' ) {
 
   if ( $addlist[0] != "" ) {
   foreach ( $addlist as $id ) {
-    $sql = "insert into Moderators ( user_id, game_id ) values ( '$id', '$game_id' )";
+    $sql = sprintf("insert into Moderators ( user_id, game_id ) values ( '%s', '%s' )",quote_smart($id),quote_smart($game_id);
     $result = mysql_query($sql);
   }
   }
@@ -72,13 +72,13 @@ if ( $state == 'open' ) {
 
   if ( $dellist[0] != "" ) {
   foreach ( $dellist as $id ) {
-    $sql = "delete from Moderators where user_id='$id' and game_id='$game_id'";
+    $sql = sprintf("delete from Moderators where user_id='%s' and game_id='%s'",quote_smart($id),quote_smart($game_id));
     $result = mysql_query($sql);
   }
   }
 
 # Return to original output
-  $sql = "Select id, name from Users, Moderators where Users.id=Moderators.user_id and Moderators.game_id='$game_id' order by name";
+  $sql = sprintf("Select id, name from Users, Moderators where Users.id=Moderators.user_id and Moderators.game_id='%s' order by name",quote_smart($game_id);
   $result = mysql_query($sql);
   $count = 0;
   $modlist = "";

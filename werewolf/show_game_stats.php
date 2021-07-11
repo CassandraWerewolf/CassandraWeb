@@ -38,7 +38,7 @@ exit;
 }
 
 # Get Game info
-$sql = "Select * from Games where thread_id=$game_thread_id";
+$sql = sprintf("Select * from Games where thread_id=%s",quote_smart($game_thread_id));
 $result = mysql_query($sql);
 $game = mysql_fetch_array($result);
 if ( mysql_num_rows($result) != 1 ) { $game['id'] = 0; }
@@ -59,7 +59,7 @@ $chats = mysql_result($result,0,0);
 $moderator = is_moderator($uid,$game['id']);
 
 # Find out if the person viewing is a player.
-$sql = "Select * from Players, Games where Players.game_id=Games.id and user_id=$uid and thread_id=$game_thread_id";
+$sql = sprintf("Select * from Players, Games where Players.game_id=Games.id and user_id=%s and thread_id=%s",quote_smart($uid),quote_smart($game_thread_id));
 $result=mysql_query($sql);
 $row_count = mysql_num_rows($result);
 $isplayer = false;

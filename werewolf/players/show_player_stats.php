@@ -121,7 +121,7 @@
 	$count = dbGetResultRowCount($res);
 	$current_games_played[] = "Currently Playing ($count)";
 	while($row = mysql_fetch_array($res)){
-	    $sql = "select count(*) from Posts, Users where Posts.user_id=Users.id and game_id='".$row['id']."' and name='$player'";
+	    $sql = sprintf("select count(*) from Posts, Users where Posts.user_id=Users.id and game_id='%s' and name='%s'",quote_smart($row['id']),quote_smart($player));
 		$posts = mysql_query($sql);
 		$num_post = mysql_result($posts,0,0);
 		mysql_free_result($posts);
@@ -140,7 +140,7 @@
 	$res = dbGetResult($sql_last_games_played);
 	$last_games_played[] = "Last 5 Games Played";
 	while($row = mysql_fetch_array($res)){
-	    $sql = "select count(*) from Posts, Users where Posts.user_id=Users.id and game_id='".$row['id']."' and name='$player'";
+	    $sql = sprintf("select count(*) from Posts, Users where Posts.user_id=Users.id and game_id='%s' and name='%s'",quote_smart($row['id']),quote_smart($player));
 		$posts = mysql_query($sql);
 		$num_post = mysql_result($posts,0,0);
 		mysql_free_result($posts);
@@ -156,7 +156,7 @@
 	$count = dbGetResultRowCount($res);
 	$current_games_modded[] = "Currently Moderating ($count)";
 	while($row = mysql_fetch_array($res)){
-	    $sql = "select count(*) from Posts, Users where Posts.user_id=Users.id and game_id='".$row['id']."' and name='$player'";
+	    $sql = sprintf("select count(*) from Posts, Users where Posts.user_id=Users.id and game_id='%s' and name='%s'",quote_smart($row['id']),quote_smart($player));
 		$posts = mysql_query($sql);
 		$num_post = mysql_result($posts,0,0);
 		mysql_free_result($posts);
@@ -189,7 +189,7 @@
 	$res = dbGetResult($sql_last_games_modded);
 	$last_games_modded[] = "Last 5 Games Modded";
 	while($row = mysql_fetch_array($res)){
-	    $sql = "select count(*) from Posts, Users where Posts.user_id=Users.id and game_id='".$row['id']."' and name='$player'";
+	    $sql = sprintf("select count(*) from Posts, Users where Posts.user_id=Users.id and game_id='%s' and name='%s'",quote_smart($row['id']),quote_smart($player));
 		$posts = mysql_query($sql);
 		$num_post = mysql_result($posts,0,0);
 		mysql_free_result($posts);
@@ -310,7 +310,7 @@
 	#$table_main->setCellAttributes(0,0,"valign='top' rowspan='2'");
 	echo $table_main->toHTML();
 
-  $sql = "select * from Misc_users where user_id=$user_id";
+  $sql = sprintf("select * from Misc_users where user_id=%s",quote_smart($user_id));
   $result = mysql_query($sql);
   $count = mysql_num_rows($result);
   if ( $count == 1 ) {
