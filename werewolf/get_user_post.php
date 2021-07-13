@@ -27,7 +27,7 @@ Please hit your browsers back button.
 exit;
 }
 
-$sql = "Select id, title from Games where thread_id='$thread_id'";
+$sql = sprintf("Select id, title from Games where thread_id='%s'",quote_smart($thread_id));
 $result = mysql_query($sql);
 if (mysql_num_rows($result) == 1 ) { 
   $game_id = mysql_result($result,0,0);
@@ -37,7 +37,7 @@ if (mysql_num_rows($result) == 1 ) {
   $game_name = "Invalid Game";
 }
 
-$sql = "Select last_dumped from Post_collect_slots where game_id='$game_id'";
+$sql = sprintf("Select last_dumped from Post_collect_slots where game_id='%s'",quote_smart($game_id));
 $result = mysql_query($sql);
 $num_rows = mysql_num_rows($result);
 if($num_rows <= 0)
@@ -51,7 +51,7 @@ else
 }
 
 if ( $player != 'all' && $player != 'users' ) {
-$sql = "Select id from Users where name='$player'";
+$sql = sprintf("Select id from Users where name='%s'",quote_smart($player));
 $result = mysql_query($sql);
 $user_id = mysql_result($result,0,0);
 
@@ -72,7 +72,7 @@ if ( $player == 'all' ) { echo "<p><a href=\"/game/$thread_id/users\">Remove Sys
 if ( $player == 'users' ) { echo "<p><a href=\"/game/$thread_id/all\">Add System posts</a></p>"; }
 if ( $player != 'all' ) { $where_user = " and Posts.user_id='$user_id' "; }
 if ( $player == 'users' ) { $where_user = " and Posts.user_id not in (306,749) "; }
-$sql = "Select Users.name, article_id, text, date_format(time_stamp, '%a %b %e,%Y %l:%i %p') as post_date from Users, Posts where Users.id=Posts.user_id and Posts.game_id='$game_id' $where_user order by article_id";
+$sql = "Select Users.name, article_id, text, date_format(time_stamp, '%a %b %e,%Y %l:%i %p') as post_date from Users, Posts where Users.id=Posts.user_id and Posts.game_id='".quote_smart($game_id)."' $where_user order by article_id";
 $result = mysql_query($sql);
 $rownum = mysql_num_rows($result);
 if ( $rownum < 1 ) {

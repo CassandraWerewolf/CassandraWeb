@@ -314,7 +314,7 @@ case 's_moderator':
 	$cache->clean('front-signup-fast-' . $game_id);
 	$cache->remove('game-' . $game_id, 'front');
 
-	$sql = "select number, title from Games where id='$game_id'";
+	$sql = sprintf("select number, title from Games where id='%s'",quote_smart($game_id);
 	$result = mysql_query($sql);
 	$game = mysql_fetch_array($result);
 	$output = "";

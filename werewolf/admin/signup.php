@@ -13,7 +13,7 @@ dbConnect();
 $bggid = $_POST['bggid'];
 
 // Removing requierement that user must already be in DB.  The will get a passwords as long as they have a BGG id.
-$sql = "Select count(*) from Users where name='$bggid'";
+$sql = sprintf("Select count(*) from Users where name='%s'",quote_smart($bggid));
 $result = mysql_query($sql);
 if ( !$result) {
   error ($sql);
@@ -21,11 +21,11 @@ if ( !$result) {
 } 
 if ( @mysql_result($result,0,0)==0) {
 //  error('According to our database you have not played in an BGG werewolf games.  Please go join a game and then come back to gain access to all the cool stuff available here.');
-$sql = "insert into Users set name='$bggid', password='none'";
+$sql = sprintf("insert into Users set name='%s', password='none'",quote_smart($bggid));
 $result = mysql_query($sql);
 }
 $newpass = substr(md5(time()),0,6);
-$sql = "update Users set password = MD5('$newpass') where name='$bggid'";
+$sql = sprintf("update Users set password = MD5('$newpass') where name='%s'",quote_smart($bggid));
 if ( !mysql_query($sql) ) {
   error('Database error #200 occurred in processing your submission.\\nIf this error persists, please contact cassandra.project@gmail.com');
 }

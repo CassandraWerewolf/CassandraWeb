@@ -38,7 +38,7 @@ exit;
 }
 
 # Get Game info
-$sql = "Select * from Games where thread_id=$game_thread_id";
+$sql = sprintf("Select * from Games where thread_id=%s",quote_smart($game_thread_id));
 $result = mysql_query($sql);
 $game = mysql_fetch_array($result);
 if ( mysql_num_rows($result) != 1 ) { $game['id'] = 0; }

@@ -112,7 +112,7 @@ function clear_edit(game_id) {
 	$games_modded_names[] = "header placeholder";
     $games_modded_comment[] = "Comment";
 	while($row = mysql_fetch_array($res_games_modded)){
-	    $sql = "select count(*) from Posts, Users where Posts.user_id=Users.id and game_id='".$row['game_id']."' and name='$player'";
+	    $sql = sprintf("select count(*) from Posts, Users where Posts.user_id=Users.id and game_id='%s' and name='%s'",quote_smart(row['game_id']),quote_smart($player));
 		$result = mysql_query($sql);
 		$num_post = mysql_result($result,0,0);
 		$games_modded_names[] = "<a href='$game".$row['thread_id']."'>".$row['game']."</a> <a href='$game".$row['thread_id']."/$player'>($num_post posts)</a>";
