@@ -56,6 +56,10 @@ $result = mysql_query($sql);
 $user_id = mysql_result($result,0,0);
 
 }
+// Find game start post
+$first_game_post_sql = "SELECT MIN(article_id) AS first_game_post FROM Posts WHERE game_id = $game_id AND user_id = 306 AND text LIKE '%The Cassandra Automatic Vote Tally System%'";
+$result = mysql_query($first_game_post_sql);
+$first_game_post_article_id = mysql_result($result,0,0);
 ?>
 <html>
 <head>
@@ -82,7 +86,7 @@ if ( $rownum < 1 ) {
 <?php
 while ( $row = mysql_fetch_array($result) ) {
 ?>
-<table cellpadding="1" cellspacing="1" border="0" width="100%" class='forum_table'>
+<table cellpadding="1" cellspacing="1" border="0" width="100%" class='forum_table <?php if ($first_game_post_article_id > $row['article_id']) { ?>forum_table--pregame<?php } ?>'>
 <?php
 if ( $player == 'all'  || $player == 'users' ) {
 ?>
