@@ -820,6 +820,12 @@ div.addcontent
 	color:            #000000;
 	border:           1px solid #8888FF;
 }
+.forum_table--pregame
+{
+    background-color: #E1E1F1;
+    border:           1px dashed #8888FF;
+    opacity:          80%;
+}
 
 .forum_table td
 {
