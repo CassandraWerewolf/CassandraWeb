@@ -15,6 +15,9 @@ body.body {
     min-height: 300px;
     padding: 30px;
   }
+  .content--wide_screen {
+      max-width: 1400px;
+  }
 }
 
 .page-title {
