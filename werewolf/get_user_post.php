@@ -68,6 +68,7 @@ $first_game_post_article_id = mysql_result($result,0,0);
 </head>
 <body>
 <?php display_menu(); ?>
+<div class="content-wrap"><div class="content content--wide_screen">
 <h2>Cassandra Files for <?=$player;?> in "<?=$game_name;?>" <?=$last_dumped;?></h2>
 <p>Return to <a href="/game/<?=$thread_id;?>">Game Page</a></p>
 <?php
@@ -116,6 +117,8 @@ Posted <?=$row['post_date'];?>
 <?php
 }
 ?>
+</div> <!-- end .content -->
+</div> <!-- end .content-wrap -->
 </body>
 </html>
 <?php
