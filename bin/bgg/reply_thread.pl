@@ -18,7 +18,10 @@ my $body = shift;
 $body =~ s/\\\'/\'/g;
 
 # CREATE USER AGENT 
-my $agent = LWP::UserAgent->new(cookie_jar => {});
+my $agent = LWP::UserAgent->new(
+    agent => 'CassandraWerewolf/1.0 https://cassandrawerewolf.com',
+    cookie_jar => {}
+);
 
 # compose the request
 my %message;
