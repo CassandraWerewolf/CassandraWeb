@@ -13,7 +13,10 @@ my $article_id = shift;
 my $url = "https://api.geekdo.com/api/articles/$article_id";
 
 # CREATE USER AGENT
-my $agent = LWP::UserAgent->new(cookie_jar => {});
+my $agent = LWP::UserAgent->new(
+    agent => 'CassandraWerewolf/1.0 https://cassandrawerewolf.com',
+    cookie_jar => {}
+);
 
 # send request
 my $response = $agent->get(

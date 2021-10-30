@@ -22,7 +22,10 @@ $to = shift;
 $subject = shift;
 $body = shift;
 
-$agent = LWP::UserAgent->new(cookie_jar => {});
+my $agent = LWP::UserAgent->new(
+    agent => 'CassandraWerewolf/1.0 https://cassandrawerewolf.com',
+    cookie_jar => {}
+);
 
 $login{username}=$from;
 $login{password}=$passwd;
