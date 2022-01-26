@@ -10,7 +10,6 @@ my $subject;
 my $body;
 my %message;
 
-my $login_url='https://boardgamegeek.com/login/api/v1';
 my $mail_url='https://boardgamegeek.com/geekmail_controller.php';
 
 die "\nUsage $0 from passwd to \"subject\" \"body\"\n\n" unless ($#ARGV == 4);
