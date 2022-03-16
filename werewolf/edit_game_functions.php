@@ -203,8 +203,8 @@ function edit_deadline($game_id) {
   #list($night,$nmin) = split(":",$night_db);
   $output .= "<table>\n";
   if ( $speed == "Standard" ) {
-    $output .= "<tr><td>Lynch:</td><td>".time_dropdown('lynch',$lynch,false,false)."</td></tr>\n";
-    $output .= "<tr><td>Night Action:</td><td>".time_dropdown('night',$night,false,false)."</td></tr>\n";
+    $output .= "<tr><td>Dusk:</td><td>".time_dropdown('lynch',$lynch,false,false)."</td></tr>\n";
+    $output .= "<tr><td>Dawn:</td><td>".time_dropdown('night',$night,false,false)."</td></tr>\n";
     $output .= "<input type='hidden' name='day_length' value='$day_length' />\n";
     $output .= "<input type='hidden' name='night_length' value='$night_length' />\n";
   } else {

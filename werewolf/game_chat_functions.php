@@ -185,13 +185,13 @@ function game_order_logx($user_id,$game_id,$mod) {
   }
   if ($mod)
   {
-    $sql = sprintf("select p.id as user_id, p.name as user, ga_group, Roles.`type`, `desc`, if(cancel is null, concat(coalesce(concat(if(target_id=0,'Lynch Victim',t.name),' '),''),user_text),'canceled') as target, last_updated, Game_orders.day as day from Game_orders left join Users t on t.id=Game_orders.target_id, Users p, Roles, Players_all, Players where Game_orders.user_id=p.id and Players_all.original_id=Players.user_id and Players_all.user_id=Game_orders.user_id and Players_all.game_id=Game_orders.game_id and Players.game_id=Players_all.game_id and Roles.id=Players.role_id and Game_orders.game_id=%s order by last_updated desc",quote_smart($game_id));
+    $sql = sprintf("select p.id as user_id, p.name as user, ga_group, Roles.`type`, `desc`, if(cancel is null, concat(coalesce(concat(if(target_id=0,'Daykill Victim',t.name),' '),''),user_text),'canceled') as target, last_updated, Game_orders.day as day from Game_orders left join Users t on t.id=Game_orders.target_id, Users p, Roles, Players_all, Players where Game_orders.user_id=p.id and Players_all.original_id=Players.user_id and Players_all.user_id=Game_orders.user_id and Players_all.game_id=Game_orders.game_id and Players.game_id=Players_all.game_id and Roles.id=Players.role_id and Game_orders.game_id=%s order by last_updated desc",quote_smart($game_id));
   } else {
     if ($group != "")
     {
-      $sql = sprintf("select p.id as user_id, p.name as user, ga_group, Roles.`type`, `desc`, if(cancel is null, concat(coalesce(concat(if(target_id=0,'Lynch Victim',t.name),' '),''),user_text),'canceled') as target, last_updated, Game_orders.day as day from Game_orders left join Users t on t.id=Game_orders.target_id, Users p, Roles, Players_all, Players where Game_orders.user_id=p.id and Players_all.original_id=Players.user_id and Players_all.user_id=Game_orders.user_id and Players_all.game_id=Game_orders.game_id and Players.game_id=Players_all.game_id and Roles.id=Players.role_id and Game_orders.game_id=%s and (p.id=%s or ga_group=%s) order by last_updated desc",quote_smart($game_id), quote_smart($user_id), quote_smart($group));
+      $sql = sprintf("select p.id as user_id, p.name as user, ga_group, Roles.`type`, `desc`, if(cancel is null, concat(coalesce(concat(if(target_id=0,'Daykill Victim',t.name),' '),''),user_text),'canceled') as target, last_updated, Game_orders.day as day from Game_orders left join Users t on t.id=Game_orders.target_id, Users p, Roles, Players_all, Players where Game_orders.user_id=p.id and Players_all.original_id=Players.user_id and Players_all.user_id=Game_orders.user_id and Players_all.game_id=Game_orders.game_id and Players.game_id=Players_all.game_id and Roles.id=Players.role_id and Game_orders.game_id=%s and (p.id=%s or ga_group=%s) order by last_updated desc",quote_smart($game_id), quote_smart($user_id), quote_smart($group));
     } else {
-      $sql = sprintf("select p.id as user_id, p.name as user, ga_group, Roles.`type`, `desc`, if(cancel is null, concat(coalesce(concat(if(target_id=0,'Lynch Victim',t.name),' '),''),user_text),'canceled') as target, last_updated, Game_orders.day as day from Game_orders left join Users t on t.id=Game_orders.target_id, Users p, Roles, Players_all, Players where Game_orders.user_id=p.id and Players_all.original_id=Players.user_id and Players_all.user_id=Game_orders.user_id and Players_all.game_id=Game_orders.game_id and Players.game_id=Players_all.game_id and Roles.id=Players.role_id and Game_orders.game_id=%s and p.id=%s order by last_updated desc",quote_smart($game_id), quote_smart($user_id));
+      $sql = sprintf("select p.id as user_id, p.name as user, ga_group, Roles.`type`, `desc`, if(cancel is null, concat(coalesce(concat(if(target_id=0,'Daykill Victim',t.name),' '),''),user_text),'canceled') as target, last_updated, Game_orders.day as day from Game_orders left join Users t on t.id=Game_orders.target_id, Users p, Roles, Players_all, Players where Game_orders.user_id=p.id and Players_all.original_id=Players.user_id and Players_all.user_id=Game_orders.user_id and Players_all.game_id=Game_orders.game_id and Players.game_id=Players_all.game_id and Roles.id=Players.role_id and Game_orders.game_id=%s and p.id=%s order by last_updated desc",quote_smart($game_id), quote_smart($user_id));
     }
   }
   $result = mysql_query($sql);
@@ -358,7 +358,7 @@ function game_order_input($user_id,$game_id,$day) {
 	    $result = mysql_query($sql);
         $count = 0;
 		if ( $actions['game_action'] == "dead" && $game_phase == "day") {
-          $output .= "<option value='0'>Today's Lynch Victim</option>";
+          $output .= "<option value='0'>Today's Daykill Victim</option>";
 		  $count++;
 		}
 	    while ( $user = mysql_fetch_array($result) ) {
@@ -421,7 +421,7 @@ function game_order_sumary($user_id,$game_id,$day) {
 		$sql2 = sprintf("select distinct `desc` from Game_orders, Players, Players_all where Game_orders.user_id=Players_all.user_id and Game_orders.game_id=Players_all.game_id and Players_all.original_id=Players.user_id and Players_all.game_id=Players.game_id and Game_orders.game_id=%s and Players.ga_group=%s order by `desc`",quote_smart($game_id),quote_smart($player['ga_group']));
 		$result2 = mysql_query($sql2);
 		while ( $action = mysql_fetch_array($result2) ) {
-		  $sql3 = sprintf("select u.name as player, concat(coalesce(concat(if(target_id=0,'Lynch Victim',t.name),' '),''),user_text) as target, cancel from Game_orders left join Users t on t.id=Game_orders.target_id , Users u, Players, Players_all where u.id=Game_orders.user_id and Players.user_id=Players_all.original_id and Players_all.user_id=Game_orders.user_id and Players.game_id=Players_all.game_id and Players.game_id=Game_orders.game_id and Game_orders.game_id=%s and `desc`=%s and day=%s and ga_group=%s order by last_updated desc limit 0, 1",quote_smart($game_id),quote_smart($action['desc']),quote_smart($day),quote_smart($player['ga_group']));
+		  $sql3 = sprintf("select u.name as player, concat(coalesce(concat(if(target_id=0,'Daykill Victim',t.name),' '),''),user_text) as target, cancel from Game_orders left join Users t on t.id=Game_orders.target_id , Users u, Players, Players_all where u.id=Game_orders.user_id and Players.user_id=Players_all.original_id and Players_all.user_id=Game_orders.user_id and Players.game_id=Players_all.game_id and Players.game_id=Game_orders.game_id and Game_orders.game_id=%s and `desc`=%s and day=%s and ga_group=%s order by last_updated desc limit 0, 1",quote_smart($game_id),quote_smart($action['desc']),quote_smart($day),quote_smart($player['ga_group']));
 	      $result3 = mysql_query($sql3);
 	      while ( $order = mysql_fetch_array($result3) ) {
 		    if ( $order['cancel'] == "" ) {
@@ -435,7 +435,7 @@ function game_order_sumary($user_id,$game_id,$day) {
 	  $sql2 = sprintf("select distinct `desc` from Game_orders where game_id=%s and user_id=%s",quote_smart($game_id),quote_smart($player['id']));
 	  $result2 = mysql_query($sql2);
 	  while ( $action = mysql_fetch_array($result2) ) {
-	    $sql3 = sprintf("select concat(coalesce(concat(if(target_id=0,'Lynch Victim',t.name),' '),''),user_text) as target, cancel from Game_orders left join Users t on t.id=Game_orders.target_id where Game_orders.game_id=%s and Game_orders.user_id=%s and `desc`=%s and day=%s order by last_updated desc limit 0, 1",quote_smart($game_id),quote_smart($player['id']),quote_smart($action['desc']),quote_smart($day));
+	    $sql3 = sprintf("select concat(coalesce(concat(if(target_id=0,'Daykill Victim',t.name),' '),''),user_text) as target, cancel from Game_orders left join Users t on t.id=Game_orders.target_id where Game_orders.game_id=%s and Game_orders.user_id=%s and `desc`=%s and day=%s order by last_updated desc limit 0, 1",quote_smart($game_id),quote_smart($player['id']),quote_smart($action['desc']),quote_smart($day));
         $result3 = mysql_query($sql3);
         while ( $order = mysql_fetch_array($result3) ) {
 		  if ( $order['cancel'] == "" ) {
@@ -461,7 +461,7 @@ function game_order_log($user_id,$game_id,$day) {
 	  $group = mysql_result($result,0,0);
 	}
   }
-  $sql = sprintf("select p.id as user_id, p.name as user, ga_group, Roles.`type`, `desc`, if(cancel is null, concat(coalesce(concat(if(target_id=0,'Lynch Victim',t.name),' '),''),user_text),'canceled') as target, last_updated from Game_orders left join Users t on t.id=Game_orders.target_id, Users p, Roles, Players_all, Players where Game_orders.user_id=p.id and Players_all.original_id=Players.user_id and Players_all.user_id=Game_orders.user_id and Players_all.game_id=Game_orders.game_id and Players.game_id=Players_all.game_id and Roles.id=Players.role_id and Game_orders.game_id=%s and Game_orders.day=%s order by last_updated desc",quote_smart($game_id),quote_smart($day));
+  $sql = sprintf("select p.id as user_id, p.name as user, ga_group, Roles.`type`, `desc`, if(cancel is null, concat(coalesce(concat(if(target_id=0,'Daykill Victim',t.name),' '),''),user_text),'canceled') as target, last_updated from Game_orders left join Users t on t.id=Game_orders.target_id, Users p, Roles, Players_all, Players where Game_orders.user_id=p.id and Players_all.original_id=Players.user_id and Players_all.user_id=Game_orders.user_id and Players_all.game_id=Game_orders.game_id and Players.game_id=Players_all.game_id and Roles.id=Players.role_id and Game_orders.game_id=%s and Game_orders.day=%s order by last_updated desc",quote_smart($game_id),quote_smart($day));
   $result = mysql_query($sql);
   $count = mysql_num_rows($result);
   if ( $count == 0 ) { return; }

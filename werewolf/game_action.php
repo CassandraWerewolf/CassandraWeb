@@ -13,7 +13,7 @@ if ( isset($_POST['submit']) || isset($_POST['cancel'])) {
   $result = mysql_query($sql);
   $game_phase = mysql_result($result,0,0);
   if ( $game_phase ==  'night' && $_POST['target_id'] == '0' ) {
-    error("Please input the players name now that the game is in night phase rather than the generic 'Lynch Victim' as your target");
+    error("Please input the players name now that the game is in night phase rather than the generic 'Daykill Victim' as your target");
   }
   $sql = sprintf("insert into Game_orders (id, user_id, game_id, `desc`, day) values (NULL, %s,%s,%s,%s)",quote_smart($_POST['user_id']),quote_smart($_POST['game_id']),quote_smart($_POST['desc']),quote_smart($_POST['day']));
   $result = mysql_query($sql);
@@ -29,7 +29,7 @@ if ( isset($_POST['submit']) || isset($_POST['cancel'])) {
         $target = mysql_result($result,0,0);
         $message .= $target." ";
 	  } else {
-        $message .= "Lynch Victim ";
+        $message .= "Daykill Victim ";
 	  }
 	}
   }

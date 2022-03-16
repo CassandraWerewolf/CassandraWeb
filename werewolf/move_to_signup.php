@@ -81,7 +81,7 @@ if ( s_date == "" || s_date == "yyyy-mm-dd" || s_date == "0000-00-00") {
   return false
 }
 if ( document.getElementById('lynch').value == document.getElementById('night').value ) {
-  alert("Lynch time and Night Action Deadline can not be the same time")
+  alert("Dusk and Dawn cannot be the same time")
   return false
 }
 
@@ -111,8 +111,8 @@ return true
 <tr><td align='right'>Game Name:</td><td><input type='text' name='title' value='<?=$game['title'];?>' /></td></tr>
 <tr><td align='right'>BGG Thread ID:</td><td><input type='text' name='thread_id' /></td></tr>
 <tr><td align='right'>Start Date:</td><td><input type='text' name='start_date' value='<?=$game['start_date'];?>'/></td></tr>
-<tr><td align='right'>Lynch Time:</td><td><?php print time_dropdown_old('lynch'); ?></td></tr>
-<tr><td align='right'>Night Action Deadline:</td><td><?php print time_dropdown_old('night'); ?></td></tr>
+<tr><td align='right'>Dusk:</td><td><?php print time_dropdown_old('lynch'); ?></td></tr>
+<tr><td align='right'>Dawn:</td><td><?php print time_dropdown_old('night'); ?></td></tr>
 <tr><td align='right'>Aprox. Length:</td><td><select name='aprox_length'>
 <?php
 $selected7 = "";

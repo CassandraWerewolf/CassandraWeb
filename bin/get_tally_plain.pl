@@ -45,11 +45,11 @@ $sth_times->bind_columns(\$lynch_time, \$action_time);
 $sth_times->fetch;
 
 if(defined($lynch_time)) {
-	print "\nLynch time is at $lynch_time";
+	print "\nDusk is at $lynch_time";
 }
 
 if(defined($action_time)) {
-	print "\nNight Action deadline is at $action_time";
+	print "\nDawn is at $action_time";
 }
 
 

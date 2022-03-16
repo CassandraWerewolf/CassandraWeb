@@ -31,7 +31,7 @@ $action = $_GET['action'];
 	    $message .= "Your Moderator has chosen to use the Longest Held Last Vote method for a tiebreaker - This is just for Cassandra system, and there may be a different tiebreaker specified by your Moderator in the ruleset.\n";
 	  }
 	  $message .= "Your Moderator has chosen to [b]" . ($nf == "No" ?  "dis" : "") . "allow[/b] Nightfall votes.\n";
-	  $message .= "Your Moderator has chosen to [b]" . ($nl == "No" ?  "dis" : "") . "allow[/b] No Lynch votes.\n\n";
+	  $message .= "Your Moderator has chosen to [b]" . ($nl == "No" ?  "dis" : "") . "allow[/b] No Kill votes.\n\n";
 	  
 	  $message .= "Vote Log Page: http://cassandrawerewolf.com/game/".$game['thread_id']."/votes\n";
 	  $message .= "Vote Tally Page: http://cassandrawerewolf.com/game/".$game['thread_id']."/tally\n";

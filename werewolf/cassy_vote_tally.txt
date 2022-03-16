@@ -23,7 +23,7 @@ see if it was marked invalid and why.
 
 6. Case does not matter and simple typos will not cause the vote to fail.
 
-7. You may [b][vote no lynch][/b] if your game allows it.
+7. You may [b][vote no kill][/b] if your game allows it.
 
 8. Non voting players will be listed in the tallies. This will only be
 correct if the Moderator notes which players have been killed (see below)
@@ -33,7 +33,7 @@ correct if the Moderator notes which players have been killed (see below)
 
 [u][b]Moderators[/b][/u]
 1. The moderator will need to post [b][Dawn][/b] when the day begins
-(after the night results are posted) and [b][Dusk][/b] when the lynch
+(after the night results are posted) and [b][Dusk][/b] when the dusk
 deadline has passed and the day is over. Votes will not be counted
 after [b][Dusk][/b] has been posted. They will be registered again
 after [b][Dawn][/b] is next posted.
@@ -47,18 +47,18 @@ Cassandra will increment an internal counter each time it sees
 3. After dusk has been posted, the Moderator may go to the game page
 on Cassandra to request a Final Tally to be posted before the normal
 scan period has elapsed (i.e. Game Y gets scanned at 45 min. after the
-hour, if it lynches at 7pm the moderator may request a tally to be
+hour, if it dusks at 7pm the moderator may request a tally to be
 posted from the game page before 7:45pm. it will also be posted
 regardless of whether or not it has been changed since the last
 posting) - Do this by clicking on the 'Force Vote Tally' link.
 
-4. You will need to note which players were killed via the lynch or at night by
+4. You will need to note which players were killed via the day vote or at night by
 either posting [b][killed jmilum][/b] in the thread, or by going to the game
 page and editing the player list. When posting in the thread, be sure to post
-[b][dusk][/b] before posting the lynch kill, and post [b][dawn][/b] before
+[b][dusk][/b] before posting the dusk kill, and post [b][dawn][/b] before
 posting the night kill.
 Example:
-A. lynch time has passed so post [b][dusk][/b]
+A. dusk has passed so post [b][dusk][/b]
 B. goto the game page and select a final tally to be posted
 C. check the final tally and post [b][killed melsana][/b]
 D. after the night deadline has passed post [b][dawn][/b]

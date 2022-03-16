@@ -170,7 +170,7 @@ $time = $sth_time->fetchrow_hashref();
 	  $mech->click_button(name => 'submit');
 	  # Post Dawn if the N0 views are random.
 	  if ( $template->{'random_n0'} eq "yes" ) {
-	    $message = "[b][Dawn][/b]\nThe first lynch will be at ".$game->{'lynch_time'}." provided it is at least 12hrs away.  Other wise it will be tomorrow at that time.";
+	    $message = "[b][Dawn][/b]\nThe first dusk will be at ".$game->{'lynch_time'}." provided it is at least 12hrs away.  Other wise it will be tomorrow at that time.";
 	    system("/opt/werewolf/post_thread.pl \"$bgg_user\" \"$bgg_pswd\" reply $thread_id \"$message\"");
 	  } else {
         $message = "It is Night 0.  If you have N0 orders please do that now.  Dawn will be posted at ".$game->{'na_deadline'}." provided it is at least 4hrs away. Otherwise it will be tomorrow at that time.";

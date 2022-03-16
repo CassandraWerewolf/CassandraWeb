@@ -220,10 +220,10 @@ list($night_length,$nlmin,$x) = split(":",$game['night_length']);
 print "<td id='deadline_td'><div $open_comment onMouseOver='show_hint(\"Click to Change Deadlines\")' onMouseOut='hide_hint()' onClick='edit_deadline()' $close_comment>";
 if ( $game['deadline_speed'] == "Standard" ) {
   if ( $lynch != "" ) {
-    print "Lynch: ".time_24($lynch,$lmin)." BGG<br />";
+    print "Dusk: ".time_24($lynch,$lmin)." BGG<br />";
   }
   if ( $night != "" ) {
-    print "Night Action: ".time_24($night,$nmin)." BGG";
+    print "Dawn: ".time_24($night,$nmin)." BGG";
   }
 } else {
   print "Day Length: $day_length:$dlmin <br />\n";
@@ -238,7 +238,7 @@ if ( $lynch != "" ) {
   $result = mysql_query($sql);
   if ( mysql_num_rows($result) == 1 ) {
     $lynch_days = mysql_result($result,0,0);
-	print"<tr><td><b>Lynch Days:</b></td><td>$lynch_days</td></tr>\n";
+	print"<tr><td><b>Game Days:</b></td><td>$lynch_days</td></tr>\n";
   }
  
 }

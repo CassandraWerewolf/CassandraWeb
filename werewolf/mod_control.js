@@ -51,7 +51,7 @@ xmlHttp.send(null)
 function activate_vt() {
   myelement = document.getElementById("control_space")
   myelement.style.visibility='visible'
-  myelement.innerHTML = "<form name='tiebreaker'>Choose a Tie Breaker:<br/><select name='tieb'><option value='lhlv' />Longest Held Last Vote<option value='lhv' />Longest Held Vote</select><br />Allow Nightfall votes? <input type='checkbox' name='allow_nightfall' id='allow_nightfall' checked=1 /><br />Allow No Lynch votes? <input type='checkbox' name='allow_nolynch' id='allow_nolynch' checked=1 /><br /><input type='button' value='submit' onClick='javascript:submit_activate_vt()'></form>"
+  myelement.innerHTML = "<form name='tiebreaker'>Choose a Tie Breaker:<br/><select name='tieb'><option value='lhlv' />Longest Held Last Vote<option value='lhv' />Longest Held Vote</select><br />Allow Nightfall votes? <input type='checkbox' name='allow_nightfall' id='allow_nightfall' checked=1 /><br />Allow No Kill votes? <input type='checkbox' name='allow_nolynch' id='allow_nolynch' checked=1 /><br /><input type='button' value='submit' onClick='javascript:submit_activate_vt()'></form>"
 }
 
 function submit_activate_vt() {
