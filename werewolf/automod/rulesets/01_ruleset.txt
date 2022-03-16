@@ -25,17 +25,17 @@ Basic 9-Player Ruleset
 [u]Evil[/u] - All evil players win if the wolves achieve parity: if at any time the number of wolves remaining equals the number of non-wolves remaining (including the sorcerer), evil wins. Howver, if one wolf is left with the hunter, then good wins. The sorcerer counts as a 'non-wolf' for these purposes.
 
 
-[b]Lynch Rules:[/b]
+[b]Day Rules:[/b]
 
-Each day players vote for one player to be lynched. The player receiving the most votes is killed. If there is a tie between two or more players, the tied player with the <tiebreaker> is killed.
+Each day players vote for one player to be killed. The player receiving the most votes is killed. If there is a tie between two or more players, the tied player with the <tiebreaker> is killed.
 
-Lynch time is <lynch> BGG time. Votes cast with this time-stamp are counted. Votes cast after this time are invalid. Votes made during the night phase are invalid.
+Dusk time is <lynch> BGG time. Votes cast with this time-stamp are counted. Votes cast after this time are invalid. Votes made during the night phase are invalid.
 
 All votes must conform to the Cassandra Vote Tally System rules. (Will be
-posted once the game starts).  If all living players vote night fall it will
-speed up the dusk.  
+posted once the game starts). If all living players vote night fall it will
+speed up the dusk.
 
-Neither the player's role or team is revealed upon lynch.
+Neither the player's role or team is revealed upon death.
 
 
 [b]Night Orders:[/b]
