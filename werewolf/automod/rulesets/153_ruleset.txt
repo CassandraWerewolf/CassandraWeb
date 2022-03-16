@@ -32,7 +32,7 @@
 [u]Evil[/u] - All evil players win if the werewolf, evil priest, and wolf cub achieve parity: if at any time their number equals the number of all other player remaining (including the sorcerer), evil wins. However, if one is left with the hunter, then good wins. The sorcerer counts as a good player for these purposes.
 
 
-[b]Lynch Rules:[/b]
+[b]Day Rules:[/b]
 
 Each day players vote for one player to be lynched. The player receiving the most votes is killed. If there is a tie between two or more players, the tied player with the <tiebreaker> is killed and their side (good or evil) is revealed.
 
