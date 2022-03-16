@@ -77,12 +77,12 @@ sub get_phase_change_message($$$) {
   my $deadline = next_deadline($game_id,$phase,$automod);
 
   $message = "[b][Dawn][/b]\n";
-  $message .= "Lynch will be at $deadline.\n";
+  $message .= "Dusk will be at $deadline.\n";
   $m_message = "\nr{Please don't post until your moderator has posted the results of the night actions.}r\n";
   if ( $phase eq "night" ) {
     $message = "[b][Dusk][/b]\n";
     $message .= "Dawn will be at $deadline.\n";
-    $message .="\nr{Please don't post until your moderator has posted the results of the lynch.}r\n";
+    $message .="\nr{Please don't post until your moderator has posted the results of the day actions.}r\n";
     $m_message = "";
   }
   if ( !$automod ) { $message .= $m_message; }

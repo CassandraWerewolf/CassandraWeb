@@ -255,21 +255,21 @@ sub get_action($$$)
 						print "$article_id,$user_id,,$type,nightfall is invalid,0,$edited\n";
 					}
 				}
-				elsif($type eq "vote" and $votee eq "no lynch")
+				elsif($type eq "vote" and $votee eq "no kill")
 				{
 					if ($game_allow_nolynch eq "Yes") {
-						print "$article_id,$user_id,,$type,No Lynch,$valid,$edited\n";
+						print "$article_id,$user_id,,$type,No Kill,$valid,$edited\n";
 					} else {
-						print "$article_id,$user_id,,$type,No Lynch is invalid,0,$edited\n";
+						print "$article_id,$user_id,,$type,No Kill is invalid,0,$edited\n";
 					}
 				}
 				elsif($type eq "unvote" and $votee eq "all")
 				{
 					print "$article_id,$user_id,,$type,all,$valid,$edited\n";
 				}
-				elsif($type eq "unvote" and $votee eq "no lynch")
+				elsif($type eq "unvote" and $votee eq "no kill")
 				{
-					print "$article_id,$user_id,,$type,No Lynch,$valid,$edited\n";
+					print "$article_id,$user_id,,$type,No Kill,$valid,$edited\n";
 				}
 				elsif($type eq "vote"  and $votee eq "all")
 				{

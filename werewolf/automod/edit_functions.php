@@ -205,7 +205,7 @@ function expand_priest_type($priest_type) {
 	  return "Priest must choose view";
 	break;
 	case "lynch":
-	  return "Priest gets all lynch deaths automatically";
+	  return "Priest gets all daykill deaths automatically";
 	break;
 	case "all":
 	  return "Priest gets all deaths automatically";
@@ -662,7 +662,7 @@ function create_role_table($template_id,$edit=false,$add=0) {
 	$output .= "Example 2:  Priest should be 'Positive Hit on', 'all', View as: 'Player's Role'.  That will make it show the player's role no matter who is targeted. <br />";
 	$output .= "Note: If you choose 'Player's Role' or 'Player's Side' for what to reveal the negative will return 'You can not determine X's Role' or 'You can not determine X's Side' .<br />";
 	$output .= "If you choose 'Let me Choose' you can specify your own phrase for the positive hit.  (ie, the Y in the above instructions.)<br />";
-	$output .= "Note: If you choose 'Priest Type' above as 'gets (lynch) deaths automatcially' you still need to specify they View Result for the Priest.<br />";
+	$output .= "Note: If you choose 'Priest Type' above as 'gets (daykill) deaths automatcially' you still need to specify they View Result for the Priest.<br />";
 	$output .= "<b>Reveal as:</b>  This lets you adjust per-role what is revealed on their death.  If 'No' is selected in the top table, then this won't matter except for a white hat or if you have a passive priest.<br />";
 	$output .= "<b>Attribute:</b> This lets you specify if the role is Tough, Brutal (can't be hidden), Tinker, or White Hat.  Tough will have to be killed twice, Brutal will get to choose a player to take down when killed (The order command will be created automatically.)  Tinker will make it so that all views are reversed,  If it would have been positive it will now be negative if it would have been negative it will now be positive.  White Hat means the players 'Reveal as' information will be revealed on death regardles.<br />";
 	$output .= "<b>Parity Count:</b>  These are the roles the code will count to see if Parity has been reached.  All wolves should have a 'Yes', you can choose if sorcerers or wolfcubs etc are counted towards parity.<br />";
@@ -812,8 +812,8 @@ function get_ruleset($template_id,$edit=false) {
   if ( $edit ) {
     $output = "<p>Please use BBG formating as this will be the first post Cassy post when the game is created.<br />";
     $output .= "The following will be replaced by user input when the game is created:<br />";
-    $output .= "&lt;lynch&gt; - Lynch Deadline <br />";
-    $output .= "&lt;night&gt; - Nigth Action Deadline <br />";
+    $output .= "&lt;lynch&gt; - Dusk Deadline <br />";
+    $output .= "&lt;night&gt; - Dawn Deadline <br />";
     $output .= "&lt;tiebreaker&gt; - Tie Breaker Type <br />";
     $output .= "<b>IMPORTANT:</b> You can't use \" you must use ' instead.<br /></p>";
     $output .= "<textarea name='my_rules' rows='25' cols='84'>";

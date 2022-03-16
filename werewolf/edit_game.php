@@ -188,10 +188,10 @@ case 's_moderator':
       list($night_length,$nlmin,$x) = split(":",$deadlines['night_length']);
       if ( $_REQUEST['speed'] == "Standard" ) {
         if ( $lynch != "" ) {
-          print "Lynch: ".time_24($lynch,$lmin)." BGG<br />";
+          print "Dusk: ".time_24($lynch,$lmin)." BGG<br />";
         }
         if ( $night != "" ) {
-          print "Night Action: ".time_24($night,$nmin)." BGG";
+          print "Dawn: ".time_24($night,$nmin)." BGG";
         }
       } else {
         print "Day Length: $day_length:$dlmin <br />\n";
@@ -224,8 +224,8 @@ case 's_moderator':
       if ( $speed == "Standard" ) { 
          list($lynch,$lmin,$x) = split(":",$_REQUEST['lynch']);
          list($night,$nmin,$x) = split(":",$_REQUEST['night']);    
-         print "Lynch: ".time_24($lynch,$lmin)." BGG<br />";
-         print "Night Action: ".time_24($night,$nmin)." BGG";
+         print "Dusk: ".time_24($lynch,$lmin)." BGG<br />";
+         print "Dawn: ".time_24($night,$nmin)." BGG";
       } else {
          print "Day Length: ".$_REQUEST['day_length']."<br />\n";
          print "Night Length: ".$_REQUEST['night_length']."<br />\n";

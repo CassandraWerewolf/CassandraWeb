@@ -60,11 +60,11 @@ $sth_times->bind_columns(\$lynch_time, \$action_time);
 $sth_times->fetch;
 
 if(defined($lynch_time)) {
-	print "\nLynch time is at [b] $lynch_time [/b]";
+	print "\nDusk is at [b] $lynch_time [/b]";
 }
 
 if(defined($action_time)) {
-	print "\nNight Action deadline is at [b] $action_time [/b]";
+	print "\nDawn is at [b] $action_time [/b]";
 }
 
 print "[/color]";

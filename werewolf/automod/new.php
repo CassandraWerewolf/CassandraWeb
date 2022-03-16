@@ -27,10 +27,10 @@ if ( isset($_POST['submit']) ) {
   if ( $_POST['deadline_speed'] == "Standard") {
     $lynch = time_24($_POST['lynch']);
     $lynch_db = $_POST['lynch'];
-    $message .= "Lynch time: ".$lynch."\n";
+    $message .= "Dusk: ".$lynch."\n";
     $night = time_24($_POST['night']);
     $night_db = $_POST['night'];
-    $message .= "Night Action Deadline: ".$night."\n";
+    $message .= "Dawn: ".$night."\n";
     $day_length = "NULL";
     $night_length = "NULL";
   } else {
@@ -131,15 +131,15 @@ function  validate_form() {
    return false
  }
  if ( document.getElementById('lynch').value == "" ) {
-  alert("Lynch time must be filled in")
+  alert("Dusk must be filled in")
   return false
  }
  if ( document.getElementById('night').value == "" ) {
-  alert("Night Action Deadline time must be filled in")
+  alert("Dawn must be filled in")
   return false
  }
  if ( document.getElementById('lynch').value == document.getElementById('night').value ) {
-   alert("Lynch time and Night Action Deadline can not be the same time")
+   alert("Dusk and Dawn can not be the same time")
    return false
  }
  return true
@@ -228,8 +228,8 @@ function show_desc() {
   <td>
   <div id='deadlines' class='showDiv'>
   <table cellspacing='0' cellpadding='0'>
-  <tr><td>Lynch Time:</td><td><?php print time_dropdown('lynch','16:00'); ?></td></tr>
-  <tr><td>Night Action Deadline:</td><td><?php print time_dropdown('night','17:00'); ?></td></tr>
+  <tr><td>Dusk:</td><td><?php print time_dropdown('lynch','16:00'); ?></td></tr>
+  <tr><td>Dawn:</td><td><?php print time_dropdown('night','17:00'); ?></td></tr>
   </table>
   </div>
   <div id='cycle_lengths' class='hideDiv'>

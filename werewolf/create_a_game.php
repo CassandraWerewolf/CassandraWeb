@@ -92,15 +92,15 @@ if ( s_date == "" || s_date == "yyyy-mm-dd" ) {
   return false
 }
 if ( document.getElementById('lynch').value == "" ) {
-  alert("Please fill in a Lynch time.")
+  alert("Please fill in a Dusk time.")
   return false
 }
 if ( document.getElementById('night').value == "" ) {
-  alert("Please fill in a Night Action deadline.")
+  alert("Please fill in a Dawn time.")
   return false
 }
 if ( document.getElementById('lynch').value == document.getElementById('night').value ) {
-  alert("Lynch time and Night Action Deadline can not be the same time")
+  alert("Dusk and dawn cannot be the same time")
   return false
 }
 
@@ -164,8 +164,8 @@ function show_deadlines() {
   <td>
   <div id='deadlines' class='showDiv'>
   <table cellspacing='0' cellpadding='0'>
-  <tr><td>Lynch Time:</td><td><?php print time_dropdown('lynch','16:00'); ?></td></tr>
-  <tr><td>Night Action Deadline:</td><td><?php print time_dropdown('night','17:00'); ?></td></tr>
+  <tr><td>Dusk:</td><td><?php print time_dropdown('lynch','16:00'); ?></td></tr>
+  <tr><td>Dawn:</td><td><?php print time_dropdown('night','17:00'); ?></td></tr>
   </table>
   </div>
   <div id='cycle_lengths' class='hideDiv'>

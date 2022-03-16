@@ -214,10 +214,10 @@ list($lynch,$x,$x) = split(":",$game['lynch_time']);
 list($night,$x,$x) = split(":",$game['na_deadline']);
 print "<td id='deadline_td'><div $open_comment onMouseOver='show_hint(\"Click to Change Deadlines\")' onMouseOut='hide_hint()' onClick='edit_deadline()' $close_comment>";
 if ( $lynch != "" ) {
-  print "Lynch: ".time_24($lynch)." BGG<br />";
+  print "Dusk: ".time_24($lynch)." BGG<br />";
 }
 if ( $night != "" ) {
-  print "Night Action: ".time_24($night)." BGG";
+  print "Dawn: ".time_24($night)." BGG";
 }
 print "</div>\n";
 ?>

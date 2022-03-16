@@ -292,15 +292,15 @@ function show_deadlines($game_id,$edit='false') {
   list($lynch,$x,$x) = split(":",$game['lynch_time']);
   list($night,$x,$x) = split(":",$game['na_deadline']);
   $content = "";
-  if ( $lynch != "" ) { $content .= "Lynch: ".time_24($lynch)." BGG<br />"; }
-  if ( $night != "" ) { $content .= "Night Action: ".time_24($night)." BGG"; }
+  if ( $lynch != "" ) { $content .= "Dusk: ".time_24($lynch)." BGG<br />"; }
+  if ( $night != "" ) { $content .= "Dawn: ".time_24($night)." BGG"; }
   $output .= create_edit_div($edit,'deadline_div2',"Click to Edit Deadlines",'get_edit_form("deadline_form")',$content);
   if ( $lynch != "" ) {
     $sql = sprintf("SELECT concat_ws(', ',if(sun, 'Sun', null),if(mon, 'Mon', null), if(tue, 'Tue', null), if(wed, 'Wed', null), if(thu, 'Thu', null), if(fri, 'Fri', null), if(sat, 'Sat', null)) as lynch_days from Auto_dusk where  game_id=%s",quote_smart($game_id));
     $result = mysql_query($sql);
     if ( mysql_num_rows($result) == 1 ) {
       $lynch_days = mysql_result($result,0,0);
-      $output .= "<tr><td><b>Lynch Days:</b></td><td>$lynch_days</td></tr>\n";
+      $output .= "<tr><td><b>Game Days:</b></td><td>$lynch_days</td></tr>\n";
     }
   }
 
@@ -398,7 +398,7 @@ function create_mod_controls($game_id,$status,$chats) {
     if ( $game['auto_vt'] == "No" ) {
       $output .= "<div><a href='javascript:get_modcontrol_form(\"vote_tally_form\")'>Activate Auto Vote Tally</a></div>\n";
     } else {
-      $output .= "<div><a href='javascript:submit_vote_tally(\"retrieve\")'>Retrieve Final Lynch Time Vote</a></div>\n";
+      $output .= "<div><a href='javascript:submit_vote_tally(\"retrieve\")'>Retrieve Final Dusk Time Vote</a></div>\n";
     }
     $output .=  "<div><a href='$domain/configure_chat.php?game_id=".$game['id']."'>Activate/Configure Game Communications System</a></div>\n";
     if ( $chats > 0 ) {
@@ -657,8 +657,8 @@ function deadline_form($game_id) {
   list($lynch,$x) = split(":",$lynch_db);
   list($night,$x) = split(":",$night_db);
   $output .= "<table>\n";
-  $output .= "<tr><td>Lynch:</td><td>".time_dropdown_old('lynch',$lynch)."</td></tr>\n";
-  $output .= "<tr><td>Night Action:</td><td>".time_dropdown_old('night',$night)."</td></tr>\n";
+  $output .= "<tr><td>Dusk:</td><td>".time_dropdown_old('lynch',$lynch)."</td></tr>\n";
+  $output .= "<tr><td>Dawn:</td><td>".time_dropdown_old('night',$night)."</td></tr>\n";
   $output .= "<tr><td colspan='2' align='center'><input type='button' name='submit' value='submit' onClick='submit_deadline()' /><input type='button' name='cancel' value='cancel' onClick='clear_edit()' /></td></tr>\n";
   $output .= "</table>\n";
   $output .= "</form>\n";
@@ -874,8 +874,8 @@ function vote_tally_form($game_id) {
   $options['lhv'] = "Longest Held Vote";
   $output .= create_dropdown('tieb','lhlv',$options);
   $output .= "<input type='button' value='submit' onClick='javascript:submit_vote_tally(\"activate\")'></form>";
-  $output .= "<br>Allow nightfall votes? <input type='checkbox' name='allow_nightfall' id='allow_nightfall' checked=1 />";
-  $output .= "<br>Allow No Lynch votes? <input type='checkbox' name='allow_nolynch' id='allow_nolynch' checked=1 />";  
+  $output .= "<br>Allow Nightfall votes? <input type='checkbox' name='allow_nightfall' id='allow_nightfall' checked=1 />";
+  $output .= "<br>Allow No Kill votes? <input type='checkbox' name='allow_nolynch' id='allow_nolynch' checked=1 />";  
   return $output;
 }
 
