@@ -118,7 +118,7 @@ $game_sth->finish;
 $players_sth->finish;
 push(@player_list, "nightfall");
 push(@player_list, "all");
-push(@player_list, "no lynch");
+push(@player_list, "no kill");
 
 if ($game_id == 3147)
 {
