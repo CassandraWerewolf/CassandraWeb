@@ -41,3 +41,6 @@ brian,itsbrianyay
 max,maximumsaximum
 ali,aligator7
 lamb,littlelambchopx
+red,bigred92
+jelly,FireBreathingJelly
+fbj,FireBreathingJelly
