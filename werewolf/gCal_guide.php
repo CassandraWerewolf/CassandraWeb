@@ -2,19 +2,19 @@
 include_once "php/accesscontrol.php";
 include_once "php/db.php";
 include_once "php/common.php";
-dbConnect();
+$mysql = dbConnect();
 
 if ( isset($_POST['submit']) ) {
   $sql = sprintf("select * from Misc_users where user_id=%s",$uid);
-  $result = mysql_query($sql);
-  $count = mysql_num_rows($result);
+  $result = mysqli_query($mysql, $sql);
+  $count = mysqli_num_rows($result);
   $_POST['cal_code'] = safe_html($_POST['cal_code'],"<iframe>");
   if ( $count == 1 ) {
     $sql = sprintf("update Misc_users set google_calendar=%s where user_id=%s",quote_smart($_POST['cal_code']),$uid);
   } else {
     $sql = sprintf("insert into Misc_users (user_id, google_calendar) values(%s,%s)",$uid,quote_smart($_POST['cal_code']));
   }
-  $result = mysql_query($sql);
+  $result = mysqli_query($mysql, $sql);
 ?>
 <html>
 <head>

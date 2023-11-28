@@ -31,8 +31,8 @@ case 's_moderator':
   $newidlist = split( ",", $_REQUEST['modlist']);
   sort($newidlist);
   $sql = sprintf("select user_id from Games, Moderators where Games.id = Moderators.game_id and Games.id=%s",quote_smart($game_id));
-  $result = mysql_query($sql);
-  while ( $row = mysql_fetch_array($result) ) {
+  $result = mysqli_query($mysql, $sql);
+  while ( $row = mysqli_fetch_array($result) ) {
     $oldidlist[] = $row['user_id'];
   }
 	$cache->clean('front-signup-' . $game_id);
@@ -55,7 +55,7 @@ case 's_moderator':
   if ( $addlist[0] != "" ) {
     foreach ( $addlist as $id ) {
       $sql = sprintf("insert into Moderators ( user_id, game_id ) values ( %s, %s )",quote_smart($id),quote_smart($game_id));
-      $result = mysql_query($sql);
+      $result = mysqli_query($mysql, $sql);
     }
   }
 
@@ -72,7 +72,7 @@ case 's_moderator':
   if ( $dellist[0] != "" ) {
     foreach ( $dellist as $id ) {
       $sql = sprintf("delete from Moderators where user_id=%s and game_id=%s",quote_smart($id),quote_smart($game_id));
-      $result = mysql_query($sql);
+      $result = mysqli_query($mysql, $sql);
     }
   }
 
@@ -92,7 +92,7 @@ case 's_moderator':
     } else {
       $start = $_REQUEST['sdate']." ".$_REQUEST['stime'];
       $sql = sprintf("update Games set start_date=%s, end_date=%s, swf=%s where id=%s",quote_smart($start),quote_smart($_REQUEST['edate']),quote_smart($_REQUEST['swf']),quote_smart($game_id));
-	  $result = mysql_query($sql);
+	  $result = mysqli_query($mysql, $sql);
     }
 	$cache->remove('games-signup-fast-list', 'front');
 	$cache->remove('games-signup-swf-list', 'front');
@@ -113,7 +113,7 @@ case 's_moderator':
   case 's_description':
     $_REQUEST['desc'] = safe_html($_REQUEST['desc'],"<a>");
     $sql = sprintf("update Games set description=%s where id=%s",quote_smart($_REQUEST['desc']),quote_smart($game_id));
-	$result = mysql_query($sql);
+	$result = mysqli_query($mysql, $sql);
 	print "<div onMouseOver='show_hint(\"Click to change Description\")' onMouseOut='hide_hint()' onclick='edit_desc()' >".stripslashes($_REQUEST['desc'])."</div>";
   break;
 
@@ -126,7 +126,7 @@ case 's_moderator':
 # Edit database with new Status return text to original.
   case 's_status':
     $sql = sprintf("update Games set `status`=%s, phase=%s, day=%s where id=%s",quote_smart($_REQUEST['status']),quote_smart($_REQUEST['phase']),quote_smart($_REQUEST['day']),quote_smart($game_id));
-	$result = mysql_query($sql);
+	$result = mysqli_query($mysql, $sql);
 	if($_REQUEST['status'] == 'In Progress') {
 		$cache->remove('total-games', 'front');
 		$cache->remove('games-in-progress-fast-list', 'front');
@@ -144,7 +144,7 @@ case 's_moderator':
 		$cache->remove('games-in-progress-list', 'front');
 		$cache->remove('games-ended-list', 'front');
         $sql = sprintf("delete from Physics_processing where game_id=%s",quote_smart($game_id));
-        mysql_query($sql);
+        mysqli_query($mysql, $sql);
 	}
 
 	print "<div onMouseOver='show_hint(\"Click to Change Status\")' onMouseOut='hide_hint()' onClick='edit_status()'>".$_REQUEST['status']." - ".$_REQUEST['phase']." ".$_REQUEST['day']."</div>";
@@ -159,7 +159,7 @@ case 's_moderator':
 # Edit database with new Speed, return text to original.
   case 's_speed':
     $sql = sprintf("update Games set deadline_speed=%s where id=%s",quote_smart($_REQUEST['speed']),quote_smart($game_id));
-    $result = mysql_query($sql);
+    $result = mysqli_query($mysql, $sql);
     print "<div onMouseOver='show_hint(\"Click to Change Speed\")' onMouseOut='hide_hint()' onClick='edit_speed()'>".$_REQUEST['speed']."</div>";
 	$cache->remove('games-in-progress-fast-list', 'front');
 	$cache->remove('games-in-progress-list', 'front');
@@ -180,8 +180,8 @@ case 's_moderator':
     if ( isset($_REQUEST['speed']) ) {
     # A change in the speed is requireing this to be refreshed
       $sql = sprintf("select lynch_time, na_deadline, day_length, night_length from Games where id=%s",quote_smart($game_id));
-      $result = mysql_query($sql);
-      $deadlines = mysql_fetch_array($result);
+      $result = mysqli_query($mysql, $sql);
+      $deadlines = mysqli_fetch_array($result);
       list($lynch,$lmin,$x) = split(":",$deadlines['lynch_time']);
       list($night,$nmin,$x) = split(":",$deadlines['na_deadline']);
       list($day_length,$dlmin,$x) = split(":",$deadlines['day_length']);
@@ -201,26 +201,26 @@ case 's_moderator':
       if ( $_REQUEST['lynch'] != "" ) {
         $lynch = $_REQUEST['lynch'];
         $sql = sprintf("update Games set `lynch_time`=%s where id=%s",quote_smart($lynch),quote_smart($game_id));
-	    $result = mysql_query($sql);
+	    $result = mysqli_query($mysql, $sql);
 	  } else {
 	    $sql = sprintf("update Games set `lynch_time`=null where id=%s",quote_smart($game_id));
-	    $result = mysql_query($sql);
+	    $result = mysqli_query($mysql, $sql);
       }
   	  if ( $_REQUEST['night'] != "" ) {
         $night = $_REQUEST['night'];
         $sql = sprintf("update Games set `na_deadline`=%s where id=%s",quote_smart($night),quote_smart($game_id));
-	    $result = mysql_query($sql);
+	    $result = mysqli_query($mysql, $sql);
 	  } else {
 	    $sql = sprintf("update Games set `na_deadline`=null where id=%s",quote_smart($game_id));
-	    $result = mysql_query($sql);
+	    $result = mysqli_query($mysql, $sql);
 	  }
       $sql = sprintf("update Games set `day_length`=%s where id=%s",quote_smart($_REQUEST['day_length']),quote_smart($game_id));
-      $result = mysql_query($sql);
+      $result = mysqli_query($mysql, $sql);
       $sql = sprintf("update Games set `night_length`=%s where id=%s",quote_smart($_REQUEST['night_length']),quote_smart($game_id));
-      $result = mysql_query($sql);
+      $result = mysqli_query($mysql, $sql);
       $sql = sprintf("select deadline_speed from Games where id=%s",quote_smart($game_id));
-      $result = mysql_query($sql);
-      $speed = mysql_result($result,0,0);
+      $result = mysqli_query($mysql, $sql);
+      $speed = mysqli_result($result,0,0);
       if ( $speed == "Standard" ) { 
          list($lynch,$lmin,$x) = split(":",$_REQUEST['lynch']);
          list($night,$nmin,$x) = split(":",$_REQUEST['night']);    
@@ -251,7 +251,7 @@ case 's_moderator':
 # Edit database with new Winner return text to original.
   case 's_winner':
     $sql = sprintf("update Games set winner=%s where id=%s",quote_smart($_REQUEST['winner']),quote_smart($game_id));
-	$result = mysql_query($sql);
+	$result = mysqli_query($mysql, $sql);
 	$cache->remove('evil-games', 'front');
 	$cache->remove('good-games', 'front');
 	$cache->remove('other-games', 'front');
@@ -268,32 +268,32 @@ case 's_moderator':
 # Delete a Sub-Thread
   case 'd_subthread':
     $sql = sprintf("select id from Games where thread_id=%s",quote_smart($_REQUEST['thread_id']));
-	$result = mysql_query($sql);
-	$st_game_id = mysql_result($result,0,0);
+	$result = mysqli_query($mysql, $sql);
+	$st_game_id = mysqli_result($result,0,0);
 	$sql = "delete from Games where id ='$st_game_id'";
-	$result = mysql_query($sql);
+	$result = mysqli_query($mysql, $sql);
 	# The following is no longer needed because of sql triggers
 	#$sql = "delete from Moderators where game_id='$st_game_id'";
-	#$result = mysql_query($sql);
+	#$result = mysqli_query($mysql, $sql);
 	#$sql = "delete from Players where game_id='$st_game_id'";
-	#$result = mysql_query($sql);
+	#$result = mysqli_query($mysql, $sql);
 	#$sql = "delete from Replacements where game_id='$st_game_id'";
-	#$result = mysql_query($sql);
+	#$result = mysqli_query($mysql, $sql);
 	#$sql = "delete from Posts where game_id='$st_game_id'";
-	#$result = mysql_query($sql);
+	#$result = mysqli_query($mysql, $sql);
     show_subt($game_id);
   break;
 
 # Add a Sub-Thread
   case 'a_subthread':
     $sql = sprintf("insert into Games (id, title, status, thread_id, parent_game_id) values ( NULL, 'Sub-Thread', 'Sub-Thread', %s, %s)",quote_smart($_REQUEST['thread_id']),quote_smart($game_id));
-	$result = mysql_query($sql);
-	$new_game_id = mysql_insert_id();
+	$result = mysqli_query($mysql, $sql);
+	$new_game_id = mysqli_insert_id();
 	$sql = sprintf("select user_id from Moderators where game_id=%s",quote_smart($game_id));
-	$result = mysql_query($sql);
-	while ( $mod = mysql_fetch_array($result) ) {
+	$result = mysqli_query($mysql, $sql);
+	while ( $mod = mysqli_fetch_array($result) ) {
       $sql2 = "insert into Moderators (user_id, game_id) values ('".$mod['user_id']."', '$new_game_id')";
-	  $result2 = mysql_query($sql2);
+	  $result2 = mysqli_query($mysql, $sql2);
 	}
 	show_subt($game_id);
   break;
@@ -308,15 +308,15 @@ case 's_moderator':
   case 's_name':
     $_REQUEST['title'] = safe_html($_REQUEST['title']);
     $sql = sprintf("update Games set title=%s where id=%s",quote_smart($_REQUEST['title']),quote_smart($game_id));
-	$result = mysql_query($sql);
+	$result = mysqli_query($mysql, $sql);
 	$cache->clean('front-signup-' . $game_id);
 	$cache->clean('front-signup-swf-' . $game_id);
 	$cache->clean('front-signup-fast-' . $game_id);
 	$cache->remove('game-' . $game_id, 'front');
 
 	$sql = "select number, title from Games where id='$game_id'";
-	$result = mysql_query($sql);
-	$game = mysql_fetch_array($result);
+	$result = mysqli_query($mysql, $sql);
+	$game = mysqli_fetch_array($result);
 	$output = "";
 	if ( $game['number'] != "" ) { $output .= $game['number'].") "; }
 	$output .= $_REQUEST['title'];
@@ -333,7 +333,7 @@ case 's_moderator':
 # Change thread_id and replace text with new id
   case 's_thread':
     $sql = sprintf("update Games set thread_id=%s where id=%s",quote_smart($_REQUEST['thread_id']),quote_smart($game_id));
-	$result = mysql_query($sql);
+	$result = mysqli_query($mysql, $sql);
 	$cache->clean('front-signup-' . $game_id);
 	$cache->clean('front-signup-swf-' . $game_id);
 	$cache->clean('front-signup-fast-' . $game_id);
@@ -352,10 +352,10 @@ case 's_moderator':
 # Delete a replacement.
   case 'd_replace':
     $sql = sprintf("delete from Replacements where user_id=%s and replace_id=%s and game_id=%s",quote_smart($_REQUEST['user_id']),quote_smart($_REQUEST['replace_id']),quote_smart($game_id));
-	$result=mysql_query($sql);
+	$result=mysqli_query($mysql, $sql);
 	$sql = sprintf("select name from Users where id=%s",quote_smart($_REQUEST['user_id']));
-	$result=mysql_query($sql);
-	$name = mysql_result($result,0,0);
+	$result=mysqli_query($mysql, $sql);
+	$name = mysqli_result($result,0,0);
 	print display_player($name,$_REQUEST['user_id'],$game_id);
   break;
 
@@ -364,16 +364,16 @@ case 's_moderator':
     $user_id = $_REQUEST['uid'];
 	if ( $_REQUEST['rep_id'] != "0" ) {
       $sql = sprintf("insert into Replacements (user_id, game_id, replace_id, period, number) values ( %s, %s, %s, %s, %s )",quote_smart($user_id),quote_smart($game_id), quote_smart($_REQUEST['rep_id']), quote_smart($_REQUEST['rep_p']), quote_smart($_REQUEST['rep_n']));
-	  $result = mysql_query($sql);
+	  $result = mysqli_query($mysql, $sql);
 	}
 	if ( $_REQUEST['d_day'] == "" ) {
 	  $sql = sprintf("update Players set role_name=%s, role_id=%s, side=%s, death_phase=%s, death_day=NULL, mod_comment=%s, player_alias=%s, alias_color=%s where user_id=%s and game_id=%s",quote_smart($_REQUEST['r_name']), quote_smart($_REQUEST['r_id']), quote_smart($_REQUEST['side']), quote_smart($_REQUEST['d_phase']), quote_smart($_REQUEST['comment']), quote_smart($_REQUEST['player_alias']), quote_smart($_REQUEST['alias_color']), quote_smart($user_id), quote_smart($game_id));
 	} else {
 	  $sql = sprintf("update Players set role_name=%s, role_id=%s, side=%s, death_phase=%s, death_day=%s, mod_comment=%s, player_alias=%s, alias_color=%s where user_id=%s and game_id=%s",quote_smart($_REQUEST['r_name']), quote_smart($_REQUEST['r_id']), quote_smart($_REQUEST['side']), quote_smart($_REQUEST['d_phase']), quote_smart($_REQUEST['d_day']), quote_smart($_REQUEST['comment']), quote_smart($_REQUEST['player_alias']), quote_smart($_REQUEST['alias_color']), quote_smart($user_id), quote_smart($game_id));
 	}
-	$result = mysql_query($sql);
+	$result = mysqli_query($mysql, $sql);
 	$sql = sprintf("update Players set need_replace=null where game_id=%s and user_id=%s",quote_smart($game_id),quote_smart($user_id));
-	$result = mysql_query($sql);
+	$result = mysqli_query($mysql, $sql);
 	createPlayer_table(true,$game_id);
   break;
   
@@ -388,12 +388,12 @@ case 's_moderator':
     if ( $_REQUEST['s'] == "new" ) {
      // Check to see if the username is a banned palyer
      $sql = sprintf("select level from Users where name=%s",quote_smart($_REQUEST['user_id']));
-     $result = mysql_query($sql);
-	if(mysql_num_rows($result)==0) {
+     $result = mysqli_query($mysql, $sql);
+	if(mysqli_num_rows($result)==0) {
 		$level = 3;
 	}
 	else {
-    	$level = mysql_result($result,0,0);
+    	$level = mysqli_result($result,0,0);
 	}
 
     if ( $level == '0' ) {
@@ -407,8 +407,8 @@ case 's_moderator':
 	 print "-->\n";
 	 if ( $bgg_result == "true" ) {
        $sql = sprintf("insert into Users (id, name) values ( NULL, %s ) ",quote_smart($_REQUEST['user_id']));
-	   $result = mysql_query($sql);
-	   $id = mysql_insert_id();
+	   $result = mysqli_query($mysql, $sql);
+	   $id = mysqli_insert_id();
 	 } else {
 	  print "<span style='color:red;'>The player you just tried to add is not a valid BGG user.  You can only add BGG users.</span><br />\n";
 	  createPlayer_table(true,$game_id);
@@ -416,13 +416,13 @@ case 's_moderator':
 	 }
 	   if ( $id == 0 ) {
          $sql = sprintf("select id from Users where name=%s",quote_smart($_REQUEST['user_id']));
-	   	 $result = mysql_query($sql);
-		 $id = mysql_result($result,0,0);
+	   	 $result = mysqli_query($mysql, $sql);
+		 $id = mysqli_result($result,0,0);
 	   }
 	  $_REQUEST['user_id'] = $id;
 	}
     $sql = sprintf("insert into Players (user_id, game_id) values (%s, %s)",quote_smart($_REQUEST['user_id']),quote_smart($game_id));
-	$result = mysql_query($sql);
+	$result = mysqli_query($mysql, $sql);
 	$cache->clean('front-signup-' . $game_id);
 	$cache->clean('front-signup-swf-' . $game_id);
 	$cache->clean('front-signup-fast-' . $game_id);
@@ -435,7 +435,7 @@ case 's_moderator':
 # Delete a Player
   case 'd_player':
     $sql = sprintf("delete from Players where user_id=%s and game_id=%s",quote_smart($_REQUEST['user_id']),quote_smart($game_id));
-	$result = mysql_query($sql);
+	$result = mysqli_query($mysql, $sql);
 	$cache->clean('front-signup-' . $game_id);
 	$cache->clean('front-signup-swf-' . $game_id);
 	$cache->clean('front-signup-fast-' . $game_id);
@@ -452,13 +452,13 @@ case 's_moderator':
 # Change Aliases for all players.
   case 's_alias':
     $sql = sprintf("select Users.id from Users, Players where Users.id=Players.user_id and game_id=%s order by name",quote_smart($game_id));
-	$result = mysql_query($sql);
+	$result = mysqli_query($mysql, $sql);
 	$aliases = split(",", $_REQUEST['aliases']);
 	$colors = split(",", $_REQUEST['colors']);
 	$i = 0;
-	while ( $user = mysql_fetch_array($result) ) {
+	while ( $user = mysqli_fetch_array($result) ) {
       $sql2 = sprintf("update Players set player_alias=%s, alias_color=%s where user_id=%s and game_id=%s",quote_smart($aliases[$i]),quote_smart($colors[$i]),quote_smart($user['id']), quote_smart($game_id));
-	  $result2 = mysql_query($sql2);
+	  $result2 = mysqli_query($mysql, $sql2);
 	  $i++;
 	}
 	createPlayer_table(true,$game_id);
@@ -473,12 +473,12 @@ case 's_moderator':
 # Change Role Names for all players.
   case 's_rolename':
     $sql = sprintf("select Users.id from Users, Players where Users.id=Players.user_id and game_id=%s order by name",quote_smart($game_id));
-	$result = mysql_query($sql);
+	$result = mysqli_query($mysql, $sql);
 	$rnames = split(",", $_REQUEST['rnames']);
 	$i = 0;
-	while ( $user = mysql_fetch_array($result) ) {
+	while ( $user = mysqli_fetch_array($result) ) {
       $sql2 = sprintf("update Players set role_name=%s where user_id=%s and game_id=%s",quote_smart($rnames[$i]),quote_smart($user['id']), quote_smart($game_id));
-	  $result2 = mysql_query($sql2);
+	  $result2 = mysqli_query($mysql, $sql2);
 	  $i++;
 	}
 	createPlayer_table(true,$game_id);
@@ -493,12 +493,12 @@ case 's_moderator':
 # Change the Role Type for each player.
   case 's_roletype':
     $sql = sprintf("select Users.id from Users, Players where Users.id=Players.user_id and game_id=%s order by name",quote_smart($game_id));
-	$result = mysql_query($sql);
+	$result = mysqli_query($mysql, $sql);
 	$rtypes = split(",", $_REQUEST['rtypes']);
 	$i = 0;
-	while ( $user = mysql_fetch_array($result) ) {
+	while ( $user = mysqli_fetch_array($result) ) {
 	  $sql2 = sprintf("update Players set role_id=%s where user_id=%s and game_id=%s",quote_smart($rtypes[$i]), $user['id'], quote_smart($game_id));
-	  $result2 = mysql_query($sql2);
+	  $result2 = mysqli_query($mysql, $sql2);
 	  $i++;
     }
 	createPlayer_table(true,$game_id);
@@ -513,12 +513,12 @@ case 's_moderator':
 # Change the Teams for each player
   case 's_team':
     $sql = sprintf("select Users.id from Users, Players where Users.id=Players.user_id and game_id=%s order by name",quote_smart($game_id));
-	$result = mysql_query($sql);
+	$result = mysqli_query($mysql, $sql);
 	$teams = split(",", $_REQUEST['teams']);
 	$i = 0;
-    while ( $user = mysql_fetch_array($result) ) {
+    while ( $user = mysqli_fetch_array($result) ) {
       $sql2 = sprintf("update Players set side=%s  where user_id='".$user['id']."' and game_id=%s",quote_smart($teams[$i]), quote_smart($game_id));
- 	  $result2 = mysql_query($sql2);
+ 	  $result2 = mysqli_query($mysql, $sql2);
  	  $i++;
 	}
 	createPlayer_table(true,$game_id);
@@ -538,7 +538,7 @@ case 's_moderator':
 
   case 's_maxplayers':
     $sql = sprintf("update Games set max_players=%s where id=%s",quote_smart($_REQUEST['max_players']),quote_smart($game_id));
-	$result = mysql_query($sql);
+	$result = mysqli_query($mysql, $sql);
 	$cache->clean('front-signup-' . $game_id);
 	$cache->clean('front-signup-swf-' . $game_id);
 	$cache->clean('front-signup-fast-' . $game_id);
@@ -552,17 +552,17 @@ case 's_moderator':
 
   case 's_deaths':
     $sql = sprintf("select Users.id from Users, Players where Users.id=Players.user_id and game_id=%s order by name",quote_smart($game_id));
-	$result = mysql_query($sql);
+	$result = mysqli_query($mysql, $sql);
 	$phases = split(",", $_REQUEST['phases']);
 	$days = split(",", $_REQUEST['days']);
 	$i = 0;
-    while ( $user = mysql_fetch_array($result) ) {
+    while ( $user = mysqli_fetch_array($result) ) {
 	  if ( $days[$i] == "" ) { 
         $sql2 = sprintf("update Players set death_phase=%s, death_day=NULL  where user_id=%s and game_id=%s",quote_smart($phases[$i]), quote_smart($user['id']), quote_smart($game_id));
 	  } else {
         $sql2 = sprintf("update Players set death_phase=%s, death_day=%s  where user_id=%s and game_id=%s",quote_smart($phases[$i]), quote_smart($days[$i]), quote_smart($user['id']), quote_smart($game_id));
       }
- 	  $result2 = mysql_query($sql2);
+ 	  $result2 = mysqli_query($mysql, $sql2);
  	  $i++;
 	}
 	createPlayer_table(true,$game_id);
@@ -575,7 +575,7 @@ case 's_moderator':
 
   case 's_complex':
     $sql = sprintf("update Games set complex=%s where id=%s",quote_smart($_REQUEST['complex']),quote_smart($game_id));
-	$result = mysql_query($sql);
+	$result = mysqli_query($mysql, $sql);
 	$cache->clean('front-signup-' . $game_id);
 	$cache->clean('front-signup-swf-' . $game_id);
 	$cache->clean('front-signup-fast-' . $game_id);

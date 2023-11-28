@@ -6,7 +6,7 @@ include_once ROOT_PATH . "/php/db.php";
 include_once ROOT_PATH . "/menu.php";
 include_once ROOT_PATH . "/php/common.php";
 
-dbConnect();
+$mysql = dbConnect();
 
 $stat_id = 0;
 $limit = 10;
@@ -76,8 +76,8 @@ if ( $stat_id == 0 ) {
   print "<option value='0'>Please select a Statistic</option>";
 }
 $sql = "select id, title from Stats order by title";
-$result = mysql_query($sql);
-while ( $stat = mysql_fetch_array($result) ) {
+$result = mysqli_query($mysql, $sql);
+while ( $stat = mysqli_fetch_array($result) ) {
   $select = "";
   if ( $stat_id == $stat['id'] ) { $select = "selected"; }
   print "<option $select value='".$stat['id']."'>".$stat['title']."</option>";
@@ -128,16 +128,18 @@ function get_stat($id,$top) {
   if ( $id == 0 ) {
    return;
   }
+  $mysql = dbConnect();
   $sql = sprintf("select title, `sql` from Stats where id=%s",quote_smart($id));
-  $result = mysql_query($sql);
-  $title = mysql_result($result,0,0);
-  $sql = mysql_result($result,0,1);
+  $result = mysqli_query($mysql, $sql);
+  $title = mysqli_result($result,0,0);
+  $sql = mysqli_result($result,0,1);
   if ( $top != "All" ) {
     $sql .= " Limit 0,".$top;
   }
-  $result = mysql_query($sql);
+  $result = mysqli_query($mysql, $sql);
   $count = 0;
-  while ( $row = mysql_fetch_array($result) ) {
+  $output = '';
+  while ( $row = mysqli_fetch_array($result, MYSQLI_ASSOC) ) {
       if ( $count == 0 ) {
         $output .= "<table class='forum_table'>";
         $output .= "<tr>";

@@ -4,15 +4,15 @@ include_once "../php/accesscontrol.php";
 include_once "../php/db.php";
 include_once "../menu.php";
 
-dbConnect();
+$mysql = dbConnect();
 
 $sql = sprintf("select * from Social_sites where site_name=%s",quote_smart($_REQUEST['site_name']));
-$result = mysql_query($sql);
-$site = mysql_fetch_array($result);
+$result = mysqli_query($mysql, $sql);
+$site = mysqli_fetch_array($result);
 
 if ( $_REQUEST['mode'] == "delete" ) {
   $sql = sprintf("delete from Social_users where site_id=%s and user_id=%s",quote_smart($site['id']),quote_smart($uid));
-  $result = mysql_query($sql);
+  $result = mysqli_query($mysql, $sql);
 ?> 
 <html>
 <head>
@@ -36,7 +36,7 @@ if ( isset($_POST['submit']) ) {
   } elseif ($_POST['mode'] == "edit")  {
     $sql = sprintf("update Social_users set user_info=%s where site_id=%s and user_id=%s",quote_smart($_POST['user_info']),quote_smart($site['id']),quote_smart($uid));
   }
-  $result = mysql_query($sql);
+  $result = mysqli_query($mysql, $sql);
 ?>
 <html>
 <head>
@@ -78,8 +78,8 @@ print $a_start.$site['site_name'].$a_end;
 $userinfo = "";
 if ( $_REQUEST['mode'] == "edit" ) {
   $sql = sprintf("select * from Social_users where site_id=%s and user_id=%s",quote_smart($site['id']),quote_smart($uid));
-  $result = mysql_query($sql);
-  $user = mysql_fetch_array($result);
+  $result = mysqli_query($mysql, $sql);
+  $user = mysqli_fetch_array($result);
   $userinfo = $user['user_info'];
 }
 ?>

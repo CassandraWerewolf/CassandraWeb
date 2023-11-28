@@ -2,13 +2,12 @@
 
 include_once "php/accesscontrol.php";
 include_once "php/db.php";
-include_once "php/common.php";
-include_once "game_page_functions.php";
-include_once "timezone_functions.php";
-include_once "menu.php";
+#include_once "php/common.php";
+#include_once "game_page_functions.php";
+#include_once "timezone_functions.php";
+#include_once "menu.php";
 
-dbConnect();
-
+$mysql = dbConnect();
 # Process any Submitted forms
 if ( isset($_POST['submit_goa']) ) {
   goa_submit($_POST);
@@ -92,8 +91,8 @@ if ( $edit ) {
 
 <?php
 $sql = sprintf("select max(article_id) as a_id from Posts where game_id=%s",$game['id']);
-$result = mysql_query($sql);
-if ( $result ) { $article_id = mysql_result($result,0,0); }
+$result = mysqli_query($mysql, $sql);
+if ( $result ) { $article_id = mysqli_result($result,0,0); }
 print "<br /><a id='game_link' href='http://www.boardgamegeek.com/thread/$thread_id'>Go to Game Thread</a>\n";
 if ( $status != "Sign-up" ) {
   print ": <a href='http://www.boardgamegeek.com/article/$article_id#$article_id'>Last retrieved post</a>\n";
@@ -120,15 +119,15 @@ print "<td valign='top'>\n";
 # Show any Wolfy awards the game has won.
 $sql = sprintf("select * from Wolfy_games, Wolfy_awards where Wolfy_games.award_
 id=Wolfy_awards.id and game_id=%s order by id, year",$game['id']);
-$result = mysql_query($sql);
+$result = mysqli_query($mysql, $sql);
 if ( $result ) {
-  $num_awards = mysql_num_rows($result);
+  $num_awards = mysqli_num_rows($result);
 } else {
   $num_award = 0;
 }
 if ( $num_awards > 0 ) {
   print "<table class='forum_table'><tr><th>Wolfy Awards</th></tr>\n";
-while ( $award = mysql_fetch_array($result) ) {
+while ( $award = mysqli_fetch_array($result) ) {
   print "<tr><td><a href='http://www.boardgamegeek.com/article/".$award['award_post']."#".$award['award_post']."'>".$award['award']." (".$award['year'].")</a></td></tr>\n";
 }
   print "</table>\n";
@@ -136,15 +135,15 @@ while ( $award = mysql_fetch_array($result) ) {
 print "</td></tr></table>\n";
 
 $sql = "select distinct Posts.user_id, name from Posts, Users where Posts.user_id=Users.id and Posts.game_id='".$game['id']."' and Posts.user_id not in ( select user_id from Players where game_id='".$game['id']."') and Posts.user_id not in ( select user_id from Moderators where game_id='".$game['id']."') and Posts.user_id not in ( select replace_id from Replacements where game_id='".$game['id']."') order by name";
-$result = mysql_query($sql);
-$num_row = mysql_num_rows($result);
+$result = mysqli_query($mysql, $sql);
+$num_row = mysqli_num_rows($result);
 if ( $num_row > 0 ) {
 print "<br />Non-Players who posted<br />\n";
 print "<table class='forum_table'>\n";
-while ( $row = mysql_fetch_array($result) ) {
+while ( $row = mysqli_fetch_array($result) ) {
   $sql2 = "select count(*) from Posts where game_id='".$game['id']."' and user_id='".$row['user_id']."'";
-  $result2 = mysql_query($sql2);
-  $num_post = mysql_result($result2,0,0);
+  $result2 = mysqli_query($mysql, $sql2);
+  $num_post = mysqli_result($result2,0,0);
   print "<tr><td>".get_player_page($row['name'])."<a href='$posts".$row['name']."'>($num_post posts)</a></td></tr>\n";
 }
 print "</table>\n";

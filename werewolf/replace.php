@@ -5,7 +5,7 @@ include_once "php/db.php";
 include_once "php/bgg.php";
 include_once "php/common.php";
 
-dbConnect();
+$mysql = dbConnect();
 
 $game_id = $_REQUEST['game_id'];
 $user_id = $_REQUEST['user_id'];
@@ -20,23 +20,23 @@ $bgg_cassy = BGG::authAsCassy();
 
 $rep = false;
 $sql = sprintf("select * from Replacements where user_id=%s and game_id=%s and replace_id=%s",quote_smart($user_id),quote_smart($game_id),quote_smart($uid));
-$result = mysql_query($sql);
-if ( mysql_num_rows($result) == 1 ) { $rep = true; }
+$result = mysqli_query($mysql, $sql);
+if ( mysqli_num_rows($result) == 1 ) { $rep = true; }
 
 $sql = sprintf("select * from Games where id=%s",quote_smart($game_id));
-$result = mysql_query($sql);
-$game = mysql_fetch_array($result);
+$result = mysqli_query($mysql, $sql);
+$game = mysqli_fetch_array($result);
 
 $sql = sprintf("select name from Users where id=%s",quote_smart($user_id));
-$result = mysql_query($sql);
-$user_name = mysql_result($result,0,0);
+$result = mysqli_query($mysql, $sql);
+$user_name = mysqli_result($result,0,0);
 
 $sql = sprintf("select name from Users, Moderators where Users.id=Moderators.user_id and game_id=%s",quote_smart($game_id));
-$result = mysql_query($sql);
-$mod_num = mysql_num_rows($result);
+$result = mysqli_query($mysql, $sql);
+$mod_num = mysqli_num_rows($result);
 $count = 0;
 $to = "";
-while ( $moderator = mysql_fetch_array($result) ) {
+while ( $moderator = mysqli_fetch_array($result) ) {
   if ( $moderator['name'] == "Cassandra Project" ) { continue; }
   if ( $count != 0  ) $to .= ", ";
   $to .= $moderator['name'];
@@ -49,7 +49,7 @@ if ( $action == "replace_me" ) {
     error("You can't put in a replacement request for this player"); 
   }
   $sql = sprintf("update Players set need_replace='1' where user_id=%s and game_id=%s",quote_smart($user_id),quote_smart($game_id));
-  $result = mysql_query($sql);
+  $result = mysqli_query($mysql, $sql);
   if ( !$mod ) {
 	$subject = "Player needs to be replaced";
     $message = "$user_name has requested to be replaced in ".$game['title'];
@@ -65,13 +65,13 @@ if ( $action == "replace_me" ) {
     if ( ! $mod ) {
 	  # Make sure another player hasn't already replace them.
 	  $sql = sprintf("select need_replace from Players where user_id=%s and game_id=%s",quote_smart($user_id),quote_smart($game_id));
-	  $result = mysql_query($sql);
-	  if ( mysql_result($result,0,0) == "" ) {
+	  $result = mysqli_query($mysql, $sql);
+	  if ( mysqli_result($result,0,0) == "" ) {
         error("I'm sorry this player no longer needs to be replaced.");
 	  }
 	}
     $sql = sprintf("update Players set need_replace = null where user_id=%s and game_id=%s", quote_smart($user_id),quote_smart($game_id));
-	$result = mysql_query($sql);
+	$result = mysqli_query($mysql, $sql);
 	if ( !$mod ) {
   	  $subject = "Player no longer needs to be replaced";
       $message = "$user_name has removed the requested to be replaced in ".$game['title'];
@@ -86,22 +86,22 @@ if ( $action == "replace_me" ) {
   # Check to make sure player is not already in the game
   $sql_check = sprintf("select * from Players_all where user_id=%s and game_id=%s",quote_smart($uid),quote_smart($game_id));
   print "Sql check: $sql_check <br />";
-  $result_check = mysql_query($sql_check);
-  if ( mysql_num_rows($result_check) > 0 ) {
+  $result_check = mysqli_query($mysql, $sql_check);
+  if ( mysqli_num_rows($result_check) > 0 ) {
     error ("You are already in this game and can not be automatically put in as a replacement.  If the moderator allows you to replace this player then he must replace you manually");
   }
   # Make sure another player hasn't already replace them.
   $sql_test = sprintf("select need_replace from Players where user_id=%s and game_id=%s",quote_smart($user_id),quote_smart($game_id));
   print "Sql test: $sql_test <br />";
-  $result_test = mysql_query($sql_test);
-  if ( mysql_result($result_test,0,0) == "" ) {
+  $result_test = mysqli_query($mysql, $sql_test);
+  if ( mysqli_result($result_test,0,0) == "" ) {
      error("I'm sorry this player no longer needs to be replaced.");
   }
   $sql = sprintf("insert into Replacements (user_id, game_id, replace_id, period, number) values ( %s, %s, %s, %s, %s)",quote_smart($user_id),quote_smart($game_id),quote_smart($uid),quote_smart($game['phase']),quote_smart($game['day']));
   print "Replace: $sql <br />";
-  $result = mysql_query($sql);
+  $result = mysqli_query($mysql, $sql);
   $sql = sprintf("update Players set need_replace = null where user_id=%s and game_id=%s", quote_smart($user_id),quote_smart($game_id));
-  $result = mysql_query($sql);
+  $result = mysqli_query($mysql, $sql);
   $subject = "Player no longer needs to be replaced";
   $message = "$username has replaced $user_name in ".$game['title'];
   if ( $to != "" ) {

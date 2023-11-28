@@ -13,8 +13,8 @@ dbconnect();
 
 //Verify that the player requesting this data has access to this room.
 $sql = sprintf("select * from Chat_users where user_id=%s and room_id=%s",quote_smart($uid),quote_smart($_GET['room_id']));
-$result = mysql_query($sql);
-if ( mysql_num_rows($result) == 0 ) {
+$result = mysqli_query($mysql, $sql);
+if ( mysqli_num_rows($result) == 0 ) {
   exit;
 }
 
@@ -22,43 +22,43 @@ if ( mysql_num_rows($result) == 0 ) {
 if(isset($_POST['message']) && $_POST['message'] != '') {
   // Check that the room isn't locked.
   $sql = sprintf("select `lock` from Chat_rooms where id=%s",quote_smart($_GET['room_id']));
-  $result = mysql_query($sql);
-  if ( mysql_result($result,0,0) == "Off" ) {
+  $result = mysqli_query($mysql, $sql);
+  if ( mysqli_result($result,0,0) == "Off" ) {
     $sql = sprintf("insert into `Chat_messages` (id, room_id, user_id, message, post_time) values (null, %s, %s, %s, now())",quote_smart($_GET['room_id']),quote_smart($uid),quote_smart($_POST['message']));
-    $result = mysql_query($sql);
+    $result = mysqli_query($mysql, $sql);
 	//Find out if poster is a moderator
 	$sql = sprintf("select `type` from Users_game_all, Chat_rooms where Users_game_all.game_id = Chat_rooms.game_id and Chat_rooms.id=%s and user_id=%s",quote_smart($_GET['room_id']),quote_smart($uid));
-	$result = mysql_query($sql);
-	if ( mysql_result($result,0,0) != "moderator" ) {
+	$result = mysqli_query($mysql, $sql);
+	if ( mysqli_result($result,0,0) != "moderator" ) {
 	  $sql = sprintf("update Chat_rooms set remaining_post = remaining_post-1 where id=%s",quote_smart($_GET['room_id']));
-	  $result = mysql_query($sql);
+	  $result = mysqli_query($mysql, $sql);
 	  $sql = sprintf("update Chat_users set remaining_post = remaining_post-1 where room_id=%s and user_id=%s",quote_smart($_GET['room_id']),quote_smart($uid));
-	  $result = mysql_query($sql);
+	  $result = mysqli_query($mysql, $sql);
 	}
   }
 }
 
 //Get the users last_visit time, and view window.
 $sql = sprintf("select date_sub(last_view, interval 1 second) as last_view, open, if(close is null, now(), close) as close, if(close is null, 'open', if(close < now(), 'close', 'open')) as eye, now() from Chat_users where room_id=%s and user_id=%s",quote_smart($_GET['room_id']),quote_smart($uid));
-$result = mysql_query($sql);
-$last_view = mysql_result($result,0,0);
-$open = mysql_result($result,0,1);
-$close = mysql_result($result,0,2);
-$eye_status = mysql_result($result,0,3);
+$result = mysqli_query($mysql, $sql);
+$last_view = mysqli_result($result,0,0);
+$open = mysqli_result($result,0,1);
+$close = mysqli_result($result,0,2);
+$eye_status = mysqli_result($result,0,3);
 
 $last = (isset($_GET['last']) && $_GET['last'] != '') ? $_GET['last'] : 0;
 //Figure out what the First message should be if $last = 0.
 if ( $last == 0 ) {
   // Find out how many messages are new since the visiters last view of the room.
   $sql = sprintf("select count(*) from Chat_messages where room_id=%s and post_time > %s and ( post_time > %s and post_time < %s )",quote_smart($_GET['room_id']),quote_smart($last_view),quote_smart($open),quote_smart($close));
-  $result = mysql_query($sql);
-  $new_messages = mysql_result($result,0,0);
+  $result = mysqli_query($mysql, $sql);
+  $new_messages = mysqli_result($result,0,0);
   $show_messages = 25;
   if ( $new_messages > $show_messages ) { $show_messages = $new_messages; }
   // Find the message id of the one $show_messages back from the end.
   $sql = sprintf("select id from Chat_messages where room_id=%s and ( post_time > %s and post_time < %s ) order by id",quote_smart($_GET['room_id']),quote_smart($open),quote_smart($close));
-  $result = mysql_query($sql);
-  $total_messages = mysql_num_rows($result);
+  $result = mysqli_query($mysql, $sql);
+  $total_messages = mysqli_num_rows($result);
   $get_message = $total_messages - $show_messages;
   if ( $get_message <= 0 ) { 
     $get_message = 0; 
@@ -72,7 +72,7 @@ if ( $last == 0 ) {
 	$first_message .= '<time>Now</time>';
 	$first_message .= '</message>';
   }
-  $last = mysql_result($result,$get_message,0) -1;
+  $last = mysqli_result($result,$get_message,0) -1;
 }
 	
 //Create the XML response.
@@ -91,8 +91,8 @@ if(!isset($_GET['room_id'])) {
   $f2 = '%b %e, %h:%i %p';
   $sql = sprintf("select Chat_messages.id as message_id, if(alias is null, name,alias) as name, color, message, if(post_time<(date_sub(now(), interval 1 day)),date_format(post_time,%s),date_format(post_time,%s)) as post_time, if(%s<=post_time,'#ffffff','#dddddd') as bgcolor from Chat_messages, Chat_users, Users where Chat_messages.user_id=Users.id and Chat_users.user_id=Users.id and Chat_users.room_id=%s and Chat_messages.room_id=%s and Chat_messages.id > %s and (post_time > %s and post_time < %s) order by Chat_messages.id",quote_smart($f2),quote_smart($f1),quote_smart($last_view),quote_smart($_GET['room_id']),quote_smart($_GET['room_id']),quote_smart($last),quote_smart($open),quote_smart($close));
   #print $sql;
-  $result = mysql_query($sql);
-  while ( $row = mysql_fetch_array($result) ) {
+  $result = mysqli_query($mysql, $sql);
+  while ( $row = mysqli_fetch_array($result) ) {
     $xml .= '<message id="'.$row['message_id'].'">';
     $xml .= '<user>'.htmlspecialchars($row['name']).'</user>';
 	$xml .= '<color>'.htmlspecialchars($row['color']).'</color>';
@@ -108,10 +108,10 @@ print $xml;
 //Update last_view to now.
 if ( $eye_status == "open" ) {
   $sql = sprintf("update Chat_users set last_view=now() where user_id=%s and room_id=%s",quote_smart($uid),quote_smart($_GET['room_id']));
-  $result = mysql_query($sql);
+  $result = mysqli_query($mysql, $sql);
 } else {
   $sql = sprintf("update Chat_users set last_view=%s where user_id=%s and room_id=%s",quote_smart($close),quote_smart($uid),quote_smart($_GET['room_id']));
-  $result = mysql_query($sql);
+  $result = mysqli_query($mysql, $sql);
 
 }
 ?>

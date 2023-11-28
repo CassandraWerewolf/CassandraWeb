@@ -2,13 +2,13 @@
 
 include_once "php/db.php";
 
-dbConnect();
+$mysql = dbConnect();
 
 $sql = "select * from Users where id=";
 $sql .= $_REQUEST['q'];
 
-$result = mysql_query($sql);
-$user = mysql_fetch_array($result);
+$result = mysqli_query($mysql, $sql);
+$user = mysqli_fetch_array($result);
 
 print $user['id'].", ".$user['password'].", ".$user['level'];
 

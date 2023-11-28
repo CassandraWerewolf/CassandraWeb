@@ -4,7 +4,7 @@ include_once("php/db.php");
 include_once "menu.php";
 include_once "php/common.php";
 
-dbConnect();
+$mysql = dbConnect();
 
 $site = '';
 ?>
@@ -26,12 +26,12 @@ $sql = "SELECT name FROM Players_active ORDER BY name";
 $result = dbGetResult($sql);
 $total = dbGetResultRowCount($result);
 echo "<tr><th colspan=3>Players ($total)</th></tr>";
-while ( $player = mysql_fetch_array($result) ) {
+while ( $player = mysqli_fetch_array($result) ) {
 print "<tr></td><td>";
 print get_player_page($player['name']);
 print "</td></tr>";
 }
-mysql_free_result($result);
+mysqli_free_result($result);
 ?>
 </table>
 </td>
@@ -42,12 +42,12 @@ $sql = "SELECT name FROM Moderators_active ORDER BY name";
 $result = dbGetResult($sql);
 $total = dbGetResultRowCount($result);
 echo "<tr><th colspan=3>Moderators ($total)</th></tr>";
-while ( $player = mysql_fetch_array($result) ) {
+while ( $player = mysqli_fetch_array($result) ) {
 print "<tr></td><td>";
 print get_player_page($player['name']);
 print "</td></tr>";
 }
-mysql_free_result($result);
+mysqli_free_result($result);
 ?>
 </table>
 </td>

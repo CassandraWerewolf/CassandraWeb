@@ -29,7 +29,7 @@ $games_in_standard_signup_as_date = $games->games_in_standard_signup_as_date();
 
 // RENDER VIEW
 require_once 'templates/shared/header.php'; 
-if ($show_funding_message) { 
+if ($show_funding_message) {
     include_once 'templates/shared/_funding_message.php';
 }
 require_once 'templates/games/recent.php';

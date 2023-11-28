@@ -4,14 +4,14 @@ include_once "php/accesscontrol.php";
 include_once "php/db.php";
 include_once "menu.php";
 
-dbConnect();
+$mysql = dbConnect();
 
 $thread_id = $_GET['thread_id'];
 $sql = sprintf("select id, title, status from Games where threaD_id=%s",quote_smart($thread_id));
-$result = mysql_query($sql);
-$game_id = mysql_result($result,0,0);
-$title = mysql_result($result,0,1);
-$status = mysql_result($result,0,2);
+$result = mysqli_query($mysql, $sql);
+$game_id = mysqli_result($result,0,0);
+$title = mysqli_result($result,0,1);
+$status = mysqli_result($result,0,2);
 
 ?>
 <html>

@@ -5,7 +5,7 @@ include_once "php/db.php";
 include_once "configure_chat_functions.php";
 include_once "configure_physics_functions.php";
 
-dbConnect();
+$mysql = dbConnect();
 
 # Global Variable with the list of the tabs
 $tab_list[1] = "Chat Room List";
@@ -16,25 +16,25 @@ $tab_list[4] = "Moderator Controls";
 # Displays the desired chat room.
 function display_chat($room_id,$status,$uid) {
   $output = "<table class='forum_table' width='500px'>\n";
-  $sql = sprintf("select name from Chat_rooms where id=%s",quote_smart($room_id)
-);
-  $result = mysql_query($sql);
-  $room_name = mysql_result($result,0,0);
+  $sql = sprintf("select name from Chat_rooms where id=%s", quote_smart($room_id));
+  $mysql = dbConnect();
+  $result = mysqli_query($mysql, $sql);
+  $room_name = mysqli_result($result,0,0);
   $output .= "<tr><th>Room: $room_name</th></tr>\n";
   $format = '%b %e, %h:%i %p';
   if ( $status == "In Progress" ) {
     $sql = sprintf("select date_sub(last_view, interval 1 second) as last_view, open, if(close is null, now(), close) as close, if(close is null, 'open', if(close < now(), 'close', 'open')) as eye, now() from Chat_users where room_id=%s and user_id=%s",quote_smart($room_id),quote_smart($uid));
-    $result = mysql_query($sql); $last_view = mysql_result($result,0,0); $open =
- mysql_result($result,0,1);
-    $close = mysql_result($result,0,2);
-    $eye_status = mysql_result($result,0,3);
+    $result = mysqli_query($mysql, $sql); $last_view = mysqli_result($result,0,0); $open =
+ mysqli_result($result,0,1);
+    $close = mysqli_result($result,0,2);
+    $eye_status = mysqli_result($result,0,3);
     $sql = sprintf("select coalesce(alias,name) as name, message, color, date_format(post_time,%s) as post_time from Chat_messages inner join Users on Chat_messages.user_id=Users.id left join Chat_users on Chat_users.user_id=Users.id and Chat_messages.room_id = Chat_users.room_id where Chat_messages.room_id=%s and (post_time > %s and post_time < %s) order by Chat_messages.id",quote_smart($format),quote_smart($room_id),quote_smart($open),quote_smart($close));
   } else {
     $sql = sprintf("select coalesce(alias,name) as name, message, color, date_format(post_time,%s) as post_time from Chat_messages inner join Users on Chat_messages.user_id=Users.id left join Chat_users on Chat_users.user_id=Users.id and Chat_messages.room_id = Chat_users.room_id where Chat_messages.room_id=%s order by Chat_messages.id",quote_smart($format),quote_smart($room_id),quote_smart($room_id));
   }
-  $result = mysql_query($sql);
+  $result = mysqli_query($mysql, $sql);
   $output .= "<tr><td>";
-  while ( $row = mysql_fetch_array($result) ) {
+  while ( $row = mysqli_fetch_array($result) ) {
     $output .= "<span style='font-weight:bold; color:".$row['color']."'>".$row['name']." ".$row['post_time'].":</span> ".$row['message']."<br />\n";
   }
   $output .= "</td></tr>\n";
@@ -46,14 +46,14 @@ function display_chat($room_id,$status,$uid) {
 function display_all($game_id) {
   $output = "<table class='forum_table' width='500px'>\n";
   $sql = sprintf("select title from Games where id=%s",quote_smart($game_id));
-  $result = mysql_query($sql);
-  $game_title = mysql_result($result,0,0);
+  $result = mysqli_query($mysql, $sql);
+  $game_title = mysqli_result($result,0,0);
   $output .= "<tr><th>All post for $game_title</th></tr>\n";
   $format = '%b %e, %h:%i %p';
   $sql = sprintf("select Chat_rooms.name as room_name, coalesce(alias,Users.name) as name, message, color, date_format(post_time,%s) as post_time from Chat_rooms, Chat_messages, Chat_users, Users where Chat_rooms.id=Chat_messages.room_id and Chat_rooms.id=Chat_users.room_id and Chat_messages.user_id=Users.id and Chat_users.user_id=Users.id and Chat_rooms.game_id=%s order by Chat_messages.id",quote_smart($format),quote_smart($game_id));
-  $result = mysql_query($sql);
+  $result = mysqli_query($mysql, $sql);
   $output .= "<tr><td>";
-  while ( $row = mysql_fetch_array($result) ) {
+  while ( $row = mysqli_fetch_array($result) ) {
     $output .= "<span style='font-style:italic;'>".$row['room_name']."</span><br />\n";
     $output .= "<span style='font-weight:bold; color:".$row['color']."'>".$row['name']." ".$row['post_time'].":</span> ".$row['message']."<br />\n";
   }
@@ -120,8 +120,8 @@ function broadcast_form($game_id) {
   $output .= "<td rowspan='2'>";
   $output .= "<input type='checkbox' id='post_to_all' />All Rooms<br />";
   $sql = sprintf("select id, name from Chat_rooms where game_id=%s",quote_smart($game_id));
-  $result = mysql_query($sql);
-  while ( $room = mysql_fetch_array($result) ) {
+  $result = mysqli_query($mysql, $sql);
+  while ( $room = mysqli_fetch_array($result) ) {
     $output .= "<input type='checkbox' id='post_to_".$room['id']."'>".$room['name']."</br>";
   }
   $output .= "</td></tr>";
@@ -150,8 +150,8 @@ function game_orders($user_id,$game_id) {
   $output = "";
   $mod = is_moderator($user_id,$game_id);
   $sql = sprintf("select day from Games where id=%s",quote_smart($game_id));
-  $result = mysql_query($sql);
-  $day = mysql_result($result,0,0);
+  $result = mysqli_query($mysql, $sql);
+  $day = mysqli_result($result,0,0);
   $output .= "<b>Game Orders for Day $day:</b> (Please refresh this tab before performing the actions to make sure they are up to date.)<br />";
   if ( !$mod ) {
     $output .= game_order_input($user_id,$game_id,$day);
@@ -176,11 +176,11 @@ function game_order_logx($user_id,$game_id,$mod) {
   $output = "";
   if ( ! $mod ) {
     $sql = sprintf("select ga_group from Players, Players_all where Players.user_id=Players_all.original_id and Players.game_id=Players_all.game_id and Players.game_id=%s and Players_all.user_id=%s",quote_smart($game_id),quote_smart($user_id));
-	  $result = mysql_query($sql);
-    if ( mysql_num_rows($result) == 0 ) {
+	  $result = mysqli_query($mysql, $sql);
+    if ( mysqli_num_rows($result) == 0 ) {
 	     $group = "";
 	  } else {
-	     $group = mysql_result($result,0,0);
+	     $group = mysqli_result($result,0,0);
 	  }
   }
   if ($mod)
@@ -194,11 +194,11 @@ function game_order_logx($user_id,$game_id,$mod) {
       $sql = sprintf("select p.id as user_id, p.name as user, ga_group, Roles.`type`, `desc`, if(cancel is null, concat(coalesce(concat(if(target_id=0,'Daykill Victim',t.name),' '),''),user_text),'canceled') as target, last_updated, Game_orders.day as day from Game_orders left join Users t on t.id=Game_orders.target_id, Users p, Roles, Players_all, Players where Game_orders.user_id=p.id and Players_all.original_id=Players.user_id and Players_all.user_id=Game_orders.user_id and Players_all.game_id=Game_orders.game_id and Players.game_id=Players_all.game_id and Roles.id=Players.role_id and Game_orders.game_id=%s and p.id=%s order by last_updated desc",quote_smart($game_id), quote_smart($user_id));
     }
   }
-  $result = mysql_query($sql);
-  $count = mysql_num_rows($result);
+  $result = mysqli_query($mysql, $sql);
+  $count = mysqli_num_rows($result);
   if ( $count == 0 ) { return; }
   $day = -1;
-  while ( $row = mysql_fetch_array($result) ) {
+  while ( $row = mysqli_fetch_array($result) ) {
     if ($day != $row['day'])
     {
       if ($day != -1)
@@ -223,35 +223,35 @@ function phys_order_input($user_id,$game_id) {
   $output = "";
   $orig_user = $user_id;
   $sql = sprintf("select p.user_id as uid, p.loc_id as loc_id FROM Players p where p.game_id = %s and p.user_id = (select pa.original_id from Players_all pa where pa.game_id=%s and pa.user_id=%s limit 0,1)", quote_smart($game_id), quote_smart($game_id), quote_smart($user_id));
-  $result = mysql_query($sql);
-  if (mysql_num_rows($result) > 0) {
-    $orig_user = mysql_result($result,0,0);
-    $loc_id = mysql_result($result,0,1);
+  $result = mysqli_query($mysql, $sql);
+  if (mysqli_num_rows($result) > 0) {
+    $orig_user = mysqli_result($result,0,0);
+    $loc_id = mysqli_result($result,0,1);
   }
 
   if ($loc_id) {
     #movements
     $sql = sprintf("select e.id as id, e.name as name FROM Loc_exits l, Exits e where e.id=l.exit_id and l.loc_from_id = %s and (e.template_id is null or e.template_id in (select distinct template_id from Items i where i.game_id=%s and i.owner_type='user' and i.owner_ref_id=%s))", quote_smart($loc_id), quote_smart($game_id), quote_smart($orig_user));
-    $result = mysql_query($sql);
-    if ( mysql_num_rows($result) > 0 ) {
+    $result = mysqli_query($mysql, $sql);
+    if ( mysqli_num_rows($result) > 0 ) {
       $sql_current = sprintf("select exit_id from Move_orders where game_id=%s and user_id=%s and status='active'", quote_smart($game_id), quote_smart($orig_user));
 
-      $result_current = mysql_query($sql_current);
-      if (mysql_num_rows($result_current) > 0 ) {
-        $current = mysql_result($result_current,0,0);
+      $result_current = mysqli_query($mysql, $sql_current);
+      if (mysqli_num_rows($result_current) > 0 ) {
+        $current = mysqli_result($result_current,0,0);
       }
       $sql_limit = sprintf("SELECT IFNULL( p.phys_move_limit, (SELECT g.phys_move_limit FROM Games g WHERE g.id = %s) ) - p.phys_moves FROM ( SELECT pp.phys_moves, pp.phys_move_limit FROM Players pp WHERE pp.game_id = %s AND user_id = %s) p",quote_smart($game_id),quote_smart($game_id),quote_smart($orig_user));
-      $result_limit = mysql_query($sql_limit);
-      if (mysql_num_rows($result_limit) > 0 ) {
+      $result_limit = mysqli_query($mysql, $sql_limit);
+      if (mysqli_num_rows($result_limit) > 0 ) {
         $opt_limit = "(";
-        $opt_limit .= mysql_result($result_limit,0,0);
+        $opt_limit .= mysqli_result($result_limit,0,0);
         $opt_limit .= " moves left)";
       }
       $output .= "<br /><form id='move_action' method='post' action ='/game_action.php'>";
       $output .= "<input type='hidden' id='ga_user_id' name='user_id' value='$user_id' />";
       $output .= "<input type='hidden' id='ga_game_id' name='game_id' value='$game_id' />";
       $output .= "Movement Options: $opt_limit<br /><select name='exit'>";
-      while ($exit = mysql_fetch_array($result)) {
+      while ($exit = mysqli_fetch_array($result)) {
         $output .= "<option value='". $exit['id'] ."' ".(($current==$exit['id'])? "selected=1" : "")." >". $exit['name'] ."</option>";
       }
       $output .= "</select>";
@@ -261,13 +261,13 @@ function phys_order_input($user_id,$game_id) {
 
     #items in loc
     $sql = sprintf("select id, name FROM Items where game_id=%s and owner_type='loc' and owner_ref_id=%s and visibility in ('conceal','obvious')",quote_smart($game_id),quote_smart($loc_id));
-    $result = mysql_query($sql);
-    if ( mysql_num_rows($result) > 0 ) {
+    $result = mysqli_query($mysql, $sql);
+    if ( mysqli_num_rows($result) > 0 ) {
       $output .= "<br /><form id='remote_item_action' method='post' action ='/game_action.php'>";
       $output .= "<input type='hidden' id='ga_user_id' name='user_id' value='$user_id' />";
       $output .= "<input type='hidden' id='ga_game_id' name='game_id' value='$game_id' />";
       $output .= "Visible Items:<br /><select name='rem_item'>";
-      while ($item = mysql_fetch_array($result)) {
+      while ($item = mysqli_fetch_array($result)) {
         $output .= "<option value='". $item['id'] ."' >". $item['name'] ."</option>";
       }
       $output .= "</select>";
@@ -278,8 +278,8 @@ function phys_order_input($user_id,$game_id) {
 
   # items in inv
   $sql_inv = sprintf("select id, name, mobility FROM Items where game_id=%s and owner_type='user' and owner_ref_id=%s", quote_smart($game_id), quote_smart($orig_user));
-  $result_inv = mysql_query($sql_inv);
-  if (mysql_num_rows($result_inv) > 0) {
+  $result_inv = mysqli_query($mysql, $sql_inv);
+  if (mysqli_num_rows($result_inv) > 0) {
       $output .= "<br /><form id='inv_item_action' method='post' action ='/game_action.php'>";
       $output .= "<input type='hidden' id='ga_user_id' name='user_id' value='$user_id' />";
       $output .= "<input type='hidden' id='ga_game_id' name='game_id' value='$game_id' />";
@@ -293,7 +293,7 @@ function phys_order_input($user_id,$game_id) {
       }}
       }
       $p_names = get_all_aliases_by_ids($game_id);
-      while ($item = mysql_fetch_array($result_inv)) {
+      while ($item = mysqli_fetch_array($result_inv)) {
         $item_name = $item['name'];
         $item_id = $item['id'];
         $output .= "$item_name: ";
@@ -325,15 +325,15 @@ function get_current_item_orders($user_id,$game_id) {
 function game_order_input($user_id,$game_id,$day) {
   $output = "";
   $sql = sprintf("select phase from Games where id=%s",quote_smart($game_id));
-  $result = mysql_query($sql);
-  $game_phase = mysql_result($result,0,0);
+  $result = mysqli_query($mysql, $sql);
+  $game_phase = mysqli_result($result,0,0);
   $sql = sprintf("select game_action, ga_desc, ga_text, ga_group, ga_lock, death_day from Players, Players_all where Players.game_id = Players_all.game_id and Players.user_id=Players_all.original_id and Players_all.user_id=%s and Players.game_id=%s ",quote_smart($user_id),quote_smart($game_id));
-  $result = mysql_query($sql);
-  if ( mysql_num_rows($result) == 0 ) {
+  $result = mysqli_query($mysql, $sql);
+  if ( mysqli_num_rows($result) == 0 ) {
     $actions['ga_desc'] = '';
     $actions['ga_lock'] = "";
   } else {
-    $actions = mysql_fetch_array($result);
+    $actions = mysqli_fetch_array($result);
   }
   #If dead, or actions are locked don't show the order form
   if ( $actions['death_day'] == "" && $actions['ga_lock'] == "" ) {
@@ -355,13 +355,13 @@ function game_order_input($user_id,$game_id,$day) {
 	  if ( $actions['game_action'] != "none" ) {
 	    $output .= "<select name='target_id'>";
 	    $sql = sprintf("select Users.id, Users.name, if(death_phase='' or death_phase is null or death_phase='Alive','Living','Dead') as status from Players_r, Users where Players_r.user_id = Users.id and Players_r.game_id=%s order by name", quote_smart($game_id));
-	    $result = mysql_query($sql);
+	    $result = mysqli_query($mysql, $sql);
         $count = 0;
 		if ( $actions['game_action'] == "dead" && $game_phase == "day") {
           $output .= "<option value='0'>Today's Daykill Victim</option>";
 		  $count++;
 		}
-	    while ( $user = mysql_fetch_array($result) ) {
+	    while ( $user = mysqli_fetch_array($result) ) {
 	      if ( $actions['game_action'] == "alive" && $user['status'] == "Dead" ) { continue; }
 	      if ( $actions['game_action'] == "dead" && $user['status'] == "Living" ) { continue; }
 	      $output .= "<option value=".$user['id'].">".$user['name']." (".$user['status'].")</option>";
@@ -381,8 +381,8 @@ function game_order_input($user_id,$game_id,$day) {
       }
       $output .=  "Post to: <br />";
       $sql = sprintf("select id, name from Chat_rooms, Chat_users where Chat_rooms.id=Chat_users.room_id and Chat_rooms.`lock`='Off' and Chat_users.`lock`='Off' and user_id=%s and game_id=%s order by name",quote_smart($user_id),quote_smart($game_id));
-      $result = mysql_query($sql);
-      while ( $room = mysql_fetch_array($result) ) {
+      $result = mysqli_query($mysql, $sql);
+      while ( $room = mysqli_fetch_array($result) ) {
         $special = "";
         if ( preg_match("/Mod chat -/", $room['name']) ) { $special = "checked='checked'"; }
         $output .=  "<input type='checkbox' name='room_".$room['id']."' $special />".$room['name']."<br />";
@@ -410,39 +410,39 @@ function game_order_sumary($user_id,$game_id,$day) {
   } else {
     $sql = sprintf("select * from Players, Players_all, Roles, Users where Players.user_id=Players_all.original_id and Players.game_id=Players_all.game_id and Players_all.user_id=Users.id and Roles.id=Players.role_id and Players.game_id=%s and Users.id=%s",quote_smart($game_id),quote_smart($user_id));
   }
-  $result = mysql_query($sql);
+  $result = mysqli_query($mysql, $sql);
   $done_groups[] = "";
-  while ( $player = mysql_fetch_array($result) ) {
+  while ( $player = mysqli_fetch_array($result) ) {
     #If the player is part of a group
     if ( $player['ga_group'] != "" ) {
       if ( ! array_search($player['ga_group'],$done_groups) ) {
         # Group needs to be processed.
 		$done_groups[] = $player['ga_group'];
 		$sql2 = sprintf("select distinct `desc` from Game_orders, Players, Players_all where Game_orders.user_id=Players_all.user_id and Game_orders.game_id=Players_all.game_id and Players_all.original_id=Players.user_id and Players_all.game_id=Players.game_id and Game_orders.game_id=%s and Players.ga_group=%s order by `desc`",quote_smart($game_id),quote_smart($player['ga_group']));
-		$result2 = mysql_query($sql2);
-		while ( $action = mysql_fetch_array($result2) ) {
+		$result2 = mysqli_query($mysql, $sql2);
+		while ( $action = mysqli_fetch_array($result2) ) {
 		  $sql3 = sprintf("select u.name as player, concat(coalesce(concat(if(target_id=0,'Daykill Victim',t.name),' '),''),user_text) as target, cancel from Game_orders left join Users t on t.id=Game_orders.target_id , Users u, Players, Players_all where u.id=Game_orders.user_id and Players.user_id=Players_all.original_id and Players_all.user_id=Game_orders.user_id and Players.game_id=Players_all.game_id and Players.game_id=Game_orders.game_id and Game_orders.game_id=%s and `desc`=%s and day=%s and ga_group=%s order by last_updated desc limit 0, 1",quote_smart($game_id),quote_smart($action['desc']),quote_smart($day),quote_smart($player['ga_group']));
-	      $result3 = mysql_query($sql3);
-	      while ( $order = mysql_fetch_array($result3) ) {
+	      $result3 = mysqli_query($mysql, $sql3);
+	      while ( $order = mysqli_fetch_array($result3) ) {
 		    if ( $order['cancel'] == "" ) {
 	          $output .=  "<li>".$order['player']." (".$player['ga_group']."): ".$action['desc']." ".$order['target']."</li>";
 			}
-	      } # while ( $order = mysql_fetch_array($result3)
-	    } # while ( $action = mysql_fetch_array($result2)
+	      } # while ( $order = mysqli_fetch_array($result3)
+	    } # while ( $action = mysqli_fetch_array($result2)
 	  }
 	} else {
 	  # For player not in a group
 	  $sql2 = sprintf("select distinct `desc` from Game_orders where game_id=%s and user_id=%s",quote_smart($game_id),quote_smart($player['id']));
-	  $result2 = mysql_query($sql2);
-	  while ( $action = mysql_fetch_array($result2) ) {
+	  $result2 = mysqli_query($mysql, $sql2);
+	  while ( $action = mysqli_fetch_array($result2) ) {
 	    $sql3 = sprintf("select concat(coalesce(concat(if(target_id=0,'Daykill Victim',t.name),' '),''),user_text) as target, cancel from Game_orders left join Users t on t.id=Game_orders.target_id where Game_orders.game_id=%s and Game_orders.user_id=%s and `desc`=%s and day=%s order by last_updated desc limit 0, 1",quote_smart($game_id),quote_smart($player['id']),quote_smart($action['desc']),quote_smart($day));
-        $result3 = mysql_query($sql3);
-        while ( $order = mysql_fetch_array($result3) ) {
+        $result3 = mysqli_query($mysql, $sql3);
+        while ( $order = mysqli_fetch_array($result3) ) {
 		  if ( $order['cancel'] == "" ) {
             $output .=  "<li>".$player['name']." (".$player['type']."): ".$action['desc']." ".$order['target']."</li>";
           }
-        } # while ( $order = mysql_fetch_array($result3) )
-      } # ( $action = mysql_fetch_array($result2) )
+        } # while ( $order = mysqli_fetch_array($result3) )
+      } # ( $action = mysqli_fetch_array($result2) )
 	}
   }
   return $output;
@@ -454,19 +454,19 @@ function game_order_log($user_id,$game_id,$day) {
   $output = "";
   if ( ! $mod ) {
     $sql = sprintf("select ga_group from Players, Players_all where Players.user_id=Players_all.original_id and Players.game_id=Players_all.game_id and Players.game_id=%s and Players_all.user_id=%s",quote_smart($game_id),quote_smart($user_id));
-	$result = mysql_query($sql);
-    if ( mysql_num_rows($result) == 0 ) {
+	$result = mysqli_query($mysql, $sql);
+    if ( mysqli_num_rows($result) == 0 ) {
 	  $group = "";
 	} else {
-	  $group = mysql_result($result,0,0);
+	  $group = mysqli_result($result,0,0);
 	}
   }
   $sql = sprintf("select p.id as user_id, p.name as user, ga_group, Roles.`type`, `desc`, if(cancel is null, concat(coalesce(concat(if(target_id=0,'Daykill Victim',t.name),' '),''),user_text),'canceled') as target, last_updated from Game_orders left join Users t on t.id=Game_orders.target_id, Users p, Roles, Players_all, Players where Game_orders.user_id=p.id and Players_all.original_id=Players.user_id and Players_all.user_id=Game_orders.user_id and Players_all.game_id=Game_orders.game_id and Players.game_id=Players_all.game_id and Roles.id=Players.role_id and Game_orders.game_id=%s and Game_orders.day=%s order by last_updated desc",quote_smart($game_id),quote_smart($day));
-  $result = mysql_query($sql);
-  $count = mysql_num_rows($result);
+  $result = mysqli_query($mysql, $sql);
+  $count = mysqli_num_rows($result);
   if ( $count == 0 ) { return; }
   $output .= "<table border='1'><tr><th>Player</th><th>Role</th><th>Action</th><th>Target</th><th>Time Stamp</th></tr>";
-  while ( $row = mysql_fetch_array($result) ) {
+  while ( $row = mysqli_fetch_array($result) ) {
     if ( $mod || $row['user_id'] == $user_id || ( $group != "" && $group == $row['ga_group']) ) {
       $output .= "<tr><td>".$row['user']."</td><td>".$row['type']."</td><td>".$row['desc']."</td><td>".$row['target']."</td><td>".$row['last_updated']."</td></tr>\n";
 	}
@@ -479,9 +479,9 @@ function game_order_log($user_id,$game_id,$day) {
 function locked_list($game_id) {
   $output = "";
   $sql = sprintf("select name, Roles.`type` from Players, Players_all, Users, Roles where Players.user_id=Players_all.original_id and Players.game_id=Players_all.game_id and Users.id=Players_all.user_id and Roles.id=Players.role_id and Players.ga_lock is not null and Players.game_id=%s order by name",quote_smart($game_id));
-  $result = mysql_query($sql);
+  $result = mysqli_query($mysql, $sql);
   $output .= "<ul>";
-  while ( $locked = mysql_fetch_array($result) ) {
+  while ( $locked = mysqli_fetch_array($result) ) {
     $output .=  "<li>".$locked['name']."(".$locked['type'].")</li>";
   }
   $output .=  "</ul>";
@@ -491,15 +491,16 @@ function locked_list($game_id) {
 
 function chat_room_list($user_id,$game_id) {
   $output = "";
+  $mysql = dbConnect();
   $sql = sprintf("select id, name, Chat_rooms.max_post, Chat_rooms.remaining_post, if(Chat_users.`lock`='Off' ,if(close < now(),'On',Chat_rooms.`lock`), Chat_users.`lock` ) as `lock`, created, open, if(close is null, now(), close) as close, if(close is null, concat('View post after: ',open), concat('View post between: ',open,' and ',close)) as user_view  from Chat_rooms, Chat_users where Chat_rooms. id=Chat_users.room_id and game_id=%s and user_id=%s order by `lock`, name",quote_smart($game_id),quote_smart($user_id));
-  $result = mysql_query($sql);
-  while ( $room = mysql_fetch_array($result) ) {
+  $result = mysqli_query($mysql, $sql);
+  while ( $room = mysqli_fetch_array($result) ) {
     $sql2 = sprintf("select count(*) from Chat_messages where post_time >= %s and post_time <= %s and room_id=%s",quote_smart($room['open']),quote_smart($room['close']),quote_smart($room['id']));
-	$result2 = mysql_query($sql2);
-	$num_messages = mysql_result($result2,0,0);
+	$result2 = mysqli_query($mysql, $sql2);
+	$num_messages = mysqli_result($result2,0,0);
     $sql2 = sprintf("select count(*) from Chat_messages, Chat_users where Chat_messages.room_id=Chat_users.room_id and Chat_messages.room_id=%s and Chat_users.user_id=%s and post_time > last_view and post_time >= %s and post_time <= %s",quote_smart($room['id']),quote_smart($user_id),quote_smart($room['open']),quote_smart($room['close']));
-    $result2 = mysql_query($sql2);
-	$new_messages = mysql_result($result2,0,0);
+    $result2 = mysqli_query($mysql, $sql2);
+	$new_messages = mysqli_result($result2,0,0);
     $output .= "<a href='javascript:change_room(\"".$room['id']."\")'>".$room['name']."</a> ($num_messages)";
 	if ( $room['lock'] == "On" ) {
 	  $output .= "<img src='/images/lock_green.gif' />";
@@ -533,17 +534,18 @@ function format_options() {
 }
 
 function display_chat_room($room_id,$user_id) {
+  $mysql = dbConnect();
   $sql = sprintf("select * from Chat_rooms where id=%s",quote_smart($room_id));
-  $result = mysql_query($sql);
-  $room = mysql_fetch_array($result);
+  $result = mysqli_query($mysql, $sql);
+  $room = mysqli_fetch_array($result, MYSQLI_ASSOC);
   $sql = sprintf("select * from Chat_users where room_id=%s and user_id=%s",quote_smart($room_id),quote_smart($user_id));
-  $result = mysql_query($sql);
-  $user = mysql_fetch_array($result);
+  $result = mysqli_query($mysql, $sql);
+  $user = mysqli_fetch_array($result, MYSQLI_ASSOC);
   $end_post = "";
   if ( $user['close'] != "" ) { $end_post = "and post_time < '".$user['close']."'"; }
   $sql = sprintf("select count(*) from Chat_messages where post_time > %s $end_post and room_id=%s",quote_smart($user['open']),quote_smart($room['id']));
-  $result = mysql_query($sql);
-  $num_messages = mysql_result($result,0,0);
+  $result = mysqli_query($mysql, $sql);
+  $num_messages = mysqli_result($result,0,0);
 
   $output = "";
   $output .= "<table><tr>";
@@ -583,16 +585,17 @@ function display_chat_room($room_id,$user_id) {
 }
 
 function list_players($room_id,$show_online=false,$user=0) {
+  $mysql = dbConnect();
   $sql = sprintf("select * from Chat_users where room_id=%s and user_id=%s",quote_smart($room_id),quote_smart($user));
-  $result = mysql_query($sql);
-  $user_result = mysql_fetch_array($result);
+  $result = mysqli_query($mysql, $sql);
+  $user_result = mysqli_fetch_array($result);
   if ($user_result && $user_result['close'] != "" && $user_result['lock'] == 'On') {
     return "";
   }
   $sql = sprintf("select coalesce(alias,name) as name, color, max_post, remaining_post, if(last_view>(date_sub(now(), interval 3 second)),'(online)','') as available, Chat_users.lock, close from Chat_users, Users where Chat_users.user_id=Users.id and room_id=%s order by name asc",quote_smart($room_id),quote_smart($room_id));
-  $result = mysql_query($sql);
+  $result = mysqli_query($mysql, $sql);
   $output = "";
-  while ( $player = mysql_fetch_array($result) ) {
+  while ( $player = mysqli_fetch_array($result) ) {
     if ($player['name'] == '<!-- invis -->' || ($player['lock'] != 'Off' && $player['close'] != '')) {
       continue;
     }
@@ -608,9 +611,9 @@ function list_players($room_id,$show_online=false,$user=0) {
 
 function room_list($game_id,$user_id) {
   $sql = sprintf("select * from Chat_rooms, Chat_users where Chat_rooms.id=Chat_users.room_id and user_id=%s and game_id=%s order by name",quote_smart($user_id),quote_smart($game_id));
-  $result = mysql_query($sql);
+  $result = mysqli_query($mysql, $sql);
   $output = "";
-  while ( $room = mysql_fetch_array($result) ) {
+  while ( $room = mysqli_fetch_array($result) ) {
     $output .= "<a href='javascript:change_room(\"".$room['id']."\")'>".$room['name']."</a><br />";
   }
   $output .= "<a href='javascript:close_div(\"room_nav\")'>[close]</a><br />";

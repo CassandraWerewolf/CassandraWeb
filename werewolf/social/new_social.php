@@ -4,12 +4,12 @@ include_once "../php/accesscontrol.php";
 include_once "../php/db.php";
 include_once "../menu.php";
 
-dbConnect();
+$mysql = dbConnect();
 
 if ( isset($_POST['submit']) ) {
   if ( $_POST['site_name'] == "" ) { error("You must have a site name."); }
   $sql = sprintf("insert into Social_sites (id, site_name, url, category, link)values ( null, %s, %s, %s, %s)",quote_smart($_POST['site_name']),quote_smart($_POST['url']),quote_smart($_POST['category']),quote_smart($_POST['link']));
-  $result = mysql_query($sql);
+  $result = mysqli_query($mysql, $sql);
 ?>
 <html>
 <head>

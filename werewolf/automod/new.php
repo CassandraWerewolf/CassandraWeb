@@ -8,7 +8,7 @@ include_once "../menu.php";
 
 $cache = init_cache();
 
-dbConnect();
+$mysql = dbConnect();
 
 
 if ( isset($_POST['submit']) ) {
@@ -68,25 +68,25 @@ if ( isset($_POST['submit']) ) {
   $player_list_id = $bgg_cassy->reply_thread($thread_id,$body);
 
   $sql = sprintf("select * from AM_template where id=%s",quote_smart($_POST['template']));
-  $result = mysql_query($sql);
-  $template = mysql_fetch_array($result);
+  $result = mysqli_query($mysql, $sql);
+  $template = mysqli_fetch_array($result);
 
   $sql = sprintf("insert into Games (id, start_date, title, status, thread_id, description, swf, aprox_length, max_players, player_list_id, complex, game_order, auto_vt, deadline_speed, lynch_time, na_deadline, day_length, night_length, automod_id, automod_timestamp) values(NULL, %s, %s, 'Sign-up', %s, %s, %s, 7, %s, %s, 'Low', 'on', %s, %s, %s, %s, %s, %s, %s, now())",quote_smart($start_date),quote_smart($title),quote_smart($thread_id),quote_smart($template['description']),quote_smart($swf),quote_smart($template['num_players']),quote_smart($player_list_id),quote_smart($_POST['tie_break']),quote_smart($_POST['deadline_speed']),quote_smart($lynch_db),quote_smart($night_db),quote_smart($day_length),quote_smart($night_length),quote_smart($_POST['template']));
-  $result = mysql_query($sql);
-  $game_id = mysql_insert_id();
+  $result = mysqli_query($mysql, $sql);
+  $game_id = mysqli_insert_id();
 
   # if not a fast game update the lynch times to add 1 min
   if ( $_POST['deadline_speed'] == "Standard" ) {
     $sql = sprintf("update Games set lynch_time=addtime(lynch_time,'00:01:00'), na_deadline=addtime(na_deadline,'00:01:00') where id = %s",quote_smart($game_id));
-    $result = mysql_query($sql);
+    $result = mysqli_query($mysql, $sql);
   }
 
   $sql = sprintf("insert into Moderators (user_id, game_id) values (%s, %s)",quote_smart(306),quote_smart($game_id));
-  $result=mysql_query($sql);
+  $result=mysqli_query($mysql, $sql);
 
   if ( $_POST['weekend'] == "on" ) {
     $sql = sprintf("update Games set automod_weekend=1 where id=%s",quote_smart($game_id));
-	$result = mysql_query($sql);
+	$result = mysqli_query($mysql, $sql);
   }
 
   $cache->remove('games-signup-list','front');
@@ -185,12 +185,12 @@ function show_deadlines() {
 $where = sprintf("where mode = 'Active' || ( mode = 'Test' && owner_id = %s )",quote_smart($uid)); 
 if ( $level == 1 ) { $where = "where mode != 'Edit'"; }
 $sql = "select * from AM_template $where order by name";
-$result = mysql_query($sql);
+$result = mysqli_query($mysql, $sql);
 $html = "<select id='template' name='template' onChange='show_desc()' >\n".
 $html .= "<option value='0' >Please Select</option>\n";
 $js = "<script language='javascript'>\n<!--\n";
 $divs = "";
-while ( $row = mysql_fetch_array($result) ) {
+while ( $row = mysqli_fetch_array($result) ) {
   $html .= "<option value='".$row['id']."'>".$row['name']."</option>\n";
   $divs .= "<div id='desc_".$row['id']."' style='visibility:hidden; position:absolute;'>".$row['description']."</div>\n";
 }

@@ -4,7 +4,7 @@ include_once "php/db.php";
 include_once "php/common.php";
 include_once "menu.php";
 
-dbConnect();
+$mysql = dbConnect();
 
 ?>
 <html>
@@ -18,10 +18,10 @@ if ($level == 1 || $level == 2)
 {
   if ( isset($_POST['submit']) ) {
 	$sql = sprintf("select id from Users where name=%s",quote_smart($_POST['player_name_wotw']));
-	$result = mysql_query($sql);
-	$player_id = mysql_result($result,0,0);
+	$result = mysqli_query($mysql, $sql);
+	$player_id = mysqli_result($result,0,0);
 	$sql = sprintf("insert into Wotw (id, user_id, num, start_date, thread_id) values (null, %s, %s, %s, %s)",quote_smart($player_id),quote_smart($_POST['num']),quote_smart($_POST['start_date']),quote_smart($_POST['thread_id']));
-	$result = mysql_query($sql);
+	$result = mysqli_query($mysql, $sql);
   }
 ?>
 <h1>Add Wolf of the Week</h1>
@@ -48,8 +48,8 @@ if ($level == 1 || $level == 2)
 </tr>
 <?php
 $sql = "select user_id, num, date_format(start_date,'%b %e, %Y') as start_date, thread_id from Wotw order by num desc";
-$result = mysql_query($sql);
-while ( $row = mysql_fetch_array($result) ) {
+$result = mysqli_query($mysql, $sql);
+while ( $row = mysqli_fetch_array($result) ) {
   print "<tr><td align='center'><a href='http://www.boardgamegeek.com/thread/".$row['thread_id']."'>".$row['num']."</a></td>\n";
   print "<td align='center'><a href='http://www.boardgamegeek.com/thread/".$row['thread_id']."'>".$row['start_date']."</a></td>\n";
   print "<td>";

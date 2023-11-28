@@ -8,7 +8,7 @@ include_once ROOT_PATH . "/php/common.php";
 include_once ROOT_PATH . "/menu.php";
 include_once "HTML/Table.php";
 
-dbConnect();
+$mysql = dbConnect();
 
 $player = $_REQUEST['player'];
 
@@ -32,10 +32,10 @@ exit;
 }
 
 $sql = sprintf("select id from Users where name=%s",quote_smart($player));
-$result = mysql_query($sql);
+$result = mysqli_query($mysql, $sql);
 $user_id = 0;
-if ( mysql_num_rows($result) == 1 ) { 
-  $user_id = mysql_result($result,0,0);
+if ( mysqli_num_rows($result) == 1 ) { 
+  $user_id = mysqli_result($result,0,0);
 }
 
 ?>
@@ -113,11 +113,11 @@ $other[] = "Other";
 $order = Array();
 
 $sql = sprintf("select * from Users_result_count where user_id=%s order by user_id, result = 'Unknown', result = 'Other', result = 'Lost', result = 'Won'",quote_smart($user_id));
-$result = mysql_query($sql);
+$result = mysqli_query($mysql, $sql);
 $total = 0;
 $count = 0;
 
-while ( $data = mysql_fetch_array($result) ) {
+while ( $data = mysqli_fetch_array($result) ) {
   if ( $data['result'] == "Total" ) { $total = $data['count']; }
   $percentage = "";
   if ( $data['result'] == "Won" || $data['result'] == "Lost" ) {
@@ -133,12 +133,12 @@ while ( $data = mysql_fetch_array($result) ) {
 }
 
 $sql = sprintf("select * from Users_result_side_count where user_id=%s order by user_id, side, result = 'Unknown', result = 'Other', result = 'Lost', result = 'Won'",quote_smart($user_id));
-$result = mysql_query($sql);
+$result = mysqli_query($mysql, $sql);
 $sub_total = 0;
-while ( $data = mysql_fetch_array($result) ) {
+while ( $data = mysqli_fetch_array($result) ) {
   $i = $order[$data['result']];
   switch ($data['side']) {
-  case Evil:
+  case 'Evil':
 	  $percentage = "";
 	  $this_total = $sub_total;
 	  if ( $data['result'] == 'Total' ) {
@@ -153,7 +153,7 @@ while ( $data = mysql_fetch_array($result) ) {
 	  }
 	  $evil[$i] = $data['count']." $percentage";;
 	  break;
-	case Good:
+	case 'Good':
 	  $percentage = "";
 	  $this_total = $sub_total;
 	  if ( $data['result'] == 'Total' ) {
@@ -168,7 +168,7 @@ while ( $data = mysql_fetch_array($result) ) {
 	  }
 	  $good[$i] = $data['count']." $percentage";;
 	  break;
-	case Other:
+	case 'Other':
 	  $percentage = "";
 	  $this_total = $sub_total;
 	  if ( $data['result'] == 'Total' ) {
@@ -190,7 +190,7 @@ $attrs = array (
 	'cellpadding' => '2'
 );
 
-$table =& new HTML_Table($attrs);
+$table =new HTML_Table($attrs);
 
 $table->addCol($results);
 $table->addCol($all);
@@ -209,12 +209,13 @@ echo $table->toHTML();
 <br />
 <table class='forum_table' cellpadding='2'>
 <?php
+$mysql = dbConnect();
 $sql_data = sprintf("select Games.id as game_id, number, title, `status`, thread_id, original_id, result, role_name, `type` as role_type, side, user_comment, death_phase, death_day from Games, Players, Players_result, Roles where Games.id=Players_result.game_id and Players_result.original_id=Players.user_id and Players_result.game_id=Players.game_id and Players.role_id=Roles.id and Players_result.user_id=%s order by number",quote_smart($user_id));
-$result_data = mysql_query($sql_data);
-$num_games = mysql_num_rows($result_data);
+$result_data = mysqli_query($mysql, $sql_data);
+$num_games = mysqli_num_rows($result_data);
  print "<tr><th>#</th><th>Games Played ($num_games)</th><th>Role Name</th><th>Role Type</th><th>Team</th><th>Result</th><th>Death</th><th>Comment</th></tr>\n";
 $game_count = 1;
-while ( $data = mysql_fetch_array($result_data) ) {
+while ( $data = mysqli_fetch_array($result_data) ) {
   $style = "";
   if ( $data['result'] == "Won" ) {
     //green
@@ -230,16 +231,16 @@ while ( $data = mysql_fetch_array($result_data) ) {
   $game_count++;
   print "<td $style><a href='$game_page/".$data['thread_id']."'>".$data['number'].") ".$data['title']."</a>";
   $sql2 = sprintf("select count(*) from Posts where user_id=%s and game_id=%s",quote_smart($user_id),quote_smart($data['game_id']));
-  $result2 = mysql_query($sql2);
-  $post = mysql_result($result2,0,0);
+  $result2 = mysqli_query($mysql, $sql2);
+  $post = mysqli_result($result2,0,0);
   print "<a href='$game_page/".$data['thread_id']."/$player'> ($post posts) </a>";
   if ( $data['original_id'] != $user_id ) {
     print "<br />";
     print "Replaced ";
     print get_player_page($data['original_id']);
 	$sql = sprintf("select * from Replacements where game_id=%s and replace_id=%s",quote_smart($data['game_id']),quote_smart($user_id));
-	$result = mysql_query($sql);
-	$rep_info = mysql_fetch_array($result);
+	$result = mysqli_query($mysql, $sql);
+	$rep_info = mysqli_fetch_array($result);
     print " on ".$rep_info['period']." ".$rep_info['number'];
 	$data['user_comment'] = $rep_info['rep_comment'];
   }
@@ -271,14 +272,15 @@ setHint()
 </html>
 <?php
 function find_Replacements($user_id,$game_id) {
+  $mysql = dbConnect();
   $sql = sprintf("Select name, replace_id as id, substring(period,1,1) as p, number from Users, Replacements where Users.id=Replacements.replace_id and game_id=%s and user_id=%s order by number, period",quote_smart($game_id),quote_smart($user_id));
-  $result = mysql_query($sql);
+  $result = mysqli_query($mysql, $sql);
   $count = 0;
   $replace = "";
-  while ( $rep = mysql_fetch_array($result) ) {
+  while ( $rep = mysqli_fetch_array($result) ) {
     $sql2 = sprintf("select count(*) from Posts where game_id=%s and user_id='".$rep['id']."'",quote_smart($game_id));
-    $result2 = mysql_query($sql2);
-    $num_post = mysql_result($result2,0,0);
+    $result2 = mysqli_query($mysql, $sql2);
+    $num_post = mysqli_result($result2,0,0);
     if ( $count == 0 ) {
       $replace = "<br /> Replaced by ";
       $replace .= get_player_page($rep['name']);
@@ -306,8 +308,8 @@ function edit_dialog($user_id,$game_id,$original_id) {
     $id = "replace_id";
   }
   $sql = sprintf("select %s from %s where %s=%s and game_id=%s",$field,$table,$id,quote_smart($user_id),quote_smart($game_id));
-  $result = mysql_query($sql);
-  $comment = mysql_result($result,0,0);
+  $result = mysqli_query($mysql, $sql);
+  $comment = mysqli_result($result,0,0);
   $output .= "<textarea id='new_comment_${game_id}_$original_id' name='new_comment_${game_id}_$original_id' style='width:100%; height:80px;'>$comment</textarea><br />";
   $output .= "<input type='button' name='submit' value='submit' onclick='submit_comment(\"$game_id\",\"$original_id\")' /> ";
   $output .= "<input type='button' name='cancel' value='cancel' onclick='clear_edit(\"$game_id\",\"$original_id\")' />";
@@ -329,7 +331,7 @@ function update_comment($user_id,$game_id,$original_id,$comment){
   $comment = stripslashes($comment);
   $comment = safe_html($comment);
   $sql = sprintf("update %s set %s=%s where %s=%s and game_id=%s",$table,$field,quote_smart($comment),$id,quote_smart($user_id),quote_smart($game_id));
-  $result = mysql_query($sql);
+  $result = mysqli_query($mysql, $sql);
   
   return $comment;
 }

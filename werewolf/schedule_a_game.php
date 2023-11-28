@@ -8,18 +8,18 @@ include_once "menu.php";
 
 $cache = init_cache();
 
-dbConnect();
+$mysql = dbConnect();
 
 if ( isset($_POST['submit']) ) {
   if ( $_POST['action'] == "new" ) {
     $sql = sprintf("insert into Games (id, start_date, title, status, description, aprox_length) values(NULL, %s, %s, 'Scheduled', %s, %s)",quote_smart($_POST['start_date']),quote_smart($_POST['title']),quote_smart($_POST['description']),quote_smart($_POST['aprox_length']));
-    $result = mysql_query($sql);
-    $game_id = mysql_insert_id();
+    $result = mysqli_query($mysql, $sql);
+    $game_id = mysqli_insert_id();
     $sql = sprintf("insert into Moderators (user_id, game_id) values (%s, %s)",quote_smart($_SESSION['uid']),quote_smart($game_id));
-    $result = mysql_query($sql);
+    $result = mysqli_query($mysql, $sql);
   } elseif ( $_POST['action'] == "old" ) {
     $sql = sprintf("update Games set start_date=%s, title=%s, description=%s, aprox_length=%s where id=%s",quote_smart($_POST['start_date']),quote_smart($_POST['title']),quote_smart($_POST['description']),quote_smart($_POST['aprox_length']),quote_smart($_POST['game_id']));
-    $result = mysql_query($sql);
+    $result = mysqli_query($mysql, $sql);
   }
 ?>
 <html>
@@ -44,8 +44,8 @@ if ( isset($_REQUEST['game_id']) ) {
   $format = "%Y-%m-%d";
   $sql = sprintf("select title, date_format(start_date,'%s') as start_date, aprox_length, description from Games where id=%s",$format,quote_smart($_REQUEST['game_id']));
   #print "$sql <br />";
-  $result = mysql_query($sql);
-  $game = mysql_fetch_array($result);
+  $result = mysqli_query($mysql, $sql);
+  $game = mysqli_fetch_array($result);
 } else {
   $pgTitle = "Add a New Game - Scheduled Mode";
   $hidden = "<input type='hidden' name='action' value='new' />\n";

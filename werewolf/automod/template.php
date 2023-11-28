@@ -9,7 +9,7 @@ include_once "../menu.php";
 
 $cache = init_cache();
 
-dbConnect();
+$mysql = dbConnect();
 
 #checkLevel($level,1);
 
@@ -54,8 +54,8 @@ if ( isset($_POST['submit']) ) {
 
 # Get Template Information
 $sql = sprintf("select * from AM_template where id=%s",quote_smart($template_id));
-$result = mysql_query($sql);
-$template = mysql_fetch_array($result);
+$result = mysqli_query($mysql, $sql);
+$template = mysqli_fetch_array($result);
 
 $owner = false;
 $edit = false;
@@ -160,11 +160,11 @@ if ( $edit ) {
 <tr><th>Game</th><th>Status</th><th>Winner</th></tr>
 <?php
 $sql = sprintf("select id, status, winner from Games where automod_id=%s",quote_smart($template_id));
-$result = mysql_query($sql);
-if ( mysql_num_rows($result) == 0 ) {
+$result = mysqli_query($mysql, $sql);
+if ( mysqli_num_rows($result) == 0 ) {
   print "<tr><td colspan='3'>No Games played with this template.</td></tr>";
 } else {
-while ( $game = mysql_fetch_array($result) ) {
+while ( $game = mysqli_fetch_array($result) ) {
   print "<tr>";
   print "<td>".get_game($game['id'])."</td>";
   print "<td>".$game['status']."</td>";

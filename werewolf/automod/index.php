@@ -8,7 +8,7 @@ include_once "../menu.php";
 
 $cache = init_cache();
 
-dbConnect();
+$mysql = dbConnect();
 
 #checkLevel($level,1);
 
@@ -27,8 +27,8 @@ dbConnect();
 <tr><th>Copy</th><th>ID</th><th>Automod Template</th><th>Owner</th><th>Mode</th></tr>
 <?php
 $sql = sprintf("select * from AM_template order by id");
-$result = mysql_query($sql);
-while ( $template = mysql_fetch_array($result) ) {
+$result = mysqli_query($mysql, $sql);
+while ( $template = mysqli_fetch_array($result) ) {
   print "<tr>";
   print "<td><a href='/automod/copy_template.php?template_id=".$template['id']."'><img src='/images/copy.png' border='0'></a></td>";
   print "<td><a href='/automod/template/".$template['id']."'>".$template['id']."</a></td>";

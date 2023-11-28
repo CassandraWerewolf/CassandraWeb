@@ -3,13 +3,13 @@
 include_once "php/accesscontrol.php";
 include_once "php/db.php";
 include_once "php/bgg.php";
-dbConnect();
+$mysql = dbConnect();
 
 $game_id = $_REQUEST['game_id'];
 
 $sql = sprintf("select id, name from Users_game_all, Users where Users_game_all.user_id = Users.id and game_id=%s order by name",quote_smart($game_id));
-$result = mysql_query($sql);
-while ( $player = mysql_fetch_array($result) ) {
+$result = mysqli__query($sql);
+while ( $player = mysqli__fetch_array($result) ) {
   $players[$player['id']] = $player['name'];
 }
 

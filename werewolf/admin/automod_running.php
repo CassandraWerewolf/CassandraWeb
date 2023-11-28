@@ -4,12 +4,12 @@ include_once "../php/accesscontrol.php";
 checkLevel($level,1);
 
 include_once "../php/db.php";
-dbConnect();
+$mysql = dbConnect();
 
 include_once "../menu.php";
 
 $sql = "select id, thread_id, title, status, automod_running from Games where automod_id is not null and status != 'Finished' order by status";
-$result = mysql_query($sql);
+$result = mysqli_query($mysql, $sql);
 ?>
 <html>
 <head>
@@ -33,8 +33,8 @@ function reload_page() {
 <p>
 <?php
 $sql_now = "select now()";
-$result_now = mysql_query($sql_now);
-$now = mysql_result($result_now,0,0);
+$result_now = mysqli_query($mysql, $sql_now);
+$now = mysqli_result($result_now,0,0);
 print "Now: $now";
 ?>
 </p>
@@ -42,7 +42,7 @@ print "Now: $now";
 <form>
 <tr><th>Game ID</th><th>Title</th><th>Status</th><th>Running</th><th>Reset</th></tr>
 <?php
-while ( $game = mysql_fetch_array($result) ) {
+while ( $game = mysqli_fetch_array($result) ) {
   print "<tr><td>".$game['id']."</td>";
   print "<td><a href='/game/".$game['thread_id']."'>".$game['title']."</a></td>\n";
   print "<td>".$game['status']."</td>";
@@ -60,7 +60,7 @@ while ( $game = mysql_fetch_array($result) ) {
 
 function reset_game($game_id) {
   $sql = sprintf("update Games set automod_running=null where id=%s",quote_smart($game_id));
-  $result = mysql_query($sql);
+  $result = mysqli_query($mysql, $sql);
   
   return;
 }

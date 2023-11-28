@@ -7,36 +7,48 @@ $dbpass = getenv('MYSQL_PASSWORD');
 function dbConnect($db="werewolf") {
   global $dbhost, $dbuser, $dbpass;
 
-  $dbcnx = mysql_connect($dbhost, $dbuser, $dbpass)
+  $dbcnx = mysqli_connect($dbhost, $dbuser, $dbpass)
 	  or die("The site database appears to be down.");
 
-  if (!@mysql_select_db($db)) die ("The site database is unavailable.");
+  if (!@mysqli_select_db($dbcnx, $db)) die ("The site database is unavailable.");
 
-  mysql_set_charset("utf8");
+  mysqli_set_charset($dbcnx, "utf8");
 
   return $dbcnx;
 }
 
+// Polyfill mysql_result for mysql.
+function mysqli_result($res,$row=0,$col=0){ 
+  $numrows = mysqli_num_rows($res); 
+  if ($numrows && $row <= ($numrows-1) && $row >=0){
+      mysqli_data_seek($res,$row);
+      $resrow = (is_numeric($col)) ? mysqli_fetch_row($res) : mysqli_fetch_assoc($res);
+      if (isset($resrow[$col])){
+          return $resrow[$col];
+      }
+  }
+  return false;
+}
+
 function dbGetResult($sql) {
-	$res = mysql_query($sql);
+  $mysql = dbConnect();
+	$res = mysqli_query($mysql, $sql);
 	if (!$res) {
-		die('Could not query:' . mysql_error());
+		die('Could not query:' . mysqli_error());
 	}
 
 	return $res;
 }
 
 function dbGetResultRowCount($res) {
-	$row_count = mysql_num_rows($res);
+	$row_count = mysqli_num_rows($res);
 	return $row_count;
 }
 
 function quote_smart($value) {
-  if ( get_magic_quotes_gpc()) {
-    $value = stripslashes($value);
-  }
+  $value = stripslashes($value);
   if ( ! is_numeric($value)) {
-    $value = "'".mysql_real_escape_string($value)."'";
+    $value = "'".mysqli_real_escape_string(dbConnect(), $value)."'";
   }
   return $value;
 }

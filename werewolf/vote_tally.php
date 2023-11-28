@@ -6,23 +6,23 @@ include_once "php/accesscontrol.php";
 include_once "php/db.php";
 include_once "php/bgg.php";
 
-dbConnect();
+$mysql = dbConnect();
 
 if ( isset($_GET['action']) ) {
 $action = $_GET['action'];
   // Check that the user requesting this page is a moderator of the game.
   $sql = sprintf("select * from Moderators where user_id=%s and game_id=%s",quote_smart($uid),quote_smart($_GET['game_id']));
-  $result = mysql_query($sql);
-  if ( mysql_num_rows($result) == 1 ) {
+  $result = mysqli_query($mysql, $sql);
+  if ( mysqli_num_rows($result) == 1 ) {
     $game_id = $_GET['game_id'];
     if ( $action == "activate" ) {
 	  if ( $_GET['nf'] == "true" ) { $nf = "Yes"; } else { $nf = "No"; }
 	  if ( $_GET['nl'] == "true" ) { $nl = "Yes"; } else { $nl = "No"; }
       $sql = sprintf("update Games set auto_vt=%s, allow_nightfall=%s, allow_nolynch=%s where id=%s",quote_smart($_GET['tieb']),quote_smart($nf),quote_smart($nl),quote_smart($game_id));
-      $result = mysql_query($sql);
+      $result = mysqli_query($mysql, $sql);
       $sql = sprintf("select * from Games where id=%s",quote_smart($game_id));
-      $result = mysql_query($sql);
-      $game = mysql_fetch_array($result);
+      $result = mysqli_query($mysql, $sql);
+      $game = mysqli_fetch_array($result);
       $message = file_get_contents("cassy_vote_tally.txt");
 	  $message .= "\n";
 	  if ( $_GET['tieb'] == "lhv") {
@@ -40,10 +40,10 @@ $action = $_GET['action'];
       print "-->\n";
     } elseif ($action == "retrieve" ) {
       $sql = sprintf("update Games set updated_tally=1 where id=%s",quote_smart($game_id));
-      $result = mysql_query($sql);
+      $result = mysqli_query($mysql, $sql);
 
       $sql = sprintf("update Post_collect_slots set last_dumped=NULL where game_id=%s",quote_smart($game_id));
-      $result = mysql_query($sql);
+      $result = mysqli_query($mysql, $sql);
     }
   }
 }

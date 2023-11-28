@@ -4,12 +4,12 @@ include_once "../php/accesscontrol.php";
 include_once "../php/db.php";
 include_once "../menu.php";
 
-dbConnect();
+$mysql = dbConnect();
 
 $site_name = urldecode($_REQUEST['site_name']);
 $sql = sprintf("select * from Social_sites where site_name=%s",quote_smart($site_name));
-$result = mysql_query($sql);
-$site = mysql_fetch_array($result);
+$result = mysqli_query($mysql, $sql);
+$site = mysqli_fetch_array($result);
 
 ?>
 <html>
@@ -33,13 +33,13 @@ print $a_start.$site['site_name'].$a_end;
 </h2>
 <?php
 $sql_users = sprintf("select * from Social_users, Users where Social_users.user_id = Users.id and site_id=%s order by name",quote_smart($site['id']));
-$result_users = mysql_query($sql_users);
-if ( mysql_num_rows($result_users) == 0 ) {
+$result_users = mysqli_query($mysql, $sql_users);
+if ( mysqli_num_rows($result_users) == 0 ) {
   print "There are no users that use this service.";
 } else {
   print "<table class='forum_table'>";
   print "<tr><th>Werewolf Player</th><th>".$site['site_name']." Information</t></tr>";
-  while ( $user = mysql_fetch_array($result_users) ) {
+  while ( $user = mysqli_fetch_array($result_users) ) {
     print "<tr>";
     print "<td>".get_player_page($user['id'])."</td>";
     if ( $site['link'] != "" ) {

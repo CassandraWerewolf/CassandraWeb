@@ -7,7 +7,7 @@ include_once "php/common.php";
 
 $cache = init_cache();
 
-dbConnect();
+$mysql = dbConnect();
 
 $today = date('Y-m-d');
 $deadline_speed = array('Standard'=>'Standard', 'Fast'=>'Fast');
@@ -38,10 +38,10 @@ if ( isset($_POST['submit']) ) {
   $_POST['title'] = safe_html($_POST['title']);
   $_POST['description'] = safe_html($_POST['description']);
   $sql = sprintf("insert into Games (id, start_date, title, status, thread_id, description, swf, aprox_length, max_players, player_list_id, complex, deadline_speed, lynch_time, na_deadline, day_length, night_length) values(NULL, %s, %s, 'Sign-up', %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",quote_smart($start_date),quote_smart($_POST['title']),quote_smart($_POST['thread_id']),quote_smart($_POST['description']),quote_smart($swf),quote_smart($_POST['aprox_length']),quote_smart($_POST['max_players']),$player_list_id,quote_smart($_POST['complex']),quote_smart($_POST['deadline_speed']),quote_smart($lynch_db),quote_smart($night_db),quote_smart($day_length),quote_smart($night_length));
-  $result = mysql_query($sql);
-  $game_id = mysql_insert_id();
+  $result = mysqli_query($mysql, $sql);
+  $game_id = mysqli_insert_id();
   $sql = sprintf("insert into Moderators (user_id, game_id) values (%s, %s)",quote_smart($_SESSION['uid']),quote_smart($game_id));
-  $result = mysql_query($sql);
+  $result = mysqli_query($mysql, $sql);
 
   // clean the cache since this action will change the front page
   $cache->remove('games-signup-fast-list', 'front');

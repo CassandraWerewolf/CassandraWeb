@@ -5,11 +5,11 @@ include_once "php/db.php";
 include_once "configure_physics_functions.php";
 #include_once "php/common.php";
 
-dbConnect();
+$mysql = dbConnect();
 
 $sql = sprintf("select * from Physics_processing order by id asc");
-$result = mysql_query($sql);
-while ($game = mysql_fetch_array($result)) {
+$result = mysqli_query($mysql, $sql);
+while ($game = mysqli_fetch_array($result)) {
   if ($game['frequency'] == 'immediate') {
 	continue;
   }
@@ -45,7 +45,7 @@ echo "year: ".$last_run['year'] ."\n";
   echo "now: ".time()."\n";
   if ($should <= time()) {
     $sql_update = sprintf("update Physics_processing set last_run=now() where id=%s",quote_smart($game['id']));
-    mysql_query($sql_update);
+    mysqli_query($mysql, $sql_update);
     if ($game['type'] == 'item') {
       process_items($game['game_id']);
     }    

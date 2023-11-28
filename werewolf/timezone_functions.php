@@ -4,7 +4,7 @@
 
 include_once "php/db.php";
 include_once "HTML/Table.php";
-dbConnect();
+$mysql = dbConnect();
 
 function timezone_changer($position="relative") {
   $output = "<div id='get_time' style='position:$position; visibility:hidden; background-color:white; border:1px solid black; height:40px;'>\n";
@@ -25,8 +25,9 @@ function timezone_chart($time="utc_timestamp()",$game_id="") {
   if ( $time == "" ) { $time="utc_timestamp()"; } 
   if ( $time != "utc_timestamp()" ) { $time = quote_smart($time); }
   $sql_tz = sprintf("select zone, description, date_format(date_add(%s, interval GMT hour), %s) as standard_time, date_format(date_add(%s, interval GMT+1 hour),%s) as daylight_time from Timezones order by GMT ",$time,quote_smart($format),$time,quote_smart($format));
-  $result_tz = mysql_query($sql_tz);
-  while ( $row = mysql_fetch_array($result_tz) ) {
+  $mysql = dbConnect();
+  $result_tz = mysqli_query($mysql, $sql_tz);
+  while ( $row = mysqli_fetch_array($result_tz) ) {
     $zones[$row['zone']] = $row['description'];
     $standard[$row['zone']] = "<div id='".$row['zone']."_std' onMouseOver='show_hint(\"Click to change times\")' onMouseOut='hide_hint()' onClick='change_time(\"".$row['zone']."\",\"std\")'>".$row['standard_time']."</div>";
     $daylight[$row['zone']] = "<div id='".$row['zone']."_day' onMouseOver='show_hint(\"Click to change times\")' onMouseOut='hide_hint()' onClick='change_time(\"".$row['zone']."\",\"dst\")'>".$row['daylight_time']."</div>";
@@ -36,9 +37,9 @@ function timezone_chart($time="utc_timestamp()",$game_id="") {
   } else {
     $sql = "select Users.id, name, time_zone as zone from Users, Bio where Users.id=Bio.user_id order by name";
   }
-  $result = mysql_query($sql);
+  $result = mysqli_query($mysql, $sql);
   $player['S'] = "<b style='color:maroon'>BGG Time</b>";
-  while ( $row = mysql_fetch_array($result) ) {
+  while ( $row = mysqli_fetch_array($result) ) {
    $sb = "";
    $eb = "";
    if ( $row['name'] == $username ) {
@@ -59,7 +60,7 @@ function timezone_chart($time="utc_timestamp()",$game_id="") {
   $attrs = array (
     'class' => 'forum_table'
   );
-  $table =& new HTML_Table($attrs);  
+  $table = new HTML_Table($attrs);  
   $col = array ("Zone", "Standard Time", "Daylight Time");
   $table->addCol($col);
   unset($col);
@@ -125,8 +126,8 @@ function timezone_js() {
 
 function calcTime($zone,$type,$time,$mer,$game_id="") {
   $sql = sprintf("select GMT from Timezones where zone=%s",quote_smart($zone));
-  $result = mysql_query($sql);
-  $gmt_offset = mysql_result($result,0,0);
+  $result = mysqli_query($mysql, $sql);
+  $gmt_offset = mysqli_result($result,0,0);
   list($hr, $mn) = split(":",$time);
   if ( $mer == "pm" && $hr != "12") {
     $gmt_offset += 12;
@@ -138,12 +139,12 @@ function calcTime($zone,$type,$time,$mer,$game_id="") {
     $gmt_offset++;
   }
   $sql = "select curdate()";
-  $result = mysql_query($sql);
-  $date = mysql_result($result,0,0);
+  $result = mysqli_query($mysql, $sql);
+  $date = mysqli_result($result,0,0);
   $fulldate = "$date $time";
   $sql = sprintf("select date_sub(%s, interval %s hour)",quote_smart($fulldate),$gmt_offset);
-  $result = mysql_query($sql);
-  $gmt_time = mysql_result($result,0,0);
+  $result = mysqli_query($mysql, $sql);
+  $gmt_time = mysqli_result($result,0,0);
   $output = timezone_chart($gmt_time,$game_id);
   return rawurlencode($output);
 }

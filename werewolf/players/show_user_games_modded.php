@@ -33,10 +33,10 @@ Please hit your browsers back button.
 <?php
 
 $sql = sprintf("select id from Users where name=%s",quote_smart($player));
-$result = mysql_query($sql);
+$result = mysqli_query($mysql, $sql);
 $user_id = 0;
-if ( mysql_num_rows($result) == 1 ) {
-  $user_id = mysql_result($result,0,0);
+if ( mysqli_num_rows($result) == 1 ) {
+  $user_id = mysqli_result($result,0,0);
 }
 
 if ( $user_id == $uid ) {
@@ -100,7 +100,7 @@ function clear_edit(game_id) {
 <div style='padding:10px;'>
 <h1>Moderator Stats for <?=$player;?></h1>
 <?php
-	dbConnect();
+	$mysql = dbConnect();
 
 	$sql_games_modded = "SELECT CONCAT(Games.number, ') ', Games.title) AS game, thread_id, Games.id as game_id, Moderators.comment FROM Games,Moderators,Users WHERE Users.name = '$player' AND Users.id=Moderators.user_id AND Games.id=Moderators.game_id and Games.status != 'Sub-Thread' and Games.status != 'Sign-up' and Games.number != 0 order by Games.number ";
 
@@ -111,10 +111,10 @@ function clear_edit(game_id) {
 	$games_modded_total = dbGetResultRowCount($res_games_modded);
 	$games_modded_names[] = "header placeholder";
     $games_modded_comment[] = "Comment";
-	while($row = mysql_fetch_array($res_games_modded)){
+	while($row = mysqli_fetch_array($res_games_modded)){
 	    $sql = "select count(*) from Posts, Users where Posts.user_id=Users.id and game_id='".$row['game_id']."' and name='$player'";
-		$result = mysql_query($sql);
-		$num_post = mysql_result($result,0,0);
+		$result = mysqli_query($mysql, $sql);
+		$num_post = mysqli_result($result,0,0);
 		$games_modded_names[] = "<a href='$game".$row['thread_id']."'>".$row['game']."</a> <a href='$game".$row['thread_id']."/$player'>($num_post posts)</a>";
 		$games_modded_comment[] = "<div id='comment_".$row['game_id']."' onMouseOver='show_hint(\"Click to Edit your comment\")' onMouseOut='hide_hint()' onClick='edit_comment(\"".$row['game_id']."\")' style='visibility:visible; position:static;' >".$row['comment']."&nbsp;</div>\n<div id='form_".$row['game_id']."' style='visibility:hidden; position:absolute;'></div>";
 	}
@@ -125,7 +125,7 @@ function clear_edit(game_id) {
 		'class' => 'forum_table'
 	);
 
-	$table =& new HTML_Table($attrs);
+	$table =new HTML_Table($attrs);
 
 	$table->addCol($games_modded_names);
     $table->addCol($games_modded_comment);
@@ -146,8 +146,8 @@ setHint()
 function edit_dialog($user_id,$game_id) {
   $output = "<form>\n";
   $sql = sprintf("select comment from Moderators where user_id=%s and game_id=%s",quote_smart($user_id),quote_smart($game_id));
-  $result = mysql_query($sql);
-  $comment = mysql_result($result,0,0);
+  $result = mysqli_query($mysql, $sql);
+  $comment = mysqli_result($result,0,0);
   $output .= "<textarea id='new_comment_${game_id}' name='new_comment_${game_id}' style='width:100%; height:80px;'>$comment</textarea><br />";
   $output .= "<input type='button' name='submit' value='submit' onclick='submit_comment(\"$game_id\")' /> ";
   $output .= "<input type='button' name='cancel' value='cancel' onclick='clear_edit(\"$game_id\")' />";
@@ -160,7 +160,7 @@ function update_comment($user_id,$game_id,$comment){
   $comment = stripslashes($comment);
   $comment = safe_html($comment);
   $sql = sprintf("update Moderators set comment=%s where user_id=%s and game_id=%s",quote_smart($comment),quote_smart($user_id),quote_smart($game_id));
-  $result = mysql_query($sql);
+  $result = mysqli_query($mysql, $sql);
 
   return $comment;
 }

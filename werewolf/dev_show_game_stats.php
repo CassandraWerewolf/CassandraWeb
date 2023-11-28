@@ -39,32 +39,32 @@ exit;
 
 # Get Game info
 $sql = "Select * from Games where thread_id=$game_thread_id";
-$result = mysql_query($sql);
-$game = mysql_fetch_array($result);
-if ( mysql_num_rows($result) != 1 ) { $game['id'] = 0; }
+$result = mysqli_query($mysql, $sql);
+$game = mysqli_fetch_array($result);
+if ( mysqli_num_rows($result) != 1 ) { $game['id'] = 0; }
 
 $status = $game['status'];
 $subthread = false;
 if ( $status == "Sub-Thread" ) {
   $sql = "Select `status` from Games where id=".$game['parent_game_id'];
-  $result = mysql_query($sql);
-  $status = mysql_result($result,0,0);
+  $result = mysqli_query($mysql, $sql);
+  $status = mysqli_result($result,0,0);
   $subthread = true;
 }
 $sql = sprintf("select count(*) from Chat_rooms where game_id=%s",quote_smart($game['id']));
-$result = mysql_query($sql);
-$chats = mysql_result($result,0,0);
+$result = mysqli_query($mysql, $sql);
+$chats = mysqli_result($result,0,0);
 
 # Find out if the person viewing is the moderator.
 $moderator = is_moderator($uid,$game['id']);
 
 # Find out if the person viewing is a player.
 $sql = "Select * from Players, Games where Players.game_id=Games.id and user_id=$uid and thread_id=$game_thread_id";
-$result=mysql_query($sql);
-$row_count = mysql_num_rows($result);
+$result=mysqli_query($mysql, $sql);
+$row_count = mysqli_num_rows($result);
 $isplayer = false;
 if ( $row_count == 1 ) $isplayer = true;
-$player_info = mysql_fetch_array($result);
+$player_info = mysqli_fetch_array($result);
 
 # Find out if person viewing should have edit abilities.
 $edit = false;
@@ -172,8 +172,8 @@ if ( !$subthread ) {
 <?php
 if ( $subthread) {
 $sql = "Select title, thread_id from Games where id='".$game['parent_game_id']."'";
-$result = mysql_query($sql);
-$parent_game = mysql_fetch_array($result);
+$result = mysqli_query($mysql, $sql);
+$parent_game = mysqli_fetch_array($result);
 print " of <a href='$game_page".$parent_game['thread_id']."'>".$parent_game['title']."</a>";
 }
 print "</div></td><td align='right'>";
@@ -181,9 +181,9 @@ if ( $game['status'] == "In Progress" ) {
 $format1 = '%i';
 $format2 = '%l';
 $sql = sprintf("select concat(date_format(if(minute>date_format(now(),'%s'),now(),date_add(now(),interval 1 hour)),'%s'),':',if(minute<10,concat('0',minute),minute)) as next from Post_collect_slots where game_id=%s",$format1,$format2,quote_smart($game['id']));
-$result = mysql_query($sql);
-if ( mysql_num_rows($result) > 0 ) {
-$next = mysql_result($result,0,0);
+$result = mysqli_query($mysql, $sql);
+if ( mysqli_num_rows($result) > 0 ) {
+$next = mysqli_result($result,0,0);
 print "Next Post Scan at $next";
 }
 }
@@ -191,8 +191,8 @@ print "</td></tr></table>";
 print "<td align='right'>";
 if ( $game['status'] == "Sign-up" ) {
   $sql1 = "select count(*) from Players where game_id='".$game['id']."'";
-  $result1 = mysql_query($sql1);
-  $count = mysql_result($result1,0,0);
+  $result1 = mysqli_query($mysql, $sql1);
+  $count = mysqli_result($result1,0,0);
   if ( $count < $game['max_players'] && !$isplayer ) {
     print "<a href='${here}sign_me_up.php?action=add&game_id=".$game['id']."'>Sign Me UP!!!</a>";
   }
@@ -223,9 +223,9 @@ print "</div>\n";
 <?php
 if ( $lynch != "" ) {
   $sql = sprintf("SELECT concat_ws(', ',if(sun, 'Sun', null),if(mon, 'Mon', null), if(tue, 'Tue', null), if(wed, 'Wed', null), if(thu, 'Thu', null), if(fri, 'Fri', null), if(sat, 'Sat', null)) as lynch_days from Auto_dusk where  game_id=%s",quote_smart($game['id']));
-  $result = mysql_query($sql);
-  if ( mysql_num_rows($result) == 1 ) {
-    $lynch_days = mysql_result($result,0,0);
+  $result = mysqli_query($mysql, $sql);
+  if ( mysqli_num_rows($result) == 1 ) {
+    $lynch_days = mysqli_result($result,0,0);
 	print"<tr><td><b>Lynch Days:</b></td><td>$lynch_days</td></tr>\n";
   }
  
@@ -252,8 +252,8 @@ if ( $edit ) {
 
 if ( ! $subthread) {
 $sql = "select count(*) from Games where parent_game_id='".$game['id']."'";
-$result = mysql_query($sql);
-$num = mysql_result($result,0,0);
+$result = mysqli_query($mysql, $sql);
+$num = mysqli_result($result,0,0);
 if ( $num > 0 || $edit) {
 print "<tr><td><div $open_comment onMouseOver='show_hint(\"Click to Add or Delete a Sub-Thread\")' onMouseOut='hide_hint()' onClick='edit_subt()' $close_comment><b>Sub-Threads:</b></div></td><td id='subt_td'>\n";
 show_subt($game['id']);
@@ -312,14 +312,14 @@ if ( $status == "In Progress" ) {
 if ( $status == "Sign-up" || $status == "In Progress" ) {
   print "<div><a href='javascript:random_selector()'>Random Selector Tool</a></div>\n";
   $sql_player_list = sprintf("select name from Players, Players_all, Users where Players.user_id=Players_all.original_id and Players.game_id=Players_all.game_id and Players_all.user_id=Users.id and Players.game_id=%s order by name",quote_smart($game['id']));
-  $result_player_list = mysql_query($sql_player_list);
+  $result_player_list = mysqli_query($mysql, $sql_player_list);
 ?>
 <script language='javascript'>
 //<!--
 <?php
 $list = "";
 $count = 0;
-while ( $player = mysql_fetch_array($result_player_list) ) {
+while ( $player = mysqli_fetch_array($result_player_list) ) {
   if ( $list != "" ) { $list .= ", "; }
   $list .= '"'.$player['name'].'"';
   $count ++;
@@ -426,8 +426,8 @@ Edit
 </table>
 <?php
   $sql = sprintf("select max(article_id) as a_id from Posts where game_id=%s",$game['id']);
-  $result = mysql_query($sql);
-  if ( $result ) { $article_id = mysql_result($result,0,0); }
+  $result = mysqli_query($mysql, $sql);
+  if ( $result ) { $article_id = mysqli_result($result,0,0); }
 ?>
 
 <br /><a id='game_link' href="http://www.boardgamegeek.com/thread/<?=$game_thread_id;?>">Go to Game Thread</a> 
@@ -474,15 +474,15 @@ print "</td>\n";
 print "<td valign='top'>\n";
 # Show any Wolfy awards the game has won.
 $sql = sprintf("select * from Wolfy_games, Wolfy_awards where Wolfy_games.award_id=Wolfy_awards.id and game_id=%s order by id, year",$game['id']);
-$result = mysql_query($sql);
+$result = mysqli_query($mysql, $sql);
 if ( $result ) {
-  $num_awards = mysql_num_rows($result);
+  $num_awards = mysqli_num_rows($result);
 } else {
   $num_award = 0;
 }
 if ( $num_awards > 0 ) {
   print "<table class='forum_table'><tr><th>Wolfy Awards</th></tr>\n";
-while ( $award = mysql_fetch_array($result) ) {
+while ( $award = mysqli_fetch_array($result) ) {
   print "<tr><td><a href='http://www.boardgamegeek.com/article/".$award['award_post']."#".$award['award_post']."'>".$award['award']." (".$award['year'].")</a></td></tr>\n";
 }
   print "</table>\n";
@@ -490,15 +490,15 @@ while ( $award = mysql_fetch_array($result) ) {
 print "</td></tr></table>\n";
 
 $sql = "select distinct Posts.user_id, name from Posts, Users where Posts.user_id=Users.id and Posts.game_id='".$game['id']."' and Posts.user_id not in ( select user_id from Players where game_id='".$game['id']."') and Posts.user_id not in ( select user_id from Moderators where game_id='".$game['id']."') and Posts.user_id not in ( select replace_id from Replacements where game_id='".$game['id']."') order by name";
-$result = mysql_query($sql);
-$num_row = mysql_num_rows($result);
+$result = mysqli_query($mysql, $sql);
+$num_row = mysqli_num_rows($result);
 if ( $num_row > 0 ) {
 print "<br />Non-Players who posted<br />\n";
 print "<table class='forum_table'>\n";
-while ( $row = mysql_fetch_array($result) ) {
+while ( $row = mysqli_fetch_array($result) ) {
   $sql2 = "select count(*) from Posts where game_id='".$game['id']."' and user_id='".$row['user_id']."'";
-  $result2 = mysql_query($sql2);
-  $num_post = mysql_result($result2,0,0);
+  $result2 = mysqli_query($mysql, $sql2);
+  $num_post = mysqli_result($result2,0,0);
   print "<tr><td>".get_player_page($row['name'])."<a href='$posts".$row['name']."'>($num_post posts)</a></td></tr>\n";
 }
 print "</table>\n";

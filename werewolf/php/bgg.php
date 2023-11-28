@@ -78,16 +78,16 @@ class BGG
 
 function edit_playerlist_post($game_id) {
   $sql = sprintf("select status, thread_id, player_list_id from Games where id=%s",quote_smart($game_id));
-  $result = mysql_query($sql);
-  $status = mysql_result($result,0,0);
-  $thread_id = mysql_result($result,0,1);
-  $player_list_id = mysql_result($result,0,2);
+  $result = mysqli_query($mysql, $sql);
+  $status = mysqli_result($result,0,0);
+  $thread_id = mysqli_result($result,0,1);
+  $player_list_id = mysqli_result($result,0,2);
   if ( $status == "Sign-up" ) {
     $sql = sprintf("select name from Users, Players where Users.id=Players.user_id and game_id=%s order by name",quote_smart($game_id));
-    $result = mysql_query($sql);
+    $result = mysqli_query($mysql, $sql);
 	$count = dbGetResultRowCount($result);
     $body = "Player List According to Cassandra:\n";
-    while ( $row = mysql_fetch_array($result) ) {
+    while ( $row = mysqli_fetch_array($result) ) {
       $body .= $row['name']."\n";
     }
     $body .= "\n$count players are signed up.\n";
@@ -101,16 +101,16 @@ function edit_playerlist_post($game_id) {
 function notify_moderator($game_id,$action="",$username="") {
   global $uname;
   $sql = sprintf("select title, thread_id from Games where id=%s",quote_smart($game_id));
-  $result = mysql_query($sql);
-  $title = mysql_result($result,0,0);
-  $thread_id = mysql_result($result,0,1);
+  $result = mysqli_query($mysql, $sql);
+  $title = mysqli_result($result,0,0);
+  $thread_id = mysqli_result($result,0,1);
 
   $sql = sprintf("select name from Users, Moderators where Users.id=Moderators.user_id and game_id=%s",quote_smart($game_id));
-  $result = mysql_query($sql);
+  $result = mysqli_query($mysql, $sql);
 
   $count = 0;
   $to = "";
-  while ( $row = mysql_fetch_array($result) ) {
+  while ( $row = mysqli_fetch_array($result) ) {
     if ( $count > 0 ) { $to .= ", "; }
 	if ( $row['name'] == "Cassandra Project" ) { continue; }
     $to .= $row['name'];
@@ -121,9 +121,9 @@ function notify_moderator($game_id,$action="",$username="") {
 
 
   $sql = sprintf("select name from Users, Players where Users.id=Players.user_id and game_id=%s order by name",quote_smart($game_id));
-  $result = mysql_query($sql);
+  $result = mysqli_query($mysql, $sql);
   $count = dbGetResultRowCount($result);
-  while ( $row = mysql_fetch_array($result) ) {
+  while ( $row = mysqli_fetch_array($result) ) {
     $message .= $row['name'] . "\n";
   }
 

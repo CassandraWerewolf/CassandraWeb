@@ -8,7 +8,7 @@ include_once "../menu.php";
 
 $cache = init_cache();
 
-dbConnect();
+$mysql = dbConnect();
 
 #checkLevel($level,1);
 
@@ -26,15 +26,15 @@ dbConnect();
 <tr><th>Type</th><th>Site</th><th>Number of WW's there</th><th>My Info</th></tr>
 <?php
 $sql = sprintf("select * from Social_sites order by category, site_name");
-$result = mysql_query($sql);
-while ( $site = mysql_fetch_array($result) ) {
+$result = mysqli_query($mysql, $sql);
+while ( $site = mysqli_fetch_array($result) ) {
   $sql_count = sprintf("select count(*) from Social_users where site_id=%s",$site['id']);
-  $result_count = mysql_query($sql_count);
-  $count = mysql_fetch_row($result_count);
+  $result_count = mysqli_query($mysql, $sql_count);
+  $count = mysqli_fetch_row($result_count);
   $site_count = $count[0];
   $sql_user = sprintf("select * from Social_users where site_id=%s and user_id=%s",$site['id'],$uid);
-  $user_result = mysql_query($sql_user);
-  $user = mysql_fetch_array($user_result);
+  $user_result = mysqli_query($mysql, $sql_user);
+  $user = mysqli_fetch_array($user_result);
   print "<tr>";
   print "<td>".$site['category']."</td>";
   $a_start = "";

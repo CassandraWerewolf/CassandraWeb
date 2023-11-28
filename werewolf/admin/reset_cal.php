@@ -5,7 +5,7 @@ include_once "../php/db.php";
 include_once "../php/google_calendar.php";
 include_once "../menu.php";
 
-dbConnect();
+$mysql = dbConnect();
 
 checkLevel($level,1);
 
@@ -24,7 +24,7 @@ checkLevel($level,1);
 <?php
 if ( 1 != 1 ) {
 $sql = sprintf("delete from Update_calendar");
-$result = mysql_query($sql);
+$result = mysqli_query($mysql, $sql);
 ?>
 <li>Deleting all calendar entries</li>
 <?php
@@ -38,12 +38,12 @@ foreach ($feed as $item) {
 <?php
 $format = "%Y-%m-%d";
 $sql = sprintf("select id, title, description, date_format(start_date,'%s') as start_date, date_format(if ( (end_date is NULL or end_date = '0000-00-00'), date_add(start_date, INTERVAL aprox_length DAY), date_add(end_date, INTERVAL 1 DAY)),'%s') as end_date, thread_id from Games where start_date != '0000-00-00 00:00:00'",$format,$format);
-$result = mysql_query($sql);
-while ( $row = mysql_fetch_array($result) ) {
+$result = mysqli_query($mysql, $sql);
+while ( $row = mysqli_fetch_array($result) ) {
   print "Game: ".$row['id']."<br />";
   $calendar_id = post_event(($row['title']),$row['description'],$row['start_date'],$row['end_date'],$row['thread_id']);
   $sql_update = sprintf("update Games set calendar_id=%s where id=%s",quote_smart($calendar_id),quote_smart($row['id']));
-  $result_update = mysql_query($sql_update);
+  $result_update = mysqli_query($mysql, $sql_update);
 }
 }
 ?>

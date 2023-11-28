@@ -3,15 +3,15 @@
 include "php/accesscontrol.php";
 include_once "php/db.php";
 
-dbConnect();
+$mysql = dbConnect();
 
 $game_id = $_REQUEST['game_id'];
 
 if ( isset($_POST['submit']) ) {
   $sql = sprintf("select user_id from Players where game_id=%s",quote_smart($game_id));
-  $result = mysql_query($sql);
+  $result = mysqli_query($mysql, $sql);
   $players = array();
-  while ( $row = mysql_fetch_array($result) ) {
+  while ( $row = mysqli_fetch_array($result) ) {
     $players[] = $row['user_id'];
   }
   $roles = array();
@@ -31,13 +31,13 @@ if ( isset($_POST['submit']) ) {
 	}
 	if ( $hide ) {
       $sql = sprintf("select mod_comment from Players where user_id=%s and game_id=%s",$players[$i],quote_smart($game_id));
-	  $result = mysql_query($sql);
-	  $mod_comment = mysql_result($result,0,0);
+	  $result = mysqli_query($mysql, $sql);
+	  $mod_comment = mysqli_result($result,0,0);
 	  $sql = sprintf("update Players set mod_comment=%s where user_id=%s and game_id=%s",quote_smart($mod_comment." ".$roles[$i]),$players[$i],quote_smart($game_id));
-	  $result = mysql_query($sql);
+	  $result = mysqli_query($mysql, $sql);
 	} else {
       $sql = sprintf("update Players set role_name=%s where user_id=%s and game_id=%s",quote_smart($roles[$i]),$players[$i],quote_smart($game_id));
-	  $result = mysql_query($sql);
+	  $result = mysqli_query($mysql, $sql);
 	}
   }
 ?>
@@ -57,12 +57,12 @@ Please hit your browsers back button.
 exit;
 }
 $sql = sprintf("select * from Games where id=%s",quote_smart($game_id));
-$result = mysql_query($sql);
-$game = mysql_fetch_array($result);
+$result = mysqli_query($mysql, $sql);
+$game = mysqli_fetch_array($result);
 
 $sql = sprintf("select role_name from Players where game_id=%s order by role_name",quote_smart($game_id));
-$result = mysql_query($sql);
-$num_players = mysql_num_rows($result);
+$result = mysqli_query($mysql, $sql);
+$num_players = mysqli_num_rows($result);
 ?>
 <html>
 <head>
@@ -76,7 +76,7 @@ $num_players = mysql_num_rows($result);
 <tr><th>Enter the Names of all Roles</th><th>hide</th></tr>
 <?php
 $i=0;
-while ( $player = mysql_fetch_array($result) ) {
+while ( $player = mysqli_fetch_array($result) ) {
   print "<tr><td align='center'><input type='text' name='role_$i' value='".$player{'role_name'}."' /></td><td><input type='checkbox' name='hide_$i' /></td></tr>\n";
   $i++;
 }

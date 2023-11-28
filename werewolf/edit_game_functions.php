@@ -4,33 +4,34 @@ include_once "HTML/Table.php";
 include_once "php/db.php";
 include_once "autocomplete.php";
 include_once "php/common.php";
-dbConnect();
+$mysql = dbConnect();
 
 $here = "/";
-$player = "${here}player/";
-$game_page = "${here}game/";
-#$game_page = "${here}dev_game/";
+$player = "{$here}player/";
+$game_page = "{$here}game/";
+#$game_page = "{$here}dev_game/";
 $posts = "";
 
 function setPostsPath($game_id) {
 global $here, $posts;
 $sql = sprintf("select thread_id from Games where id=%s",quote_smart($game_id));
-$result = mysql_query($sql);
-$thread_id = mysql_result($result,0,0);
-$posts = "${here}game/$thread_id/";
+$result = mysqli_query($mysql, $sql);
+$thread_id = mysqli_result($result,0,0);
+$posts = "{$here}game/$thread_id/";
 }
 
 function show_moderator($game_id) {
  global $player, $posts;
  if ( $posts == "" ) { setPostsPath($game_id); }
+ $mysql = dbConnect();
   $sql = sprintf("Select id, name from Users, Moderators where Users.id=Moderators.user_id and Moderators.game_id=%s order by name",quote_smart($game_id));
-  $result = mysql_query($sql);
+  $result = mysqli_query($mysql, $sql);
   $count = 0;
   $output = "";
-  while ( $mod = mysql_fetch_array($result) ) {
+  while ( $mod = mysqli_fetch_array($result) ) {
     $sql2 = sprintf("Select count(*) from Posts where game_id=%s and user_id='".$mod['id']."'",quote_smart($game_id));
-    $result2=mysql_query($sql2);
-    $num_post=mysql_result($result2,0,0);
+    $result2=mysqli_query($mysql, $sql2);
+    $num_post=mysqli_result($result2,0,0);
     if ( $count == 0 ) { 
 	  $output = get_player_page($mod['name']);
 	  $output .= " <a href='$posts".$mod['name']."'>($num_post post)</a>";
@@ -48,14 +49,14 @@ function edit_moderator($game_id) {
   $output = "<form name='change_mod'>\n";
   $output .= "<select name='moderator[]' size='25' multiple>\n";
   $sql = sprintf("select user_id from Users, Moderators where Moderators.user_id=Users.id and game_id=%s order by name",quote_smart($game_id));
-  $result = mysql_query($sql);
-  while ( $row = mysql_fetch_array($result) ) {
+  $result = mysqli_query($mysql, $sql);
+  while ( $row = mysqli_fetch_array($result) ) {
     $id[]=$row['user_id'];
   }
   $sql="Select id, name from Users where level != '0' order by name";
-  $result = mysql_query($sql);
+  $result = mysqli_query($mysql, $sql);
   $i = 0;
-  while ( $row = mysql_fetch_array($result) ) {
+  while ( $row = mysqli_fetch_array($result) ) {
     $selected = "";
     if ( $row['id'] == $id[$i] ) {
       $selected = "selected";
@@ -75,9 +76,10 @@ function show_dates($game_id) {
   global $open_comment, $close_comment;
   $format = "'%b %e, %Y'";
   $format2 = "'%l:%i %p'";
+  $mysql = dbConnect();
   $sql = sprintf("select date_format(start_date, %s) as start, date_format(start_date, %s) as start_time, date_format(end_date, %s) as end, swf, status, deadline_speed from Games where id=%s",$format,$format2,$format,quote_smart($game_id));
-  $result = mysql_query($sql);
-  $date = mysql_fetch_array($result);
+  $result = mysqli_query($mysql, $sql);
+  $date = mysqli_fetch_array($result);
   $content = $date['start']." to ".$date['end'];
   if ( $date['status'] == "Sign-up" ) {
     if ( $date['deadline_speed'] == "Fast" ) { $content = $date['start']." ".$date['start_time']." to ".$date['end']; }
@@ -93,8 +95,8 @@ function edit_dates($game_id) {
   $format2 = "'%H:%i'";
   $output = "<form name='edit_date'>\n";
   $sql = sprintf("select date_format(start_date, %s) as start, date_format(start_date, %s) as start_time, date_format(end_date, %s) as end, swf, status, deadline_speed from Games where id=%s", $format,$format2,$format,quote_smart($game_id));
-  $result = mysql_query($sql);
-  $date = mysql_fetch_array($result);
+  $result = mysqli_query($mysql, $sql);
+  $date = mysqli_fetch_array($result);
   $checked = "";
   $value = $date['swf'];
   if ( $date['swf'] == "Yes" ) { $checked = "checked='checked'"; }
@@ -120,8 +122,8 @@ function edit_dates($game_id) {
 function edit_description($game_id) {
   $output = "<form name='new_descrip'>\n";
   $sql = sprintf("select description from Games where id=%s",quote_smart($game_id));
-  $result = mysql_query($sql);
-  $description = mysql_result($result,0,0);
+  $result = mysqli_query($mysql, $sql);
+  $description = mysqli_result($result,0,0);
   $output .= "<textarea name='desc' rows='5' cols='50'>$description</textarea>\n";
   $output .= "<br /><input type='button' name='submit' value='submit' onClick='submit_desc()' />\n";
   $output .= "</form>\n";
@@ -133,13 +135,13 @@ function edit_status($game_id) {
   $output = "<form name='new_status'>\n";
   $output .= "<select name='status'>\n";
   $sql=sprintf("select status, phase, day from Games where id=%s",quote_smart($game_id));
-  $result = mysql_query($sql);
-  $status = mysql_result($result,0,0);
-  $phase = mysql_result($result,0,1);
-  $day = mysql_result($result,0,2);
+  $result = mysqli_query($mysql, $sql);
+  $status = mysqli_result($result,0,0);
+  $phase = mysqli_result($result,0,1);
+  $day = mysqli_result($result,0,2);
   $sql="show columns from Games where field='status'";
-  $result=mysql_query($sql);
-  while ($row=mysql_fetch_row($result)) {
+  $result=mysqli_query($mysql, $sql);
+  while ($row=mysqli_fetch_row($result)) {
     foreach(explode("','",substr($row[1],6,-2)) as $v) {
       $selected = "";
 	  if ( $status == $v ) { $selected = "selected"; }
@@ -150,8 +152,8 @@ function edit_status($game_id) {
   $output .= "</select><br />\n";
   $output .= "<select name='phase'>\n";
   $sql="show columns from Games where field='phase'";
-  $result=mysql_query($sql);
-  while ($row=mysql_fetch_row($result)) {
+  $result=mysqli_query($mysql, $sql);
+  while ($row=mysqli_fetch_row($result)) {
     foreach(explode("','",substr($row[1],6,-2)) as $v) {
       $selected = "";
 	  if ( $phase == $v ) { $selected = "selected"; }
@@ -170,12 +172,12 @@ function edit_speed($game_id) {
   $output = "<form name='new_speed'>\n";
   $output .= "<select name='speed'>\n";
   $sql=sprintf("select deadline_speed from Games where id=%s",quote_smart($game_id));
-  $result=mysql_query($sql);
-  $speed = mysql_result($result,0,0);
+  $result=mysqli_query($mysql, $sql);
+  $speed = mysqli_result($result,0,0);
   $output .= "Speed: ";
   $sql="show columns from Games where field='deadline_speed'"; 
-  $result = mysql_query($sql);
-  while ( $row=mysql_fetch_row($result)) {
+  $result = mysqli_query($mysql, $sql);
+  while ( $row=mysqli_fetch_row($result)) {
     foreach(explode("','",substr($row[1],6,-2)) as $v) {
       $selected = "";
       if ( $speed == $v ) { $selected = "selected='selected'"; }
@@ -191,14 +193,14 @@ function edit_speed($game_id) {
 function edit_deadline($game_id) {
   $output = "<form name='new_deadline'>\n";
   $sql=sprintf("select lynch_time, na_deadline, day_length, night_length, deadline_speed from Games where id=%s",quote_smart($game_id));
-  $result = mysql_query($sql);
-  #$lynch_db = mysql_result($result,0,0);
-  #$night_db = mysql_result($result,0,1);
-  $lynch = mysql_result($result,0,0);
-  $night = mysql_result($result,0,1);
-  $day_length = mysql_result($result,0,2);
-  $night_length = mysql_result($result,0,3);
-  $speed = mysql_result($result,0,4);
+  $result = mysqli_query($mysql, $sql);
+  #$lynch_db = mysqli_result($result,0,0);
+  #$night_db = mysqli_result($result,0,1);
+  $lynch = mysqli_result($result,0,0);
+  $night = mysqli_result($result,0,1);
+  $day_length = mysqli_result($result,0,2);
+  $night_length = mysqli_result($result,0,3);
+  $speed = mysqli_result($result,0,4);
   #list($lynch,$lmin) = split(":",$lynch_db);
   #list($night,$nmin) = split(":",$night_db);
   $output .= "<table>\n";
@@ -224,11 +226,11 @@ function edit_winner($game_id) {
   $output = "<form name='new_winner'>\n";
   $output .= "<select name='winner'>\n";
   $sql=sprintf("select winner from Games where id=%s",quote_smart($game_id));
-  $result = mysql_query($sql);
-  $winner = mysql_result($result,0,0);
+  $result = mysqli_query($mysql, $sql);
+  $winner = mysqli_result($result,0,0);
   $sql="show columns from Games where field='winner'";
-  $result=mysql_query($sql);
-  while ($row=mysql_fetch_row($result)) {
+  $result=mysqli_query($mysql, $sql);
+  while ($row=mysqli_fetch_row($result)) {
     foreach(explode("','",substr($row[1],6,-2)) as $v) {
       $selected = "";
 	  if ( $winner == $v ) { $selected = "selected"; }
@@ -244,9 +246,9 @@ function edit_winner($game_id) {
 
 function edit_subt($game_id) {
   $sql = sprintf("select * from Games where parent_game_id=%s",quote_smart($game_id));
-  $result = mysql_query($sql);
+  $result = mysqli_query($mysql, $sql);
   $output = "";
-  while ( $row = mysql_fetch_array($result) ) {
+  while ( $row = mysqli_fetch_array($result) ) {
     $output .=  $row['title']." - ".$row['thread_id']." <a href='javascript:delete_subt(\"".$row['thread_id']."\")'>delete</a><br />\n";
   }
   $output .= "<form name='new_subt'><input type='text' name='tid' />\n";
@@ -259,9 +261,9 @@ function edit_subt($game_id) {
 function show_subt($game_id) {
   global $game_page, $open_comment, $close_comment;
   $sql = sprintf("select * from Games where parent_game_id=%s",quote_smart($game_id));
-  $result = mysql_query($sql);
+  $result = mysqli_query($mysql, $sql);
   $output = "";
-  while ( $row = mysql_fetch_array($result) ) {
+  while ( $row = mysqli_fetch_array($result) ) {
     $output .= "<div $open_comment onMouseOver='show_hint(\"Click to Add or Delete a Sub-Thread\")' onMouseOut='hide_hint()' onClick='edit_subt()' $close_comment><a href='$game_page".$row['thread_id']."'>".$row['title']."</a><br /></div>\n";
   }
 
@@ -270,8 +272,8 @@ function show_subt($game_id) {
 
 function edit_name($game_id) {
   $sql = sprintf("select title from Games where id=%s",quote_smart($game_id));
-  $result = mysql_query($sql);
-  $title = mysql_result($result,0,0);
+  $result = mysqli_query($mysql, $sql);
+  $title = mysqli_result($result,0,0);
   $output = "<form name='new_title'>\n";
   $output .= "<input type='text' name='title' value='$title' />\n";
   $output .= "<input type='button' name='submit' value='submit' onClick='submit_name()'/>\n";
@@ -282,8 +284,8 @@ function edit_name($game_id) {
 
 function edit_thread($game_id) {
   $sql = sprintf("select thread_id from Games where id=%s",quote_smart($game_id));
-  $result = mysql_query($sql);
-  $thread_id = mysql_result($result,0,0);
+  $result = mysqli_query($mysql, $sql);
+  $thread_id = mysqli_result($result,0,0);
   $output = "<form name='new_thread'>\n";
   $output .= "<input type='text' name='thread' value='$thread_id' />\n";
   $output .= "<input type='button' name='submit' value='submit' onClick='submit_thread()' />\n";
@@ -295,22 +297,23 @@ function edit_thread($game_id) {
 function createPlayer_table($edit,$game_id) {
   global $here, $posts, $uid, $finished, $rep_id, $status, $open_comment, $close_comment;
   if ( $posts == "" ) { setPostsPath($game_id); }
+  $mysql = dbConnect();
   $sql = sprintf("select alias_display, automod_id from Games where id=%s",quote_smart($game_id));
-  $result = mysql_query($sql);
+  $result = mysqli_query($mysql, $sql);
   $show_alias = false;
   $show_alias_values = false;
-  $alias_display = mysql_result($result,0,0);
+  $alias_display = mysqli_result($result,0,0);
   if ( $alias_display != 'None' ) { $show_alias = true; }
   if ( $alias_display == 'Public' ) { $show_alias_values = true; } 
   $is_automod = false;
-  if ( mysql_result($result,0,1) != "" ) { $is_automod = true; }
+  if ( mysqli_result($result,0,1) != "" ) { $is_automod = true; }
 
   $sql = sprintf("SELECT CASE WHEN Games.status =  'Sign-Up' THEN CONCAT( COUNT( * ) ,  '/', max_players ) ELSE CONCAT( SUM( CASE WHEN (death_phase IS NULL OR death_phase = 'Alive' OR death_phase = '') THEN 1 ELSE 0 END ) ,  '/', COUNT( * ) ) END FROM Players_r, Games WHERE Games.id =%s AND Players_r.game_id = Games.id",quote_smart($game_id));
-  $result = mysql_query($sql);
-  $players_total = mysql_result($result,0,0);
+  $result = mysqli_query($mysql, $sql);
+  $players_total = mysqli_result($result,0,0);
 
   $sql = sprintf("select Users.id as uid, name, role_name, `type`, side, death_phase, death_day, mod_comment, need_replace, player_alias, alias_color, automod_role_id from Users, Players, Roles where Users.id=Players.user_id and Players.role_id=Roles.id and game_id=%s order by name",quote_smart($game_id));
-  $result = mysql_query($sql);
+  $result = mysqli_query($mysql, $sql);
   $edit_col[] = "Edit"; 
   $replace[] = "Repl";
   $players[] = "Players ($players_total)";
@@ -323,7 +326,7 @@ function createPlayer_table($edit,$game_id) {
   $death_color[] = "#000000";
   $comment[] = "Comment";
   $count = 0;
-  while ( $row = mysql_fetch_array($result) ) {
+  while ( $row = mysqli_fetch_array($result) ) {
 	$players[] = display_player($row['name'],$row['uid'],$game_id);
     if ( $edit ) { $edit_col[] = "<a href='javascript:edit_player(\"".$row['uid']."\",\"$count\")'><img src='/images/edit.png' border='0' /></a>"; }
 	if ( $row['need_replace'] != "" ) {
@@ -381,7 +384,7 @@ function createPlayer_table($edit,$game_id) {
 	  'cellspacing' => '2'
   );
 
-  $table =& new HTML_Table($attrs);
+  $table = new HTML_Table($attrs);
 
   if ( $edit ) { $table->addCol($edit_col); }
   if ( $status == "In Progress" ) { $table->addCol($replace); }
@@ -395,8 +398,8 @@ function createPlayer_table($edit,$game_id) {
   $table->addCol($comment);
 
   $sql = sprintf("select count(*) from Posts where game_id=%s",quote_smart($game_id));
-  $result = mysql_query($sql);
-  $num_post = mysql_result($result,0,0);
+  $result = mysqli_query($mysql, $sql);
+  $num_post = mysqli_result($result,0,0);
 
   $i = 0;
   if ( $edit ) {
@@ -406,13 +409,13 @@ function createPlayer_table($edit,$game_id) {
 	  $table->setHeaderContents(0,0+$i,"Repl");
       $i = 2;
 	}
-    $table->setHeaderContents(0,0+$i,"<div $open_comment onMouseOver='show_hint(\"Click to Add a player\")' onMouseOut='hide_hint()' onClick='add_player()' $close_comment><img src='/images/add.png' border='0' width='15px' height='15px' /></div> Players ($players_total) <a href='${posts}all'>($num_post posts)</a>");
+    $table->setHeaderContents(0,0+$i,"<div $open_comment onMouseOver='show_hint(\"Click to Add a player\")' onMouseOut='hide_hint()' onClick='add_player()' $close_comment><img src='/images/add.png' border='0' width='15px' height='15px' /></div> Players ($players_total) <a href='{$posts}all'>($num_post posts)</a>");
   } else {
 	if ( $status == "In Progress" ) {
 	  $table->setHeaderContents(0,0+$i,"Repl");
       $i = 1;
 	}
-    $table->setHeaderContents(0,0+$i,"<div $open_comment onMouseOver='show_hint(\"Click to Add a player\")' onMouseOut='hide_hint()' onClick='add_player()' $close_comment>Players ($players_total) <a href='${posts}users'>($num_post posts)</a></div>");
+    $table->setHeaderContents(0,0+$i,"<div $open_comment onMouseOver='show_hint(\"Click to Add a player\")' onMouseOut='hide_hint()' onClick='add_player()' $close_comment>Players ($players_total) <a href='{$posts}users'>($num_post posts)</a></div>");
   }
   if ( $show_alias ) {
     $i++;
@@ -434,7 +437,7 @@ function createPlayer_table($edit,$game_id) {
       for ( $c=1; $c<6; $c++ ) {
 	    $ro = $r - 1;
 	    $co = $c - 1;
-	    $table->setCellAttributes($r,$c,"id='r${ro}_c$co'");
+	    $table->setCellAttributes($r,$c,"id='r{$ro}_c$co'");
 	  }
 	}
   }
@@ -451,37 +454,38 @@ function display_player($name,$user_id,$game_id) {
   if ( $posts == "" ) { setPostsPath($game_id); }
   $rep_id = 0;
   $replace = find_Replacements($user_id,$game_id);
+  $mysql = dbConnect();
   $sql2 = sprintf("select count(*) from Posts where game_id=%s and user_id=%s",quote_smart($game_id),quote_smart($user_id));
-  $result2 = mysql_query($sql2);
-  $num_post = mysql_result($result2,0,0);
+  $result2 = mysqli_query($mysql, $sql2);
+  $num_post = mysqli_result($result2,0,0);
   $current_id = $user_id;
   $current_num_post = $num_post;
   if ( $replace != "" ) {
     $sql2 = sprintf("select replace_id from Replacements where game_id=%s and user_id=%s",quote_smart($game_id),quote_smart($user_id));
-	$result2 = mysql_query($sql2);
-	$current_id = mysql_result($result2,mysql_num_rows($result2)-1,0);
+	$result2 = mysqli_query($mysql, $sql2);
+	$current_id = mysqli_result($result2,mysqli_num_rows($result2)-1,0);
 	$sql2 = sprintf("select count(*) from Posts where game_id=%s and user_id=%s",quote_smart($game_id),quote_smart($current_id));
-	$result2 = mysql_query($sql2);   
-	$current_num_post = mysql_result($result2,0,0);
+	$result2 = mysqli_query($mysql, $sql2);   
+	$current_num_post = mysqli_result($result2,0,0);
   }
   $sql2 = sprintf("select death_phase, status from Players, Games where Players.game_id=Games.id and game_id=%s and user_id=%s",quote_smart($game_id),quote_smart($user_id));
-  $result2 = mysql_query($sql2);
+  $result2 = mysqli_query($mysql, $sql2);
   $dead = false;
-  if ( (mysql_result($result2,0,0) != "" && mysql_result($result2,0,0) != "Alive") ||  mysql_result($result2,0,1) == "Finished" ) { $dead = true; }
+  if ( (mysqli_result($result2,0,0) != "" && mysqli_result($result2,0,0) != "Alive") ||  mysqli_result($result2,0,1) == "Finished" ) { $dead = true; }
   if ( $current_num_post > 0 ) {
     $sql2 = sprintf("select max(time_stamp) as last_post, if(date_add(max(time_stamp),interval missing_hr hour) < now(), 'Yes','No') as missing from Posts, Games where Posts.game_id=Games.id and game_id=%s and user_id=%s",quote_smart($game_id),quote_smart($current_id));
   } else {
     $sql2 = sprintf("select 'Never' as last_post, if(date_add(start_date, interval missing_hr hour) < now(), 'Yes', 'No') as missing from Games where id=%s",quote_smart($game_id));
   }
-  $result2 = mysql_query($sql2);
-  $last_post = mysql_result($result2,0,0);
-  $missing = mysql_result($result2,0,1);
+  $result2 = mysqli_query($mysql, $sql2);
+  $last_post = mysqli_result($result2,0,0);
+  $missing = mysqli_result($result2,0,1);
   $this_player = "";
   if ( $missing == "Yes" && !$dead) {
-     $this_player .=  "<span onMouseOver='javascript:{document.getElementById(\"${user_id}_lp\").style.visibility=\"visible\";}' ";
-     $this_player .=  "onMouseOut='javascript:{document.getElementById(\"${user_id}_lp\").style.visibility=\"hidden\";}' >";
+     $this_player .=  "<span onMouseOver='javascript:{document.getElementById(\"{$user_id}_lp\").style.visibility=\"visible\";}' ";
+     $this_player .=  "onMouseOut='javascript:{document.getElementById(\"{$user_id}_lp\").style.visibility=\"hidden\";}' >";
 	 $this_player .= "<img src='/images/warning.png' border='0' /> </span>";
-	 $this_player .= "<span id='${user_id}_lp' style='position:absolute;border:solid black 1px; background-color:white; visibility:hidden;'>Last Post: $last_post</span> ";
+	 $this_player .= "<span id='{$user_id}_lp' style='position:absolute;border:solid black 1px; background-color:white; visibility:hidden;'>Last Post: $last_post</span> ";
   }
   $this_player .= get_player_page($name);
   $this_player .= " <a href='$posts$name'>($num_post posts)</a>".$replace;
@@ -492,15 +496,16 @@ function display_player($name,$user_id,$game_id) {
 function find_Replacements($user_id,$game_id) {
   global $posts, $player, $rep_id;
   if ( $posts == "" ) { setPostsPath($game_id); }
+  $mysql = dbConnect();
   $sql = sprintf("Select name, replace_id as id, substring(period,1,1) as p, number from Users, Replacements where Users.id=Replacements.replace_id and game_id=%s and user_id=%s order by number, period",quote_smart($game_id),quote_smart($user_id));
-  $result = mysql_query($sql);
+  $result = mysqli_query($mysql, $sql);
   $count = 0;
   $replace = "";
-  while ( $rep = mysql_fetch_array($result) ) {
+  while ( $rep = mysqli_fetch_array($result) ) {
     $rep_id = $rep['id'];
     $sql2 = sprintf("select count(*) from Posts where game_id=%s and user_id='".$rep['id']."'",quote_smart($game_id));
-    $result2 = mysql_query($sql2);
-    $num_post = mysql_result($result2,0,0);
+    $result2 = mysqli_query($mysql, $sql2);
+    $num_post = mysqli_result($result2,0,0);
     if ( $count == 0 ) { 
       $replace = "<br /> (replaced by ";
 	  $replace .= get_player_page($rep['name']);
@@ -522,15 +527,15 @@ function edit_player($user_id,$row,$game_id) {
   $output .= "<input type='hidden' name='user_id' value='$user_id' />\n";
   $output .= "<input type='hidden' name='row_id' value='$row' />\n";
   $sql = sprintf("select * from Users, Players where Users.id=Players.user_id and Users.id=%s and Players.game_id=%s",quote_smart($user_id),quote_smart($game_id));
-  $result = mysql_query($sql);
-  $data = mysql_fetch_array($result);
+  $result = mysqli_query($mysql, $sql);
+  $data = mysqli_fetch_array($result);
   $output .= "<table border='0'>";
   $output .= "<tr><th colspan='2'>Editing ".$data['name']."</th></tr>\n";
   # Show Players that have been asigned as replacements.
   $sql2 = sprintf("Select name, replace_id as id, period, number from Users, Replacements where Users.id=Replacements.replace_id and game_id=%s and user_id=%s order by number, period",quote_smart($game_id),quote_smart($user_id));
-  $result2 = mysql_query($sql2);
+  $result2 = mysqli_query($mysql, $sql2);
   $count = 0;
-  while ( $rep = mysql_fetch_array($result2) ) {
+  while ( $rep = mysqli_fetch_array($result2) ) {
     $output .= "<tr><td align='right'>Replacement:</td>";
 	$output .= "<td>".$rep['name']." on  ".$rep['period']." ".$rep['number'];
 	$output .= " - <a href='javascript:delete_replacement(\"".$rep['id']."\")'>delete</a></td></tr>\n";
@@ -544,8 +549,8 @@ function edit_player($user_id,$row,$game_id) {
   $output .= "<input type='text' name='rep_number' size='3' value='' /></td></tr>";
   # (Optional) Change Alias
   $sql_alias = sprintf("select alias_display from Games where id = %s",quote_smart($game_id));
-  $result_alias = mysql_query($sql_alias);
-  if (mysql_result($result_alias,0,0) != 'None')
+  $result_alias = mysqli_query($mysql, $sql_alias);
+  if (mysqli_result($result_alias,0,0) != 'None')
   {
 	$output .= "<tr><td align='right'>Alias:</td><td><input type='text' name='player_alias' value='".$data['player_alias']."' /><br /><input type='text' id='alias_color' name='alias_color' value='".$data['alias_color']."' size='8' /><a href='#' onClick='cp.select(document.editPlayer.alias_color,\"pick\"); return false;' name='pick' id='pick'><img src='/images/color_pick.gif' border='0' /></a></td></tr>";
   } else {
@@ -588,10 +593,10 @@ function add_player($game_id) {
 
 function player_dropdown($name) {
   $sql = "select id, name from Users where level != '0' order by name";
-  $result = mysql_query($sql);
+  $result = mysqli_query($mysql, $sql);
   $output .= "<select name='$name'>";
     $output .= "<option value='0' />\n";
-  while ( $row = mysql_fetch_array($result) ) {
+  while ( $row = mysqli_fetch_array($result) ) {
     $output .= "<option value='".$row['id']."' />".$row['name'];
   }
   $output .= "</select>\n";
@@ -601,9 +606,9 @@ function player_dropdown($name) {
 function edit_alias($game_id) {
   $output = "<form name='change_aliases'><table border='0'>";
   $sql = sprintf("select name, id, player_alias, alias_color from Users, Players where Users.id=Players.user_id and game_id=%s order by name",quote_smart($game_id));
-  $result = mysql_query($sql);
+  $result = mysqli_query($mysql, $sql);
   $count  =0;
-  while ( $row = mysql_fetch_array($result) ) {
+  while ( $row = mysqli_fetch_array($result) ) {
     $output .= "<tr><td align='right'>".$row['name']."</td><td><input type='text' name='alias[$count]' value='".$row['player_alias']."' />";
 	$count++;
 	$output .= "<input type='text' id='alias_$count' name='alias[$count]' value='".$row['alias_color']."' size='8' /><a href='#' onClick='cp.select(document.change_aliases.alias_$count,\"pick\"); return false;' name='pick' id='pick'><img src='/images/color_pick.gif' border='0' /></a>";
@@ -619,9 +624,9 @@ function edit_alias($game_id) {
 function edit_rolename($game_id) {
   $output = "<form name='change_rolenames'><table border='0'>";
   $sql = sprintf("select name, id, role_name from Users, Players where Users.id=Players.user_id and game_id=%s order by name",quote_smart($game_id));
-  $result = mysql_query($sql);
+  $result = mysqli_query($mysql, $sql);
   $count  =0;
-  while ( $row = mysql_fetch_array($result) ) {
+  while ( $row = mysqli_fetch_array($result) ) {
     $output .= "<tr><td align='right'>".$row['name']."</td><td><input type='text' name='rname[$count]' value='".$row['role_name']."' /></td></tr>\n";
 	$count++;
   }
@@ -634,8 +639,8 @@ function edit_rolename($game_id) {
 function edit_roletype($game_id) {
   $output = "<form name='change_roletypes'><table border='0'>";
   $sql = sprintf("select name, id, role_id from Users, Players where Users.id=Players.user_id and game_id=%s order by name",quote_smart($game_id));
-  $result = mysql_query($sql);
-  while ( $row = mysql_fetch_array($result) ) {
+  $result = mysqli_query($mysql, $sql);
+  while ( $row = mysqli_fetch_array($result) ) {
     $output .= "<tr><td align='right'>".$row['name']."</td><td>";
 	$output .= roletype_dropdown("rt_".$row['id'],$row['role_id']);
 	$output .= "</td></tr>";
@@ -649,8 +654,8 @@ function edit_roletype($game_id) {
 function roletype_dropdown($name,$type) {
   $output .= "<select name='$name'>\n";
   $sql = "select * from Roles order by `type`";
-  $result = mysql_query($sql);
-  while ( $row = mysql_fetch_array($result) ) {
+  $result = mysqli_query($mysql, $sql);
+  while ( $row = mysqli_fetch_array($result) ) {
     if ( $row['id'] == $type ) {
       $output .= "<option selected value='".$row['id']."'>".$row['type'];
 	} else {
@@ -666,8 +671,8 @@ function roletype_dropdown($name,$type) {
 function edit_team($game_id) {
   $output = "<form name='change_teams'><table border='0'>" ;
   $sql = sprintf("select name, id, side from Users, Players where Users.id=Players.user_id and game_id=%s order by name",quote_smart($game_id));
-  $result = mysql_query($sql);
-  while ( $row = mysql_fetch_array($result) ) {
+  $result = mysqli_query($mysql, $sql);
+  while ( $row = mysqli_fetch_array($result) ) {
     $output .= "<tr><td align='right'>".$row['name']."</td><td>";
 	$output .= team_dropdown("t_".$row['id'],$row['side']);
 	$output .= "</td></tr>";
@@ -709,8 +714,8 @@ function team_dropdown($name,$side) {
 function edit_comment($game_id) {
    $output = "<form name='change_comments'><table border='0'>";
    $sql = sprintf("select name, id, mod_comment from Users, Players where Users.id=Players.user_id and game_id=%s order by name",quote_smart($game_id));
-   $result = mysql_query($sql);
-   while ( $row = mysql_fetch_array($result) ) {
+   $result = mysqli_query($mysql, $sql);
+   while ( $row = mysqli_fetch_array($result) ) {
      $output .= "<tr><td align='right' valign='center'>".$row['name']."</td><td>";
      $output .= "<textarea name='c_".$row['id']."' rows='1' cols='30'>".$row['mod_comment']."</textarea></td></tr>";
    }
@@ -722,14 +727,14 @@ function edit_comment($game_id) {
 
 function clear_editSpace() {
   global $here;
-  print "You have edit permissions for this game.  Please click on something you wish to edit.  The edit dialogue will appear here.<br /><a href='${here}editgame_userguide.html'>Users Guide</a>";
+  print "You have edit permissions for this game.  Please click on something you wish to edit.  The edit dialogue will appear here.<br /><a href='{$here}editgame_userguide.html'>Users Guide</a>";
 }
 
 function edit_maxplayers($game_id) {
   $output = "<form name='change_maxp'>";
   $sql = sprintf("select max_players from Games where id=%s",quote_smart($game_id));
-  $result = mysql_query($sql);
-  $max_players = mysql_result($result,0,0);
+  $result = mysqli_query($mysql, $sql);
+  $max_players = mysqli_result($result,0,0);
   $output .= "<input type='text' name='max_players' value='$max_players' />";
   $output .= "<input type='button' name='submit' value='submit' onClick='submit_maxplayers()' />";
   $output .= "</form>";
@@ -740,8 +745,8 @@ function edit_maxplayers($game_id) {
 function edit_deaths($game_id) {
   $output = "<form name='change_deaths'><table border='0'>" ;
   $sql = sprintf("select name, id, death_phase, death_day from Users, Players where Users.id=Players.user_id and game_id=%s order by name",quote_smart($game_id));
-  $result = mysql_query($sql);
-  while ( $row = mysql_fetch_array($result) ) {
+  $result = mysqli_query($mysql, $sql);
+  while ( $row = mysqli_fetch_array($result) ) {
     $output .= "<tr><td align='right'>".$row['name']."</td><td>";
 	$output .= phase_dropdown("d_".$row['id'],$row['death_phase']);
 	$output .= "<input type='text' size='2' name='d_day' value='".$row['death_day']."' />";
@@ -784,8 +789,8 @@ function phase_dropdown($name,$phase) {
 function edit_complex($game_id) {
   $output = "<form name='comp_form'>";
   $sql = sprintf("select complex from Games where id=%s",quote_smart($game_id));
-  $result = mysql_query($sql);
-  $complex = mysql_result($result,0,0);
+  $result = mysqli_query($mysql, $sql);
+  $complex = mysqli_result($result,0,0);
   $output .= complex_dropdown($complex);
   $output .= "<input type='button' name='submit' value='submit' onClick='submit_complex()' />";
   $output .= "</form>";
@@ -847,6 +852,6 @@ function show_complex($complex) {
   if ( $complex == "" ) {
     return "";
   } else {
-    return "<img src='/images/${complex}_large.png' />";
+    return "<img src='/images/{$complex}_large.png' />";
   }
 }

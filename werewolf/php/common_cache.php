@@ -1,7 +1,7 @@
 <?php // common.php
 
 include_once "db.php";
-dbConnect();
+$mysql = dbConnect();
 
 function error($msg) {
 ?>
@@ -23,8 +23,8 @@ function get_player_page($player,$profile=true) {
   // $player can be a name or an user_id.
   if ( is_numeric($player) ) {
     $sql = sprintf("select name from Users where id=%s",quote_smart($player));
-    $result = mysql_query($sql);
-    $player = mysql_result($result,0,0);
+    $result = mysqli_query($mysql, $sql);
+    $player = mysqli_result($result,0,0);
   }
   $output = "";
   if ( $profile ) {
@@ -40,16 +40,16 @@ function get_profile_page($player,$icon=false) {
   if ( is_numeric($player) ) {
     $id = $player;
     $sql = sprintf("select name from Users where id=%s",quote_smart($player));
-    $result = mysql_query($sql);
-    $player = mysql_result($result,0,0);
+    $result = mysqli_query($mysql, $sql);
+    $player = mysqli_result($result,0,0);
   } else {
     $sql = sprintf("select id from Users where name=%s",quote_smart($player));
-	$result = mysql_query($sql);
-	$id = mysql_result($result,0,0);
+	$result = mysqli_query($mysql, $sql);
+	$id = mysqli_result($result,0,0);
   }
   $sql = sprintf("select * from Bio where user_id=%s",quote_smart($id));
-  $result = mysql_query($sql);
-  $count = mysql_num_rows($result);
+  $result = mysqli_query($mysql, $sql);
+  $count = mysqli_num_rows($result);
   if ( $count == 1 ) {
     if ( $icon ) {
       $output = "<a href='/profile/$player'><img src='/images/camera-photo.png' style='border:0' alt='View Player Profile' /></a>";
@@ -81,8 +81,8 @@ function get_game($game_id,$parameters="title"){
 # 
   $parms = explode(", ",$parameters);
   $sql = sprintf("select * from Games where id=%s",quote_smart($game_id));
-  $result = mysql_query($sql);
-  $game = mysql_fetch_array($result);
+  $result = mysqli_query($mysql, $sql);
+  $game = mysqli_fetch_array($result);
   $output = "";
   foreach ( $parms as $parm) {
   switch($parm){
@@ -100,26 +100,26 @@ function get_game($game_id,$parameters="title"){
 	break;
 	case full:
 	  $sql = sprintf("select count(*) from Players where game_id=%s",quote_smart($game_id));
-	  $result = mysql_query($sql);
-	  $num_players = mysql_result($result,0,0);
+	  $result = mysqli_query($mysql, $sql);
+	  $num_players = mysqli_result($result,0,0);
 	  $full = "$num_players/".$game['max_players'];
 	  if ( $num_players == $game['max_players'] ) { $full = "Full/$num_players"; }
 	  $output .= "($full) ";
 	break;
 	case post:
 	  $sql = sprintf("select count(*) from Posts where game_id=%s",quote_smart($game_id));
-	  $result = mysql_query($sql);
-	  $num_posts = mysql_result($result,0,0);
+	  $result = mysqli_query($mysql, $sql);
+	  $num_posts = mysqli_result($result,0,0);
 	  $output .= "<a href='/game/".$game['thread_id']."/all'>($num_posts posts)</a> ";
 	break;
 	case mod:
 	case mod_np:
 	  $sql = sprintf("select name from Users, Moderators where Users.id=Moderators.user_id and game_id=%s",quote_smart($game_id));
-	  $result = mysql_query($sql);
-	  $mod_num = mysql_num_rows($result);
+	  $result = mysqli_query($mysql, $sql);
+	  $mod_num = mysqli_num_rows($result);
 	  $count = 0;
 	  $modlist = "";
-	  while ( $mod = mysql_fetch_array($result) ) {
+	  while ( $mod = mysqli_fetch_array($result) ) {
 	    if ( $count == 0  && $parm != "mod_np" ) $modlist = "(";
 	    if ( $count != 0  ) $modlist .= ", ";
 		$modlist .= get_player_page($mod['name'],false);
@@ -131,8 +131,8 @@ function get_game($game_id,$parameters="title"){
 	case in:
 	  if ( isset($uid) ) {
 	    $sql = sprintf("select * from Users_game_all where game_id=%s and user_id=%s",quote_smart($game_id),quote_smart($uid));
-	    $result = mysql_query($sql);
-	    if ( mysql_num_rows($result) != 0 ) {
+	    $result = mysqli_query($mysql, $sql);
+	    if ( mysqli_num_rows($result) != 0 ) {
           $output .= "<img src='/images/calendar.png' /> ";
 	    }
 	  }
@@ -141,10 +141,10 @@ function get_game($game_id,$parameters="title"){
 	  if ( isset($uid) ) {
         #$sql = sprintf("select count(*) from Chat_users, Chat_rooms, Chat_messages where Chat_users.room_id=Chat_rooms.id and Chat_rooms.id=Chat_messages.room_id and Chat_messages.post_time >= Chat_users.last_view and Chat_messages.post_time > Chat_users.open and Chat_messages.post_time < if(Chat_users.close is null, now(), Chat_users.close) and Chat_rooms.game_id=%s and Chat_users.user_id=%s",quote_smart($game_id),quote_smart($uid));
         $sql = sprintf("select null from Chat_users, Chat_rooms, Chat_messages where Chat_users.room_id=Chat_rooms.id and Chat_rooms.id=Chat_messages.room_id and Chat_messages.post_time >= Chat_users.last_view and Chat_messages.post_time > Chat_users.open and Chat_messages.post_time < if(Chat_users.close is null, now(), Chat_users.close) and Chat_rooms.game_id=%s and Chat_users.user_id=%s limit 1",quote_smart($game_id),quote_smart($uid));
-		$result = mysql_query($sql);
-		#$count = mysql_result($result,0,0);
+		$result = mysqli_query($mysql, $sql);
+		#$count = mysqli_result($result,0,0);
 		#if ( $count > 0 ) {
-		if ( mysql_num_rows($result) == 1 ) {
+		if ( mysqli_num_rows($result) == 1 ) {
           $output .= "<a href='/game/".$game['thread_id']."/chat' ";
 		  #$output .= "onMouseOver='javascript:{document.getElementById(\"${game_id}_nm\").style.visibility=\"visible\";}' ";
 		  #$output .= "onMouseOut='javascript:{document.getElementById(\"${game_id}_nm\").style.visibility=\"hidden\"}'";

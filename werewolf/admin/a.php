@@ -5,8 +5,6 @@ include_once "../php/db.php";
 include_once "../php/google_calendar.php";
 #nclude_once "../menu.php";
 
-#dbConnect();
-
 #checkLevel($level,1);
 
 

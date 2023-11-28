@@ -4,13 +4,13 @@ include_once "../php/accesscontrol.php";
 checkLevel($level,1);
 
 include_once "../php/db.php";
-dbConnect();
+$mysql = dbConnect();
 
 include_once "../menu.php";
 
 $site = "";
 $sql = "select id, name from Users order by name";
-$result = mysql_query($sql);
+$result = mysqli_query($mysql, $sql);
 ?>
 <html>
 <head>
@@ -23,7 +23,7 @@ $result = mysql_query($sql);
 <table class='forum_table'>
 <tr><th>User ID</th><th>User</th></tr>
 <?php
-while ( $user = mysql_fetch_array($result) ) {
+while ( $user = mysqli_fetch_array($result) ) {
   print "<tr><td>".$user['id']."</td>";
   print "<td><a href='$site/player/".$user['name']."'>".$user['name']."</a></td>\n";
   print "</tr>\n";

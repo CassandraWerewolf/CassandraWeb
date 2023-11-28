@@ -8,7 +8,7 @@ if ( $_POST['password1'] != $_POST['password2'] ) {
   error("Passwords do not match, please try again.");
 }
 $sql = "Update Users set password = MD5('".$_POST['password1']."') where id = '".$_SESSION['uid']."'";
-$result = mysql_query($sql);
+$result = mysqli_query($mysql, $sql);
 $_SESSION['pwd'] = $_POST['password1'];
 if ( isset($_COOKIE['cassy_pwd']) ) { $_COOKIE['cassy_pwd'] = $_POST['password1']; }
 ?>

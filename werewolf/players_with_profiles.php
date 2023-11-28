@@ -17,8 +17,8 @@ include "menu.php";
 <table class='forum_table'>
 <?php
 $sql = "select name from Bio, Users where Bio.user_id=Users.id order by name";
-$result = mysql_query($sql);
-while ( $row = mysql_fetch_array($result) ) {
+$result = mysqli_query($mysql, $sql);
+while ( $row = mysqli_fetch_array($result) ) {
   print "<tr><td><a href='/profile/".$row['name']."'>".$row['name']."</a></td></tr>\n";
 }
 ?>

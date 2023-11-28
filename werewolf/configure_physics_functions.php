@@ -2,8 +2,6 @@
 include_once "php/db.php";
 include_once "configure_chat_functions.php";
 
-#dbConnect();
-
 # Global Variable with the list of the tabs
 $ptab_list[1] = "Admin";
 $ptab_list[2] = "Locations";
@@ -106,8 +104,8 @@ function show_physics_tab($active,$user_id,$game_id) {
 
 function lock_loc($loc_id) {
   $sql = sprintf("select `lock` from Locations where id=%s",quote_smart($loc_id));
-  $result = mysql_query($sql);
-  $lock = mysql_result($result,0,0);
+  $result = mysqli_query($mysql, $sql);
+  $lock = mysqli_result($result,0,0);
   if ( $lock == "Off" ) {
     $lock = "On";
   } elseif ( $lock == "On") {
@@ -116,7 +114,7 @@ function lock_loc($loc_id) {
     $lock = "Off";
   }
   $sql = sprintf("update Locations  set `lock`=%s where id=%s",quote_smart($lock),quote_smart($loc_id));
-  $result = mysql_query($sql);
+  $result = mysqli_query($mysql, $sql);
                                                                                 
   return $lock;
 }
@@ -133,14 +131,14 @@ function opt_string($str) {
 
 function insert_loc($game_id, $loc_name, $loc_desc, $loc_comment, $sub_id, $room_id, $visibility) {
   $sql = sprintf("insert into Locations (id, game_id, name, description, comment, subgame_id, room_id, visibility, created) values ( null, %s, %s ,%s, %s, %s, %s, %s, now())",quote_smart($game_id),quote_smart($loc_name),opt_string($loc_desc),opt_string($loc_comment),opt_string($sub_id),opt_string($room_id),quote_smart($visibility));
-    $result = mysql_query($sql);
-    return  mysql_insert_id();  
+    $result = mysqli_query($mysql, $sql);
+    return  mysqli_insert_id();  
 }
 
 function insert_item($game_id, $temp_id, $name, $desc, $visibility, $mobility, $type, $owner, $room_id, $room_alias, $room_color) {
   $sql = sprintf("insert into Items (id, template_id, game_id, name, description, visibility, mobility, owner_type, room_id, room_alias, room_color, created) values (null, %s, %s, %s, %s, %s, %s, 'loc', %s, %s, %s, now())", quote_smart($temp_id), quote_smart($game_id),quote_smart($name),opt_string($desc),quote_smart($visibility), quote_smart($mobility),opt_string($room_id), opt_string($room_alias), opt_string($room_color));  
-  $result = mysql_query($sql);
-  $val =  mysql_insert_id();    
+  $result = mysqli_query($mysql, $sql);
+  $val =  mysqli_insert_id();    
   if ($type == 'loc') { give_item_to_loc($game_id, $owner, $val); }
   else { give_item_to_player($game_id, $owner, $val); }
   return $val;
@@ -148,67 +146,67 @@ function insert_item($game_id, $temp_id, $name, $desc, $visibility, $mobility, $
 
 function insert_item_temp($game_id, $name, $desc, $visibility, $mobility, $room_id, $room_alias, $room_color) {
   $sql = sprintf("insert into Item_templates (id, game_id, name, description, visibility, mobility, room_id, room_alias, room_color) values (null, %s, %s, %s, %s, %s, %s, %s, %s)", quote_smart($game_id),quote_smart($name),opt_string($desc),quote_smart($visibility), quote_smart($mobility), opt_string($room_id), opt_string($room_alias), opt_string($room_color));  
-  $result = mysql_query($sql);
-  return  mysql_insert_id();    
+  $result = mysqli_query($mysql, $sql);
+  return  mysqli_insert_id();    
 }
 
 function insert_exit($game_id, $exit_name, $exit_travel_text, $exit_comment, $temp_id) {
   $sql = sprintf("insert into Exits (id, game_id, name, travel_text, comment, template_id, created) values ( null, %s, %s ,%s, %s, %s, now())",quote_smart($game_id),quote_smart($exit_name),opt_string($exit_travel_text),opt_string($exit_comment),opt_string($temp_id));
-    $result = mysql_query($sql);
-    return  mysql_insert_id();  
+    $result = mysqli_query($mysql, $sql);
+    return  mysqli_insert_id();  
 }
 
 function insert_exit_loc_map($exit_id, $loc_from, $loc_to) {
   $sql = sprintf("insert into Loc_exits (exit_id, loc_from_id, loc_to_id) values (%s, %s, %s)", quote_smart($exit_id), quote_smart($loc_from), quote_smart($loc_to));
-  $result = mysql_query($sql);
-  return mysql_insert_id();
+  $result = mysqli_query($mysql, $sql);
+  return mysqli_insert_id();
 }
 
 function delete_exit_loc_map($exit_id, $loc_from) {
   $sql = sprintf("delete from Loc_exits where exit_id=%s and loc_from_id=%s", $exit_id, $loc_from);
-  $result = mysql_query($sql);
+  $result = mysqli_query($mysql, $sql);
 }
 
 function conditional_update($id, $table, $field, $oldval, $newval) {
   if ( $oldval != $newval ) {
     $sql = sprintf("update %s set %s=%s where id=%s", $table, $field, opt_string($newval), quote_smart($id));
-    return mysql_query($sql);
+    return mysqli_query($mysql, $sql);
   }
 }
 
 function item_update($id, $field, $newval) {
   $sql = sprintf("update Items set %s=%s where template_id=%s", $field, opt_string($newval), quote_smart($id));
-  return mysql_query($sql);  
+  return mysqli_query($mysql, $sql);  
 }
 
 function delete_loc($loc_id) {
   $sql = sprintf("delete from Loc_exits where loc_from_id=%s", $loc_id);
-  $result = mysql_query($sql);
+  $result = mysqli_query($mysql, $sql);
   $sql = sprintf("delete from Loc_exits where loc_to_id=%s", $loc_id);
-  $result = mysql_query($sql);  
+  $result = mysqli_query($mysql, $sql);  
   $sql = sprintf("delete from Locations where id=%s",quote_smart($loc_id));
-  $result = mysql_query($sql);
+  $result = mysqli_query($mysql, $sql);
 }
 
 function delete_exit($exit_id) {
   $sql = sprintf("delete from Loc_exits where exit_id=%s", $exit_id);
-  $result = mysql_query($sql);
+  $result = mysqli_query($mysql, $sql);
   $sql = sprintf("delete from Exits where id=%s",quote_smart($exit_id));
-  $result = mysql_query($sql);
+  $result = mysqli_query($mysql, $sql);
 }
 
 function delete_item($item_id) {
   $sql = sprintf("delete from Items where id=%s",quote_smart($item_id));
-  $result = mysql_query($sql);
+  $result = mysqli_query($mysql, $sql);
 }
 
 function delete_item_temp($temp_id) {
   $sql = sprintf("delete from Items where template_id=%s",quote_smart($temp_id));
-  $result = mysql_query($sql);
+  $result = mysqli_query($mysql, $sql);
   $sql = sprintf("update Exits set template_id=null where template_id=%s", quote_smart($temp_id));
-  $result = mysql_query($sql);
+  $result = mysqli_query($mysql, $sql);
   $sql = sprintf("delete from Item_templates where id=%s",quote_smart($temp_id));
-  $result = mysql_query($sql);  
+  $result = mysqli_query($mysql, $sql);  
 }
 
 function create_room_for_loc($game_id,$name) {
@@ -224,9 +222,9 @@ function create_room_for_loc($game_id,$name) {
 
 function process_item_order_ex($game_id, $order) {
   $sql = sprintf("select phys_item_limit from Games where id = %s",quote_smart($game_id));
-  $result = mysql_query($sql);
-  if (mysql_num_rows($result) > 0) {
-    $game_item_limit = mysql_result($result,0,0);
+  $result = mysqli_query($mysql, $sql);
+  if (mysqli_num_rows($result) > 0) {
+    $game_item_limit = mysqli_result($result,0,0);
   }
   $p_loc = get_player_loc_info($game_id);
   process_item_order($game_id, $p_loc, $order, $game_item_limit);
@@ -239,12 +237,12 @@ function process_item_order($game_id, $p_loc, $order, $game_item_limit) {
           && $p_loc[intval($order['target_id'])]['death_phase'] == '') {
 
       $sql_limit = sprintf("select (select count(1) from Items where owner_type='user' and owner_ref_id=Players.user_id and game_id=Players.game_id) items, phys_item_limit from Players where game_id=%s and user_id=%s",quote_smart($game_id),quote_smart($order['target_id']));
-      $result_limit = mysql_query($sql_limit);
-      $player_items = mysql_result($result_limit,0,0);
+      $result_limit = mysqli_query($mysql, $sql_limit);
+      $player_items = mysqli_result($result_limit,0,0);
       if ($player_items == "") {
         $player_items = 0;
       }
-      $player_limit = mysql_result($result_limit,0,1);
+      $player_limit = mysqli_result($result_limit,0,1);
       
       # If player limit is set, check that. If not and game limit is set, check that
       $can_hold = ($player_limit != "" ? ($player_items < $player_limit)  
@@ -277,15 +275,15 @@ function process_item_order($game_id, $p_loc, $order, $game_item_limit) {
 
 function process_items($game_id) {
   $sql = sprintf("select phys_item_limit from Games where id = %s",quote_smart($game_id));
-  $result = mysql_query($sql);
-  if (mysql_num_rows($result) > 0) {
-    $game_item_limit = mysql_result($result,0,0);
+  $result = mysqli_query($mysql, $sql);
+  if (mysqli_num_rows($result) > 0) {
+    $game_item_limit = mysqli_result($result,0,0);
   }
 
   $sql = sprintf("select * from Item_orders where game_id = %s and status='active' order by last_updated ASC",quote_smart($game_id));
-  $result = mysql_query($sql);
+  $result = mysqli_query($mysql, $sql);
   $p_loc = get_player_loc_info($game_id);
-  while ($order = mysql_fetch_array($result)) {
+  while ($order = mysqli_fetch_array($result)) {
     conditional_update($order['id'], "Item_orders", "status", "active", "processed");
 	process_item_order($game_id, $p_loc, $order, $game_item_limit);     
   }  
@@ -293,9 +291,9 @@ function process_items($game_id) {
 
 function process_movement_order_ex($game_id, $order) {
   $sql = sprintf("select phys_move_limit from Games where id = %s",quote_smart($game_id));
-  $result = mysql_query($sql);
-  if (mysql_num_rows($result) > 0) {
-    $game_move_limit = mysql_result($result,0,0);
+  $result = mysqli_query($mysql, $sql);
+  if (mysqli_num_rows($result) > 0) {
+    $game_move_limit = mysqli_result($result,0,0);
   }
   process_movement_order($game_id, $order, $game_move_limit);
 }
@@ -303,22 +301,22 @@ function process_movement_order_ex($game_id, $order) {
 function process_movement_order($game_id, $order, $game_move_limit) {
     $user_id = $order['user_id'];
     $sql_hvy = sprintf("select count(1) from Items where game_id = %s and owner_type='user' and owner_ref_id=%s and mobility='heavy'",quote_smart($game_id),quote_smart($user_id));
-    $result_hvy = mysql_query($sql_hvy);        
-    if (mysql_result($result_hvy,0,0) > 0) {
+    $result_hvy = mysqli_query($mysql, $sql_hvy);        
+    if (mysqli_result($result_hvy,0,0) > 0) {
       sys_message_to_modchat($game_id,$user_id,"You try to move, but you are holding too much!");
     } else {
       $sql_limit = sprintf("select phys_moves, phys_move_limit from Players where game_id=%s and user_id=%s",quote_smart($game_id),quote_smart($user_id));
-      $result_limit = mysql_query($sql_limit);
-      $player_moves = mysql_result($result_limit,0,0);
+      $result_limit = mysqli_query($mysql, $sql_limit);
+      $player_moves = mysqli_result($result_limit,0,0);
       if ($player_moves == "") {
         $player_moves = 0;
       }
-      $player_limit = mysql_result($result_limit,0,1);
+      $player_limit = mysqli_result($result_limit,0,1);
       # If player limit is set, check that. If not and game limit is set, check that
       if ($player_limit != "" ? ($player_moves < $player_limit)  
            : ($game_move_limit == "" || $player_moves < $game_move_limit)) {
         $sql_moves = sprintf("update Players set phys_moves=%s where game_id=%s and user_id=%s",quote_smart($player_moves+1),quote_smart($game_id),quote_smart($user_id));
-        mysql_query($sql_moves);
+        mysqli_query($mysql, $sql_moves);
         travel_through_exit($game_id,$user_id,$order['exit_id']);          
       } else {
         sys_message_to_modchat($game_id,$user_id,"You are too exhausted to travel any further for now.");      
@@ -328,13 +326,13 @@ function process_movement_order($game_id, $order, $game_move_limit) {
 
 function process_movements($game_id) {
   $sql = sprintf("select phys_move_limit from Games where id = %s",quote_smart($game_id));
-  $result = mysql_query($sql);
-  if (mysql_num_rows($result) > 0) {
-    $game_move_limit = mysql_result($result,0,0);
+  $result = mysqli_query($mysql, $sql);
+  if (mysqli_num_rows($result) > 0) {
+    $game_move_limit = mysqli_result($result,0,0);
   }
   $sql = sprintf("select * from Move_orders where game_id = %s and status='active'",quote_smart($game_id));
-  $result = mysql_query($sql);
-  while ($order = mysql_fetch_array($result)) {
+  $result = mysqli_query($mysql, $sql);
+  while ($order = mysqli_fetch_array($result)) {
     conditional_update($order['id'], "Move_orders", "status", "active", "processed");
 	process_movement_order($game_id,$order, $game_move_limit);
   }
@@ -343,7 +341,7 @@ function process_movements($game_id) {
 function submit_phys_settings($game_id) {
   global $_POST;
   $sql = sprintf("update Games set phys_move_limit=%s, phys_item_limit=%s, phys_reset_moves=%s where id=%s", opt_string($_POST['move_limit']), opt_string($_POST['item_limit']), quote_smart($_POST['phys_reset_moves']), quote_smart($game_id));
-  $result = mysql_query($sql);  
+  $result = mysqli_query($mysql, $sql);  
 }
 
 function assocToXML ($theArray, $defaultTag, $tabCount=1) {    
@@ -368,8 +366,8 @@ function assocToXML ($theArray, $defaultTag, $tabCount=1) {
 
 function xml_export_exits($game_id) {
   $sql = sprintf("select * from Exits where game_id=%s",quote_smart($game_id));
-  $result = mysql_query($sql);
-  while ($exit = mysql_fetch_assoc ($result)) {
+  $result = mysqli_query($mysql, $sql);
+  while ($exit = mysqli_fetch_assoc ($result)) {
 	unset($exit['created']);
 	unset($exit['game_id']);
 	if ($exit['comment'] == "") { unset($exit['comment']); }
@@ -383,8 +381,8 @@ function xml_export_exits($game_id) {
 function xml_export_locs($game_id) {
   global $room_names;
   $sql = sprintf("select * from Locations where game_id=%s",quote_smart($game_id));
-  $result = mysql_query($sql);
-  while ($loc = mysql_fetch_assoc ($result)) {
+  $result = mysqli_query($mysql, $sql);
+  while ($loc = mysqli_fetch_assoc ($result)) {
 	if ($room_names["{$loc['room_id']}"]) { $loc['room_id'] = $room_names["{$loc['room_id']}"];   }
 	if ($loc['description'] == "") { unset($loc['description']); }
 	if ($loc['comment'] == "") { unset($loc['comment']); }
@@ -399,8 +397,8 @@ function xml_export_locs($game_id) {
 
 function xml_export_connections($game_id) {
   $sql = sprintf("select * from Loc_exits where exit_id in (select id from Exits where game_id=%s)",quote_smart($game_id));
-  $result = mysql_query($sql);
-  while ($conn = mysql_fetch_assoc ($result)) {
+  $result = mysqli_query($mysql, $sql);
+  while ($conn = mysqli_fetch_assoc ($result)) {
     $conns[] = $conn;
   }  
   return '<connections>'.assocToXML($conns, "connection").PHP_EOL.'</connections>'.PHP_EOL;
@@ -409,8 +407,8 @@ function xml_export_connections($game_id) {
 function xml_export_templates($game_id) {
   global $room_names;
   $sql = sprintf("select * from Item_templates where game_id=%s",quote_smart($game_id));
-  $result = mysql_query($sql);
-  while ($temp = mysql_fetch_assoc ($result)) {
+  $result = mysqli_query($mysql, $sql);
+  while ($temp = mysqli_fetch_assoc ($result)) {
 	if ($room_names["{$temp['room_id']}"]) { $temp['room_id'] = $room_names["{$temp['room_id']}"];  }
 	unset($temp['game_id']);	
 	if ($temp['description'] == "") { unset($temp['description']); }
@@ -425,8 +423,8 @@ function xml_export_templates($game_id) {
 function xml_export_items($game_id) {
   global $room_names;
   $sql = sprintf("select * from Items where game_id=%s",quote_smart($game_id));
-  $result = mysql_query($sql);
-  while ($item = mysql_fetch_assoc ($result)) {
+  $result = mysqli_query($mysql, $sql);
+  while ($item = mysqli_fetch_assoc ($result)) {
 	unset($item['game_id']);
 	unset($item['created']);
 	if ($room_names["{$item['room_id']}"]) { $item['room_id'] = $room_names["{$item['room_id']}"]; }
@@ -445,11 +443,11 @@ function xml_export_triggers($game_id) {
 
 function xml_import_physics($game_id, $data) {
   $sql = sprintf("select * from Exits where game_id=%s",quote_smart($game_id));
-  $result = mysql_query($sql);
-  while ($exit = mysql_fetch_assoc ($result)) { $exits[$exit['id']] = $exit; }
+  $result = mysqli_query($mysql, $sql);
+  while ($exit = mysqli_fetch_assoc ($result)) { $exits[$exit['id']] = $exit; }
   $sql = sprintf("select * from Item_templates where game_id=%s",quote_smart($game_id));
-  $result = mysql_query($sql);
-  while ($temp = mysql_fetch_assoc ($result)) { $temps[$temp['id']] = $temp; }
+  $result = mysqli_query($mysql, $sql);
+  while ($temp = mysqli_fetch_assoc ($result)) { $temps[$temp['id']] = $temp; }
   $room_names = get_room_names_by_id($game_id);
   $game_names = get_subgame_names_by_id($game_id);
   $loc_names = get_loc_names_by_id($game_id);
@@ -505,8 +503,8 @@ function import_physics($game_id) {
   
   #location-specific chatrooms
   $sql = sprintf("select * from Chat_rooms where id in (select distinct room_id from Locations where game_id = %s)",quote_smart($from_id));
-  $result = mysql_query($sql);
-  while ($chat = mysql_fetch_array($result)) {
+  $result = mysqli_query($mysql, $sql);
+  while ($chat = mysqli_fetch_array($result)) {
     $chats_by_orig_id[$chat['id']] = $chat;
     $room_id = insert_chat_room($game_id, $chat['name'], $chat['max_post']);
     $chats_by_orig_id[$chat['id']]['id'] = $room_id; 
@@ -518,8 +516,8 @@ function import_physics($game_id) {
     
   #locations
   $sql = sprintf("select * from Locations where game_id=%s",quote_smart($from_id));
-  $result = mysql_query($sql);
-  while ($loc = mysql_fetch_array($result)) {
+  $result = mysqli_query($mysql, $sql);
+  while ($loc = mysqli_fetch_array($result)) {
     $locs_by_orig_id[$loc['id']] = $loc;
     $loc['room_id'] = $chats_by_orig_id[$loc['room_id']]['id'];
     $locs_by_orig_id[$loc['id']]['id'] = insert_loc($game_id, $loc['name'], $loc['description'], $loc['comment'], "", $loc['room_id'], $loc['visibility']);
@@ -527,16 +525,16 @@ function import_physics($game_id) {
   
   #templates
   $sql = sprintf("select * from Item_templates where game_id=%s",quote_smart($from_id));
-  $result = mysql_query($sql);
-  while ($temp = mysql_fetch_array($result)) {
+  $result = mysqli_query($mysql, $sql);
+  while ($temp = mysqli_fetch_array($result)) {
     $temps_by_orig_id[$temp['id']] = $temp;
     $temps_by_orig_id[$temp['id']]['id'] = insert_item_temp($game_id, $temp['name'], $temp['description'], $temp['visibility'], $temp['mobility'], $temp['room_id']);
   }   
   
   #items
   $sql = sprintf("select * from Items where game_id=%s",quote_smart($from_id));
-  $result = mysql_query($sql);
-  while ($item = mysql_fetch_array($result)) {
+  $result = mysqli_query($mysql, $sql);
+  while ($item = mysqli_fetch_array($result)) {
     $items_by_orig_id[$item['id']] = $item;
     $item['owner_ref_id'] = $item['owner_type'] == 'user' ? "" :
       $locs_by_orig_id[$item['owner_ref_id']]['id'];
@@ -548,8 +546,8 @@ function import_physics($game_id) {
   
   #exits
   $sql = sprintf("select * from Exits where game_id=%s",quote_smart($from_id));
-  $result = mysql_query($sql);
-  while ($exit = mysql_fetch_array($result)) {
+  $result = mysqli_query($mysql, $sql);
+  while ($exit = mysqli_fetch_array($result)) {
     $exits_by_orig_id[$exit['id']] = $exit;
     $exit['item_id'] = $items_by_orig_id[$exit['item_id']]['id'];
     $exits_by_orig_id[$exit['id']]['id'] = insert_exit($game_id, $exit['name'], $exit['travel_text'], $exit['comment'],$exit['item_id']);
@@ -557,8 +555,8 @@ function import_physics($game_id) {
   
   #location-exit mappings
   $sql = sprintf("select * from Loc_exits where loc_from_id in (select id from Locations where game_id = %s)",quote_smart($from_id));
-  $result = mysql_query($sql);
-  while ($loc_map = mysql_fetch_array($result)) {
+  $result = mysqli_query($mysql, $sql);
+  while ($loc_map = mysqli_fetch_array($result)) {
     insert_exit_loc_map(
       $exits_by_orig_id[$loc_map['exit_id']]['id'],
       $locs_by_orig_id[$loc_map['loc_from_id']]['id'],
@@ -572,33 +570,33 @@ function submit_schedule_physics($game_id) {
   global $_POST;
   if ($_POST['item_set'] == 'on') {
     $sql = sprintf("select * from Physics_processing where game_id=%s and type='item'",quote_smart($game_id));
-    $result = mysql_query($sql);
-    if ($current = mysql_fetch_array($result)) {
+    $result = mysqli_query($mysql, $sql);
+    if ($current = mysqli_fetch_array($result)) {
       conditional_update($current['id'],"Physics_processing", "frequency", $current['frequency'],$_POST['item_frequency']);
       conditional_update($current['id'],"Physics_processing", "minute", $current['minute'],$_POST['item_minute']);
       conditional_update($current['id'],"Physics_processing", "hour", $current['hour'],$_POST['item_hour']);      
     } else {
       $sql = sprintf("insert into Physics_processing (id, game_id, type, frequency, minute, hour, last_run) values (NULL, %s, 'item', %s, %s, %s, now())",quote_smart($game_id), quote_smart($_POST['item_frequency']), quote_smart($_POST['item_minute']), opt_string($_POST['item_hour']));
-      mysql_query($sql);
+      mysqli_query($mysql, $sql);
     }       
   } else {
     $sql = sprintf("delete from Physics_processing where game_id=%s and type='item'",quote_smart($game_id));
-    mysql_query($sql);
+    mysqli_query($mysql, $sql);
   }    
   if ($_POST['movement_set'] == 'on') {
     $sql = sprintf("select * from Physics_processing where game_id=%s and type='movement'",quote_smart($game_id));
-    $result = mysql_query($sql);
-    if ($current = mysql_fetch_array($result)) {
+    $result = mysqli_query($mysql, $sql);
+    if ($current = mysqli_fetch_array($result)) {
       conditional_update($current['id'],"Physics_processing", "frequency", $current['frequency'],$_POST['move_frequency']);
       conditional_update($current['id'],"Physics_processing", "minute", $current['minute'],$_POST['move_minute']);
       conditional_update($current['id'],"Physics_processing", "hour", $current['hour'],$_POST['move_hour']);      
     } else {
       $sql = sprintf("insert into Physics_processing (id, game_id, type, frequency, minute, hour, last_run) values (NULL, %s, 'movement', %s, %s, %s, now())",quote_smart($game_id), quote_smart($_POST['move_frequency']), quote_smart($_POST['move_minute']), opt_string($_POST['move_hour']));
-      mysql_query($sql);
+      mysqli_query($mysql, $sql);
     }       
   } else {
     $sql = sprintf("delete from Physics_processing where game_id=%s and type='movement'",quote_smart($game_id));
-    mysql_query($sql);
+    mysqli_query($mysql, $sql);
   }
 }
 
@@ -608,8 +606,8 @@ function submit_new_exit($game_id) {
 
   $exit_id = insert_exit($game_id,$_POST['exit_name'],$_POST['exit_travel_text'],$_POST['exit_comment'],$_POST['exit_temp_id']);
   $sql_loc = sprintf("select id from Locations where game_id=%s",quote_smart($game_id));
-  $result_loc = mysql_query($sql_loc);
-  while ( $loc = mysql_fetch_array($result_loc) ) {
+  $result_loc = mysqli_query($mysql, $sql_loc);
+  while ( $loc = mysqli_fetch_array($result_loc) ) {
     $from = $loc['id'];
     if ( $_POST["loc_$from"] == "on" ) {
       insert_exit_loc_map($exit_id,$from,$_POST["dest_$from"]);
@@ -652,24 +650,24 @@ function submit_new_loc($game_id) {
 
 function get_item_info($item_id) {
   $sql = sprintf("select name, description, visibility, mobility, owner_ref_id, owner_type, template_id, room_id, room_alias, room_color from Items where id=%s", quote_smart($item_id));
-  $result = mysql_query($sql);
-  $output['name'] = mysql_result($result,0,0);
-  $output['description'] = mysql_result($result,0,1);
-  $output['visibility'] = mysql_result($result,0,2);
-  $output['mobility'] = mysql_result($result,0,3);
-  $output['owner_ref_id'] = mysql_result($result,0,4);
-  $output['owner_type'] = mysql_result($result,0,5);
-  $output['template_id'] = mysql_result($result,0,6);
-  $output['room_id'] = mysql_result($result,0,7);
-  $output['room_alias'] = mysql_result($result,0,8);
-  $output['room_color'] = mysql_result($result,0,9);
+  $result = mysqli_query($mysql, $sql);
+  $output['name'] = mysqli_result($result,0,0);
+  $output['description'] = mysqli_result($result,0,1);
+  $output['visibility'] = mysqli_result($result,0,2);
+  $output['mobility'] = mysqli_result($result,0,3);
+  $output['owner_ref_id'] = mysqli_result($result,0,4);
+  $output['owner_type'] = mysqli_result($result,0,5);
+  $output['template_id'] = mysqli_result($result,0,6);
+  $output['room_id'] = mysqli_result($result,0,7);
+  $output['room_alias'] = mysqli_result($result,0,8);
+  $output['room_color'] = mysqli_result($result,0,9);
   return $output;
 }
 
 function get_all_item_names_by_player($game_id) {
   $sql = sprintf("select id, name, owner_ref_id, owner_type from Items where owner_type='user' and game_id=%s", quote_smart($game_id));
-  $result = mysql_query($sql);
-  while ($map_row = mysql_fetch_array($result)) {
+  $result = mysqli_query($mysql, $sql);
+  while ($map_row = mysqli_fetch_array($result)) {
     $output[intval($map_row['owner_ref_id'])][] = $map_row['name'];
   }
   return $output;
@@ -678,21 +676,21 @@ function get_all_item_names_by_player($game_id) {
 
 function get_item_temp_info($temp_id) {
   $sql = sprintf("select name, description, visibility, mobility, room_id, room_alias, room_color from Item_templates where id=%s", quote_smart($temp_id));
-  $result = mysql_query($sql);
-  $output['name'] = mysql_result($result,0,0);
-  $output['description'] = mysql_result($result,0,1);
-  $output['visibility'] = mysql_result($result,0,2);
-  $output['mobility'] = mysql_result($result,0,3);
-  $output['room_id'] = mysql_result($result,0,4);
-  $output['room_alias'] = mysql_result($result,0,5);
-  $output['room_color'] = mysql_result($result,0,6);
+  $result = mysqli_query($mysql, $sql);
+  $output['name'] = mysqli_result($result,0,0);
+  $output['description'] = mysqli_result($result,0,1);
+  $output['visibility'] = mysqli_result($result,0,2);
+  $output['mobility'] = mysqli_result($result,0,3);
+  $output['room_id'] = mysqli_result($result,0,4);
+  $output['room_alias'] = mysqli_result($result,0,5);
+  $output['room_color'] = mysqli_result($result,0,6);
   return $output;
 }
 
 function get_all_item_temp_info($game_id) {
   $sql = sprintf("select id, name, description, visibility, mobility, room_id, room_alias, room_color from Item_templates where game_id=%s", quote_smart($game_id));
-  $result = mysql_query($sql);
-  while ($map_row = mysql_fetch_array($result)) {
+  $result = mysqli_query($mysql, $sql);
+  while ($map_row = mysqli_fetch_array($result)) {
   	$output[$map_row['id']]['name'] = $map_row['name'];
 	$output[$map_row['id']]['description'] = $map_row['description'];
 	$output[$map_row['id']]['visibility'] = $map_row['visibility'];
@@ -706,30 +704,30 @@ function get_all_item_temp_info($game_id) {
 
 function get_loc_info($loc_id) {
   $sql = sprintf("select name, description, comment, subgame_id, room_id, visibility from Locations where id=%s", quote_smart($loc_id));
-  $result = mysql_query($sql);
-  $output['name'] = mysql_result($result,0,0);
-  $output['description'] = mysql_result($result,0,1);
-  $output['comment'] = mysql_result($result,0,2);
-  $output['subgame_id'] = mysql_result($result,0,3);
-  $output['room_id'] = mysql_result($result,0,4);
-  $output['visibility'] = mysql_result($result,0,5);
+  $result = mysqli_query($mysql, $sql);
+  $output['name'] = mysqli_result($result,0,0);
+  $output['description'] = mysqli_result($result,0,1);
+  $output['comment'] = mysqli_result($result,0,2);
+  $output['subgame_id'] = mysqli_result($result,0,3);
+  $output['room_id'] = mysqli_result($result,0,4);
+  $output['visibility'] = mysqli_result($result,0,5);
   return $output;
 }
 
 function get_exit_info($exit_id) {
   $sql = sprintf("select name, travel_text, comment, template_id from Exits where id=%s", quote_smart($exit_id));
-  $result = mysql_query($sql);
-  $output['name'] = mysql_result($result,0,0);
-  $output['travel_text'] = mysql_result($result,0,1);
-  $output['comment'] = mysql_result($result,0,2);
-  $output['template_id'] = mysql_result($result,0,3);
+  $result = mysqli_query($mysql, $sql);
+  $output['name'] = mysqli_result($result,0,0);
+  $output['travel_text'] = mysqli_result($result,0,1);
+  $output['comment'] = mysqli_result($result,0,2);
+  $output['template_id'] = mysqli_result($result,0,3);
   return $output;
 }
 
 function get_exit_loc_info($game_id) {
   $sql_map = sprintf("select * from Loc_exits where exit_id in (select id from Exits where game_id=%s)",quote_smart($game_id));
-  $result_map = mysql_query($sql_map);
-  while ($map_row = mysql_fetch_array($result_map) ) {
+  $result_map = mysqli_query($mysql, $sql_map);
+  while ($map_row = mysqli_fetch_array($result_map) ) {
     $map['by_exit'][$map_row['exit_id']][$map_row['loc_from_id']] = $map_row['loc_to_id'];
     $map['by_from'][$map_row['loc_from_id']][$map_row['exit_id']] = $map_row['loc_to_id'];
   }
@@ -738,8 +736,8 @@ function get_exit_loc_info($game_id) {
 
 function get_exit_loc_info_by_loc($loc_id) {
   $sql_map = sprintf("select * from Loc_exits where loc_from_id = %s",quote_smart($loc_id));
-  $result_map = mysql_query($sql_map);
-  while ($map_row = mysql_fetch_array($result_map) ) {
+  $result_map = mysqli_query($mysql, $sql_map);
+  while ($map_row = mysqli_fetch_array($result_map) ) {
     $map[$map_row['exit_id']] = $map_row['loc_to_id'];
   }
   return $map;
@@ -747,8 +745,8 @@ function get_exit_loc_info_by_loc($loc_id) {
 
 function get_exit_loc_info_by_exit($exit_id) {
   $sql_map = sprintf("select * from Loc_exits where exit_id = %s",quote_smart($exit_id));
-  $result_map = mysql_query($sql_map);
-  while ($map_row = mysql_fetch_array($result_map) ) {
+  $result_map = mysqli_query($mysql, $sql_map);
+  while ($map_row = mysqli_fetch_array($result_map) ) {
     $map[$map_row['loc_from_id']] = $map_row['loc_to_id'];
   }
   return $map;
@@ -756,13 +754,13 @@ function get_exit_loc_info_by_exit($exit_id) {
 
 function get_player_loc_info($game_id) {
   $sql = sprintf("select user_id,loc_id,modchat_id,user_id real_id, death_phase, phys_moves, phys_move_limit, phys_item_limit from Players p, Users u where p.user_id = u.id and game_id=%s order by u.name", quote_smart($game_id));
-  $result = mysql_query($sql);
-  while ( $p = mysql_fetch_array($result) ) {
+  $result = mysqli_query($mysql, $sql);
+  while ( $p = mysqli_fetch_array($result) ) {
    $players[$p['user_id']] = $p;
   }
   $sql_rep = sprintf("select user_id, replace_id from Replacements where game_id=%s order by number, period ASC",quote_smart($game_id));
-  $result_rep = mysql_query($sql_rep);
-  while ( $rep = mysql_fetch_array($result_rep) ) {
+  $result_rep = mysqli_query($mysql, $sql_rep);
+  while ( $rep = mysqli_fetch_array($result_rep) ) {
    $players[$rep['user_id']]['real_id'] = $rep['replace_id'];
   }   
   return $players;
@@ -770,31 +768,31 @@ function get_player_loc_info($game_id) {
 
 function remove_player_from_loc($game_id, $uid, $dont_remove_room) {
   $sql = sprintf("select loc_id, subgame_id, room_id from Players p, Locations l where p.loc_id=l.id and p.game_id=%s and p.user_id=%s",quote_smart($game_id), quote_smart($uid));
-  $result_id  = mysql_query($sql);
-  if (mysql_num_rows($result_id) > 0) {
-    $loc = mysql_result($result_id,0,0);
-    $subgame_id = mysql_result($result_id,0,1);
-    $room_id = mysql_result($result_id,0,2);
+  $result_id  = mysqli_query($mysql, $sql);
+  if (mysqli_num_rows($result_id) > 0) {
+    $loc = mysqli_result($result_id,0,0);
+    $subgame_id = mysqli_result($result_id,0,1);
+    $room_id = mysqli_result($result_id,0,2);
 
     $update_player_sql = sprintf("update Players set loc_id=NULL where game_id=%s and user_id=%s", quote_smart($game_id), quote_smart($uid));
-    mysql_query($update_player_sql);
+    mysqli_query($update_player_sql);
 
     $uid = get_current_player($game_id,$uid);
 
     if ($subgame_id != "" && $subgame_id != "NULL") {
       $update_sub_sql = sprintf("delete from Players where game_id=%s and user_id=%s", quote_smart($subgame_id), quote_smart($uid));
-      mysql_query($update_sub_sql);
+      mysqli_query($update_sub_sql);
     }
 
     if (!($dont_remove_room) && $room_id != "" && $room_id != "NULL") {
 	  $sql = sprintf("select 1 from Items where owner_type='user' and owner_ref_id=%s and room_id=%s", quote_smart($uid), quote_smart($room_id));
-	  $result_access = mysql_query($sql);
-	  if (mysql_num_rows($result_access) == 0) {	 
+	  $result_access = mysqli_query($mysql, $sql);
+	  if (mysqli_num_rows($result_access) == 0) {	 
 		$sql = sprintf("update Chat_users set close=now(), Chat_users.lock='On' where room_id=%s and user_id=%s",quote_smart($room_id), quote_smart($uid));
-		mysql_query($sql);
+		mysqli_query($mysql, $sql);
 		$sql = sprintf("select name from Locations where id=%s",quote_smart($loc));
-		$result = mysql_query($sql);
-		$name = mysql_result($result,0,0);
+		$result = mysqli_query($mysql, $sql);
+		$name = mysqli_result($result,0,0);
 		$msg = sprintf("%s has left %s",get_alias($game_id, $uid),$name);
 		sys_message_to_chat($room_id,$msg);
     }}  
@@ -803,37 +801,37 @@ function remove_player_from_loc($game_id, $uid, $dont_remove_room) {
 
 function sys_message_to_modchat($game_id, $uid, $message) {
   $sql = sprintf("select modchat_id from Players where user_id=%s and game_id=%s",quote_smart($uid),quote_smart($game_id));
-  $result = mysql_query($sql);
-  if (mysql_num_rows($result) > 0) {
-    $modchat = mysql_result($result,0,0);
+  $result = mysqli_query($mysql, $sql);
+  if (mysqli_num_rows($result) > 0) {
+    $modchat = mysqli_result($result,0,0);
     sys_message_to_chat($modchat, $message);
   }  
 }
 
 function sys_message_to_chat($room_id, $message) {
   $sql = sprintf("insert into Chat_messages (id, room_id, user_id, message, post_time) values (NULL, %s,%s,%s, now() )",quote_smart($room_id),quote_smart(306),quote_smart($message));
-  $result = mysql_query($sql);
+  $result = mysqli_query($mysql, $sql);
 }
 
 function are_locs_in_diff_chatrooms($from_id, $to_id) {
   $sql = sprintf("select 1 from dual where (SELECT room_id FROM `Locations` where id=%s) = (SELECT room_id FROM `Locations` where id=%s)",quote_smart($to_id),quote_smart($from_id));
-  $result = mysql_query($sql);
-  return mysql_num_rows($result);    
+  $result = mysqli_query($mysql, $sql);
+  return mysqli_num_rows($result);    
 }
 
 function travel_through_exit($game_id, $uid, $exit_id) {
   $sql = sprintf("select e.loc_to_id as to_id, e.loc_from_id as from_id from Loc_exits e where e.exit_id=%s and e.loc_from_id = (select loc_id from Players where game_id=%s and user_id=%s)",quote_smart($exit_id),quote_smart($game_id), quote_smart($uid));
-  $result = mysql_query($sql);
-  if (mysql_num_rows($result) > 0) {
-    $to_id = mysql_result($result,0,0);    
-    $from_id = mysql_result($result,0,1);
+  $result = mysqli_query($mysql, $sql);
+  if (mysqli_num_rows($result) > 0) {
+    $to_id = mysqli_result($result,0,0);    
+    $from_id = mysqli_result($result,0,1);
     
     $diff_rooms = are_locs_in_diff_chatrooms($from_id, $to_id);
         
     remove_player_from_loc($game_id, $uid, $diff_rooms);
     $sql = sprintf("select travel_text from Exits where id=%s",quote_smart($exit_id));
-    $result = mysql_query($sql);
-    $message = mysql_result($result,0,0);
+    $result = mysqli_query($mysql, $sql);
+    $message = mysqli_result($result,0,0);
     if ($message != "") {      
       sys_message_to_modchat($game_id,$uid,$message); 
     }
@@ -845,21 +843,21 @@ function travel_through_exit($game_id, $uid, $exit_id) {
 function get_alias($game_id, $uid) {
   $name = '';
   $sql_game = sprintf("select phys_by_alias from Games where id = %s", quote_smart($game_id));
-  $result_game  = mysql_query($sql_game);
-  if (mysql_num_rows($result_game) > 0 && mysql_result($result_game,0,0) == 'Yes')  
+  $result_game  = mysqli_query($mysql, $sql_game);
+  if (mysqli_num_rows($result_game) > 0 && mysqli_result($result_game,0,0) == 'Yes')  
   {    
 	$sql_alias = sprintf("select player_alias from Players_all where game_id=%s and user_id=%s", quote_smart($game_id), quote_smart($uid));
-	$result_alias  = mysql_query($sql_alias);
-	if (mysql_num_rows($result_alias) > 0)
+	$result_alias  = mysqli_query($mysql, $sql_alias);
+	if (mysqli_num_rows($result_alias) > 0)
 	{
-	  $name = mysql_result($result_alias,0,0);
+	  $name = mysqli_result($result_alias,0,0);
 	}
   }
   if ($name == '')
   {
     $sql_name = sprintf("select name from Users where id = %s", quote_smart($uid));
-	$result_name = mysql_query($sql_name);
-	$name = mysql_result($result_name,0,0);
+	$result_name = mysqli_query($mysql, $sql_name);
+	$name = mysqli_result($result_name,0,0);
   }
   return $name;
 }
@@ -867,15 +865,15 @@ function get_alias($game_id, $uid) {
 function update_alias_in_chat($game_id, $uid, $room_id) {
   $name = '';
   $sql_game = sprintf("select phys_by_alias from Games where id = %s", quote_smart($game_id));
-  $result_game  = mysql_query($sql_game);
-  if (mysql_num_rows($result_game) > 0 && mysql_result($result_game,0,0) == 'Yes')
+  $result_game  = mysqli_query($mysql, $sql_game);
+  if (mysqli_num_rows($result_game) > 0 && mysqli_result($result_game,0,0) == 'Yes')
   {    
 	$sql_alias = sprintf("select player_alias, alias_color from Players_all where game_id=%s and user_id=%s", quote_smart($game_id), quote_smart($uid));
-	$result_alias  = mysql_query($sql_alias);
-	if (mysql_num_rows($result_alias) > 0)
+	$result_alias  = mysqli_query($mysql, $sql_alias);
+	if (mysqli_num_rows($result_alias) > 0)
 	{
-	  $name = mysql_result($result_alias,0,0);
-	  $color = mysql_result($result_alias,0,1);
+	  $name = mysqli_result($result_alias,0,0);
+	  $color = mysqli_result($result_alias,0,1);
 	}
 	if ($name != '')
 	{ update_chat_user($room_id, $uid, 'alias', $name);	}
@@ -896,15 +894,15 @@ function update_alias_for_item($game_id, $uid, $room_id, $alias, $color) {
 
 function add_player_to_loc($game_id, $uid, $loc_id, $dont_add_to_room) {
   $sql = sprintf("select name, description, subgame_id, room_id from Locations l where id=%s",quote_smart($loc_id));
-  $result_id  = mysql_query($sql);
-  if (mysql_num_rows($result_id) > 0) {
-    $name = mysql_result($result_id,0,0);
-    $description = mysql_result($result_id,0,1);
-    $subgame_id = mysql_result($result_id,0,2);
-    $room_id = mysql_result($result_id,0,3);
+  $result_id  = mysqli_query($mysql, $sql);
+  if (mysqli_num_rows($result_id) > 0) {
+    $name = mysqli_result($result_id,0,0);
+    $description = mysqli_result($result_id,0,1);
+    $subgame_id = mysqli_result($result_id,0,2);
+    $room_id = mysqli_result($result_id,0,3);
 
     $update_player_sql = sprintf("update Players set loc_id=%s where game_id=%s and user_id=%s", quote_smart($loc_id), quote_smart($game_id), quote_smart($uid));
-    mysql_query($update_player_sql);
+    mysqli_query($update_player_sql);
    
     $msg = sprintf("Current Location: <b>%s</b> %s %s",$name,($description == "" ? "" : "<br />"),$description); 
     sys_message_to_modchat($game_id,$uid,$msg);
@@ -913,22 +911,22 @@ function add_player_to_loc($game_id, $uid, $loc_id, $dont_add_to_room) {
 
     if ($subgame_id != "" && $subgame_id != "NULL") {
       $update_sub_sql = sprintf("insert into Players (user_id, game_id) values (%s, %s)", quote_smart($subgame_id), quote_smart($uid));
-      mysql_query($update_sub_sql);
+      mysqli_query($update_sub_sql);
     }
 
     if (!$dont_add_to_room && $room_id != "" && $room_id != "NULL") {
       $sql = sprintf("select Chat_users.lock, Chat_users.close from Chat_users where room_id=%s and user_id=%s",quote_smart($room_id), quote_smart($uid));
-      $result_lock = mysql_query($sql);
-      if (mysql_num_rows($result_lock) > 0) {
-        $lock = mysql_result($result_lock,0,0);        
-		$close = mysql_result($result_lock,0,1);
+      $result_lock = mysqli_query($mysql, $sql);
+      if (mysqli_num_rows($result_lock) > 0) {
+        $lock = mysqli_result($result_lock,0,0);        
+		$close = mysqli_result($result_lock,0,1);
 		if ($close) {
           if ($lock != "On") {
 			$sql_chat = sprintf("update Chat_users set open=now(), close=NULL where room_id=%s and user_id=%s",quote_smart($room_id), quote_smart($uid));
-			mysql_query($sql_chat);
+			mysqli_query($mysql, $sql_chat);
           } else {
 			$sql_chat = sprintf("update Chat_users set open=now(), close=NULL, Chat_users.lock='Off' where room_id=%s and user_id=%s",quote_smart($room_id), quote_smart($uid));
-			mysql_query($sql_chat);
+			mysqli_query($mysql, $sql_chat);
 			$msg = sprintf("%s has entered %s",get_alias($game_id, $uid),$name);
 			sys_message_to_chat($room_id,$msg);		
           }		  
@@ -936,7 +934,7 @@ function add_player_to_loc($game_id, $uid, $loc_id, $dont_add_to_room) {
 		}	
 	  } else {
 	    $sql_chat = sprintf("insert into Chat_users (room_id, user_id, color, open) values (%s, %s, %s, now())",quote_smart($room_id), quote_smart($uid), quote_smart(get_profile_color($uid,"#000000","on")));
-		mysql_query($sql_chat);
+		mysqli_query($mysql, $sql_chat);
 		update_alias_in_chat($game_id, $uid, $room_id);
 		$msg = sprintf("%s has entered %s",get_alias($game_id, $uid),$name);
 		sys_message_to_chat($room_id,$msg);		
@@ -1018,44 +1016,44 @@ function submit_edit_player($game_id) {
 	     set_player_modchat($game_id,$old_id,$_POST["pchat_$old_id"]);      
     }
     $sql = sprintf("Update Players set phys_moves=%s, phys_move_limit=%s, phys_item_limit=%s where user_id=%s and game_id=%s",quote_smart($_POST["moves_$old_id"]),opt_string($_POST["move_limit_$old_id"]),opt_string($_POST["item_limit_$old_id"]),quote_smart($old_id),quote_smart($game_id));
-    mysql_query($sql);
+    mysqli_query($mysql, $sql);
   }
 }
 
 function on_item_change_owner($game_id, $item_id, $new_owner="") {
   $sql = sprintf("select owner_ref_id, owner_type, room_id, room_alias, room_color from Items where id=%s",quote_smart($item_id));
-  $result_item = mysql_query($sql);
-  if (($iteminfo = mysql_fetch_assoc ($result_item)) && $iteminfo['room_id']) {
+  $result_item = mysqli_query($mysql, $sql);
+  if (($iteminfo = mysqli_fetch_assoc ($result_item)) && $iteminfo['room_id']) {
     $room_id=$iteminfo['room_id'];
 	$alias=$iteminfo['room_alias'];
 	$color=$iteminfo['room_color'];
     $sql = sprintf("select name from Items where id=%s",quote_smart($item_id));
-    $result = mysql_query($sql);
-    $name = mysql_result($result,0,0);  
+    $result = mysqli_query($mysql, $sql);
+    $name = mysqli_result($result,0,0);  
 	if ($iteminfo['owner_type'] == 'user') {
 	  $uid = get_current_player($game_id,$iteminfo['owner_ref_id']);
 	  $sql = sprintf("select 1 from Items where owner_type='user' and owner_ref_id=%s and room_id=%s and id<>%s union select 1 from Locations l, Players p  where p.loc_id=l.id and p.game_id=%s and p.user_id=%s and l.room_id=%s", quote_smart($iteminfo['owner_ref_id']), quote_smart($room_id), quote_smart($item_id), quote_smart($game_id), quote_smart($iteminfo['owner_ref_id']), quote_smart($room_id));
-	  $result = mysql_query($sql);
-	  if (mysql_num_rows($result) == 0) {	  		
+	  $result = mysqli_query($mysql, $sql);
+	  if (mysqli_num_rows($result) == 0) {	  		
 		$sql = sprintf("update Chat_users set close=now(), Chat_users.lock='On' where room_id=%s and user_id=%s",quote_smart($room_id), quote_smart($uid));
-		mysql_query($sql);
+		mysqli_query($mysql, $sql);
 		$msg = sprintf("%s no longer has %s",$alias ? $alias : get_alias($game_id, $uid),$name);
 		sys_message_to_chat($room_id,$msg);	  
 	}}
 	if ($new_owner) {
 	  $uid = get_current_player($game_id,$new_owner);  	
       $sql = sprintf("select Chat_users.lock, Chat_users.close from Chat_users where room_id=%s and user_id=%s",quote_smart($room_id), quote_smart($uid));
-      $result_lock = mysql_query($sql);
-      if (mysql_num_rows($result_lock) > 0) {
-        $lock = mysql_result($result_lock,0,0);        
-		$close = mysql_result($result_lock,0,1);
+      $result_lock = mysqli_query($mysql, $sql);
+      if (mysqli_num_rows($result_lock) > 0) {
+        $lock = mysqli_result($result_lock,0,0);        
+		$close = mysqli_result($result_lock,0,1);
 		if ($close) {
           if ($lock != "On") {
 			$sql_chat = sprintf("update Chat_users set open=now(), close=NULL where room_id=%s and user_id=%s",quote_smart($room_id), quote_smart($uid));
-			mysql_query($sql_chat);
+			mysqli_query($mysql, $sql_chat);
           } else {
 			$sql_chat = sprintf("update Chat_users set open=now(), close=NULL, Chat_users.lock='Off' where room_id=%s and user_id=%s",quote_smart($room_id), quote_smart($uid));
-			mysql_query($sql_chat);
+			mysqli_query($mysql, $sql_chat);
 			$msg = sprintf("%s has acquired %s",$alias ? $alias : get_alias($game_id, $uid),$name);
 			sys_message_to_chat($room_id,$msg);	  			
           }		  
@@ -1074,11 +1072,11 @@ function on_item_change_owner($game_id, $item_id, $new_owner="") {
 function give_item_to_player($game_id, $user_id, $item_id) {
   on_item_change_owner($game_id, $item_id, $user_id);
   $sql = sprintf("update Items set owner_type='user', owner_ref_id=%s where id=%s", quote_smart($user_id), quote_smart($item_id));
-  mysql_query($sql);
+  mysqli_query($mysql, $sql);
   $sql = sprintf("select name,description from Items where id=%s",quote_smart($item_id));
-  $result = mysql_query($sql);
-  $name = mysql_result($result,0,0);
-  if ($desc = mysql_result($result,0,1)) {
+  $result = mysqli_query($mysql, $sql);
+  $name = mysqli_result($result,0,0);
+  if ($desc = mysqli_result($result,0,1)) {
     sys_message_to_modchat($game_id, $user_id, "<b>$name</b>: $desc");
   } 
 }
@@ -1086,13 +1084,13 @@ function give_item_to_player($game_id, $user_id, $item_id) {
 function give_item_to_loc($game_id, $loc_id, $item_id) {
   on_item_change_owner($game_id, $item_id);
   $sql = sprintf("update Items set owner_type='loc', owner_ref_id=%s where id=%s", quote_smart($loc_id), quote_smart($item_id));
-  mysql_query($sql);
+  mysqli_query($mysql, $sql);
 #  $sql = sprintf("select name from Items where id=%s",quote_smart($item_id));
-#  $result = mysql_query($sql);
-#  $name = mysql_result($result,0,0);
+#  $result = mysqli_query($mysql, $sql);
+#  $name = mysqli_result($result,0,0);
 #  $sql = sprintf("select user_id from Players where loc_id=%s and game_id=%s", quote_smart($game_id), quote_smart($loc_id));
-#  $result = mysql_query($sql);
-#  while ($usr = mysql_fetch_array($result)) {
+#  $result = mysqli_query($mysql, $sql);
+#  while ($usr = mysqli_fetch_array($result)) {
 #    sys_message_to_modchat($game_id, $user_id, "You $desc); 
 #  }     
 }
@@ -1152,15 +1150,15 @@ function submit_edit_item_temp($game_id) {
 
 function get_current_player($game_id,$uid) {
   $sql = sprintf("select replace_id from Replacements where game_id=%s and user_id=%s order by period, number DESC",quote_smart($game_id),quote_smart($uid));
-  $result = mysql_query($sql);
-  if (mysql_num_rows($result) > 0) { $uid = mysql_result($result,0,0); }
+  $result = mysqli_query($mysql, $sql);
+  if (mysqli_num_rows($result) > 0) { $uid = mysqli_result($result,0,0); }
   return $uid;
 }
 
 function get_room_names_by_id($game_id) {
   $sql = sprintf("select id, name from Chat_rooms where game_id=%s order by name",quote_smart($game_id));
-  $result = mysql_query($sql);
-  while ( $row = mysql_fetch_array($result) ) {
+  $result = mysqli_query($mysql, $sql);
+  while ( $row = mysqli_fetch_array($result) ) {
     $room_names[$row['id']] = $row['name'];
   }
   return $room_names;  
@@ -1168,8 +1166,8 @@ function get_room_names_by_id($game_id) {
 
 function get_subgame_names_by_id($game_id) {
   $sql = sprintf("select id, title from Games where parent_game_id=%s order by title",quote_smart($game_id));
-  $result = mysql_query($sql);
-  while ( $row = mysql_fetch_array($result) ) {
+  $result = mysqli_query($mysql, $sql);
+  while ( $row = mysqli_fetch_array($result) ) {
     $game_names[$row['id']] = $row['title'];
   }
   return $game_names;  
@@ -1187,8 +1185,8 @@ function find_id_for_string($map, $string) {
 
 function get_loc_names_by_id($game_id) {
   $sql = sprintf("select id, name from Locations where game_id=%s order by name",quote_smart($game_id));
-  $result = mysql_query($sql);
-  while ( $row = mysql_fetch_array($result) ) {
+  $result = mysqli_query($mysql, $sql);
+  while ( $row = mysqli_fetch_array($result) ) {
     $loc_names[$row['id']] = $row['name'];
   }
   return $loc_names;  
@@ -1196,8 +1194,8 @@ function get_loc_names_by_id($game_id) {
 
 function get_item_names_by_id($game_id) {
   $sql = sprintf("select id, name from Items where game_id=%s order by name",quote_smart($game_id));
-  $result = mysql_query($sql);
-  while ( $row = mysql_fetch_array($result) ) {
+  $result = mysqli_query($mysql, $sql);
+  while ( $row = mysqli_fetch_array($result) ) {
     $item_names[$row['id']] = $row['name'];
   }
   return $item_names;  
@@ -1205,8 +1203,8 @@ function get_item_names_by_id($game_id) {
 
 function get_item_temp_names_by_id($game_id) {
   $sql = sprintf("select id, name from Item_templates where game_id=%s order by name",quote_smart($game_id));
-  $result = mysql_query($sql);
-  while ( $row = mysql_fetch_array($result) ) {
+  $result = mysqli_query($mysql, $sql);
+  while ( $row = mysqli_fetch_array($result) ) {
     $temp_names[$row['id']] = $row['name'];
   }
   return $temp_names;  
@@ -1214,8 +1212,8 @@ function get_item_temp_names_by_id($game_id) {
 
 function get_exit_names_by_id($game_id) {
   $sql = sprintf("select id, name from Exits where game_id=%s order by name",quote_smart($game_id));
-  $result = mysql_query($sql);
-  while ( $row = mysql_fetch_array($result) ) {
+  $result = mysqli_query($mysql, $sql);
+  while ( $row = mysqli_fetch_array($result) ) {
     $exit_names[$row['id']] = $row['name'];
   }
   return $exit_names;  
@@ -1618,8 +1616,8 @@ function display_edit_players($game_id, $user_id) {
 
 function list_items($game_id) {
   $sql = sprintf("select * from Items where game_id=%s order by name", quote_smart($game_id));
-  $result = mysql_query($sql);
-  $num_items = mysql_num_rows($result);
+  $result = mysqli_query($mysql, $sql);
+  $num_items = mysqli_num_rows($result);
   $locs_by_id = get_loc_names_by_id($game_id);
   $pnames = get_all_names_by_ids($game_id);
   $rooms_by_id = get_room_names_by_id($game_id);
@@ -1627,7 +1625,7 @@ function list_items($game_id) {
   $output .= "<form id='all_items' name='all_items'>\n";
   $output .= "<table class='forum_table'><tr><th><a href='javascript:add_item_dialog()'><img src='/images/add.png'  border='0' /></a></th><th colspan='2'>Current Items ($num_items)</th></tr>\n";
   
-  while ( $item = mysql_fetch_array($result) ) {
+  while ( $item = mysqli_fetch_array($result) ) {
     $output .= "<tr>";
     $output .= "<td valign='top'>";
     $output .= "<a href='javascript:edit_item_dialog(\"".$item['id']."\")'><img src='/images/edit.png' border='0' /></a>";
@@ -1666,14 +1664,14 @@ function list_items($game_id) {
 
 function list_item_temps($game_id) {
   $sql = sprintf("select * from Item_templates where game_id=%s order by name", quote_smart($game_id));
-  $result = mysql_query($sql);
-  $num_temps = mysql_num_rows($result);
+  $result = mysqli_query($mysql, $sql);
+  $num_temps = mysqli_num_rows($result);
   $rooms_by_id = get_room_names_by_id($game_id);
   
   $output .= "<form id='all_temps' name='all_temps'>\n";
   $output .= "<table class='forum_table'><tr><th><a href='javascript:add_temp_dialog()'><img src='/images/add.png'  border='0' /></a></th><th colspan='2'>Current Item Templates ($num_temps)</th></tr>\n";
   
-  while ( $temp = mysql_fetch_array($result) ) {
+  while ( $temp = mysqli_fetch_array($result) ) {
     $output .= "<tr>";
     $output .= "<td valign='top'>";
     $output .= "<a href='javascript:edit_temp_dialog(\"".$temp['id']."\")'><img src='/images/edit.png' border='0' /></a>";
@@ -1687,9 +1685,9 @@ function list_item_temps($game_id) {
     }
     $output .= "</td><td valign='top'>";
 	$sql_cnt = sprintf("select count(1) from Items where template_id = %s", quote_smart($temp['id']));
-	$result_cnt = mysql_query($sql_cnt);
+	$result_cnt = mysqli_query($mysql, $sql_cnt);
 	$item_cnt = 0;
-	if (mysql_num_rows($result_cnt) > 0) { $item_cnt = mysql_result($result_cnt,0,0); }
+	if (mysqli_num_rows($result_cnt) > 0) { $item_cnt = mysqli_result($result_cnt,0,0); }
 	$output .= "Items: " . $item_cnt;
 	if ($temp['room_id']) {
 		$output .= "<br />Chat room: " . $rooms_by_id[$temp['room_id']];
@@ -1710,8 +1708,8 @@ function list_item_temps($game_id) {
 
 function list_exits($game_id) {
   $sql = sprintf("select * from Exits where game_id=%s order by name", quote_smart($game_id));
-  $result = mysql_query($sql);
-  $num_exits = mysql_num_rows($result);
+  $result = mysqli_query($mysql, $sql);
+  $num_exits = mysqli_num_rows($result);
   $map = get_exit_loc_info($game_id);
   $locs_by_id = get_loc_names_by_id($game_id);
   $items_by_id = get_item_temp_names_by_id($game_id);
@@ -1719,7 +1717,7 @@ function list_exits($game_id) {
   $output .= "<form id='all_exits' name='all_exits'>\n";
   $output .= "<table class='forum_table'><tr><th><a href='javascript:add_exit_dialog()'><img src='/images/add.png'  border='0' /></a></th><th colspan='2'>Current Exits ($num_exits)</th></tr>\n";
 
-  while ( $exit = mysql_fetch_array($result) ) {
+  while ( $exit = mysqli_fetch_array($result) ) {
     $output .= "<tr>";
     $output .= exit_info($exit['id'],$items_by_id);
     if (count($map['by_exit'][$exit['id']]) > 0) {
@@ -1736,12 +1734,12 @@ function list_exits($game_id) {
 
 function list_locs($game_id) {
   $sql = sprintf("select * from Locations where game_id=%s order by name", quote_smart($game_id));
-  $result = mysql_query($sql);
-  $num_locs = mysql_num_rows($result);
+  $result = mysqli_query($mysql, $sql);
+  $num_locs = mysqli_num_rows($result);
   $output .= "<form id='all_locs' name='all_locs'>\n";
   $output .= "<table class='forum_table'><tr><th><a href='javascript:add_loc_dialog()'><img src='/images/add.png'  border='0' /></a></th><th colspan='2'>Current Locations ($num_locs)</th></tr>\n";
 
-  while ( $loc = mysql_fetch_array($result) ) {
+  while ( $loc = mysqli_fetch_array($result) ) {
     $output .= "<tr>";
     $output .= loc_info($loc['id']);
     $output .= "</tr>\n";
@@ -1824,8 +1822,8 @@ function list_phys_settings($game_id, $user_id) {
   $output .= "<form id='edit_config_form' name='edit_config_form' method='post' action='".$_SERVER['PHP_SELF']."' >\n";
   $output .= "<input type='hidden' name='game_id' value='$game_id' />\n";
   $sql = sprintf("select * from Games where id=%s", quote_smart($game_id));
-  $result = mysql_query($sql);
-  $current = mysql_fetch_array($result);
+  $result = mysqli_query($mysql, $sql);
+  $current = mysqli_fetch_array($result);
   $output .= "Limit Movements Per Day: ";
   $output .= "<input type='text' name='move_limit' size='3' value='".$current['phys_move_limit']."' /><br />";
   $output .= "Limit Held Items Per Player: ";
@@ -1839,13 +1837,13 @@ function list_phys_settings($game_id, $user_id) {
   $output .= "</form>";
   
   $sql = sprintf("select Games.id id, Games.title title from Games, Moderators where Moderators.game_id = Games.id and Moderators.user_id=%s and Games.status in ('Finished', 'In Progress')",quote_smart($user_id));
-  $result = mysql_query($sql);
-  if (mysql_num_rows($result) > 0) {
+  $result = mysqli_query($mysql, $sql);
+  if (mysqli_num_rows($result) > 0) {
     $output .= "<form id='import_physics_form' name='import_physics_form' method='post' action='".$_SERVER['PHP_SELF']."' >\n";
     $output .= "<input type='hidden' name='game_id' value='$game_id' />\n";  
     $output .= "Import Physics System from a previous game:<br />";
     $output .= "<select name='import_physics'>";
-    while ($game = mysql_fetch_array($result)) {
+    while ($game = mysqli_fetch_array($result)) {
       $output .= "<option value='".$game['id']."'>".$game['title']."</option>";
     }    
     $output .= "</select><br />";
@@ -1862,8 +1860,8 @@ function list_phys_processing($game_id) {
   $output .= "<input type='hidden' name='game_id' value='$game_id' />\n";
   
   $sql = sprintf("select * from Physics_processing where game_id=%s and type='movement'",quote_smart($game_id));
-  $result = mysql_query($sql);
-  if ($current = mysql_fetch_array($result)) {
+  $result = mysqli_query($mysql, $sql);
+  if ($current = mysqli_fetch_array($result)) {
     $movement_set = 1;
   }
   
@@ -1882,8 +1880,8 @@ function list_phys_processing($game_id) {
   $output .= "Minute: <input type='text' name='move_minute' value='".($movement_set ? $current['minute'] : '0')."' size='2'/><br />";
   
   $sql = sprintf("select * from Physics_processing where game_id=%s and type='item'",quote_smart($game_id));
-  $result = mysql_query($sql);
-  if ($current = mysql_fetch_array($result)) {
+  $result = mysqli_query($mysql, $sql);
+  if ($current = mysqli_fetch_array($result)) {
     $item_set = 1;
   }
 
@@ -1912,8 +1910,8 @@ function list_phys_processing($game_id) {
 function exit_info($exit_id,$items_by_id,$page='config') {
   if ($exit_id == 0 ) { return "No Exit Selected"; }
   $sql = sprintf("select * from Exits where id=%s", quote_smart($exit_id));
-  $result = mysql_query($sql);
-  $exit = mysql_fetch_array($result);
+  $result = mysqli_query($mysql, $sql);
+  $exit = mysqli_fetch_array($result);
 
   if ($page == 'config') {
    $output .= "<td valign='top'>";
@@ -1958,18 +1956,18 @@ function exit_loc_info($exit_id,$map,$loc_names) {
 function loc_info($loc_id,$page='config') {
   if ($loc_id == 0 ) { return "No Location Selected"; }
   $sql = sprintf("select * from Locations where id=%s", quote_smart($loc_id));
-  $result = mysql_query($sql);
-  $loc = mysql_fetch_array($result);
+  $result = mysqli_query($mysql, $sql);
+  $loc = mysqli_fetch_array($result);
   $sql_rooms = sprintf ("select name from Chat_rooms where id=%s", quote_smart($loc['room_id']));
-  $result_rooms = mysql_query($sql_rooms);
-  if (mysql_num_rows($result_rooms) > 0) {
-    $room_row = mysql_fetch_row($result_rooms);
+  $result_rooms = mysqli_query($mysql, $sql_rooms);
+  if (mysqli_num_rows($result_rooms) > 0) {
+    $room_row = mysqli_fetch_row($result_rooms);
     $room_name = $room_row[0];
   }
   $sql_subthread = sprintf ("select title from Games where id=%s", quote_smart($loc['subgame_id']));
-  $result_sub = mysql_query($sql_subthread);
-  if (mysql_num_rows($result_sub) > 0) {
-    $sub_row = mysql_fetch_row($result_sub);
+  $result_sub = mysqli_query($mysql, $sql_subthread);
+  if (mysqli_num_rows($result_sub) > 0) {
+    $sub_row = mysqli_fetch_row($result_sub);
     $sub_name = $sub_row[0];
   }
 

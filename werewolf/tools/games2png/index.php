@@ -7,7 +7,7 @@ include_once(ROOT_PATH . "php/db.php");
 // Set the enviroment variable for GD
 putenv('GDFONTPATH=' . realpath('.'));
 
-dbConnect();
+$mysql = dbConnect();
 
 $fontsize = 10;
 $font = 'Vera';
@@ -20,7 +20,7 @@ $text = "test 123";
 #$total = dbGetResultRowCount($res);
 
 #$text = "Games($total)\n"; 
-#while($row=mysql_fetch_array($res))
+#while($row=mysqli_fetch_array($res))
 #{
 #	$text .= $text . $row['game'] . "\n";
 #)

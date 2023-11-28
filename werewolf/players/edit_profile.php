@@ -13,8 +13,8 @@ exit;
 $id = $_REQUEST['user_id'];
 $field = $_REQUEST['field'];
 $sql = "show full columns from Bio";
-$result = mysql_query($sql);
-while ( $bio = mysql_fetch_array($result) ) {
+$result = mysqli_query($mysql, $sql);
+while ( $bio = mysqli_fetch_array($result) ) {
   $comment[$bio['Field']] = $bio['Comment'];
 }
 
@@ -28,8 +28,8 @@ if ( $_REQUEST['q'] == "edit" ) {
   print "<form name='edit_form'>\n";
   print "<input type='hidden' name='field' value='$field' />\n";
   $sql_field = sprintf("select %s from Bio where user_id=%s",$field,quote_smart($id));
-  $result_field = mysql_query($sql_field);
-  $value = mysql_result($result_field,0,0);
+  $result_field = mysqli_query($mysql, $sql_field);
+  $value = mysqli_result($result_field,0,0);
   switch ( $field ) {
   case max_messages:
     print "<input type='text' size='6' name='$field' value='$value' />\n";
@@ -66,8 +66,8 @@ if ( $_REQUEST['q'] == "edit" ) {
   case time_zone:
     print "<select name='$field'><option value=''/>\n";
     $sql_tz = "select zone, concat('(GMT',if(GMT>0,' +',''),if(GMT=0,'',concat(if(GMT<0,' ',''),GMT)),') ',description) as text from Timezones order by zone DESC";
-    $result_tz = mysql_query($sql_tz);
-    while ( $tz = mysql_fetch_array($result_tz) ) {
+    $result_tz = mysqli_query($mysql, $sql_tz);
+    while ( $tz = mysqli_fetch_array($result_tz) ) {
 	  $selected = "";
 	  if ( $tz['zone'] == $value ) { $selected = "selected"; }
       print "<option $selected value='".$tz['zone']."' />".$tz['text']."\n";
@@ -83,7 +83,7 @@ if ( $_REQUEST['q'] == "edit" ) {
 } else if ( $_REQUEST['q'] == "submit" ) {
   $_REQUEST['value'] = safe_html($_REQUEST['value'],"<img><object><param><embed><a>");
   $sql = sprintf("update Bio set %s = %s where user_id=%s",$field,quote_smart($_REQUEST['value']),quote_smart($id));
-  $result = mysql_query($sql);
+  $result = mysqli_query($mysql, $sql);
   print show_field($id,$field);
 
 	if($field == 'twitter_name') {

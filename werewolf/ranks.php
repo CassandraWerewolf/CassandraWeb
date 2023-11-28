@@ -5,7 +5,7 @@ include_once "php/accesscontrol.php";
 include_once("menu.php");
 include_once("php/common.php");
 
-dbConnect();
+$mysql = dbConnect();
 
 $site = '';
 
@@ -46,8 +46,8 @@ location.href = "game/"+game
 <th>Name</th><th>Total</th><th>Rank</th></tr>
 <?php
 $sql = "SELECT name, games_played, rank FROM Users_game_ranks WHERE rank <= 25 ORDER BY rank, name";
-$result = mysql_query($sql);
-while ( $player = mysql_fetch_array($result) ) {
+$result = mysqli_query($mysql, $sql);
+while ( $player = mysqli_fetch_array($result) ) {
 print "<tr></td><td>";
 print get_player_page($player['name']);
 print "</td><td><a href='$site/player/".$player['name']."/games_played'>".$player['games_played']."</a></td><td>".$player['rank']."</td></tr>";
@@ -61,8 +61,8 @@ print "</td><td><a href='$site/player/".$player['name']."/games_played'>".$playe
         <tr><th>Name</th><th>Total</th><th>Rank</th></tr>
 <?php
 $sql = "SELECT name, games_moderated, rank FROM Users_modded_ranks WHERE rank <= 25 ORDER BY rank, name";
-$result = mysql_query($sql);
-while ( $player = mysql_fetch_array($result) ) {
+$result = mysqli_query($mysql, $sql);
+while ( $player = mysqli_fetch_array($result) ) {
 print "<tr></td><td>";
 print get_player_page($player['name']);
 print "</td><td><a href='$site/player/".$player['name']."/games_modded'>".$player['games_moderated']."</a></td><td>".$player['rank']."</td></tr>";
