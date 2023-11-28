@@ -3,7 +3,7 @@
 include_once "php/accesscontrol.php";
 include_once "php/db.php";
 include_once "php/bgg.php";
-dbConnect();
+$mysql = dbConnect();
 ?>
 
 <html>

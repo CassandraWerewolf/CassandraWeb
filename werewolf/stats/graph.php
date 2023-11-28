@@ -10,24 +10,24 @@
 	#$player = $_REQUEST['player']; 
 	$player = 'jmilum';
 
-	dbConnect();
+	$mysql = dbConnect();
 
-	$total_games = mysql_query("SELECT DATE_FORMAT(start_date, '%y%m') AS month, count(*) AS total FROM Games GROUP BY month ORDER BY month");
+	$total_games = mysqli_query("SELECT DATE_FORMAT(start_date, '%y%m') AS month, count(*) AS total FROM Games GROUP BY month ORDER BY month");
 	if (!$total_games){
-		die('Could not query:' . mysql_error());
+		die('Could not query:' . mysqli_error());
 	}
 
-	$player_games = mysql_query("SELECT DATE_FORMAT(start_date, '%y%m') AS month, count(*) AS total FROM Games,Players,Users WHERE Users.name = '$player' AND Users.id=Players.user_id AND Games.id=Players.game_id GROUP BY month ORDER BY month");
+	$player_games = mysqli_query("SELECT DATE_FORMAT(start_date, '%y%m') AS month, count(*) AS total FROM Games,Players,Users WHERE Users.name = '$player' AND Users.id=Players.user_id AND Games.id=Players.game_id GROUP BY month ORDER BY month");
 	if (!$player_games){
-		die('Could not query:' . mysql_error());
+		die('Could not query:' . mysqli_error());
 	}
 
-	while($row = mysql_fetch_array($total_games)){
+	while($row = mysqli_fetch_array($total_games)){
 		$month[] = $row['month'];
 		$total[] = $row['total'];
 	}
 
-	while($row = mysql_fetch_array($player_games)){
+	while($row = mysqli_fetch_array($player_games)){
 		$player_month[] = $row['month'];
 		$player_total[] = $row['total'];
 	}

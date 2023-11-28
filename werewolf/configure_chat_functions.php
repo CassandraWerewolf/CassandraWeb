@@ -1,19 +1,19 @@
 <?php
 
 include_once("php/db.php");
-dbConnect();
+$mysql = dbConnect();
 
 
 function get_chat_room_info($room_id) {
   $sql = sprintf("select name, max_post, created from Chat_rooms where id=%s",quote_smart($room_id));
-  $result = mysql_query($sql);
-  $output['name'] = mysql_result($result,0,0);
-  $output['max_post'] = mysql_result($result,0,1);
-  $output['created'] = mysql_result($result,0,2);
+  $result = mysqli_query($mysql, $sql);
+  $output['name'] = mysqli_result($result,0,0);
+  $output['max_post'] = mysqli_result($result,0,1);
+  $output['created'] = mysqli_result($result,0,2);
   $sql = sprintf("select user_id, color, max_post, alias, secret, open from Chat_users where room_id=%s",quote_smart($room_id));
-  $result = mysql_query($sql);
+  $result = mysqli_query($mysql, $sql);
   $output['player_list'] = "";
-  while ( $row = mysql_fetch_array($result) ) {
+  while ( $row = mysqli_fetch_array($result) ) {
     if ( $output['plyaer_list'] != "" ) { $output['player_list'] .= ", "; }
     $id = sprintf("%0d",$row['user_id']);
 	$output['player_list'] .= $id;
@@ -29,21 +29,21 @@ function get_chat_room_info($room_id) {
 
 function change_dawn_reset($game_id) {
   $sql = sprintf("select dawn_chat_reset from Games where id=%s",quote_smart($game_id));
-  $result = mysql_query($sql);
-  $reset = mysql_result($result,0,0);
+  $result = mysqli_query($mysql, $sql);
+  $reset = mysqli_result($result,0,0);
   if ( $reset == "Yes" ) {
     $reset = "No";
   } else {
     $reset = "Yes";
   }
   $sql = sprintf("update Games set dawn_chat_reset=%s where id=%s",quote_smart($reset),quote_smart($game_id));
-  $result = mysql_query($sql);
+  $result = mysqli_query($mysql, $sql);
 }
 
 function lock_room($room_id) {
   $sql = sprintf("select `lock` from Chat_rooms where id=%s",quote_smart($room_id));
-  $result = mysql_query($sql);
-  $lock = mysql_result($result,0,0);
+  $result = mysqli_query($mysql, $sql);
+  $lock = mysqli_result($result,0,0);
   if ( $lock == "Off" ) {
     $lock = "On";
   } elseif ( $lock == "On") {
@@ -52,15 +52,15 @@ function lock_room($room_id) {
     $lock = "Off";
   }
   $sql = sprintf("update Chat_rooms set `lock`=%s where id=%s",quote_smart($lock),quote_smart($room_id));
-  $result = mysql_query($sql);
+  $result = mysqli_query($mysql, $sql);
                                                                                 
   return $lock;
 }
 
 function lock_player($room_id,$user_id) {
   $sql = sprintf("select `lock` from Chat_users where room_id=%s and user_id=%s",quote_smart($room_id),quote_smart($user_id));
-  $result = mysql_query($sql);
-  $lock = mysql_result($result,0,0);
+  $result = mysqli_query($mysql, $sql);
+  $lock = mysqli_result($result,0,0);
   if ( $lock == "Off" ) {
     $lock = "On";
   } elseif ( $lock == "On" ) {
@@ -69,17 +69,17 @@ function lock_player($room_id,$user_id) {
     $lock = "Off";
   }
   $sql = sprintf("update Chat_users set `lock`=%s where room_id=%s and user_id=%s",quote_smart($lock),quote_smart($room_id),quote_smart($user_id));
-  $result = mysql_query($sql);
+  $result = mysqli_query($mysql, $sql);
                                                                                 
   return $lock;
 }
 
 function eye_player($room_id,$user_id) {
   $sql = sprintf("select open, close, now() from Chat_users where room_id=%s and user_id=%s",quote_smart($room_id),quote_smart($user_id));
-  $result = mysql_query($sql);
-  $open = mysql_result($result,0,0);
-  $close = mysql_result($result,0,1);
-  $now = mysql_result($result,0,2);
+  $result = mysqli_query($mysql, $sql);
+  $open = mysqli_result($result,0,0);
+  $close = mysqli_result($result,0,1);
+  $now = mysqli_result($result,0,2);
   if ( $close == "" ) {
 	$open = quote_smart($open);
     $close = quote_smart($now);
@@ -90,7 +90,7 @@ function eye_player($room_id,$user_id) {
 	$return = "Open";
   }
   $sql = sprintf("update Chat_users set open=%s, close=%s where room_id=%s and user_id=%s",$open,$close,quote_smart($room_id),quote_smart($user_id));
-  $result = mysql_query($sql);
+  $result = mysqli_query($mysql, $sql);
                                                                                 
   return $return;
 }
@@ -98,23 +98,23 @@ function eye_player($room_id,$user_id) {
 
 function reset_room($room_id) {
   $sql = sprintf("select max_post from Chat_rooms where id=%s",quote_smart($room_id));
-  $result = mysql_query($sql);
-  $max_post = mysql_result($result,0,0);
+  $result = mysqli_query($mysql, $sql);
+  $max_post = mysqli_result($result,0,0);
   update_chat_room($room_id,'remaining_post',$max_post);
 }
 
 function reset_user($room_id,$user_id) {
   $sql = sprintf("select max_post from Chat_users where room_id=%s and user_id=%s",quote_smart($room_id),quote_smart($user_id));
-  $result = mysql_query($sql);
-  $max_post = mysql_result($result,0,0);
+  $result = mysqli_query($mysql, $sql);
+  $max_post = mysqli_result($result,0,0);
   update_chat_user($room_id,$user_id,'remaining_post',$max_post);
 }
 
 
 function get_mod_names_by_ids($game_id) {
   $sql = sprintf("select user_id, name from Moderators, Users where Moderators.user_id=Users.id and game_id=%s order by name",quote_smart($game_id));
-  $result = mysql_query($sql);
-  while ( $row = mysql_fetch_array($result) ) {
+  $result = mysqli_query($mysql, $sql);
+  while ( $row = mysqli_fetch_array($result) ) {
     $mod_names[$row['user_id']] = $row['name'];
   }
   return $mod_names;
@@ -122,8 +122,8 @@ function get_mod_names_by_ids($game_id) {
 
 function get_player_names_by_ids($game_id) {
   $sql = sprintf("select user_id, name from Players_all, Users where Players_all.user_id=Users.id and game_id=%s order by name",quote_smart($game_id));
-  $result = mysql_query($sql);
-  while ( $row = mysql_fetch_array($result) ) {
+  $result = mysqli_query($mysql, $sql);
+  while ( $row = mysqli_fetch_array($result) ) {
     $player_names[$row['user_id']] = $row['name'];
   }
   return $player_names;
@@ -131,8 +131,8 @@ function get_player_names_by_ids($game_id) {
 
 function get_all_names_by_ids($game_id) {
   $sql = sprintf("select user_id, name from Users_game_all, Users where Users_game_all.user_id=Users.id and game_id=%s",quote_smart($game_id));
-  $result = mysql_query($sql);
-  while ( $row = mysql_fetch_array($result) ) {
+  $result = mysqli_query($mysql, $sql);
+  while ( $row = mysqli_fetch_array($result) ) {
     $player_names[$row['user_id']] = $row['name'];
   }
   return $player_names;
@@ -141,13 +141,13 @@ function get_all_names_by_ids($game_id) {
 function get_all_aliases_by_ids($game_id) {
   $name = '';
   $sql_game = sprintf("select phys_by_alias from Games where id = %s", quote_smart($game_id));
-  $result_game  = mysql_query($sql_game);
-  if (mysql_num_rows($result_game) > 0 && mysql_result($result_game,0,0) == 'Yes')  
+  $result_game  = mysqli_query($mysql, $sql_game);
+  if (mysqli_num_rows($result_game) > 0 && mysqli_result($result_game,0,0) == 'Yes')  
   {    
 	$sql_alias = sprintf("select p.user_id, IFNULL(p.player_alias, u.name) name_to_use from Players_all p, Users u where game_id=%s and p.user_id=u.id ", 
       quote_smart($game_id));
-	$result_alias  = mysql_query($sql_alias);
-    while ( $row = mysql_fetch_array($result_alias) ) {
+	$result_alias  = mysqli_query($mysql, $sql_alias);
+    while ( $row = mysqli_fetch_array($result_alias) ) {
       $player_names[$row['user_id']] = $row['name_to_use'];
     }	
 	return $player_names;
@@ -157,16 +157,16 @@ function get_all_aliases_by_ids($game_id) {
 
 function get_player_alias($room_id, $user_id) {
   $sql = sprintf("select alias from Chat_users where room_id=%s and user_id=%s", quote_smart($room_id),quote_smart($user_id));
-  $result = mysql_query($sql);
-  $row = mysql_fetch_array($result);
+  $result = mysqli_query($mysql, $sql);
+  $row = mysqli_fetch_array($result);
 
   return $row['alias'];
 }
 
 function get_player_secret($room_id, $user_id) {
   $sql = sprintf("select secret from Chat_users where room_id=%s and user_id=%s", quote_smart($room_id),quote_smart($user_id));
-  $result = mysql_query($sql);
-  $row = mysql_fetch_array($result);
+  $result = mysqli_query($mysql, $sql);
+  $row = mysqli_fetch_array($result);
 
   return $row['secret'];
 }
@@ -178,7 +178,7 @@ function insert_chat_user($room_id,$player_id,$color,$max_post) {
     $max_post = quote_smart($max_post);
   }
   $sql = sprintf("insert into Chat_users (room_id, user_id, last_view, color, max_post, remaining_post, open) values ( %s, %s, now(), %s, %s, %s, now() )",quote_smart($room_id),quote_smart($player_id),quote_smart($color),$max_post,$max_post);
-  $result = mysql_query($sql);
+  $result = mysqli_query($mysql, $sql);
 }
 
 function update_chat_user($room_id,$player_id,$field,$value) {
@@ -188,13 +188,13 @@ function update_chat_user($room_id,$player_id,$field,$value) {
     $value = quote_smart($value);
   }
   $sql = sprintf("update Chat_users set %s=%s where user_id=%s and room_id=%s",$field,$value,quote_smart($player_id),quote_smart($room_id));
-  $result = mysql_query($sql);
+  $result = mysqli_query($mysql, $sql);
 }
 
 
 function delete_chat_user($room_id,$player_id) {
   $sql = sprintf("delete from Chat_users where user_id=%s and room_id=%s",quote_smart($player_id),quote_smart($room_id));
-  $result = mysql_query($sql);
+  $result = mysqli_query($mysql, $sql);
 }
 
 function insert_chat_room($game_id,$room_name,$max_post) {
@@ -204,8 +204,8 @@ function insert_chat_room($game_id,$room_name,$max_post) {
     $max_post = quote_smart($max_post);
   }
   $sql = sprintf("insert into Chat_rooms (id, game_id, name, max_post, remaining_post, created) values ( null, %s, %s ,%s, %s, now())",quote_smart($game_id),quote_smart($room_name),$max_post,$max_post);
-    $result = mysql_query($sql);
-    return  mysql_insert_id();
+    $result = mysqli_query($mysql, $sql);
+    return  mysqli_insert_id();
 }
 
 function update_chat_room($room_id,$field,$value) {
@@ -215,12 +215,12 @@ function update_chat_room($room_id,$field,$value) {
     $value = quote_smart($value);
   }
   $sql = sprintf("update Chat_rooms set %s=%s where id=%s",$field,$value,quote_smart($room_id));
-  $result = mysql_query($sql);
+  $result = mysqli_query($mysql, $sql);
 }
 
 function delete_chat_room($room_id) {
   $sql = sprintf("delete from Chat_rooms where id=%s",quote_smart($room_id));
-  $result = mysql_query($sql);
+  $result = mysqli_query($mysql, $sql);
 }
 
 function set_player_modchat($game_id,$uid,$chat_id)
@@ -228,7 +228,7 @@ function set_player_modchat($game_id,$uid,$chat_id)
   if ($chat_id == "" || $chat_id == "n/a") { $chat_id = "NULL"; }
 
   $update_player_sql = sprintf("update Players set modchat_id=%s where game_id=%s and user_id=%s", quote_smart($chat_id), quote_smart($game_id), quote_smart($uid));
-  mysql_query($update_player_sql);  
+  mysqli_query($update_player_sql);  
 }
 
 
@@ -286,8 +286,8 @@ function get_profile_color($user_id, $color, $defcol) {
   if ($defcol == "on") {
     $color = "#000000";
     $sql_color = sprintf("select chat_color from Bio where user_id=%s",quote_smart($user_id));
-    $result_color = mysql_query($sql_color);
-    if (mysql_num_rows($result_color)) {$color = mysql_result($result_color, 0); }
+    $result_color = mysqli_query($mysql, $sql_color);
+    if (mysqli_num_rows($result_color)) {$color = mysqli_result($result_color, 0); }
   }
   return $color;
 }
@@ -298,9 +298,9 @@ function submit_new_chat($game_id) {
   print $_POST['room_max']."<br />";
   $room_id = insert_chat_room($game_id,$_POST['chat_name'],$_POST['room_max']);
   $sql_user = sprintf("select user_id from Users_game_all where game_id=%s",quote_smart($game_id));
-  $result_user = mysql_query($sql_user);
+  $result_user = mysqli_query($mysql, $sql_user);
 
-  while ( $user = mysql_fetch_array($result_user) ) {
+  while ( $user = mysqli_fetch_array($result_user) ) {
     $id = $user['user_id'];
 
     if ( $_POST['player_'.$id] == "on" ) {
@@ -374,12 +374,12 @@ function submit_edit_chat($game_id){
 # Creates the Table to manage all the chat rooms
 function list_chat_rooms($game_id) {
   $sql = sprintf("select * from Chat_rooms where game_id=%s order by name",quote_smart($game_id));
-  $result =  mysql_query($sql);
-  $num_chat_rooms = mysql_num_rows($result);
+  $result =  mysqli_query($mysql, $sql);
+  $num_chat_rooms = mysqli_num_rows($result);
   $output .= "<form id='all_rooms' name='all_rooms'>\n";
   $output .= "<table class='forum_table'><tr><th><a href='javascript:add_room_dialog()'><img src='/images/add.png'  border='0' /></a></th><th colspan='2'>Current Chat Rooms ($num_chat_rooms)</th></tr>\n";
 
-  while ( $room = mysql_fetch_array($result) ) {
+  while ( $room = mysqli_fetch_array($result) ) {
     $output .= "<tr>";
     $output .= room_info($room['id']);
 	$output .= player_info($game_id,$room['id']);
@@ -395,11 +395,11 @@ function list_chat_rooms($game_id) {
 function room_info($room_id,$page='config') {
   if ( $room_id == 0 ) { return "No Room Selected"; }
   $sql_room = sprintf("select * from Chat_rooms where id=%s",quote_smart($room_id));
-  $result_room = mysql_query($sql_room);
-  $room = mysql_fetch_array($result_room);
+  $result_room = mysqli_query($mysql, $sql_room);
+  $room = mysqli_fetch_array($result_room);
   $sql_messages = "select count(*) from Chat_messages where room_id=".$room['id'];
-  $result_messages = mysql_query($sql_messages);
-  $room['message_count'] = mysql_result($result_messages,0,0);
+  $result_messages = mysqli_query($mysql, $sql_messages);
+  $room['message_count'] = mysqli_result($result_messages,0,0);
   if ( $page == "config" ) {
     $output .= "<td valign='top'>";
   }
@@ -434,10 +434,10 @@ function room_info($room_id,$page='config') {
 
 function player_info($game_id,$room_id) {
   $sql_users = sprintf("select id, name, color, `lock`, `type`, max_post, remaining_post, open, close from Chat_users, Users, Users_game_all where Chat_users.user_id=Users.id and Chat_users.user_id=Users_game_all.user_id and Users.id=Users_game_all.user_id and game_id =%s and room_id=%s order by type, name",quote_smart($game_id),quote_smart($room_id));
-  $result_users = mysql_query($sql_users);
+  $result_users = mysqli_query($mysql, $sql_users);
   $output .= "<td>";
   $output .= "<table border='0'>";
-  while ( $user = mysql_fetch_array($result_users) ) {
+  while ( $user = mysqli_fetch_array($result_users) ) {
     $output .= "<tr>";
     $output .= "<td>";
     if ( $user['type'] != "moderator" ) {
@@ -591,8 +591,8 @@ function display_edit_dialog($game_id, $room_id) {
 
 function display_eye_dialog($game_id,$room_id,$user_id) {
   $sql = sprintf("select name, open, close from Chat_users, Users where Chat_users.user_id=Users.id and room_id=%s and user_id=%s",quote_smart($room_id),quote_smart($user_id));
-  $result = mysql_query($sql);
-  $user = mysql_fetch_array($result);
+  $result = mysqli_query($mysql, $sql);
+  $user = mysqli_fetch_array($result);
   $output = "<form id='edit_eye' name='edit_eye' method='post' action='".$_SERVER['PHP_SELF']."'>\n";
   $output .= "<table class='forum_table'>\n";
   $output .= "<tr><th colspan='2'>Edit Viewing Times for ".$user['name']."</th></tr>\n";

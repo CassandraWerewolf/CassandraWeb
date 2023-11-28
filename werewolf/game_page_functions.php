@@ -14,7 +14,7 @@ include_once "google_calendar_functions.php";
 // include_once "moderator_control_functions.php";
 
 
-dbConnect();
+$mysql = dbConnect();
 
 function get_game_info($id,$type) {
   if ( $type == "thread" ) {
@@ -25,18 +25,18 @@ function get_game_info($id,$type) {
     $game['id'] = 0;
     return $game;
   }
-  $result = mysql_query($sql);
-  $game = mysql_fetch_array($result);
-  if ( mysql_num_rows($result) != 1 ) { $game['id'] = 0; }
+  $result = mysqli_query($mysql, $sql);
+  $game = mysqli_fetch_array($result);
+  if ( mysqli_num_rows($result) != 1 ) { $game['id'] = 0; }
 
   return $game;
 }
 
 function get_player_info($user_id,$game_id) {
   $sql = sprintf("select * from Players, Players_all where Players.user_id=Players_all.original_id and Players.game_id=Players_all.game_id and Players_all.user_id=%s and Players_all.game_id=%s",quote_smart($user_id),quote_smart($game_id));
-  $result = mysql_query($sql);
-  $player_info = mysql_fetch_array($result);
-  if ( mysql_num_rows($result) != 1 ) { unset($player_info); }
+  $result = mysqli_query($mysql, $sql);
+  $player_info = mysqli_fetch_array($result);
+  if ( mysqli_num_rows($result) != 1 ) { unset($player_info); }
 
   return $player_info;
 }
@@ -45,8 +45,8 @@ function get_game_status($status,$parent_id) {
  $subthread = false;
  if ( $status == "Sub-Thread" ) {
   $sql = sprintf("Select `status` from Games where id=%s",quote_smart($parent_id));
-  $result = mysql_query($sql);
-  $status = mysql_result($result,0,0);
+  $result = mysqli_query($mysql, $sql);
+  $status = mysqli_result($result,0,0);
   $subthread = true;
  }
 
@@ -56,8 +56,8 @@ function get_game_status($status,$parent_id) {
 
 function get_game_chat_status($game_id){
   $sql = sprintf("select count(*) from Chat_rooms where game_id=%s",quote_smart($game_id));
-  $result = mysql_query($sql);
-  $chats = mysql_result($result,0,0);
+  $result = mysqli_query($mysql, $sql);
+  $chats = mysqli_result($result,0,0);
   
   return $chats;
 }
@@ -194,12 +194,12 @@ function show_moderator($game_id) {
   }
   $output = "";
   $sql = sprintf("Select id, name from Users, Moderators where Users.id=Moderators.user_id and Moderators.game_id=%s order by name",quote_smart($game_id));
-  $result = mysql_query($sql);
+  $result = mysqli_query($mysql, $sql);
   $count = 0;
-  while ( $mod = mysql_fetch_array($result) ) {
+  while ( $mod = mysqli_fetch_array($result) ) {
     $sql2 = sprintf("Select count(*) from Posts where game_id=%s and user_id=%s",quote_smart($game_id),quote_smart($mod['id']));
-    $result2=mysql_query($sql2);
-    $num_post=mysql_result($result2,0,0);
+    $result2=mysqli_query($mysql, $sql2);
+    $num_post=mysqli_result($result2,0,0);
     if ( $count == 0 ) {
       $output .= get_player_page($mod['name']);
       $output .= " <a href='$domain/game/".$game['thread_id']."/".$mod['name']."'>($num_post post)</a>";
@@ -218,8 +218,8 @@ function show_dates($game_id,$edit='false') {
   $output = "";
   $format = "'%b %e, %Y'";
   $sql = sprintf("select date_format(start_date, %s) as start, date_format(end_date, %s) as end from Games where id=%s",$format,$format,quote_smart($game_id));
-  $result = mysql_query($sql);
-  $date = mysql_fetch_array($result);
+  $result = mysqli_query($mysql, $sql);
+  $date = mysqli_fetch_array($result);
   if ( $date['end'] == "" ) { $date['end'] = "?"; }
   $content = $date['start']." to ".$date['end'];
   $output = create_edit_div($edit,'dates_div2',"Click to Edit Dates",'get_edit_form("dates_form")',$content);
@@ -238,8 +238,8 @@ function show_game_status($game_id,$edit='false') {
   list ($status, $subthread) = get_game_status($game['status'],$game['parent_game_id']);
   if ( $subthread ) {
     $sql = sprintf("Select title, thread_id from Games where id=%s",quote_smart($game['parent_game_id']));
-    $result = mysql_query($sql);
-    $parent_game = mysql_fetch_array($result);
+    $result = mysqli_query($mysql, $sql);
+    $parent_game = mysqli_fetch_array($result);
     $output .= " of <a href='$domain/game/".$parent_game['thread_id']."'>".$parent_game['title']."</a>";
   }
   return $output;
@@ -259,16 +259,16 @@ function show_extra_status_info($game_id) {
     $format1 = '%i';
     $format2 = '%l';
     $sql = sprintf("select concat(date_format(if(minute>date_format(now(),'%s'),now(),date_add(now(),interval 1 hour)),'%s'),':',if(minute<10,concat('0',minute),minute)) as next from Post_collect_slots where game_id=%s",$format1,$format2,quote_smart($game_id));
-    $result = mysql_query($sql);
-    if ( mysql_num_rows($result) > 0 ) {
-      $next = mysql_result($result,0,0);
+    $result = mysqli_query($mysql, $sql);
+    if ( mysqli_num_rows($result) > 0 ) {
+      $next = mysqli_result($result,0,0);
       $output .= "Next Post Scan at $next";
     } 
   }
   if ( $game['status'] == "Sign-up" ) {
     $sql = sprintf("select count(*) from Players where game_id=%s",quote_smart($game_id));
-    $result = mysql_query($sql);
-    $count = mysql_result($result,0,0);
+    $result = mysqli_query($mysql, $sql);
+    $count = mysqli_result($result,0,0);
     if ( $count < $game['max_players'] && !$isplayer  && !$ismod ) {
       $output .= "<a href='$domain/sign_me_up.php?action=add&game_id=$game_id'>Sign Me UP!!!</a>";
     }
@@ -297,9 +297,9 @@ function show_deadlines($game_id,$edit='false') {
   $output .= create_edit_div($edit,'deadline_div2',"Click to Edit Deadlines",'get_edit_form("deadline_form")',$content);
   if ( $lynch != "" ) {
     $sql = sprintf("SELECT concat_ws(', ',if(sun, 'Sun', null),if(mon, 'Mon', null), if(tue, 'Tue', null), if(wed, 'Wed', null), if(thu, 'Thu', null), if(fri, 'Fri', null), if(sat, 'Sat', null)) as lynch_days from Auto_dusk where  game_id=%s",quote_smart($game_id));
-    $result = mysql_query($sql);
-    if ( mysql_num_rows($result) == 1 ) {
-      $lynch_days = mysql_result($result,0,0);
+    $result = mysqli_query($mysql, $sql);
+    if ( mysqli_num_rows($result) == 1 ) {
+      $lynch_days = mysqli_result($result,0,0);
       $output .= "<tr><td><b>Game Days:</b></td><td>$lynch_days</td></tr>\n";
     }
   }
@@ -360,8 +360,8 @@ function show_subthreads($game_id) {
   }
   $output = "";
   $sql = sprintf("select * from Games where parent_game_id=%s",quote_smart($game_id));
-  $result = mysql_query($sql);
-  while ( $row = mysql_fetch_array($result) ) {
+  $result = mysqli_query($mysql, $sql);
+  while ( $row = mysqli_fetch_array($result) ) {
     $output .= "<a href='$domain/game/".$row['thread_id']."'>".$row['title']."</a><br />\n";
   }
   return $output;
@@ -416,8 +416,8 @@ function create_mod_controls($game_id,$status,$chats) {
   if ( $status == "Sign-up" || $status == "In Progress" ) {
     $output .= "<div><a href='$domain/configure_physics.php?game_id=".$game['id']."'>Activate/Configure Physics System</a></div>\n";
     $sql = sprintf("select name from Players_all, Users where Players_all.user_id=Users.id and Players_all.`type` != 'replaced' and Players_all.game_id=%s",quote_smart($game_id));
-    $result = mysql_query($sql);
-    while ( $r = mysql_fetch_array($result) ) {
+    $result = mysqli_query($mysql, $sql);
+    while ( $r = mysqli_fetch_array($result) ) {
       $player_list[] = $r['name'];
     }
     $output .= random_selector_tool($player_list);
@@ -451,8 +451,8 @@ function clear_editSpace() {
 function name_form($game_id) {
   $output = "You can change the name of the game or sub-thread.<br /><br />";
   $sql = sprintf("select title from Games where id=%s",quote_smart($game_id));
-  $result = mysql_query($sql);
-  $title = mysql_result($result,0,0);
+  $result = mysqli_query($mysql, $sql);
+  $title = mysqli_result($result,0,0);
   $output .= "<form name='new_title'>\n";
   $output .= "<input type='text' name='title' value='$title' />\n";
   $output .= "<input type='button' name='submit' value='submit' onClick='submit_name()'/>\n";
@@ -466,7 +466,7 @@ function name_submit($game_id,$title) {
     $cache = init_cache();
     $title = safe_html($title);
     $sql = sprintf("update Games set title=%s where id=%s",quote_smart($title),quote_smart($game_id));
-    $result = mysql_query($sql);
+    $result = mysqli_query($mysql, $sql);
     $cache->clean('front-signup-' . $game_id);
     $cache->clean('front-signup-fast-' . $game_id);
     $cache->clean('front-signup-swf-' . $game_id);
@@ -479,14 +479,14 @@ function mod_form($game_id) {
   $output .= "<form name='change_mod'>\n";
   $sql = sprintf("select user_id from Users, Moderators where Moderators.user_id
 =Users.id and game_id=%s order by name",quote_smart($game_id));
-  $result = mysql_query($sql);
-  while ( $row = mysql_fetch_array($result) ) {
+  $result = mysqli_query($mysql, $sql);
+  while ( $row = mysqli_fetch_array($result) ) {
     $modids[]=$row['user_id'];
   }
   $sql="Select id, name from Users order by name";
-  $result = mysql_query($sql);
+  $result = mysqli_query($mysql, $sql);
   unset($options);
-  while ( $row = mysql_fetch_array($result) ) {
+  while ( $row = mysqli_fetch_array($result) ) {
     $options[$row['id']] = $row['name'];
   }
 
@@ -503,8 +503,8 @@ function mod_submit($game_id,$modlist) {
   $newidlist = split( ",", $modlist);
   sort($newidlist);
   $sql = sprintf("select user_id from Games, Moderators where Games.id = Moderators.game_id and Games.id=%s",quote_smart($game_id));
-  $result = mysql_query($sql);
-  while ( $row = mysql_fetch_array($result) ) {
+  $result = mysqli_query($mysql, $sql);
+  while ( $row = mysqli_fetch_array($result) ) {
     $oldidlist[] = $row['user_id'];
   }
   $cache->clean('front-signup-' . $game_id);
@@ -527,7 +527,7 @@ function mod_submit($game_id,$modlist) {
   if ( $addlist[0] != "" ) {
     foreach ( $addlist as $id ) {
       $sql = sprintf("insert into Moderators ( user_id, game_id ) values ( %s, %s )",quote_smart($id),quote_smart($game_id));
-      $result = mysql_query($sql);
+      $result = mysqli_query($mysql, $sql);
     }
   }
 
@@ -544,7 +544,7 @@ function mod_submit($game_id,$modlist) {
   if ( $dellist[0] != "" ) {
     foreach ( $dellist as $id ) {
       $sql = sprintf("delete from Moderators where user_id=%s and game_id=%s",quote_smart($id),quote_smart($game_id));
-      $result = mysql_query($sql);
+      $result = mysqli_query($mysql, $sql);
     }
   }
 
@@ -556,8 +556,8 @@ function dates_form($game_id) {
   $format = "'%Y-%m-%d'";
   $output .= "<form name='edit_date'>\n";
   $sql = sprintf("select date_format(start_date, %s) as start, date_format(end_date, %s) as end from Games where id=%s", $format,$format,quote_smart($game_id));
-  $result = mysql_query($sql);
-  $date = mysql_fetch_array($result);
+  $result = mysqli_query($mysql, $sql);
+  $date = mysqli_fetch_array($result);
   $output .= "<input type=text name='start' value='".$date['start']."' />";
   $output .= " to ";
   $output .= "<input type=text name='end' value='".$date['end']."' />\n";
@@ -571,7 +571,7 @@ function dates_form($game_id) {
 function dates_submit($game_id,$sdate,$edate) {
   $cache = init_cache();
   $sql = sprintf("update Games set start_date=%s, end_date=%s where id=%s",quote_smart($sdate),quote_smart($edate),quote_smart($game_id));
-  $result = mysql_query($sql);
+  $result = mysqli_query($mysql, $sql);
   $cache->clean('front-signup-' . $game_id);
   $cache->clean('front-signup-fast-' . $game_id);
   $cache->clean('front-signup-swf-' . $game_id);
@@ -594,8 +594,8 @@ function status_form($game_id) {
   $day = $game['day'];
   unset($options);
   $sql="show columns from Games where field='status'";
-  $result=mysql_query($sql);
-  while ($row=mysql_fetch_row($result)) {
+  $result=mysqli_query($mysql, $sql);
+  while ($row=mysqli_fetch_row($result)) {
     foreach(explode("','",substr($row[1],6,-2)) as $v) {
       if ( $status != "Sub-Thread" ) {
         $options[$v] = $v;
@@ -608,8 +608,8 @@ function status_form($game_id) {
   }
   unset($options);
   $sql="show columns from Games where field='phase'";
-  $result=mysql_query($sql);
-  while ($row=mysql_fetch_row($result)) {
+  $result=mysqli_query($mysql, $sql);
+  while ($row=mysqli_fetch_row($result)) {
     foreach(explode("','",substr($row[1],6,-2)) as $v) {
       $options[$v] = $v; 
     }
@@ -625,7 +625,7 @@ function status_form($game_id) {
 function status_submit($game_id,$status,$phase,$day) {
   $cache = init_cache();
   $sql = sprintf("update Games set `status`=%s, phase=%s, day=%s where id=%s",quote_smart($status),quote_smart($phase),quote_smart($day),quote_smart($game_id));
-  $result = mysql_query($sql);
+  $result = mysqli_query($mysql, $sql);
   if($status == 'In Progress') {
     $cache->remove('total-games', 'front');
     $cache->remove('games-in-progress-list', 'front');
@@ -673,14 +673,14 @@ function deadline_submit($game_id,$lynch,$night) {
   } else {
     $sql = sprintf("update Games set `lynch_time`=null where id=%s",quote_smart($game_id));
   }
-  $result = mysql_query($sql);
+  $result = mysqli_query($mysql, $sql);
   if ( $night != "" ) {
     $night .= ":00:00";
     $sql = sprintf("update Games set `na_deadline`=%s where id=%s",quote_smart($night),quote_smart($game_id));
   } else {
     $sql = sprintf("update Games set `na_deadline`=null where id=%s",quote_smart($game_id));
   }
-  $result = mysql_query($sql);
+  $result = mysqli_query($mysql, $sql);
 
   return show_deadlines($game_id,true);
 }
@@ -704,7 +704,7 @@ function maxplayers_form($game_id) {
 function maxplayers_submit($game_id,$maxplayers) {
   $cache = init_cache();
   $sql = sprintf("update Games set max_players=%s where id=%s",quote_smart($maxplayers),quote_smart($game_id));
-  $result = mysql_query($sql);
+  $result = mysqli_query($mysql, $sql);
   $cache->clean('front-signup-' . $game_id);
   $cache->clean('front-signup-fast-' . $game_id);
   $cache->clean('front-signup-swf-' . $game_id);
@@ -721,9 +721,9 @@ function complexity_form($game_id) {
   $output .= "<form name='comp_form'>";
   $complex = $game['complex'];
   $sql="show columns from Games where field='complex'";
-  $result=mysql_query($sql);
+  $result=mysqli_query($mysql, $sql);
   unset($options);
-  while ($row=mysql_fetch_row($result)) {
+  while ($row=mysqli_fetch_row($result)) {
     foreach(explode("','",substr($row[1],6,-2)) as $v) {
       $options[$v] = $v;
     }
@@ -739,7 +739,7 @@ function complexity_form($game_id) {
 function complexity_submit($game_id,$complex) {
   $cache = init_cache();
   $sql = sprintf("update Games set complex=%s where id=%s",quote_smart($complex),quote_smart($game_id));
-  $result = mysql_query($sql);
+  $result = mysqli_query($mysql, $sql);
   $cache->clean('front-signup-' . $game_id);
   $cache->clean('front-signup-swf-' . $game_id);
   $cache->clean('front-signup-fast-' . $game_id);
@@ -756,9 +756,9 @@ function winner_form ($game_id) {
   $output .= "<form name='new_winner'>\n";
   $winner = $game['winner'];
   $sql="show columns from Games where field='winner'";
-  $result=mysql_query($sql);
+  $result=mysqli_query($mysql, $sql);
   unset($options);
-  while ($row=mysql_fetch_row($result)) {
+  while ($row=mysqli_fetch_row($result)) {
     foreach(explode("','",substr($row[1],6,-2)) as $v) {
       $options[$v] = $v;
     }
@@ -774,7 +774,7 @@ function winner_form ($game_id) {
 function winner_submit($game_id,$winner) {
   $cache = init_cache();
   $sql = sprintf("update Games set winner=%s where id=%s",quote_smart($winner),quote_smart($game_id));
-  $result = mysql_query($sql);
+  $result = mysqli_query($mysql, $sql);
   $cache->remove('evil-games', 'front');
   $cache->remove('good-games', 'front');
   $cache->remove('other-games', 'front');
@@ -801,7 +801,7 @@ function thread_form($game_id) {
 function thread_submit($game_id,$thread_id) {
   $cache = init_cache();
   $sql = sprintf("update Games set thread_id=%s where id=%s",quote_smart($thread_id),quote_smart($game_id));
-  $result = mysql_query($sql);
+  $result = mysqli_query($mysql, $sql);
   $cache->clean('front-signup-' . $game_id);
   $cache->clean('front-signup-fast-' . $game_id);
   $cache->clean('front-signup-swf-' . $game_id);
@@ -812,8 +812,8 @@ function thread_submit($game_id,$thread_id) {
 function subt_form($game_id){
   $output = "If your game has sub-threads associated with it, such as threads where team-member can discussthings.  Then you add them here.  Once you have added the BGG thead_id you can edit that 'game' page just as you are editing this one.<br /><br />";
   $sql = sprintf("select * from Games where parent_game_id=%s",quote_smart($game_id));
-  $result = mysql_query($sql);
-  while ( $row = mysql_fetch_array($result) ) {
+  $result = mysqli_query($mysql, $sql);
+  while ( $row = mysqli_fetch_array($result) ) {
     $output .=  $row['title']." - ".$row['thread_id']." <a href='javascript:submit_subt(\"".$row['thread_id']."\",\"delete\")'>delete</a><br />\n";
   }
   $output .= "<form name='new_subt'><input type='text' name='tid' />\n";
@@ -827,20 +827,20 @@ function subt_form($game_id){
 function subt_submit($game_id,$subthread_id,$action) {
   if ( $action == "add" ) {
     $sql = sprintf("insert into Games (id, title, status, thread_id, parent_game_id) values ( NULL, 'Sub-Thread', 'Sub-Thread', %s, %s)",($subthread_id),quote_smart($game_id));
-    $result = mysql_query($sql);
-    $new_game_id = mysql_insert_id();
+    $result = mysqli_query($mysql, $sql);
+    $new_game_id = mysqli_insert_id();
     $sql = sprintf("select user_id from Moderators where game_id=%s",quote_smart($game_id));
-    $result = mysql_query($sql);
-    while ( $mod = mysql_fetch_array($result) ) {
+    $result = mysqli_query($mysql, $sql);
+    while ( $mod = mysqli_fetch_array($result) ) {
       $sql2 = "insert into Moderators (user_id, game_id) values ('".$mod['user_id']."', '$new_game_id')";
-      $result2 = mysql_query($sql2);
+      $result2 = mysqli_query($mysql, $sql2);
     }
   } elseif ($action == "delete" ) {
     $sql = sprintf("select id from Games where thread_id=%s",quote_smart($subthread_id));
-    $result = mysql_query($sql);
-    $st_game_id = mysql_result($result,0,0);
+    $result = mysqli_query($mysql, $sql);
+    $st_game_id = mysqli_result($result,0,0);
     $sql = "delete from Games where id ='$st_game_id'";
-    $result = mysql_query($sql);
+    $result = mysqli_query($mysql, $sql);
   } 
   return show_subthreads($game_id);
 }
@@ -864,7 +864,7 @@ function desc_form($game_id) {
 function desc_submit($game_id,$desc) {
   $desc = safe_html($desc,"<a>");
   $sql = sprintf("update Games set description=%s where id=%s",quote_smart($desc),quote_smart($game_id));
-  $result = mysql_query($sql);
+  $result = mysqli_query($mysql, $sql);
   return show_description($game_id,true);
 }
 
@@ -886,7 +886,7 @@ function vote_tally_submit($game_id,$action,$tiebreaker) {
   }
   if ( $action == "activate" ) {
     $sql = sprintf("update Games set auto_vt=%s where id=%s",quote_smart($toebrealer),quote_smart($game_id));
-    $result = mysql_query($sql);
+    $result = mysqli_query($mysql, $sql);
     $message = file_get_contents("cassy_vote_tally.txt");
     $message .= "\n";
     if ( $tiebreaker == "lhv") {
@@ -899,9 +899,9 @@ function vote_tally_submit($game_id,$action,$tiebreaker) {
     BGG::authAsCassy()->reply_thread($game['thread_id'],$message);
   } elseif ($action == "retrieve" ) {
     $sql = sprintf("update Games set updated_tally=1 where id=%s",quote_smart($game_id));
-    $result = mysql_query($sql);
+    $result = mysqli_query($mysql, $sql);
     $sql = sprintf("update Post_collect_slots set last_dumped=NULL where game_id=%s",quote_smart($game_id));
-    $result = mysql_query($sql);
+    $result = mysqli_query($mysql, $sql);
   }
 
   return;
@@ -927,16 +927,16 @@ function goa_form($game_id) {
   $output .= "<table class='forum_table'>";
   $output .= "<tr><th>Player</th><th>Order Description</th><th>Game Order Choices</th><th>Group Name</th></tr>";
   $sql = sprintf("select * from Players, Users where Players.user_id=Users.id and game_id=%s order by name",quote_smart($game_id));
-  $result = mysql_query($sql);
-  while ( $player = mysql_fetch_array($result) ) {
+  $result = mysqli_query($mysql, $sql);
+  while ( $player = mysqli_fetch_array($result) ) {
     $output .= "<tr>";
     $output .= "<td>".$player['name']."</td>";
     $output .= "<td><input type='text' width='50' id='desc_".$player['user_id']."' name='desc_".$player['user_id']."' value='".$player['ga_desc']."' />";
     $output .= "<td align='center'>";
     $sql2="show columns from Players where field='game_action'";
-    $result2=mysql_query($sql2);
+    $result2=mysqli_query($mysql, $sql2);
     unset($options);
-    while ($row=mysql_fetch_row($result2)) {
+    while ($row=mysqli_fetch_row($result2)) {
       foreach(explode("','",substr($row[1],6,-2)) as $v) {
         $options[$v] = $v;
       }
@@ -958,12 +958,12 @@ function goa_form($game_id) {
 
 function goa_submit($data) {
   $sql = sprintf("update Games set game_order='on' where id=%s",quote_smart($data['game_id']));
-  $result = mysql_query($sql);
+  $result = mysqli_query($mysql, $sql);
   $sql = sprintf("select * from Players where game_id=%s",quote_smart($data['game_id']));
-  $result=mysql_query($sql);
-  while ( $player = mysql_fetch_array($result) ) {
+  $result=mysqli_query($mysql, $sql);
+  while ( $player = mysqli_fetch_array($result) ) {
     $sql_update = sprintf("update Players set game_action=%s, ga_desc=%s, ga_text=%s, ga_group=%s where user_id=%s and game_id=%s",quote_smart($data['na_'.$player['user_id']]),quote_smart($data['desc_'.$player['user_id']]),quote_smart($data['text_'.$player['user_id']]),quote_smart($data['group_'.$player['user_id']]),quote_smart($player['user_id']),quote_smart($data['game_id']));
-    $result_update = mysql_query($sql_update);
+    $result_update = mysqli_query($mysql, $sql_update);
   }
   error("Game Order Assistant has been submitted");
   return;
@@ -988,7 +988,7 @@ function mpw_submit($game_id,$hr) {
   } else {
     $sql = sprintf("update Games set missing_hr=%s where id=%s",quote_smart($hr),quote_smart($game_id));
   }
-  $result = mysql_query($sql);
+  $result = mysqli_query($mysql, $sql);
   return " ";
 }
 
@@ -1086,15 +1086,15 @@ function random_selector_tool($list) {
 
 function assign_roles_form($game_id) {
   $sql = sprintf("select role_name from Players where game_id=%s order by role_name",quote_smart($game_id));
-  $result = mysql_query($sql);
-  $num_players = mysql_num_rows($result);
+  $result = mysqli_query($mysql, $sql);
+  $num_players = mysqli_num_rows($result);
   $output = "<form name='roles' method='post' action='".$_SERVER['PHP_SELF']."'>\n";
   $output .= "<input type='hidden' name='game_id' value='$game_id' />\n";
   $output .= "<input type='hidden' name='num' value='$num_players' />\n";
   $output .= "<table class='forum_table'>\n";
   $output .= "<tr><th>Enter the Names of all Roles</th><th>hide</th></tr>\n";
   $i=0;
-  while ( $player = mysql_fetch_array($result) ) {
+  while ( $player = mysqli_fetch_array($result) ) {
     $output .= "<tr><td align='center'><input type='text' name='role_$i' value='".$player{'role_name'}."' /></td><td><input type='checkbox' name='hide_$i' /></td></tr>\n";
     $i++;
   }
@@ -1108,9 +1108,9 @@ function assign_roles_form($game_id) {
 
 function assign_roles_submit($data) {
   $sql = sprintf("select user_id from Players where game_id=%s",quote_smart($data['game_id']));
-  $result = mysql_query($sql);
+  $result = mysqli_query($mysql, $sql);
   $players = array();
-  while ( $row = mysql_fetch_array($result) ) {
+  while ( $row = mysqli_fetch_array($result) ) {
     $players[] = $row['user_id'];
   }
   $roles = array();
@@ -1130,13 +1130,13 @@ function assign_roles_submit($data) {
     }
     if ( $hide ) {
       $sql = sprintf("select mod_comment from Players where user_id=%s and game_id=%s",$players[$i],quote_smart($data['game_id']));
-      $result = mysql_query($sql);
-      $mod_comment = mysql_result($result,0,0);
+      $result = mysqli_query($mysql, $sql);
+      $mod_comment = mysqli_result($result,0,0);
       $sql = sprintf("update Players set mod_comment=%s where user_id=%s and game_id=%s",quote_smart($mod_comment." ".$roles[$i]),$players[$i],quote_smart($data['game_id']));
-      $result = mysql_query($sql);
+      $result = mysqli_query($mysql, $sql);
     } else {
       $sql = sprintf("update Players set role_name=%s where user_id=%s and game_id=%s",quote_smart($roles[$i]),$players[$i],quote_smart($data['game_id']));
-      $result = mysql_query($sql);
+      $result = mysqli_query($mysql, $sql);
     }
   }
   error("Roles have been randomly assigned.");
@@ -1149,8 +1149,8 @@ function pm_players_form($game_id) {
   $output .= "<table border='0' class='forum_table' >\n";
   $output .= "<input type='hidden' name='game_id' value='$game_id' />\n";
   $sql = sprintf("select id, name from Users_game_all, Users where Users_game_all.user_id = Users.id and game_id=%s order by name",quote_smart($game_id));
-  $result = mysql_query($sql);
-  while ( $player = mysql_fetch_array($result) ) {
+  $result = mysqli_query($mysql, $sql);
+  while ( $player = mysqli_fetch_array($result) ) {
     $output .= "<tr>";
     $output .= "<td><input type='checkbox' name='".$player['name']."' value='".$player['id']."' /></td>";
     $output .= "<td>".$player['name']."</td>";
@@ -1177,10 +1177,10 @@ function createPlayer_table($edit,$game_id) {
   if ( $game['alias_display'] == 'Public' ) { $show_alias_values = true; } 
 print "VOTE: $show_alias <br />";
   $sql = sprintf("SELECT CASE WHEN Games.status =  'Sign-Up' THEN CONCAT( COUNT( * ) ,  '/', max_players ) ELSE CONCAT( SUM( CASE WHEN (death_phase IS NULL OR death_phase = 'Alive' OR death_phase = '') THEN 1 ELSE 0 END ) ,  '/', COUNT( * ) ) END FROM Players_r, Games WHERE Games.id =%s AND Players_r.game_id = Games.id",quote_smart($game_id));
-  $result = mysql_query($sql);
-  $players_total = mysql_result($result,0,0);
+  $result = mysqli_query($mysql, $sql);
+  $players_total = mysqli_result($result,0,0);
   $sql = sprintf("select Users.id as uid, name, role_name, `type`, side, death_phase, death_day, mod_comment, need_replace, player_alias, alias_color from Users, Players, Roles where Users.id=Players.user_id and Players.role_id=Roles.id and game_id=%s order by name",quote_smart($game_id));
-  $result = mysql_query($sql);
+  $result = mysqli_query($mysql, $sql);
   if ( $edit ) {
     $edit_col[] = "Edit";
   }
@@ -1196,7 +1196,7 @@ print "VOTE: $show_alias <br />";
   $death_color[] = "#000000";
   $comment[] = "Comment";
   $count = 0;
-  while ( $row = mysql_fetch_array($result) ) {
+  while ( $row = mysqli_fetch_array($result) ) {
     $players[] = display_player($row['name'],$row['uid'],$game_id);
     if ( $edit ) { $edit_col[] = "<a href='javascript:edit_player(\"".$row['uid']."\",\"$count\")'><img src='$domain/images/edit.png' border='0' /></a>"; }
     if ( $row['need_replace'] != "" ) {
@@ -1250,7 +1250,7 @@ print "VOTE: $show_alias <br />";
       'cellspacing' => '2'
   );
 
-  $table =& new HTML_Table($attrs);
+  $table =new HTML_Table($attrs);
 
   if ( $edit ) { $table->addCol($edit_col); }
   if ( $status == "In Progress" ) { $table->addCol($replace); }
@@ -1263,8 +1263,8 @@ print "VOTE: $show_alias <br />";
   $table->addCol($comment);
 
   $sql = sprintf("select count(*) from Posts where game_id=%s",quote_smart($game_id));
-  $result = mysql_query($sql);
-  $num_post = mysql_result($result,0,0);
+  $result = mysqli_query($mysql, $sql);
+  $num_post = mysqli_result($result,0,0);
 
   $i = 0;
   if ( $edit ) {
@@ -1320,30 +1320,30 @@ function display_player($name,$user_id,$game_id) {
   $rep_id = 0;
   $replace = find_Replacements($user_id,$game_id);
   $sql2 = sprintf("select count(*) from Posts where game_id=%s and user_id=%s",quote_smart($game_id),quote_smart($user_id));
-  $result2 = mysql_query($sql2);
-  $num_post = mysql_result($result2,0,0);
+  $result2 = mysqli_query($mysql, $sql2);
+  $num_post = mysqli_result($result2,0,0);
   $current_id = $user_id;
   $current_num_post = $num_post;
   if ( $replace != "" ) {
     $sql2 = sprintf("select replace_id from Replacements where game_id=%s and user_id=%s",quote_smart($game_id),quote_smart($user_id));
-    $result2 = mysql_query($sql2);
-    $current_id = mysql_result($result2,mysql_num_rows($result2)-1,0);
+    $result2 = mysqli_query($mysql, $sql2);
+    $current_id = mysqli_result($result2,mysqli_num_rows($result2)-1,0);
     $sql2 = sprintf("select count(*) from Posts where game_id=%s and user_id=%s",quote_smart($game_id),quote_smart($current_id));
-    $result2 = mysql_query($sql2);
-    $current_num_post = mysql_result($result2,0,0);
+    $result2 = mysqli_query($mysql, $sql2);
+    $current_num_post = mysqli_result($result2,0,0);
   }
   $sql2 = sprintf("select death_phase, status from Players, Games where Players.game_id=Games.id and game_id=%s and user_id=%s",quote_smart($game_id),quote_smart($user_id));
-  $result2 = mysql_query($sql2);
+  $result2 = mysqli_query($mysql, $sql2);
   $dead = false;
-  if ( (mysql_result($result2,0,0) != "" && mysql_result($result2,0,0) != "Alive") ||  mysql_result($result2,0,1) == "Finished" ) { $dead = true; }
+  if ( (mysqli_result($result2,0,0) != "" && mysqli_result($result2,0,0) != "Alive") ||  mysqli_result($result2,0,1) == "Finished" ) { $dead = true; }
   if ( $current_num_post > 0 ) {
     $sql2 = sprintf("select max(time_stamp) as last_post, if(date_add(max(time_stamp),interval missing_hr hour) < now(), 'Yes','No') as missing from Posts, Games where Posts.game_id=Games.id and game_id=%s and user_id=%s",quote_smart($game_id),quote_smart($current_id));
   } else {
     $sql2 = sprintf("select 'Never' as last_post, if(date_add(start_date, interval missing_hr hour) < now(), 'Yes', 'No') as missing from Games where id=%s",quote_smart($game_id));
   }
-  $result2 = mysql_query($sql2);
-  $last_post = mysql_result($result2,0,0);
-  $missing = mysql_result($result2,0,1);
+  $result2 = mysqli_query($mysql, $sql2);
+  $last_post = mysqli_result($result2,0,0);
+  $missing = mysqli_result($result2,0,1);
   $this_player = "";
   if ( $missing == "Yes" && !$dead) {
      $this_player .=  "<span onMouseOver='javascript:{document.getElementById(\"${user_id}_lp\").style.visibility=\"visible\";}' ";
@@ -1360,14 +1360,14 @@ function display_player($name,$user_id,$game_id) {
 function find_Replacements($user_id,$game_id) {
   global $rep_id;
   $sql = sprintf("Select name, replace_id as id, substring(period,1,1) as p, number from Users, Replacements where Users.id=Replacements.replace_id and game_id=%s and user_id=%s order by number, period",quote_smart($game_id),quote_smart($user_id));
-  $result = mysql_query($sql);
+  $result = mysqli_query($mysql, $sql);
   $count = 0;
   $replace = "";
-  while ( $rep = mysql_fetch_array($result) ) {
+  while ( $rep = mysqli_fetch_array($result) ) {
     $rep_id = $rep['id'];
     $sql2 = sprintf("select count(*) from Posts where game_id=%s and user_id='".$rep['id']."'",quote_smart($game_id));
-    $result2 = mysql_query($sql2);
-    $num_post = mysql_result($result2,0,0);
+    $result2 = mysqli_query($mysql, $sql2);
+    $num_post = mysqli_result($result2,0,0);
     if ( $count == 0 ) {
       $replace = "<br /> (replaced by ";
       $replace .= get_player_page($rep['name']);

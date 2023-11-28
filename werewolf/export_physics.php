@@ -6,21 +6,21 @@ include_once "php/common.php";
 include_once "configure_physics_functions.php";
 //include_once "menu.php";
 
-dbConnect();
+$mysql = dbConnect();
 #upgrading();
 
 $game_id = $_REQUEST['export_game_id'];
 
 //Make sure the person viewing this page is a moderator of the game.
 $sql = sprintf("select * from Moderators where game_id=%s and user_id=%s",quote_smart($game_id),$uid);
-$result = mysql_query($sql);
-if ( mysql_num_rows($result) != 1 ) {
+$result = mysqli_query($mysql, $sql);
+if ( mysqli_num_rows($result) != 1 ) {
 	error("You must be the moderator of the game in order to export the Physics System.");
 }
 
 $sql = sprintf("select * from Games where id=%s",quote_smart($game_id));
-$result = mysql_query($sql);
-$game = mysql_fetch_array($result);
+$result = mysqli_query($mysql, $sql);
+$game = mysqli_fetch_array($result);
 
 header('Content-type: text/xml');
 header('Content-Disposition: attachment; filename='.$game['title'].'.xml');

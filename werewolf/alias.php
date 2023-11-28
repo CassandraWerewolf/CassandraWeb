@@ -3,7 +3,7 @@
 include "php/accesscontrol.php";
 include_once "php/db.php";
 
-dbConnect();
+$mysql = dbConnect();
 
 $game_id = $_REQUEST['game_id'];
 
@@ -16,7 +16,7 @@ if ( isset($_POST['submit']) ) {
   $sql = sprintf("update Games set alias_display=%s, vote_by_alias=%s, phys_by_alias=%s where id=%s",
 	quote_smart($_POST['alias_display']), quote_smart($_POST['vote_by_alias'] ? 'Yes' : 'No'), quote_smart($_POST['phys_by_alias'] ? 'Yes' : 'No'),
 	quote_smart($game_id));
-  $result = mysql_query($sql);
+  $result = mysqli_query($mysql, $sql);
 ?>
 <html>
 <head>
@@ -38,8 +38,8 @@ print display_alias_settings($game_id);
 
 function display_alias_settings($game_id) {
 $sql = sprintf("select * from Games where id=%s",quote_smart($game_id));
-$result = mysql_query($sql);
-$game = mysql_fetch_array($result);
+$result = mysqli_query($mysql, $sql);
+$game = mysqli_fetch_array($result);
 
 $output = "<html>";
 $output .= "<head>";

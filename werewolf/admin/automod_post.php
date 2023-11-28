@@ -11,14 +11,14 @@ if ( $_REQUEST['remember'] == "on" ) {
   setcookie('bgg_password', $_REQUEST['bggpwd'], time()+60*60*24*365, '/', '', true, true);
 }
 
-dbConnect();
+$mysql = dbConnect();
 
 $bggpwd = $_COOKIE['bgg_password'];
 
 if ( isset($_REQUEST['submit']) ) {
   $sql = sprintf("select thread_id from Games where automod_id is not null and status != 'Finished'");
-  $result = mysql_query($sql);
-  while ( $thread_id = mysql_fetch_array($result) ) {
+  $result = mysqli_query($mysql, $sql);
+  while ( $thread_id = mysqli_fetch_array($result) ) {
     $message = $_REQUEST['message'];
     print "<!--";
     $bgg_user = BGG::auth($username, $_REQUEST['bggpwd']);

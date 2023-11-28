@@ -5,7 +5,7 @@ include_once "php/db.php";
 
 $cache = init_cache();
 
-dbConnect();
+$mysql = dbConnect();
 
 $game_id = $_REQUEST['game_id'];
 
@@ -13,8 +13,8 @@ $game_id = $_REQUEST['game_id'];
 
 if ( $level != 1 ) {
   $sql = sprintf("select * from Moderators where game_id=%s and user_id=%s",quote_smart($game_id),quote_smart($uid));
-  $result = mysql_query($sql);
-  if ( mysql_num_rows($result) != 1 ) {
+  $result = mysqli_query($mysql, $sql);
+  if ( mysqli_num_rows($result) != 1 ) {
     error("You must be a Moderator to delete this game.");
   }
 }
@@ -22,8 +22,8 @@ if ( $level != 1 ) {
 // Make sure the game is in sign-up mode.
 
 $sql = sprintf("select status from Games where id=%s",quote_smart($game_id));
-$result = mysql_query($sql);
-$status = mysql_result($result,0,0);
+$result = mysqli_query($mysql, $sql);
+$status = mysqli_result($result,0,0);
 
 if ( $status != "Sign-up" && $status != "Scheduled" && $status != "Unknown" ) {
   error("You can only delete a game Before it is in 'In Progress' mode.");
@@ -31,7 +31,7 @@ if ( $status != "Sign-up" && $status != "Scheduled" && $status != "Unknown" ) {
 
 if ( isset($_POST['confirm']) ) {
   $sql = sprintf("delete from Games where id=%s",quote_smart($game_id));
-  $result = mysql_query($sql);
+  $result = mysqli_query($mysql, $sql);
   $cache->remove('games-signup-fast-list', 'front');
   $cache->remove('games-signup-list', 'front');
 ?>

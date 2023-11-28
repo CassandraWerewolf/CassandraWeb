@@ -39,21 +39,21 @@ exit;
 
 # Get Game info
 $sql = "Select * from Games where thread_id=$game_thread_id";
-$result = mysql_query($sql);
-$game = mysql_fetch_array($result);
-if ( mysql_num_rows($result) != 1 ) { $game['id'] = 0; }
+$result = mysqli_query($mysql, $sql);
+$game = mysqli_fetch_array($result);
+if ( mysqli_num_rows($result) != 1 ) { $game['id'] = 0; }
 
 $status = $game['status'];
 $subthread = false;
 if ( $status == "Sub-Thread" ) {
   $sql = "Select `status` from Games where id=".$game['parent_game_id'];
-  $result = mysql_query($sql);
-  $status = mysql_result($result,0,0);
+  $result = mysqli_query($mysql, $sql);
+  $status = mysqli_result($result,0,0);
   $subthread = true;
 }
 $sql = sprintf("select count(*) from Chat_rooms where game_id=%s",quote_smart($game['id']));
-$result = mysql_query($sql);
-$chats = mysql_result($result,0,0);
+$result = mysqli_query($mysql, $sql);
+$chats = mysqli_result($result,0,0);
 
 if ( $status != "Finished" ) {
   error("This game is not part of the Cassandra Competion because it is not Finished yet.");
@@ -63,11 +63,11 @@ if ( $status != "Finished" ) {
 # Get Cassandra Competition Information
 $format = '%a. %b %e, %Y at %l:%i%p';
 $sql = sprintf("select user_id, name, if(timestampdiff(HOUR,claim_time,now())>=72,'open',date_format(date_add(claim_time, interval 3 day),'%s')) as expire, challenger_id, type_error, desc_error from CC_info, Users where CC_info.user_id=Users.id and game_id=%s",$format,quote_smart($game['id']));
-$result = mysql_query($sql);
-if ( mysql_num_rows($result) != 1 ) {
+$result = mysqli_query($mysql, $sql);
+if ( mysqli_num_rows($result) != 1 ) {
   $CC_info['user_id'] = "";
 } else {
-  $CC_info = mysql_fetch_array($result);
+  $CC_info = mysqli_fetch_array($result);
 }
 
 # Find out if person viewing should have edit abilities.
@@ -177,8 +177,8 @@ if ( !$subthread ) {
 <?php
 if ( $subthread) {
 $sql = "Select title, thread_id from Games where id='".$game['parent_game_id']."'";
-$result = mysql_query($sql);
-$parent_game = mysql_fetch_array($result);
+$result = mysqli_query($mysql, $sql);
+$parent_game = mysqli_fetch_array($result);
 print " of <a href='$game_page".$parent_game['thread_id']."'>".$parent_game['title']."</a>";
 }
 print "</div></td><td align='right'>";
@@ -186,9 +186,9 @@ if ( $game['status'] == "In Progress" ) {
 $format1 = '%i';
 $format2 = '%l';
 $sql = sprintf("select concat(date_format(if(minute>date_format(now(),'%s'),now(),date_add(now(),interval 1 hour)),'%s'),':',if(minute<10,concat('0',minute),minute)) as next from Post_collect_slots where game_id=%s",$format1,$format2,quote_smart($game['id']));
-$result = mysql_query($sql);
-if ( mysql_num_rows($result) > 0 ) {
-$next = mysql_result($result,0,0);
+$result = mysqli_query($mysql, $sql);
+if ( mysqli_num_rows($result) > 0 ) {
+$next = mysqli_result($result,0,0);
 print "Next Post Scan at $next";
 }
 }
@@ -196,8 +196,8 @@ print "</td></tr></table>";
 print "<td align='right'>";
 if ( $game['status'] == "Sign-up" ) {
   $sql1 = "select count(*) from Players where game_id='".$game['id']."'";
-  $result1 = mysql_query($sql1);
-  $count = mysql_result($result1,0,0);
+  $result1 = mysqli_query($mysql, $sql1);
+  $count = mysqli_result($result1,0,0);
   if ( $count < $game['max_players'] && !$isplayer ) {
     print "<a href='${here}sign_me_up.php?action=add&game_id=".$game['id']."'>Sign Me UP!!!</a>";
   }
@@ -245,8 +245,8 @@ if ( $edit ) {
 
 if ( ! $subthread) {
 $sql = "select count(*) from Games where parent_game_id='".$game['id']."'";
-$result = mysql_query($sql);
-$num = mysql_result($result,0,0);
+$result = mysqli_query($mysql, $sql);
+$num = mysqli_result($result,0,0);
 if ( $num > 0 || $edit) {
 print "<tr><td><div $open_comment onMouseOver='show_hint(\"Click to Add or Delete a Sub-Thread\")' onMouseOut='hide_hint()' onClick='edit_subt()' $close_comment><b>Sub-Threads:</b></div></td><td id='subt_td'>\n";
 show_subt($game['id']);
@@ -315,8 +315,8 @@ Edit
 </table>
 <?php
   $sql = sprintf("select max(article_id) as a_id from Posts where game_id=%s",$game['id']);
-  $result = mysql_query($sql);
-  if ( $result ) { $article_id = mysql_result($result,0,0); }
+  $result = mysqli_query($mysql, $sql);
+  if ( $result ) { $article_id = mysqli_result($result,0,0); }
 ?>
 
 <br /><a id='game_link' href="http://www.boardgamegeek.com/thread/<?=$game_thread_id;?>">Go to Game Thread</a> 
@@ -353,15 +353,15 @@ print "</td>\n";
 print "<td valign='top'>\n";
 # Show any Wolfy awards the game has won.
 $sql = sprintf("select * from Wolfy_games, Wolfy_awards where Wolfy_games.award_id=Wolfy_awards.id and game_id=%s order by id, year",$game['id']);
-$result = mysql_query($sql);
+$result = mysqli_query($mysql, $sql);
 if ( $result ) {
-  $num_awards = mysql_num_rows($result);
+  $num_awards = mysqli_num_rows($result);
 } else {
   $num_award = 0;
 }
 if ( $num_awards > 0 ) {
   print "<table class='forum_table'><tr><th>Wolfy Awards</th></tr>\n";
-while ( $award = mysql_fetch_array($result) ) {
+while ( $award = mysqli_fetch_array($result) ) {
   print "<tr><td><a href='http://www.boardgamegeek.com/article/".$award['award_post']."#".$award['award_post']."'>".$award['award']." (".$award['year'].")</a></td></tr>\n";
 }
   print "</table>\n";
@@ -369,15 +369,15 @@ while ( $award = mysql_fetch_array($result) ) {
 print "</td></tr></table>\n";
 
 $sql = "select distinct Posts.user_id, name from Posts, Users where Posts.user_id=Users.id and Posts.game_id='".$game['id']."' and Posts.user_id not in ( select user_id from Players where game_id='".$game['id']."') and Posts.user_id not in ( select user_id from Moderators where game_id='".$game['id']."') and Posts.user_id not in ( select replace_id from Replacements where game_id='".$game['id']."') order by name";
-$result = mysql_query($sql);
-$num_row = mysql_num_rows($result);
+$result = mysqli_query($mysql, $sql);
+$num_row = mysqli_num_rows($result);
 if ( $num_row > 0 ) {
 print "<br />Non-Players who posted<br />\n";
 print "<table class='forum_table'>\n";
-while ( $row = mysql_fetch_array($result) ) {
+while ( $row = mysqli_fetch_array($result) ) {
   $sql2 = "select count(*) from Posts where game_id='".$game['id']."' and user_id='".$row['user_id']."'";
-  $result2 = mysql_query($sql2);
-  $num_post = mysql_result($result2,0,0);
+  $result2 = mysqli_query($mysql, $sql2);
+  $num_post = mysqli_result($result2,0,0);
   print "<tr><td>".get_player_page($row['name'])."<a href='$posts".$row['name']."'>($num_post posts)</a></td></tr>\n";
 }
 print "</table>\n";

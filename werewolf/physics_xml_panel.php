@@ -6,7 +6,7 @@ include_once "php/common.php";
 include_once "configure_physics_functions.php";
 include_once "menu.php";
 
-dbConnect();
+$mysql = dbConnect();
 #upgrading();
 
 if (!($uid == 459 || $uid == 754 || $uid == 58 || $uid == 905 || $uid == 18 || $uid == 321 || $uid == 367)) {
@@ -15,12 +15,12 @@ if (!($uid == 459 || $uid == 754 || $uid == 58 || $uid == 905 || $uid == 18 || $
 
 // Export
 $sql = sprintf("select Games.id id, Games.title title from Games, Moderators where Moderators.game_id = Games.id and Moderators.user_id=%s",quote_smart($uid));
-$result = mysql_query($sql);
-if (mysql_num_rows($result) > 0) { ?>
+$result = mysqli_query($mysql, $sql);
+if (mysqli_num_rows($result) > 0) { ?>
 <form id='export_form' action="export_physics.php" method="get" >
 <select name='export_game_id'>
 <?php 
-    while ($game = mysql_fetch_array($result)) {
+    while ($game = mysqli_fetch_array($result)) {
       echo "<option value='".$game['id']."'>".$game['title']."</option>";
     }    
  ?>
@@ -40,13 +40,13 @@ if (mysql_num_rows($result) > 0) { ?>
 
 // Import
 $sql = sprintf("select Games.id id, Games.title title from Games, Moderators where Moderators.game_id = Games.id and Moderators.user_id=%s and Games.status in ('In Progress', 'Sign-up','Scheduled')",quote_smart($uid));
-$result = mysql_query($sql);
-if (mysql_num_rows($result) > 0) {
+$result = mysqli_query($mysql, $sql);
+if (mysqli_num_rows($result) > 0) {
 ?>
 <form id='import_form'  action="import_physics.php" method="post" enctype="multipart/form-data">
 <select name='import_game_id'>
 <?php 
-    while ($game = mysql_fetch_array($result)) {
+    while ($game = mysqli_fetch_array($result)) {
       echo "<option value='".$game['id']."'>".$game['title']."</option>";
     }    
  ?>

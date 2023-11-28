@@ -2,7 +2,7 @@
 include "php/accesscontrol.php";
 include_once "php/db.php";
 
-dbConnect();
+$mysql = dbConnect();
 
 checkLevel($level,1);
 
@@ -15,31 +15,31 @@ $old_players = $_POST['old_players'];
 $new_players = $_POST['new_players'];
 
 # Get the game Number
-$result = mysql_query("select max(number)+1 from Games");
-$numbers = mysql_fetch_array($result);
+$result = mysqli_query("select max(number)+1 from Games");
+$numbers = mysqli_fetch_array($result);
 $number = $numbers[0];
 
 # Insert the game into the database
-$result = mysql_query("insert into Games (id, number, start_date, end_date, title, status, winner, thread_id) values ( NULL, $number, '$start_date', NULL, '$title', 'In Progress', '', '$thread_id')");
-$game_id = mysql_insert_id();
+$result = mysqli_query("insert into Games (id, number, start_date, end_date, title, status, winner, thread_id) values ( NULL, $number, '$start_date', NULL, '$title', 'In Progress', '', '$thread_id')");
+$game_id = mysqli_insert_id();
 
 # Insert the moderator into the database 
 foreach ( $moderator as $mod_id ) {
-$result = mysql_query("insert into Moderators ( user_id, game_id ) values ( '$mod_id', '$game_id' )");
+$result = mysqli_query("insert into Moderators ( user_id, game_id ) values ( '$mod_id', '$game_id' )");
 }
 
 # Insert the players into the database 
 foreach ( $old_players as $player_id ) {
-  $result = mysql_query("insert into Players ( user_id, game_id ) values ( '$player_id', '$game_id')");
+  $result = mysqli_query("insert into Players ( user_id, game_id ) values ( '$player_id', '$game_id')");
 }
 
 # Insert new players into the database and add them to the game.
 if ( $new_players != "" ) {
   $new_players_list = split ( ", ", $new_players );
   foreach ( $new_players_list as $name ) {
-    $result = mysql_query("insert into Users ( id, name ) values ( NULL , '$name' )");
-    $player_id = mysql_insert_id();
-    $result = mysql_query("insert into Players ( user_id, game_id) values ( '$player_id', '$game_id' )");
+    $result = mysqli_query("insert into Users ( id, name ) values ( NULL , '$name' )");
+    $player_id = mysqli_insert_id();
+    $result = mysqli_query("insert into Players ( user_id, game_id) values ( '$player_id', '$game_id' )");
   }
 }
 ?>
@@ -60,23 +60,23 @@ if ( $new_players != "" ) {
 </tr>
 <tr>
 <?php
-$result = mysql_query("select number, start_date, title from Games where id=$game_id");
-$game_data = mysql_fetch_array($result);
+$result = mysqli_query("select number, start_date, title from Games where id=$game_id");
+$game_data = mysqli_fetch_array($result);
 print "<td>".$game_data['number']."</td>\n";
 print "<td>".$game_data['start_date']."</td>\n";
 print "<td>";
-$result = mysql_query("select name from Moderators, Users where Moderators.user_id = Users.id and Moderators.game_id = $game_id");
-while ( $mod_name = mysql_fetch_array($result) ) {
+$result = mysqli_query("select name from Moderators, Users where Moderators.user_id = Users.id and Moderators.game_id = $game_id");
+while ( $mod_name = mysqli_fetch_array($result) ) {
 print $mod_name[0]."<br />";
 }
 print "</td>\n";
 print "<td>".$game_data['title']."</td>\n";
 print "<td>";
-$result = mysql_query("select name from Players, Users where Players.user_id = Users.id and Players.game_id = $game_id order by Users.name");
-while ( $player = mysql_fetch_array($result) ) {
+$result = mysqli_query("select name from Players, Users where Players.user_id = Users.id and Players.game_id = $game_id order by Users.name");
+while ( $player = mysqli_fetch_array($result) ) {
 print $player[0]."<br />";
 }
-$num_players = mysql_num_rows($result);
+$num_players = mysqli_num_rows($result);
 print "($num_players Players)";
 print "</td>\n";
 ?>
@@ -118,10 +118,10 @@ print "</td>\n";
   <td> </td>
   <td><?php  
 foreach ( $_POST['moderator'] as $id ) {
-$result = mysql_query("select name from Users where id=$id");
-$name = mysql_fetch_array($result);
+$result = mysqli_query("select name from Users where id=$id");
+$name = mysqli_fetch_array($result);
 print "$name[0]<br />";
-mysql_free_result($result);
+mysqli_free_result($result);
 }
 ?></td>
 </tr>
@@ -131,11 +131,11 @@ mysql_free_result($result);
   <td><?php
   $count=0;
 foreach ( $_POST['old_players'] as $id ) {
-$result = mysql_query("select name from Users where id=$id");
-$name = mysql_fetch_array($result);
+$result = mysqli_query("select name from Users where id=$id");
+$name = mysqli_fetch_array($result);
 print "$name[0]<br />";
 $count++;
-mysql_free_result($result);
+mysqli_free_result($result);
 }
 print "($count Players)";
 ?></td>
@@ -201,11 +201,11 @@ $count++;
   <td>Please select from the list:</td>
   <td><select name='moderator[]' size='4' multiple>
 <?php
-$result = mysql_query("select * from Users order by name");
-while ( $Users = mysql_fetch_array($result) ) { 
+$result = mysqli_query("select * from Users order by name");
+while ( $Users = mysqli_fetch_array($result) ) { 
   print "<option value='".$Users['id']."' />".$Users['name']."\n";
 }
-mysql_free_result($result);
+mysqli_free_result($result);
 ?>
   </select></td>
 </tr>
@@ -214,11 +214,11 @@ mysql_free_result($result);
   <td>Please select from the list:</td>
   <td><select name='old_players[]' size='12' multiple>
 <?php
-$result = mysql_query("select * from Users order by name");
-while ( $Users = mysql_fetch_array($result) ) {
+$result = mysqli_query("select * from Users order by name");
+while ( $Users = mysqli_fetch_array($result) ) {
   print "<option value='".$Users['id']."' />".$Users['name']."\n";
 }
-mysql_free_result($result);
+mysqli_free_result($result);
 ?>
   </select></td>
 </tr>

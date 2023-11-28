@@ -8,11 +8,11 @@ include_once "../menu.php";
 
 $cache = init_cache();
 
-dbConnect();
+$mysql = dbConnect();
 
 $sql = sprintf("select name, id from Users where name=%s",quote_smart($_REQUEST['username']));
-$result = mysql_query($sql);
-$user = mysql_fetch_array($result);
+$result = mysqli_query($mysql, $sql);
+$user = mysqli_fetch_array($result);
 
 #checkLevel($level,1);
 
@@ -30,8 +30,8 @@ $user = mysql_fetch_array($result);
 <tr><th>Type</th><th>Site</th><th><?=$user['name']?>'s Info</th></tr>
 <?php
 $sql = sprintf("select * from Social_sites, Social_users where Social_sites.id=Social_users.site_id and Social_users.user_id=%s order by category, site_name",quote_smart($user['id']));
-$result = mysql_query($sql);
-while ( $site = mysql_fetch_array($result) ) {
+$result = mysqli_query($mysql, $sql);
+while ( $site = mysqli_fetch_array($result) ) {
   print "<tr>";
   print "<td>".$site['category']."</td>";
   $a_start = "";

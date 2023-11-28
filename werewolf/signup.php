@@ -8,25 +8,25 @@ include_once "php/bgg.php";
 //checkLevel($level,2);
 
 if ( isset($_POST['request']) ) {
-dbConnect();
+$mysql = dbConnect();
 
 $bggid = $_POST['bggid'];
 
 // Removing requierement that user must already be in DB.  The will get a passwords as long as they have a BGG id.
 $sql = "Select count(*) from Users where name='$bggid'";
-$result = mysql_query($sql);
+$result = mysqli_query($mysql, $sql);
 if ( !$result) {
   error ($sql);
   error('Database error # 100 occurred in proccessing your submission.\\nIf this error persists, please e-mail cassandra.project@gmail.com');
 } 
-if ( @mysql_result($result,0,0)==0) {
+if ( @mysqli_result($result,0,0)==0) {
 //  error('According to our database you have not played in an BGG werewolf games.  Please go join a game and then come back to gain access to all the cool stuff available here.');
 $sql = "insert into Users set name='$bggid', password='none'";
-$result = mysql_query($sql);
+$result = mysqli_query($mysql, $sql);
 }
 $newpass = substr(md5(time()),0,6);
 $sql = "update Users set password = MD5('$newpass') where name='$bggid'";
-if ( !mysql_query($sql) ) {
+if ( !mysqli_query($mysql, $sql) ) {
   error('Database error #200 occurred in processing your submission.\\nIf this error persists, please contact cassandra.project@gmail.com');
 }
 $to = $bggid;

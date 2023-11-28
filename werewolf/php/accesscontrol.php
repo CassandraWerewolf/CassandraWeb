@@ -6,7 +6,7 @@ include_once 'common.php';
 include_once 'db.php';
 include_once 'mobile_device_detect.php';
 
-dbConnect();
+$mysql = dbConnect();
 
 $_SESSION['url'] = $_SERVER['REQUEST_URI'];
 
@@ -14,14 +14,14 @@ if ( isset($_POST['login']) ) {
   $uname = $_POST['uname'];
   $pwd = $_POST['pwd'];
   $sql = sprintf("Select id from Users where name=%s",quote_smart($uname));
-  $result = mysql_query($sql);
-  $uid = mysql_result($result,0,0);
+  $result = mysqli_query($mysql, $sql);
+  $uid = mysqli_result($result,0,0);
   if ( $_POST['remember'] == "on" ) {
-    setcookie('cassy_uid', $uid, time()+60*60*24*365, '/; samesite=none', '', true, true);
-    setcookie('cassy_pwd', $pwd, time()+60*60*24*365, '/; samesite=none', '', true, true);
+    setcookie('cassy_uid', $uid, time()+60*60*24*365, 'samesite=none', '', true, true);
+    setcookie('cassy_pwd', $pwd, time()+60*60*24*365, 'samesite=none', '', true, true);
   } else {
-    setcookie('cassy_uid', $uid, 0, '/; samesite=none', '', true, true);
-    setcookie('cassy_pwd', $pwd, 0, '/; samesite=none', '', true, true);
+    setcookie('cassy_uid', $uid, 0, 'samesite=none', '', true, true);
+    setcookie('cassy_pwd', $pwd, 0, 'samesite=none', '', true, true);
   }
 } else {
   $uid = (isset($_SESSION['uid']) ? $_SESSION['uid'] : (isset($_COOKIE['cassy_uid']) ? $_COOKIE['cassy_uid'] : null));
@@ -58,7 +58,7 @@ $_SESSION['uid'] = $uid;
 $_SESSION['pwd'] = $pwd;
 
 $sql = sprintf("select * from Users where id=%s and password = MD5(%s)",quote_smart($uid),quote_smart($pwd));
-$result = mysql_query($sql);
+$result = mysqli_query($mysql, $sql);
 if ( !$result) {
   unset ($_SESSION['uid']);
   unset ($_SESSION['pwd']);
@@ -70,7 +70,7 @@ if ( !$result) {
   }
   error ("Database error #300 occured while checking your login details.\\nIf this error persists, please e-mail cassandra.project@gmail.com");
 }
-if ( mysql_num_rows($result) == 0 ) {
+if ( mysqli_num_rows($result) == 0 ) {
   unset ($_SESSION['uid']);
   unset ($_SESSION['pwd']);
   if ( isset($_COOKIE['cassy_uid']) ) {
@@ -92,8 +92,8 @@ if ( mysql_num_rows($result) == 0 ) {
 <?php
 exit;
 }
-$username = mysql_result($result,0,'name');
-$level = mysql_result($result,0,'level');
+$username = mysqli_result($result,0,'name');
+$level = mysqli_result($result,0,'level');
 
 if ( $level == 0 ) {
 ?>

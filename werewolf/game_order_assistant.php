@@ -3,7 +3,7 @@
 include "php/accesscontrol.php";
 include_once "php/db.php";
 
-dbConnect();
+$mysql = dbConnect();
 
 $game_id = $_REQUEST['game_id'];
 
@@ -14,12 +14,12 @@ if ( ! is_moderator($uid,$game_id) ) {
 
 if ( isset($_POST['submit']) ) {
   $sql = sprintf("update Games set game_order='on' where id=%s",quote_smart($game_id));
-  $result = mysql_query($sql);
+  $result = mysqli_query($mysql, $sql);
   $sql = sprintf("select * from Players where game_id=%s",quote_smart($game_id));
-  $result=mysql_query($sql);
-  while ( $player = mysql_fetch_array($result) ) {
+  $result=mysqli_query($mysql, $sql);
+  while ( $player = mysqli_fetch_array($result) ) {
     $sql_update = sprintf("update Players set game_action=%s, ga_desc=%s, ga_text=%s, ga_group=%s where user_id=%s and game_id=%s",quote_smart($_POST['na_'.$player['user_id']]),quote_smart($_POST['desc_'.$player['user_id']]),quote_smart($_POST['text_'.$player['user_id']]),quote_smart($_POST['group_'.$player['user_id']]),quote_smart($player['user_id']),quote_smart($game_id));
-	$result_update = mysql_query($sql_update);
+	$result_update = mysqli_query($mysql, $sql_update);
   }
 ?>
 <html>
@@ -42,8 +42,8 @@ print display_goa($game_id);
 
 function display_goa($game_id) {
 $sql = sprintf("select * from Games where id=%s",quote_smart($game_id));
-$result = mysql_query($sql);
-$game = mysql_fetch_array($result);
+$result = mysqli_query($mysql, $sql);
+$game = mysqli_fetch_array($result);
 
 $output = "<html>";
 $output .= "<head>";
@@ -65,8 +65,8 @@ $output .= "<input type='hidden' name='game_id' value='$game_id' />";
 $output .= "<table class='forum_table'>";
 $output .= "<tr><th>Player</th><th>Order Description</th><th>Game Order Choices</th><th>Group Name</th></tr>";
 $sql = sprintf("select * from Players, Users where Players.user_id=Users.id and game_id=%s order by name",quote_smart($game_id));
-$result = mysql_query($sql);
-while ( $player = mysql_fetch_array($result) ) {
+$result = mysqli_query($mysql, $sql);
+while ( $player = mysqli_fetch_array($result) ) {
   $output .= "<tr>";
   $output .= "<td>".$player['name']."</td>";
   $output .= "<td><input type='text' width='50' id='desc_".$player['user_id']."' name='desc_".$player['user_id']."' value='".$player['ga_desc']."' />";
@@ -92,11 +92,11 @@ return $output;
 function na_dropdown($game_id,$player_id) {
   $output .= "<select name='na_$player_id'>\n";
   $sql = sprintf("select game_action from Players where game_id=%s and user_id=%s",quote_smart($game_id),quote_smart($player_id));
-  $result = mysql_query($sql);
-  $na = mysql_result($result,0,0);
+  $result = mysqli_query($mysql, $sql);
+  $na = mysqli_result($result,0,0);
   $sql="show columns from Players where field='game_action'";
-  $result=mysql_query($sql);
-  while ($row=mysql_fetch_row($result)) {
+  $result=mysqli_query($mysql, $sql);
+  while ($row=mysqli_fetch_row($result)) {
     foreach(explode("','",substr($row[1],6,-2)) as $v) {
 	  $selected = "";
 	  if ( $na == $v ) { $selected = "selected"; }

@@ -7,7 +7,7 @@ include_once "php/common.php";
 
 $cache = init_cache();
 
-dbConnect();
+$mysql = dbConnect();
 
 $game_id = $_REQUEST['game_id'];
 
@@ -25,9 +25,9 @@ if ( isset($_POST['submit']) ) {
   $lynch_db = $_POST['lynch'].":00:00";
   $night_db = $_POST['night'].":00:00";
   $sql = sprintf("replace into Games (id, start_date, title, status, thread_id, description, aprox_length, max_players, player_list_id, complex, lynch_time, na_deadline) values(%s, %s, %s, 'Sign-up', %s, %s, %s, %s, %s, %s, %s, %s)",quote_smart($game_id),quote_smart($_POST['start_date']),quote_smart($_POST['title']),quote_smart($_POST['thread_id']),quote_smart($_POST['description']),quote_smart($_POST['aprox_length']),quote_smart($_POST['max_players']),$player_list_id,quote_smart($_POST['complex']),quote_smart($lynch_db),quote_smart($night_db));
-  $result = mysql_query($sql);
+  $result = mysqli_query($mysql, $sql);
     $sql = sprintf("insert into Moderators (user_id, game_id) values (%s, %s)",quote_smart($uid),quote_smart($game_id));
-	  $result = mysql_query($sql);
+	  $result = mysqli_query($mysql, $sql);
 
   // clean the cache since this action will change the front page
   $cache->remove('games-signup-list', 'front');
@@ -49,8 +49,8 @@ exit;
 }
 $format = "%Y-%m-%d";
 $sql = sprintf("select title, date_format(start_date,'%s') as start_date, aprox_length, description from Games where id=%s",$format,quote_smart($game_id));
-$result = mysql_query($sql);
-$game = mysql_fetch_array($result);
+$result = mysqli_query($mysql, $sql);
+$game = mysqli_fetch_array($result);
 ?>
 <html>
 <head>

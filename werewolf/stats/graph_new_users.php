@@ -7,11 +7,11 @@
 	require_once("jpgraph/jpgraph_line.php"); 	
 
 
-	dbConnect();
+	$mysql = dbConnect();
 
 	$res = dbGetResult("SELECT DATE_FORMAT(start_month, '%b-%y') as month, DATE_FORMAT(start_month, '%y%m') AS sort_month, count(*) AS total FROM Users_start_month GROUP BY sort_month ORDER BY sort_month");
 
-	while($row = mysql_fetch_array($res)){
+	while($row = mysqli_fetch_array($res)){
 		$month[] = $row['month'];
 		$total[] = $row['total'];
 	}

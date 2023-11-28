@@ -4,7 +4,7 @@ include_once "../php/accesscontrol.php";
 include_once "../php/db.php";
 include_once "../php/common.php";
 
-dbConnect();
+$mysql = dbConnect();
 
 # Array of Roles Automod can handle.
 $roles['02'] = "werewolf";
@@ -47,8 +47,8 @@ $rules['27'] = "You must still set this role up to be promoted to the seer when 
 function create_title($template_id,$edit=false,$buttons=true) {
   if ( is_numeric($buttons) ) { $buttons=true; }
   $sql = sprintf("select * from AM_template where id=%s",quote_smart($template_id));
-  $result = mysql_query($sql);
-  $template = mysql_fetch_array($result);
+  $result = mysqli_query($mysql, $sql);
+  $template = mysqli_fetch_array($result);
   if ( $edit ) {
     $output = "<input type='textbox' name='name' value='".$template['name']."' size='50' />\n";
 	if ( $buttons ) {
@@ -65,11 +65,11 @@ function create_title($template_id,$edit=false,$buttons=true) {
 function mode_select($template_id) {
   global $level;
   $sql = sprintf("select mode from AM_template where id=%s",quote_smart($template_id));
-  $result = mysql_query($sql);
-  $current_mode = mysql_result($result,0,0);
+  $result = mysqli_query($mysql, $sql);
+  $current_mode = mysqli_result($result,0,0);
   $sql = sprintf("select count(*) from Games where automod_id=%s and status != 'Finished' ",quote_smart($template_id));
-  $result = mysql_query($sql);
-  $active_games = mysql_result($result,0,0);
+  $result = mysqli_query($mysql, $sql);
+  $active_games = mysqli_result($result,0,0);
   if ( $current_mode == "Edit" && $active_games > 0 ) {
     return "<p style='color:red;'>ERROR: Please let Melsana or Jmilum know that you have an Automod Template Mode Error.</p>";
   }
@@ -93,8 +93,8 @@ function mode_select($template_id) {
 
 function create_info_table($template_id,$edit=false) {
   $sql = sprintf("select * from AM_template where id=%s",quote_smart($template_id));
-  $result = mysql_query($sql);
-  $template = mysql_fetch_array($result);
+  $result = mysqli_query($mysql, $sql);
+  $template = mysqli_fetch_array($result);
   $output = "<table class='forum_table' width='75%'>\n";
   $output .= "<tr><td><b>Number of Players</b></td><td>";
   if ( $edit ) {
@@ -223,8 +223,8 @@ function expand_priest_type($priest_type) {
 function create_role_table($template_id,$edit=false,$add=0) {
   global $roles, $rules;
   $sql = sprintf("select * from AM_template where id=%s",quote_smart($template_id));
-  $result = mysql_query($sql);
-  $template = mysql_fetch_array($result);
+  $result = mysqli_query($mysql, $sql);
+  $template = mysqli_fetch_array($result);
   $required_groups = count(explode(",",$template['num_player_sets']));
   $output = "";
   if ( $edit ) {
@@ -252,10 +252,10 @@ function create_role_table($template_id,$edit=false,$add=0) {
   $output .= "<th>Require Role Group</th>";
   $output .= "</tr>\n";
   $sql = sprintf("select * from AM_roles where template_id=%s order by role_id",quote_smart($template_id));
-  $result = mysql_query($sql);
+  $result = mysqli_query($mysql, $sql);
   $count = 0;
   $color = "#F5F5FF";
-  while ( $role = mysql_fetch_array($result) ) {
+  while ( $role = mysqli_fetch_array($result) ) {
     $count++;
 	if ( $color == "#F5F5FF" ) {
 	  $color = "white";
@@ -832,7 +832,7 @@ function get_ruleset($template_id,$edit=false) {
 function update_name($name,$template_id) {
   $name = safe_html($name);
   $sql = sprintf("update AM_template set name=%s where id=%s",quote_smart($name),quote_smart($template_id));
-  $result = mysql_query($sql);
+  $result = mysqli_query($mysql, $sql);
 
   return;
 }
@@ -844,7 +844,7 @@ function update_info($data,$template_id) {
   if ( isset($data['random_whitehat']) ) { $random_whitehat = 1; }
   $data['description'] = safe_html($data['description']);
   $sql = sprintf("update AM_template set description=%s, num_players=%s, num_player_sets=%s, role_reveal=%s, random_n0=%s, priest_type=%s, random_tinker=%s, random_whitehat=%s where id=%s",quote_smart($data['description']),quote_smart($data['num_players']),quote_smart($data['num_player_sets']),quote_smart($data['role_reveal']),quote_smart($data['random_n0']),quote_smart($data['priest_type']),quote_smart($random_tinker),quote_smart($random_whitehat),quote_smart($template_id));
-  $result=mysql_query($sql);
+  $result=mysqli_query($mysql, $sql);
 
   return;
 
@@ -862,7 +862,7 @@ function update_roles($count,$data,$template_id) {
   for ( $i=1; $i<=$count; $i++ ) {
     if ( isset ( $data['delete_'.$i] )) {
       $sql = sprintf("delete from AM_roles where id=%s",quote_smart($data['id_'.$i]));
-	  $result = mysql_query($sql);
+	  $result = mysqli_query($mysql, $sql);
 	  continue;
 	}
     $role_id = $data['role_id_'.$i];
@@ -949,11 +949,11 @@ function update_roles($count,$data,$template_id) {
 	$require_role = $data['require_role_'.$i];
     if ( $data['id_'.$i] == 'new' ) {
 	  $sql = sprintf("insert into AM_roles (id, template_id, role_id, side, game_action, action_desc, group_name, n0_knows, n0_view, view_result, reveal_as, attribute, a_hidden, parity, promotion, promotion_parity, require_role) VALUES ( null, %s, %s, %s, %s, $action_desc, $group_name, '$n0_knows', %s, $view_result, %s, %s, %s, %s, '$promotion', %s, %s)",quote_smart($template_id),quote_smart($role_id),quote_smart($side),quote_smart($game_action),quote_smart($n0_view),quote_smart($reveal_as),quote_smart($attribute),quote_smart($a_hidden),quote_smart($parity),quote_smart($promotion_parity),quote_smart($require_role));
-	  $result = mysql_query($sql);
+	  $result = mysqli_query($mysql, $sql);
 	} else {
 	  $id = $data['id_'.$i];
 	  $sql = sprintf("update AM_roles set role_id=%s, side=%s, game_action=%s, action_desc=$action_desc, group_name=$group_name, n0_knows='$n0_knows', n0_view=%s, view_result=$view_result, reveal_as='$reveal_as', attribute=%s, a_hidden=%s, parity=%s, promotion='$promotion', promotion_parity=%s, require_role=%s where id=%s",quote_smart($role_id),quote_smart($side),quote_smart($game_action),quote_smart($n0_view),quote_smart($attribute),quote_smart($a_hidden),quote_smart($parity),quote_smart($promotion_parity),quote_smart($require_role),quote_smart($id));
-	  $result = mysql_query($sql);
+	  $result = mysqli_query($mysql, $sql);
 	}
   }
   return;

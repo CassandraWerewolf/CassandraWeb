@@ -4,7 +4,7 @@ include_once "php/accesscontrol.php";
 include_once "php/db.php";
 include_once "menu.php";
 
-dbConnect();
+$mysql = dbConnect();
 
 ?>
 <html>
@@ -23,8 +23,8 @@ foreach ( $status_types as $status ) {
 <ul>
 <?php
   $sql = sprintf("select * from Games, Moderators where Games.id=Moderators.game_id and user_id=%s and status=%s",quote_smart($uid),quote_smart($status));
-  $result = mysql_query($sql);
-  while ( $game = mysql_fetch_array($result) ) {
+  $result = mysqli_query($mysql, $sql);
+  while ( $game = mysqli_fetch_array($result) ) {
     print "<li>".$game['title']." (Start Date: ".$game['start_date'].")<br /><a href='/schedule_a_game.php?game_id=".$game['id']."'>[edit]</a>";
 	if($status != 'Sign-up'){
 		print "<a href='/move_to_signup.php?game_id=".$game['id'].">[move to sign-up mode]</a>";

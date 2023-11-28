@@ -4,7 +4,7 @@ include_once "php/accesscontrol.php";
 include_once "php/db.php";
 include_once "php/common.php";
 
-dbConnect();
+$mysql = dbConnect();
 
 $game_id = $_REQUEST['game_id'];
 
@@ -14,8 +14,8 @@ if ( ! is_moderator($uid,$game_id) ) {
 
 if ( isset($_POST['submit']) ){
   $sql = sprintf("show columns from Auto_dusk");
-  $result = mysql_query($sql);
-  while ( $table = mysql_fetch_array($result) ) {
+  $result = mysqli_query($mysql, $sql);
+  while ( $table = mysqli_fetch_array($result) ) {
     if ( $table['Field'] == "game_id" ) { continue; }
 	if ( isset($_POST[$table['Field']]) ) {
       $auto_dusk[$table['Field']] = 1;
@@ -24,7 +24,7 @@ if ( isset($_POST['submit']) ){
 	}
   }
   $sql = sprintf("replace Auto_dusk (game_id, mon, tue, wed, thu, fri, sat, sun) values(%s,%s,%s,%s,%s,%s,%s,%s)",quote_smart($game_id),quote_smart($auto_dusk['mon']),quote_smart($auto_dusk['tue']),quote_smart($auto_dusk['wed']),quote_smart($auto_dusk['thu']),quote_smart($auto_dusk['fri']),quote_smart($auto_dusk['sat']),quote_smart($auto_dusk['sun']));
-  $result = mysql_query($sql);
+  $result = mysqli_query($mysql, $sql);
   error("Auto Dusk has been modified.");
 }
 ?>
@@ -46,14 +46,14 @@ if ( isset($_POST['submit']) ){
 <tr>
 <?php
 $sql = sprintf("select * from Auto_dusk where game_id=%s",quote_smart($game_id));
-$result = mysql_query($sql);
-if ( mysql_num_rows($result) == 1 ) {
-$auto_dusk = mysql_fetch_array($result);
+$result = mysqli_query($mysql, $sql);
+if ( mysqli_num_rows($result) == 1 ) {
+$auto_dusk = mysqli_fetch_array($result);
 }
 
 $sql = sprintf("show columns from Auto_dusk");
-$result = mysql_query($sql);
-while ( $table = mysql_fetch_array($result) ) {
+$result = mysqli_query($mysql, $sql);
+while ( $table = mysqli_fetch_array($result) ) {
   if ( ! isset($auto_dusk[$table['Field']]) ){
     if ( $table['Field'] == "game_id" ) {
       $auto_dusk[$table['Field']] = $game_id;

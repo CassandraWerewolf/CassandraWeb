@@ -4,12 +4,12 @@ include_once "../php/accesscontrol.php";
 checkLevel($level,1);
 
 include_once "../php/db.php";
-dbConnect();
+$mysql = dbConnect();
 
 include_once "../menu.php";
 
 $sql = "select id, concat(if(number,number,'*'),') ',title) as name, thread_id from Games order by id";
-$result = mysql_query($sql);
+$result = mysqli_query($mysql, $sql);
 ?>
 <html>
 <head>
@@ -22,7 +22,7 @@ $result = mysql_query($sql);
 <table class='forum_table'>
 <tr><th>Game ID</th><th>Title</th></tr>
 <?php
-while ( $game = mysql_fetch_array($result) ) {
+while ( $game = mysqli_fetch_array($result) ) {
   print "<tr><td>".$game['id']."</td>";
   print "<td><a href='/game/".$game['thread_id']."'>".$game['name']."</a></td></tr>\n";
 }

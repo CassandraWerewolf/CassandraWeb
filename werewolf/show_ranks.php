@@ -4,7 +4,7 @@ include_once("php/db.php");
 include_once "menu.php";
 include_once("php/common.php");
 
-dbConnect();
+$mysql = dbConnect();
 
 $site = '';
 ?>
@@ -24,11 +24,11 @@ $site = '';
 <tr><th>Name</th><th>Total</th><th>Rank</th></tr>
 <?php
 $sql = "SELECT name, games_played, rank FROM Users_game_ranks ORDER BY rank, name";
-$result = mysql_query($sql);
-while ( $player = mysql_fetch_array($result) ) {
+$result = mysqli_query($mysql, $sql);
+while ( $player = mysqli_fetch_array($result) ) {
 print "<tr></td><td>".get_player_page($player['name'])."</td><td><a href='$site/player/".$player['name']."/games_played'>".$player['games_played']."</a></td><td>".$player['rank']."</td></tr>";
 }
-mysql_free_result($result);
+mysqli_free_result($result);
 ?>
 </table>
 </td>
@@ -38,11 +38,11 @@ mysql_free_result($result);
 <tr><th>Name</th><th>Total</th><th>Rank</th></tr>
 <?php
 $sql = "SELECT name, games_moderated, rank FROM Users_modded_ranks ORDER BY rank, name";
-$result = mysql_query($sql);
-while ( $player = mysql_fetch_array($result) ) {
+$result = mysqli_query($mysql, $sql);
+while ( $player = mysqli_fetch_array($result) ) {
 print "<tr></td><td>".get_player_page($player['name'])."</td><td><a href='$site/player/".$player['name']."/games_modded'>".$player['games_moderated']."</a></td><td>".$player['rank']."</td></tr>";
 }
-mysql_free_result($result);
+mysqli_free_result($result);
 ?>
 </table>
 </td>

@@ -1,7 +1,7 @@
 <?php
 
 include_once "php/db.php";
-dbConnect();
+$mysql = dbConnect();
 
 $state =  $_REQUEST['state'];
 if ( $state == 'open' ) {
@@ -11,15 +11,15 @@ if ( $state == 'open' ) {
   $output .= "<select name='moderator[]' size='4' multiple>\n";
 
   foreach ( $modlist as $name ) {
-    $result = mysql_query("select id from Users where name='$name' ");
-    $id[] = mysql_result($result,0,0);
+    $result = mysqli_query("select id from Users where name='$name' ");
+    $id[] = mysqli_result($result,0,0);
   }
 
   $sql="Select id, name from Users order by name";
-  $result = mysql_query($sql);
+  $result = mysqli_query($mysql, $sql);
 
   $i = 0;
-  while ( $row = mysql_fetch_array($result) ) {
+  while ( $row = mysqli_fetch_array($result) ) {
     $selected = "";
     if ( $row['id'] == $id[$i] ) {
       $selected = "selected";
@@ -40,8 +40,8 @@ if ( $state == 'open' ) {
   $game_id = $_REQUEST['gameid'];
 
   $sql = "select user_id from Games, Moderators where Games.id = Moderators.game_id and Games.id = $game_id";
-  $result = mysql_query($sql);
-  while ( $row = mysql_fetch_array($result) ) {
+  $result = mysqli_query($mysql, $sql);
+  while ( $row = mysqli_fetch_array($result) ) {
     $oldidlist[] = $row['user_id'];
   }
 
@@ -57,7 +57,7 @@ if ( $state == 'open' ) {
   if ( $addlist[0] != "" ) {
   foreach ( $addlist as $id ) {
     $sql = "insert into Moderators ( user_id, game_id ) values ( '$id', '$game_id' )";
-    $result = mysql_query($sql);
+    $result = mysqli_query($mysql, $sql);
   }
   }
 
@@ -73,16 +73,16 @@ if ( $state == 'open' ) {
   if ( $dellist[0] != "" ) {
   foreach ( $dellist as $id ) {
     $sql = "delete from Moderators where user_id='$id' and game_id='$game_id'";
-    $result = mysql_query($sql);
+    $result = mysqli_query($mysql, $sql);
   }
   }
 
 # Return to original output
   $sql = "Select id, name from Users, Moderators where Users.id=Moderators.user_id and Moderators.game_id='$game_id' order by name";
-  $result = mysql_query($sql);
+  $result = mysqli_query($mysql, $sql);
   $count = 0;
   $modlist = "";
-  while ( $mod = mysql_fetch_array($result) ) {
+  while ( $mod = mysqli_fetch_array($result) ) {
     ( $count == 0 ) ? $modlist = $mod['name'] : $modlist .= ", ".$mod['name'];
     $count++;
   }

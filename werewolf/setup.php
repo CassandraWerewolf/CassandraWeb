@@ -1,5 +1,5 @@
 <?php
-define(ROOT_PATH, dirname(__FILE__), true);
+define('ROOT_PATH', dirname(__FILE__));
 
 // Themes are handled by a custom .css in /assets/css/themes
 // CSS filename should match the theme name here, ex: 'matrix' with matrix.css
@@ -11,6 +11,6 @@ $show_funding_message = false;
 
 // Start timer, used in footer to calculate load time
 require("timer.php");
-$timer = new BC_Timer;
+$timer = new BC_Timer();
 $timer->start_time();
 ?>

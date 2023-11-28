@@ -11,12 +11,12 @@ include_once ROOT_PATH . "/menu.php";
 $here = "/";
 $player = $_GET['player'];
 $sql = sprintf("select id from Users where name=%s",quote_smart($player));
-$result = mysql_query($sql);
-$id = mysql_result($result,0,0);
+$result = mysqli_query($mysql, $sql);
+$id = mysqli_result($result,0,0);
 $edit = false;
 if ( $uid == $id ) { $edit = true; }
 $sql_bio = sprintf ("select * from Bio where user_id=%s",$id);
-$result_bio = mysql_query($sql_bio);
+$result_bio = mysqli_query($mysql, $sql_bio);
 
 if ( $player == "" ) {
 ?>
@@ -37,7 +37,7 @@ exit;
 }
 
 #If the player has edit abilities, check to see if a profile has already been created.  If not send the user to the add_profile.php page.
-if ( $edit && mysql_num_rows($result_bio) == 0 ) {
+if ( $edit && mysqli_num_rows($result_bio) == 0 ) {
 ?>
 <html>
 <head>
@@ -83,12 +83,12 @@ if ( $edit ) {
 <?php display_menu();?>
 <h1>Profile for <?=$player;?></h1>
 <?php
-if ( mysql_num_rows($result_bio) != 1 ) {
+if ( mysqli_num_rows($result_bio) != 1 ) {
 ?>
 <p>This player has not created a profile page.</p>
 <?php
 } else {
-$bio = mysql_fetch_array($result_bio);
+$bio = mysqli_fetch_array($result_bio);
 ?>
 <div id='divDescription' class='clDescriptionCont'>
 <!--Empty Div used for hint popup-->
@@ -99,9 +99,9 @@ $bio = mysql_fetch_array($result_bio);
 
 <?php
 $wotw_sql = sprintf("select thread_id from Wotw where user_id=%s",quote_smart($id));
-$wotw_result = mysql_query($wotw_sql);
-if ( mysql_num_rows($wotw_result) == 1 ) {
-  $wotw_thread = mysql_result($wotw_result,0,0);
+$wotw_result = mysqli_query($wotw_sql);
+if ( mysqli_num_rows($wotw_result) == 1 ) {
+  $wotw_thread = mysqli_result($wotw_result,0,0);
   print "<a href='http://boardgamegeek.com/thread/".$wotw_thread."'>Wolf of the Week Thread</a><br />"; 
 }
 ?>
@@ -111,8 +111,8 @@ if ( mysql_num_rows($wotw_result) == 1 ) {
 <table class='forum_table' cellpadding='5'>
 <?php
 $sql_col = "show full columns from Bio";
-$result_col = mysql_query($sql_col);
-while ( $col = mysql_fetch_array($result_col)) {
+$result_col = mysqli_query($mysql, $sql_col);
+while ( $col = mysqli_fetch_array($result_col)) {
   $field = $col['Field'];
   $comment = $col['Comment'];
   $hint_comment = $comment;
@@ -126,14 +126,14 @@ while ( $col = mysql_fetch_array($result_col)) {
 	case b_date:
 	  $comment = "Age";
 	  $sql = sprintf("select TIMESTAMPDIFF(YEAR, b_date, CURDATE()) from Bio where user_id=%s",quote_smart($id));
-      $result = mysql_query($sql);
-	  $bio['b_date'] = mysql_result($result,0,0);
+      $result = mysqli_query($mysql, $sql);
+	  $bio['b_date'] = mysqli_result($result,0,0);
 	break;
 	case time_zone:
 	  if ( $bio['time_zone'] != "" ) {
         $sql = sprintf("select concat('(GMT',if(GMT>0,' +',''),if(GMT=0,'',concat(if(GMT<0,' ',''),GMT)),') ',description) as text from Timezones where zone=%s",quote_smart($bio['time_zone']));
-	    $result = mysql_query($sql);
-	    $bio['time_zone'] = mysql_result($result,0,0);
+	    $result = mysqli_query($mysql, $sql);
+	    $bio['time_zone'] = mysqli_result($result,0,0);
 	  }
 	break;
   }

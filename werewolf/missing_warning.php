@@ -6,14 +6,14 @@ include_once "php/accesscontrol.php";
 include_once "php/db.php";
 include_once "php/bgg.php";
 
-dbConnect();
+$mysql = dbConnect();
 
 if ( isset($_GET['action']) ) {
 $action = $_GET['action'];
   // Check that the user requesting this page is a moderator of the game.
   $sql = sprintf("select * from Moderators where user_id=%s and game_id=%s",quote_smart($uid),quote_smart($_GET['game_id']));
-  $result = mysql_query($sql);
-  if ( mysql_num_rows($result) == 1 ) {
+  $result = mysqli_query($mysql, $sql);
+  if ( mysqli_num_rows($result) == 1 ) {
     $game_id = $_GET['game_id'];
     if ( $action == "activate" ) {
 	  if ( $_GET['hr'] == "0" || $_GET['hr'] == "" ) {
@@ -21,7 +21,7 @@ $action = $_GET['action'];
 	  } else {
         $sql = sprintf("update Games set missing_hr=%s where id=%s",quote_smart($_GET['hr']),quote_smart($game_id));
 	  }
-      $result = mysql_query($sql);
+      $result = mysqli_query($mysql, $sql);
     }
   }
 }

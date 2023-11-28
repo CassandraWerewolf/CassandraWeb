@@ -3,7 +3,7 @@ include_once "php/accesscontrol.php";
 include_once "php/db.php";
 include_once "menu.php";
 
-dbConnect();
+$mysql = dbConnect();
 
 #checkLevel($level,1);
 
@@ -30,19 +30,19 @@ exit;
 
 
 $sql = sprintf("select id, title, auto_vt from Games where thread_id=%s",quote_smart($thread_id));
-$result = mysql_query($sql);
-if ( mysql_num_rows($result) == 1 ) {
-  $game_id = mysql_result($result,0,0);
-  $title = mysql_result($result,0,1);
-  $tiebreaker = mysql_result($result,0,2);
+$result = mysqli_query($mysql, $sql);
+if ( mysqli_num_rows($result) == 1 ) {
+  $game_id = mysqli_result($result,0,0);
+  $title = mysqli_result($result,0,1);
+  $tiebreaker = mysqli_result($result,0,2);
 } else {
   $game_id = 0;
   $title = "Invalid Game";
 }
 $sql = sprintf("select last_dumped from Post_collect_slots where game_id=%s",$game_id);
-$result = mysql_query($sql);
-if ( mysql_num_rows($result) == 1 ) {
-  $last_dumped = mysql_result($result,0,0);
+$result = mysqli_query($mysql, $sql);
+if ( mysqli_num_rows($result) == 1 ) {
+  $last_dumped = mysqli_result($result,0,0);
 } 
 
 ?>
@@ -76,11 +76,11 @@ if ( $tiebreaker == "lhv" ) {
   print "<p>Your Moderator has chosen to use the Longest Held Last Vote method for a tiebreaker - This is just for Cassandra system, and there may be a different tiebreaker specified by your Moderator in the ruleset.</p>\n";
 }
 $sql_players = sprintf("select name from Players, Players_all, Users where Players.user_id=Players_all.original_id and Players.game_id=Players_all.game_id and Players_all.user_id=Users.id and Players_all.game_id=%s order by name",quote_smart($game_id));
-$result_players = mysql_query($sql_players);
+$result_players = mysqli_query($mysql, $sql_players);
 print "<form>";
 print "Show Player: <select id='s_name' onChange='show_tables()'>";
 print "<option value='All'>All</option>";
-while ( $player = mysql_fetch_array($result_players) ) {
+while ( $player = mysqli_fetch_array($result_players) ) {
   print "<option value='".$player['name']."'>".$player['name']."</option>";
 }
 print "</select></form>";
@@ -98,21 +98,21 @@ function vote_table($game_id,$player) {
 
   $output = "";
   $sql_days = sprintf("select distinct day from Votes_log where game_id=%s order by day desc",$game_id);
-  $result_days = mysql_query($sql_days);
-  while ( $day = mysql_fetch_array($result_days) ) {
+  $result_days = mysqli_query($mysql, $sql_days);
+  while ( $day = mysqli_fetch_array($result_days) ) {
     if ( $player == "All" ) {
       $sql_votes = sprintf("select * from Votes_log where game_id=%s and day=%s order by time_stamp",$game_id,$day[0]);
     } else {
       $sql_votes = sprintf("select * from Votes_log where game_id=%s and day=%s and voter=%s order by time_stamp",$game_id,$day[0],quote_smart($player));
     }
-    $result_votes = mysql_query($sql_votes);
-	if ( mysql_num_rows($result_votes) == 0 ) {
+    $result_votes = mysqli_query($mysql, $sql_votes);
+	if ( mysqli_num_rows($result_votes) == 0 ) {
 	  $output .= "$player did not vote on day ".$day[0]."<br />";
 	} else {
       $output .= "<table class='forum_table'>";
       $output .= "<tr><th colspan='6'>Day ".$day[0]."</th></tr>";
       $output .= "<tr><th>Voter</th><th>Type</th><th>Votee</th><th>Misc</th><th>Time Stamp</th><th>Valid</th><th>Edited</th></tr>";
-      while ( $row = mysql_fetch_array($result_votes) ) {
+      while ( $row = mysqli_fetch_array($result_votes) ) {
         $style = "style='color:black;'";
         if ( $row['valid'] == "No" ) {
           $style = "style='color:red;'";
@@ -131,8 +131,8 @@ function vote_table($game_id,$player) {
 	}
     if ( $player == "All" ) {
       $sql_nonvoters = sprintf("select get_non_voters(%d, %d);",$game_id, $day[0]);
-      $res = mysql_query($sql_nonvoters);
-      $nonvoters = mysql_result($res,0,0);
+      $res = mysqli_query($mysql, $sql_nonvoters);
+      $nonvoters = mysqli_result($res,0,0);
       $output .=  "Not voting: $nonvoters<br>\n";     
     }
 	$output .= "<br />";

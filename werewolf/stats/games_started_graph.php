@@ -7,14 +7,14 @@
 	require_once("jpgraph/jpgraph_line.php"); 	
 
 
-	dbConnect();
+	$mysql = dbConnect();
 
-	$total_games = mysql_query("SELECT DATE_FORMAT(start_date, '%b-%y') as month, DATE_FORMAT(start_date, '%y%m') AS sort_month, count(*) AS total FROM Games GROUP BY sort_month ORDER BY sort_month");
+	$total_games = mysqli_query("SELECT DATE_FORMAT(start_date, '%b-%y') as month, DATE_FORMAT(start_date, '%y%m') AS sort_month, count(*) AS total FROM Games GROUP BY sort_month ORDER BY sort_month");
 	if (!$total_games){
-		die('Could not query:' . mysql_error());
+		die('Could not query:' . mysqli_error());
 	}
 
-	while($row = mysql_fetch_array($total_games)){
+	while($row = mysqli_fetch_array($total_games)){
 		$month[] = $row['month'];
 		$total[] = $row['total'];
 	}

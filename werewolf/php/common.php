@@ -1,7 +1,7 @@
 <?php // common.php
 
 include_once "db.php";
-dbConnect();
+$mysql = dbConnect();
 
 function init_cache($dir='/dev/shm/cache_lite/')
 {
@@ -40,10 +40,11 @@ exit;
 }
 function get_player_page($player,$profile=true) {
   // $player can be a name or an user_id.
+  $mysql = dbConnect();
   if ( is_numeric($player) and $player > 0) {
     $sql = sprintf("select name from Users where id=%s",quote_smart($player));
-    $result = mysql_query($sql);
-   	$player = mysql_result($result,0,0);
+    $result = mysqli_query($mysql, $sql);
+   	$player = mysqli_result($result,0,0);
   }
   $output = "";
   if ( $profile ) {
@@ -56,19 +57,20 @@ function get_player_page($player,$profile=true) {
 }
 function get_profile_page($player,$icon=false) {
   // $player can be a name or an user_id.
+  $mysql = dbConnect();
   if ( is_numeric($player) ) {
     $id = $player;
     $sql = sprintf("select name from Users where id=%s",quote_smart($player));
-    $result = mysql_query($sql);
-    $player = mysql_result($result,0,0);
+    $result = mysqli_query($mysql, $sql);
+    $player = mysqli_result($result,0,0);
   } else {
     $sql = sprintf("select id from Users where name=%s",quote_smart($player));
-	$result = mysql_query($sql);
-	$id = mysql_result($result,0,0);
+	$result = mysqli_query($mysql, $sql);
+	$id = mysqli_result($result,0,0);
   }
   $sql = sprintf("select * from Bio where user_id=%s",quote_smart($id));
-  $result = mysql_query($sql);
-  $count = mysql_num_rows($result);
+  $result = mysqli_query($mysql, $sql);
+  $count = mysqli_num_rows($result);
   if ( $count == 1 ) {
     if ( $icon ) {
       $output = "<a href='/profile/$player'><img src='/images/camera-photo.png' style='border:0' alt='View Player Profile' /></a>";
@@ -99,10 +101,11 @@ function get_game($game_id,$parameters="title"){
 # chat: Displays an icon if the person viewing the page has a new message in a chat room for that game.
 # repl: Displays and icon if the game needs a replacement player.
 # 
+  $mysql = dbConnect();
   $parms = explode(", ",$parameters);
   $sql = sprintf("select * from Games where id=%s",quote_smart($game_id));
-  $result = mysql_query($sql);
-  $game = mysql_fetch_array($result);
+  $result = mysqli_query($mysql, $sql);
+  $game = mysqli_fetch_array($result);
   $output = "";
   foreach ( $parms as $parm) {
   switch($parm){
@@ -124,26 +127,26 @@ function get_game($game_id,$parameters="title"){
 	break;
 	case "full":
 	  $sql = sprintf("select count(*) from Players where game_id=%s",quote_smart($game_id));
-	  $result = mysql_query($sql);
-	  $num_players = mysql_result($result,0,0);
+	  $result = mysqli_query($mysql, $sql);
+	  $num_players = mysqli_result($result,0,0);
 	  $full = "$num_players/".$game['max_players'];
 	  if ( $num_players == $game['max_players'] ) { $full = "Full/$num_players"; }
 	  $output .= "($full) ";
 	break;
 	case "post":
 	  $sql = sprintf("select count(*) from Posts where game_id=%s",quote_smart($game_id));
-	  $result = mysql_query($sql);
-	  $num_posts = mysql_result($result,0,0);
+	  $result = mysqli_query($mysql, $sql);
+	  $num_posts = mysqli_result($result,0,0);
 	  $output .= "<a href='/game/".$game['thread_id']."/all'>($num_posts posts)</a> ";
 	break;
 	case "mod":
 	case "mod_np":
 	  $sql = sprintf("select name from Users, Moderators where Users.id=Moderators.user_id and game_id=%s",quote_smart($game_id));
-	  $result = mysql_query($sql);
-	  $mod_num = mysql_num_rows($result);
+	  $result = mysqli_query($mysql, $sql);
+	  $mod_num = mysqli_num_rows($result);
 	  $count = 0;
 	  $modlist = "";
-	  while ( $mod = mysql_fetch_array($result) ) {
+	  while ( $mod = mysqli_fetch_array($result) ) {
 	    if ( $count == 0  && $parm != "mod_np" ) $modlist = "(";
 	    if ( $count != 0  ) $modlist .= ", ";
 		$modlist .= get_player_page($mod['name'],false);
@@ -155,8 +158,8 @@ function get_game($game_id,$parameters="title"){
 	case "in":
 	  if ( isset($uid) ) {
 	    $sql = sprintf("select * from Users_game_all where game_id=%s and user_id=%s",quote_smart($game_id),quote_smart($uid));
-	    $result = mysql_query($sql);
-	    if ( mysql_num_rows($result) != 0 ) {
+	    $result = mysqli_query($mysql, $sql);
+	    if ( mysqli_num_rows($result) != 0 ) {
           $output .= "<img src='/images/calendar.png' /> ";
 	    }
 	  }
@@ -165,8 +168,8 @@ function get_game($game_id,$parameters="title"){
 	  if ( isset($uid) ) {
         #$sql = sprintf("select count(*) from Chat_users, Chat_rooms, Chat_messages where Chat_users.room_id=Chat_rooms.id and Chat_rooms.id=Chat_messages.room_id and Chat_messages.post_time >= Chat_users.last_view and Chat_messages.post_time > Chat_users.open and Chat_messages.post_time < if(Chat_users.close is null, now(), Chat_users.close) and Chat_rooms.game_id=%s and Chat_users.user_id=%s",quote_smart($game_id),quote_smart($uid));
         $sql = sprintf("select null from Games, Chat_users, Chat_rooms, Chat_messages where Chat_users.room_id=Chat_rooms.id and Chat_rooms.id=Chat_messages.room_id and Chat_messages.post_time >= Chat_users.last_view and Chat_messages.post_time > Chat_users.open and Chat_messages.post_time < if(Chat_users.close is null, now(), Chat_users.close) and Chat_rooms.game_id=%s and Games.id=Chat_rooms.game_id and Games.status ='In Progress' and Chat_users.user_id=%s limit 1",quote_smart($game_id),quote_smart($uid));
-		$result = mysql_query($sql);
-		if ( mysql_num_rows($result) == 1 ) {
+		$result = mysqli_query($mysql, $sql);
+		if ( mysqli_num_rows($result) == 1 ) {
           $output .= "<a href='/game/".$game['thread_id']."/chat'>";
 		  $output .= "<img src='/images/new_message.png' border='0'/></a>";
 		}
@@ -174,8 +177,8 @@ function get_game($game_id,$parameters="title"){
 	break;
 	case "repl":
 	  $sql = sprintf("select * from Players where game_id=%s and need_replace is not null",quote_smart($game_id));
-	  $result = mysql_query($sql);
-	  if ( mysql_num_rows($result) > 0 ) {
+	  $result = mysqli_query($mysql, $sql);
+	  if ( mysqli_num_rows($result) > 0 ) {
         $output .= "<img src='/images/i_replace.png' border='0'/>";
 	  }
 	break;
@@ -304,24 +307,25 @@ function time_dropdown($name,$select="0:00",$mil_time=false,$need_js=true) {
 
 function time_24($hour,$min="00") {
   if ( $hour == 0 ) {
-    return "12:${min}am";
+    return "12:{$min}am";
   }
   if ( $hour < 12 ) {
-    return "$hour:${min}am";
+    return "$hour:{$min}am";
   }
   if ( $hour == 12 ) {
-    return "$hour:${min}pm";
+    return "$hour:{$min}pm";
   }
   if ( $hour > 12 ) {
     $hour-=12;
-    return "$hour:${min}pm";
+    return "$hour:{$min}pm";
   }
 }
 
 function is_moderator($user_id,$game_id) {
+  $mysql = dbConnect();
   $sql = sprintf("Select * from Moderators where user_id=%s and game_id=%s",quote_smart($user_id),quote_smart($game_id));
-  $result=mysql_query($sql);
-  $row_count = mysql_num_rows($result);
+  $result=mysqli_query($mysql, $sql);
+  $row_count = mysqli_num_rows($result);
   $moderator = false;
   if ( $row_count == 1 ) $moderator = true;
   
@@ -329,9 +333,10 @@ function is_moderator($user_id,$game_id) {
 }
 
 function is_player($user_id,$game_id) {
+  $mysql = dbConnect();
   $sql = sprintf("Select * from Players where user_id=%s and game_id=%s",quote_smart($user_id),quote_smart($game_id));
-  $result=mysql_query($sql);
-  $row_count = mysql_num_rows($result);
+  $result=mysqli_query($mysql, $sql);
+  $row_count = mysqli_num_rows($result);
   $isplayer = false;
   if ( $row_count == 1 ) $isplayer = true;
 
@@ -339,9 +344,10 @@ function is_player($user_id,$game_id) {
 }
 
 function get_enum_array($field,$table) {
+  $mysql = dbConnect();
   $sql = "show columns from $table where field='$field'";
-  $result = mysql_query($sql);
-  while ($row=mysql_fetch_row($result)) {
+  $result = mysqli_query($mysql, $sql);
+  while ($row=mysqli_fetch_row($result)) {
     foreach(explode("','",substr($row[1],6,-2)) as $v) {
 	  $enum_array[$v] = $v;
 	}

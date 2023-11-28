@@ -1,4 +1,5 @@
 <?php
+
 	include_once "../setup.php";
 
 	include      ROOT_PATH . "/php/accesscontrol.php";
@@ -33,9 +34,9 @@
 	$mod_link = "/player/$player/games_modded";
 	$with_link = "/player/$player/with";
 	$sql = sprintf("select id from Users where name=%s",quote_smart($player));
-	$result = mysql_query($sql);
-	if ( mysql_num_rows($result) != 0 ) {
-		$user_id = mysql_result($result,0,0);
+	$result = mysqli_query($mysql, $sql);
+	if ( mysqli_num_rows($result) != 0 ) {
+		$user_id = mysqli_result($result,0,0);
 	} else {
 		$user_id = 0;
 	}
@@ -47,9 +48,9 @@
 </head>
 <body>
 <?php display_menu(); ?>
-<h1>Player Stats for <?=$x.$player;?></h1>
+<h1>Player Stats for <?=$player;?></h1>
 <?php
-	dbConnect();
+	$mysql = dbConnect();
 
 	$sql_games_played_stats = "SELECT games_played, rank FROM Users_game_ranks WHERE name = '$player';";
 
@@ -79,26 +80,26 @@
 	# get games played stats
 	#
 	$res_games_played_stats = dbGetResult($sql_games_played_stats);
-	$row = mysql_fetch_row($res_games_played_stats);
+	$row = mysqli_fetch_row($res_games_played_stats);
 	$games_played = $row[0];
 	$games_played_rank = $row[1];
-	mysql_free_result($res_games_played_stats);
+	mysqli_free_result($res_games_played_stats);
 
 	#
 	# get games modded stats
 	#
 	$res_games_modded_stats = dbGetResult($sql_games_modded_stats);
-	$row = mysql_fetch_row($res_games_modded_stats);
+	$row = mysqli_fetch_row($res_games_modded_stats);
 	$games_modded = $row[0];
 	$games_modded_rank = $row[1];
-	mysql_free_result($res_games_modded_stats);
+	mysqli_free_result($res_games_modded_stats);
 
 	#
 	# get players played with
 	#
 	$res_played_with = dbGetResult($sql_played_with);
-	$played_with = mysql_num_rows($res_played_with);
-	mysql_free_result($res_played_with);
+	$played_with = mysqli_num_rows($res_played_with);
+	mysqli_free_result($res_played_with);
 
 	#
 	# get current games signed-up for
@@ -107,12 +108,12 @@
 	$count = dbGetResultRowCount($res);
 	$current_games_signup[] = "Currently Signed Up For ($count)";
 	$games_signup_date[] = "";
-	while($row = mysql_fetch_array($res)){
+	while($row = mysqli_fetch_array($res)){
 		#$current_games_signup[] = "<a href='$game".$row['thread_id']."'>".$row['title']."</a>";
 		$current_games_signup[] = get_game($row['id'],'complex, title, mod');
 		$games_signup_date[] = $row['start'];
 	}
-	mysql_free_result($res);
+	mysqli_free_result($res);
 
 	#
 	# get current games played
@@ -120,11 +121,11 @@
 	$res = dbGetResult($sql_current_games_played);
 	$count = dbGetResultRowCount($res);
 	$current_games_played[] = "Currently Playing ($count)";
-	while($row = mysql_fetch_array($res)){
+	while($row = mysqli_fetch_array($res)){
 	    $sql = "select count(*) from Posts, Users where Posts.user_id=Users.id and game_id='".$row['id']."' and name='$player'";
-		$posts = mysql_query($sql);
-		$num_post = mysql_result($posts,0,0);
-		mysql_free_result($posts);
+		$posts = mysqli_query($mysql, $sql);
+		$num_post = mysqli_result($posts,0,0);
+		mysqli_free_result($posts);
 		#$current_games_played[] = "<a href='$game".$row['thread_id']."'>".$row['number'].") ".$row['title']."</a> <a href='$game".$row['thread_id']."/$player'>($num_post posts)</a>";
 		if ( $uid == $user_id ) {
 		  $current_games_played[] = get_game($row['id'],'num, chat, title, mod')."<a href='$game".$row['thread_id']."/$player'>($num_post posts)</a>";
@@ -132,22 +133,22 @@
 		  $current_games_played[] = get_game($row['id'],'num, title, mod')."<a href='$game".$row['thread_id']."/$player'>($num_post posts)</a>";
 		}
 	}
-	mysql_free_result($res);
+	mysqli_free_result($res);
 
 	#
 	# get last games played
 	#
 	$res = dbGetResult($sql_last_games_played);
 	$last_games_played[] = "Last 5 Games Played";
-	while($row = mysql_fetch_array($res)){
+	while($row = mysqli_fetch_array($res)){
 	    $sql = "select count(*) from Posts, Users where Posts.user_id=Users.id and game_id='".$row['id']."' and name='$player'";
-		$posts = mysql_query($sql);
-		$num_post = mysql_result($posts,0,0);
-		mysql_free_result($posts);
+		$posts = mysqli_query($mysql, $sql);
+		$num_post = mysqli_result($posts,0,0);
+		mysqli_free_result($posts);
 		#$last_games_played[] = "<a href='$game".$row['thread_id']."'>".$row['number'].") ".$row['title']."</a> <a href='$game".$row['thread_id']."/$player'>($num_post posts)</a>";
 		$last_games_played[] = get_game($row['id'],'num, title')."<a href='$game".$row['thread_id']."/$player'>($num_post posts)</a>";
 	}
-	mysql_free_result($res);
+	mysqli_free_result($res);
 
 	#
 	# get current games modded
@@ -155,11 +156,11 @@
 	$res = dbGetResult($sql_current_games_modded);
 	$count = dbGetResultRowCount($res);
 	$current_games_modded[] = "Currently Moderating ($count)";
-	while($row = mysql_fetch_array($res)){
+	while($row = mysqli_fetch_array($res)){
 	    $sql = "select count(*) from Posts, Users where Posts.user_id=Users.id and game_id='".$row['id']."' and name='$player'";
-		$posts = mysql_query($sql);
-		$num_post = mysql_result($posts,0,0);
-		mysql_free_result($posts);
+		$posts = mysqli_query($mysql, $sql);
+		$num_post = mysqli_result($posts,0,0);
+		mysqli_free_result($posts);
 		#$current_games_modded[] = "<a href='$game".$row['thread_id']."'>".$row['number'].") ".$row['title']."</a> <a href='$game".$row['thread_id']."/$player'>($num_post posts)</a>";
 		if ( $uid == $user_id ) {
 		  $current_games_modded[] = get_game($row['id'],'num, chat, title')."<a href='$game".$row['thread_id']."/$player'>($num_post posts)</a>";
@@ -167,7 +168,7 @@
 		  $current_games_modded[] = get_game($row['id'],'num, title')."<a href='$game".$row['thread_id']."/$player'>($num_post posts)</a>";
 		}
 	}
-	mysql_free_result($res);
+	mysqli_free_result($res);
 
 	#
 	# get future modded games
@@ -176,27 +177,27 @@
 	$count = dbGetResultRowCount($res);
 	$future_modded[] = "Future Modded Games ($count)";
 	$future_modded_date[] = "";
-	while($row = mysql_fetch_array($res)){
+	while($row = mysqli_fetch_array($res)){
 		#$future_modded[] = "<a href='$game".$row['thread_id']."'>".$row['title']."</a>";
 		$future_modded[] = get_game($row['id'],'complex, title');
 		$future_modded_date[] = $row['start'];
 	}
-	mysql_free_result($res);
+	mysqli_free_result($res);
 
 	#
 	# get last games modded
 	#
 	$res = dbGetResult($sql_last_games_modded);
 	$last_games_modded[] = "Last 5 Games Modded";
-	while($row = mysql_fetch_array($res)){
+	while($row = mysqli_fetch_array($res)){
 	    $sql = "select count(*) from Posts, Users where Posts.user_id=Users.id and game_id='".$row['id']."' and name='$player'";
-		$posts = mysql_query($sql);
-		$num_post = mysql_result($posts,0,0);
-		mysql_free_result($posts);
+		$posts = mysqli_query($mysql, $sql);
+		$num_post = mysqli_result($posts,0,0);
+		mysqli_free_result($posts);
 		#$last_games_modded[] = "<a href='$game".$row['thread_id']."'>".$row['number'].") ".$row['title']."</a> <a href='$game".$row['thread_id']."/$player'>($num_post posts)</a>";
 		$last_games_modded[] = get_game($row['id'],'num, title')."<a href='$game".$row['thread_id']."/$player'>($num_post posts)</a>";
 	}
-	mysql_free_result($res);
+	mysqli_free_result($res);
 
 	$top_attrs = array(
 		'border' => '0',
@@ -210,7 +211,7 @@
 		'width' => '100%'
 	);
 
-	$table =& new HTML_Table($top_attrs);
+	$table =new HTML_Table($top_attrs);
 	$table->addRow(array("", "Total", "Rank")); 
 	$table->addRow(array("Games Played", "<a href='" . $player_link . "'>" . $games_played . "</a>", $games_played_rank)); 
 	$table->addRow(array("Games Modded", "<a href='" . $mod_link . "'>" . $games_modded . "</a>", $games_modded_rank)); 
@@ -222,19 +223,19 @@
     print "<td valign='top'>\n";
 	# Show any Wolfy awards the game has won.
 	$sql_award_p = sprintf("select * from Wolfy_players, Wolfy_awards, Users where Wolfy_players.award_id=Wolfy_awards.id and Wolfy_players.user_id=Users.id and name=%s order by Wolfy_awards.id, year",quote_smart($player));
-	$result_award_p = mysql_query($sql_award_p);
+	$result_award_p = mysqli_query($mysql, $sql_award_p);
 	$sql_award_g =sprintf("select * from Wolfy_games, Wolfy_awards, Games, Moderators, Users where Wolfy_games.game_id=Games.id and Wolfy_games.award_id=Wolfy_awards.id and Games.id=Moderators.game_id and Users.id=Moderators.user_id and Users.name=%s",quote_smart($player));
-	$result_award_g = mysql_query($sql_award_g);
-	$num_awards_p = mysql_num_rows($result_award_p) ;
-	$num_awards_g = mysql_num_rows($result_award_g) ;
+	$result_award_g = mysqli_query($mysql, $sql_award_g);
+	$num_awards_p = mysqli_num_rows($result_award_p) ;
+	$num_awards_g = mysqli_num_rows($result_award_g) ;
 	$num_awards = $num_awards_p + $num_awards_g;
 	if ( $num_awards > 0 ) {
 	  print "<table class='forum_table'><tr><th><a href='/wolfy_awards.php'>Wolfy Awards</a></th></tr>\n";
 	  }
-	  while ( $award = mysql_fetch_array($result_award_p) ) {
+	  while ( $award = mysqli_fetch_array($result_award_p) ) {
 	    print "<tr><td><a href='http://www.boardgamegeek.com/article/".$award['award_post']."#".$award['award_post']."'>".$award['award']." (".$award['year'].")</a></td></tr>\n";
 		}
-	  while ( $award = mysql_fetch_array($result_award_g) ) {
+	  while ( $award = mysqli_fetch_array($result_award_g) ) {
 	    print "<tr><td><a href='http://www.boardgamegeek.com/article/".$award['award_post']."#".$award['award_post']."'>".$award['award']." (".$award['year'].")</a> - For <a href='/game/".$award['thread_id']."'>".$award['title']."</a></td></tr>\n";
 		}
 		if ( $num_awards > 0 ) {
@@ -254,10 +255,11 @@
 	print "<a href='http://boardgamegeek.com/user/".$player."'>BGG Profile</a><br />";
     print "<a href='${here}social/user/$player'>Social Sites</a></br />";
 	$wotw_sql = sprintf("select thread_id from Wotw where user_id=%s",quote_smart($user_id));
-	$wotw_result = mysql_query($wotw_sql);
+	$mysql = dbConnect();
+	$wotw_result = mysqli_query($mysql, $wotw_sql);
 	$wotw_c = 0;
- 	while ( $wotw_c < mysql_num_rows($wotw_result) ) {	
-	  $wotw_thread = mysql_result($wotw_result,$wotw_c,0);
+ 	while ( $wotw_c < mysqli_num_rows($wotw_result) ) {	
+	  $wotw_thread = mysqli_result($wotw_result,$wotw_c,0);
       print "<a href='http://boardgamegeek.com/thread/".$wotw_thread."'>Wolf of the Week Thread</a><br />";
 	  $wotw_c++;
 	}
@@ -269,38 +271,38 @@
 	);
 
 
-	$table_main =& new HTML_Table($attrs_main);
+	$table_main =new HTML_Table($attrs_main);
 
-	$table =& new HTML_Table($attrs);
+	$table =new HTML_Table($attrs);
 	$table->addCol($current_games_signup);
 	$table->addCol($games_signup_date);
 	$table->setRowType(0,"TH");
 	$table->setCellAttributes(0,0,"colspan='2'");
 	$table_main->setCellContents(0,0,$table->toHTML());
 
-	$table =& new HTML_Table($attrs);
+	$table =new HTML_Table($attrs);
 	$table->addCol($future_modded);
 	$table->addCol($future_modded_date);
 	$table->setRowType(0,"TH");
 	$table->setCellAttributes(0,0,"colspan='2'");
 	$table_main->setCellContents(1,0,$table->toHTML());
 
-	$table =& new HTML_Table($attrs);
+	$table =new HTML_Table($attrs);
 	$table->addCol($current_games_played);
 	$table->setRowType(0,"TH");
 	$table_main->setCellContents(0,2,$table->toHTML());
 
-	$table =& new HTML_Table($attrs);
+	$table =new HTML_Table($attrs);
 	$table->addCol($last_games_played);
 	$table->setRowType(0,"TH");
 	$table_main->setCellContents(1,2,$table->toHTML());
 
-	$table =& new HTML_Table($attrs);
+	$table =new HTML_Table($attrs);
 	$table->addCol($current_games_modded);
 	$table->setRowType(0,"TH");
 	$table_main->setCellContents(0,4,$table->toHTML());
 
-	$table =& new HTML_Table($attrs);
+	$table =new HTML_Table($attrs);
 	$table->addCol($last_games_modded);
 	$table->setRowType(0,"TH");
 	$table_main->setCellContents(1,4,$table->toHTML());
@@ -311,10 +313,10 @@
 	echo $table_main->toHTML();
 
   $sql = "select * from Misc_users where user_id=$user_id";
-  $result = mysql_query($sql);
-  $count = mysql_num_rows($result);
+  $result = mysqli_query($mysql, $sql);
+  $count = mysqli_num_rows($result);
   if ( $count == 1 ) {
-    $misc = mysql_fetch_array($result);
+    $misc = mysqli_fetch_array($result);
 	print $misc['google_calendar'];
 	if ( $user_id == $uid ) {
 	print "<br /><a href='${here}gCal_guide.php'>Edit Calendar</a>";

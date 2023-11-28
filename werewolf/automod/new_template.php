@@ -5,7 +5,7 @@ include_once "../php/db.php";
 include_once "../menu.php";
 include_once "edit_functions.php";
 
-dbConnect();
+$mysql = dbConnect();
 
 if ( isset($_POST['submit'])) {
   $random_tinker = 0;
@@ -13,8 +13,8 @@ if ( isset($_POST['submit'])) {
   if ( isset($_POST['random_tinker']) ) { $random_tinker = 1; }
   if ( isset($_POST['random_whitehat']) ) { $random_whitehat = 1; }
   $sql = sprintf("insert into AM_template (id, owner_id, name, description, num_players, num_player_sets, role_reveal, random_n0, priest_type, random_tinker, random_whitehat, mode ) VALUES ( null, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, 'Edit')",quote_smart($uid),quote_smart($_POST['name']),quote_smart($_POST['description']),quote_smart($_POST['num_players']),quote_smart($_POST['num_player_sets']),quote_smart($_POST['role_reveal']),quote_smart($_POST['random_n0']),quote_smart($_POST['priest_type']),quote_smart($random_tinker),quote_smart($random_whitehat));
-  $result = mysql_query($sql);
-  $template_id = mysql_insert_id();
+  $result = mysqli_query($mysql, $sql);
+  $template_id = mysqli_insert_id();
   if ( $template_id < 10 ) { $template_id = "0".$template_id; }
 ?>
 <html>

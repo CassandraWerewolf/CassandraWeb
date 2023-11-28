@@ -2,7 +2,7 @@
 
 include_once "php/db.php";
 
-dbConnect();
+$mysql = dbConnect();
 
 print "<?xml version='1.0'?>\n";
 ?>
@@ -16,9 +16,9 @@ print "<?xml version='1.0'?>\n";
 <?php
 
 $sql = "select * from Games where status='Sign-up' order by id desc";
-$result = mysql_query($sql);
+$result = mysqli_query($mysql, $sql);
 
-while ( $game = mysql_fetch_array($result) ) {
+while ( $game = mysqli_fetch_array($result) ) {
   print "<item>\n";
   print "<title> ".$game['title']."</title>\n";
   print "<link>http://cassandrawerewolf.com/game/".$game['thread_id']."</link>\n";
@@ -26,11 +26,11 @@ while ( $game = mysql_fetch_array($result) ) {
   print "<description>";
   # Get Mod list 
   $sql2 = sprintf("select name from Users, Moderators where Users.id=Moderators.user_id and game_id=%s",quote_smart($game['id']));
-  $result2 = mysql_query($sql2);
-  $mod_num = mysql_num_rows($result2);
+  $result2 = mysqli_query($mysql, $sql2);
+  $mod_num = mysqli_num_rows($result2);
   $count = 0;
   $modlist = "";
-  while ( $mod = mysql_fetch_array($result2) ) {
+  while ( $mod = mysqli_fetch_array($result2) ) {
     if ( $count != 0  ) $modlist .= ", ";
     $modlist .= $mod['name'];
     $count++;

@@ -6,7 +6,7 @@ include_once "php/common.php";
 include_once "configure_physics_functions.php";
 include_once "menu.php";
 
-dbConnect();
+$mysql = dbConnect();
 #upgrading();
 
 $game_id = $_REQUEST['game_id'];
@@ -165,14 +165,14 @@ $gid = $game_id;
 $status = "Sub-Thread";
 while ( $status == "Sub-Thread" ) {
   $sql = sprintf("select `status`, parent_game_id from Games where id=%s",quote_smart($gid));
-  $result = mysql_query($sql);
-  $status = mysql_result($result,0,0);
-  if ( $status == "Sub-Thread" ) { $gid = mysql_result($result,0,1); }
+  $result = mysqli_query($mysql, $sql);
+  $status = mysqli_result($result,0,0);
+  if ( $status == "Sub-Thread" ) { $gid = mysqli_result($result,0,1); }
 }
 
 $sql = sprintf("select thread_id from Games where  id=%s",quote_smart($game_id));
-$result = mysql_query($sql);
-$thread_id = mysql_result($result,0,0);
+$result = mysqli_query($mysql, $sql);
+$thread_id = mysqli_result($result,0,0);
 
 
 if ($status != "In Progress"  && $status != "Sign-up" ) {
@@ -180,8 +180,8 @@ error("This game $game_id is not In progress - Physics can only be used while ga
 }
 //Make sure the person viewing this page is a moderator of the game.
 $sql = sprintf("select * from Moderators where game_id=%s and user_id=%s",quote_smart($game_id),$uid);
-$result = mysql_query($sql);
-if ( mysql_num_rows($result) != 1 ) {
+$result = mysqli_query($mysql, $sql);
+if ( mysqli_num_rows($result) != 1 ) {
 error("You must be the moderator of the game in order to configure the Physics System.");
 }
 
@@ -191,8 +191,8 @@ $max_tab = count($ptab_list);
 if ( $tab == "" || $tab > $max_tab ) { $tab = 4; }
 
 $sql = sprintf("select * from Games where id=%s",quote_smart($game_id));
-$result = mysql_query($sql);
-$game = mysql_fetch_array($result);
+$result = mysqli_query($mysql, $sql);
+$game = mysqli_fetch_array($result);
 ?>
 <html>
 <head>

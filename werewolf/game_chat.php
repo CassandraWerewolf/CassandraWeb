@@ -6,7 +6,7 @@ include_once "game_chat_functions.php";
 #include_once "game_order_assistant.php";
 include_once "menu.php";
 
-dbConnect();
+$mysql = dbConnect();
 
 if ( isset($_POST['submit_editchat']) ) {
   submit_edit_chat($_POST['game_id']);
@@ -51,8 +51,8 @@ if ( $thread_id == "" ) {
 } # if ( $thread_id == "" )
 
 $sql = sprintf("select * from Games where thread_id=%s",quote_smart($thread_id));
-$result = mysql_query($sql);
-$game = mysql_fetch_array($result);
+$result = mysqli_query($mysql, $sql);
+$game = mysqli_fetch_array($result);
 $game_id = $game['id'];
 $title = $game['title'];
 $status = $game['status'];
@@ -71,14 +71,14 @@ if ( $tab == "" || $tab > $max_tab ) { $tab = 1; }
 $gid = $game_id;
 if($status == "Sub-Thread"){
   $sql=sprintf("select `status` from Games where id=%s",quote_smart($p_game_id));
-  $result = mysql_query($sql);
-  $status = mysql_result($result,0);
+  $result = mysqli_query($mysql, $sql);
+  $status = mysqli_result($result,0);
 }
 
 //Show chats based on Game Status
 if ( $status == "Finished" ) {
   $sql = sprintf("select * from Chat_rooms where game_id=%s order by name",quote_smart($game_id));
-  $result = mysql_query($sql);
+  $result = mysqli_query($mysql, $sql);
   ?>
   <html>
   <head>
@@ -113,7 +113,7 @@ if ( $status == "Finished" ) {
   $menu_output .= "<input type='hidden' id='game_id' name='game_id' value='$game_id' />\n";
   $menu_output .= "<select id='room_select' name='room_select' onChange='change_rooms()' >\n";
   $first_room = "";
-  while ( $room = mysql_fetch_array($result) ) {
+  while ( $room = mysqli_fetch_array($result) ) {
     if ( $first_room == "" ) { $first_room = $room['id']; }
     $menu_output .= "<option value='".$room['id']."' />".$room['name']."\n";
   }
@@ -135,10 +135,10 @@ elseif ( $status != "In Progress" && !$mod)  {
 else {
 
 $sql = sprintf("select * from Chat_rooms, Chat_users where Chat_rooms.id=Chat_users.room_id and user_id=%s and game_id=%s order by name",quote_smart($uid),quote_smart($game_id));
-$result = mysql_query($sql);
-$num_rooms = mysql_num_rows($result);
+$result = mysqli_query($mysql, $sql);
+$num_rooms = mysqli_num_rows($result);
 if ( $num_rooms == 1 ) {
-  $room = mysql_fetch_array($result);
+  $room = mysqli_fetch_array($result);
 }
 $force_room = false;
 if ( isset($_GET['go_to_room']) ) {
@@ -200,7 +200,7 @@ if ( $num_rooms > 1 ) {
   print "<option value='0'>Change Room</option>";
   $js_out = "var room_list = new Array()\n";
   $c = 0;
-  while ( $myroom = mysql_fetch_array($result) ) {
+  while ( $myroom = mysqli_fetch_array($result) ) {
     print "<option value='".$myroom['id']."'>".$myroom['name']."</option>";
 	$js_out .= "room_list[$c] = '".$myroom['id']."'\n";
 	$c++;

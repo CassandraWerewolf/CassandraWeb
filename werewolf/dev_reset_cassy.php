@@ -3,7 +3,7 @@
 include_once "php/accesscontrol.php";
 include_once "php/db.php";
 
-dbConnect();
+$mysql = dbConnect();
 
 $game_id = $_GET['game_id'];
 $from_url = $_GET['from'];
@@ -14,8 +14,8 @@ if ( $game_id == "" ) {
 
 # Make sure it is a Moderator who is accessing this page.
 $sql = sprintf("select user_id from Moderators where game_id=%s and user_id=%s",quote_smart($game_id),quote_smart($uid));
-$request = mysql_query($sql);
-if ( mysql_num_rows($request) != 1 ) {
+$request = mysqli_query($mysql, $sql);
+if ( mysqli_num_rows($request) != 1 ) {
   error("You must be the moderator of the game to access this page.");
 }
 

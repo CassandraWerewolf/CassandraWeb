@@ -7,11 +7,11 @@ include ROOT_PATH . "/php/accesscontrol.php";
 include_once ROOT_PATH . "/php/db.php";
 include_once ROOT_PATH . "/menu.php";
 
-dbConnect();
+$mysql = dbConnect();
 
 $sql = sprintf("select * from Bio where user_id = %s",quote_smart($uid));
-$result = mysql_query($sql);
-$num = mysql_num_rows($result);
+$result = mysqli_query($mysql, $sql);
+$num = mysqli_num_rows($result);
 if ( $num != 0 ) {
 ?>
 <html>
@@ -31,17 +31,17 @@ exit;
 }
 
 $sql_col = "show full columns from Bio";
-$result_col = mysql_query($sql_col);
+$result_col = mysqli_query($mysql, $sql_col);
 
 if ( isset($_POST['submit']) ) {
   $sql = sprintf("insert into Bio (user_id) values (%s)",quote_smart($_POST['user_id']));
-  $result = mysql_query($sql);
-  while ( $col = mysql_fetch_array($result_col) ) {
+  $result = mysqli_query($mysql, $sql);
+  while ( $col = mysqli_fetch_array($result_col) ) {
     if ( $col['Field'] == "user_id" ) { continue; }
 	if ( $col['Field'] == "b_date" && $_POST['b_date'] == "yyyy-mm-dd" ) { continue; }
 	if ( $_POST[$col['Field']] == "" ) { continue; }
     $sql = sprintf("update Bio set %s=%s where user_id=%s",$col['Field'],quote_smart($_POST[$col['Field']]),quote_smart($_POST['user_id']));
-	$result = mysql_query($sql);
+	$result = mysqli_query($mysql, $sql);
   }
 ?>
 <html>
@@ -74,7 +74,7 @@ exit;
 <table class='forum_table'>
 <input type='hidden' name='user_id' value='<?=$uid;?>' />
 <?php
-while ( $col = mysql_fetch_array($result_col) ) {
+while ( $col = mysqli_fetch_array($result_col) ) {
   if ( $col['Comment'] == "" ) { continue; }
   print "<tr><td>".$col['Comment'];
   $star = "";
@@ -104,8 +104,8 @@ while ( $col = mysql_fetch_array($result_col) ) {
 	  print "*";
 	  print "</td><td><select name='".$col['Field']."'><option value=''/>\n";
       $sql_tz = "select zone, concat('(GMT',if(GMT>0,' +',''),if(GMT=0,'',concat(if(GMT<0,' ',''),GMT)),') ',description) as text from Timezones order by zone DESC";
-      $result_tz = mysql_query($sql_tz);
-	  while ( $tz = mysql_fetch_array($result_tz) ) {
+      $result_tz = mysqli_query($mysql, $sql_tz);
+	  while ( $tz = mysqli_fetch_array($result_tz) ) {
         print "<option value='".$tz['zone']."' />".$tz['text']."\n";
 	  }
 	  print "</select></td></tr>\n";

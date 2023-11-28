@@ -14,7 +14,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 include_once "php/accesscontrol.php";
 include_once "php/db.php";
 
-dbConnect();
+$mysql = dbConnect();
 
 //checkLevel($level, 1);
 
@@ -26,9 +26,9 @@ if ($thread_id == "") {
 }
 
 $sql = sprintf("select id from Games where thread_id=%s", quote_smart($thread_id));
-$result = mysql_query($sql);
-if (mysql_num_rows($result) == 1) {
-	$game_id = mysql_result($result, 0, 0);
+$result = mysqli_query($mysql, $sql);
+if (mysqli_num_rows($result) == 1) {
+	$game_id = mysqli_result($result, 0, 0);
 } else {
 	exit;
 }
@@ -46,16 +46,16 @@ $writer->startElement('votelog');
 $writer->writeAttribute('game_id', $game_id); 
 
 $sql_days = sprintf("select distinct day from Votes_log where game_id=%s order by day asc", $game_id);
-$result_days = mysql_query($sql_days);
+$result_days = mysqli_query($mysql, $sql_days);
 
-while ($day = mysql_fetch_array($result_days)) {
+while ($day = mysqli_fetch_array($result_days)) {
 	$writer->startElement('day');
 	$writer->writeAttribute('daynum', $day[0]);
 	
 	$sql_votes = sprintf("select * from Votes_log where game_id=%s and day=%s order by time_stamp", $game_id, $day[0]);
-	$result_votes = mysql_query($sql_votes);
+	$result_votes = mysqli_query($mysql, $sql_votes);
 
-	while ($row = mysql_fetch_array($result_votes)) {
+	while ($row = mysqli_fetch_array($result_votes)) {
 		$writer->startElement('vote');
 		$writer->writeAttribute('type', $row['type']);
 		$writer->writeAttribute('valid', $row['valid']);
@@ -77,8 +77,8 @@ while ($day = mysql_fetch_array($result_days)) {
 	}
 
 	$sql_nonvoters = sprintf("select get_non_voters(%d, %d);", $game_id, $day[0]);
-	$res = mysql_query($sql_nonvoters);
-	$nonvoters = mysql_result($res, 0, 0);
+	$res = mysqli_query($mysql, $sql_nonvoters);
+	$nonvoters = mysqli_result($res, 0, 0);
 
 	if($nonvoters != '') {
 		$elements = explode(', ', $nonvoters);

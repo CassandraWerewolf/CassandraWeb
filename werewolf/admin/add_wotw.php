@@ -4,17 +4,17 @@ include_once "../php/accesscontrol.php";
 checkLevel($level,2);
 
 include_once "../php/db.php";
-dbConnect();
+$mysql = dbConnect();
 
 include_once "../php/common.php";
 include_once "../menu.php";
 
 if ( isset($_POST['submit']) ) {
   $sql = sprintf("select id from Users where name=%s",quote_smart($_POST['player_name_wotw']));
-  $result = mysql_query($sql);
-  $player_id = mysql_result($result,0,0);
+  $result = mysqli_query($mysql, $sql);
+  $player_id = mysqli_result($result,0,0);
   $sql = sprintf("insert into Wotw (id, user_id, num, start_date, thread_id) values (null, %s, %s, %s, %s)",quote_smart($player_id),quote_smart($_POST['num']),quote_smart($_POST['start_date']),quote_smart($_POST['thread_id']));
-  $result = mysql_query($sql);
+  $result = mysqli_query($mysql, $sql);
 
 ?>
 <html>

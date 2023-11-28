@@ -12,13 +12,13 @@ if ( $_REQUEST['remember'] == "on" ) {
    setcookie('bgg_password', $_REQUEST['bggpwd'], time()+60*60*24*365, '/', '', true, true);
 }
 
-dbConnect();
+$mysql = dbConnect();
 
 $bggpwd = $_COOKIE['bgg_password'];
 
 if ( $_GET['action'] == "add" ) {
   $sql = sprintf ("insert into Players ( user_id, game_id, update_time ) values ( %s, %s, now() )",quote_smart($uid),quote_smart($_GET['game_id']));
-  $result = mysql_query($sql);
+  $result = mysqli_query($mysql, $sql);
 	$cache->clean('front-signup-' . quote_smart($_GET['game_id']));
 	$cache->clean('front-signup-fast-' . quote_smart($_GET['game_id']));
 	$cache->clean('front-signup-swf-' . quote_smart($_GET['game_id']));
@@ -27,8 +27,8 @@ if ( $_GET['action'] == "add" ) {
 
   
   $sql = sprintf("select thread_id from Games where id=%s",quote_smart($_GET['game_id']));
-  $result = mysql_query($sql);
-  $thread_id = mysql_result($result,0,0);
+  $result = mysqli_query($mysql, $sql);
+  $thread_id = mysqli_result($result,0,0);
 
   print "<!--\n";
   edit_playerlist_post($_GET['game_id']);
@@ -72,12 +72,12 @@ if ($uid == 1525) {
 }
 if ( $_GET['action'] == "confirm") {
   $sql = sprintf("update Players set need_to_confirm = null where user_id=%s and game_id=%s",quote_smart($uid),quote_smart($_GET['game_id']));
-  $result = mysql_query($sql);
+  $result = mysqli_query($mysql, $sql);
   error("You have been confirmed");
 }
 if ( $_GET['action'] == "remove" ) {
   $sql = sprintf ("delete from Players where user_id=%s and game_id=%s",quote_smart($uid),quote_smart($_GET['game_id']));
-  $result = mysql_query($sql);
+  $result = mysqli_query($mysql, $sql);
 	$cache->clean('front-signup-' . quote_smart($_GET['game_id']));
 	$cache->clean('front-signup-fast-' . quote_smart($_GET['game_id']));
 	$cache->clean('front-signup-swf-' . quote_smart($_GET['game_id']));
@@ -85,8 +85,8 @@ if ( $_GET['action'] == "remove" ) {
 	$cache->remove('games-signup-fast-list', 'front');
   
   $sql = sprintf("select thread_id from Games where id=%s",quote_smart($_GET['game_id']));
-  $result = mysql_query($sql);
-  $thread_id = mysql_result($result,0,0);
+  $result = mysqli_query($mysql, $sql);
+  $thread_id = mysqli_result($result,0,0);
 
   edit_playerlist_post($_GET['game_id']);
   notify_moderator($_GET['game_id'],"removed",$username);
