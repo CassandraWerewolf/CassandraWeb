@@ -1,9 +1,9 @@
 version: '3'
 services:
   web:
-    image: cassandraproject/web:latest
+    #image: cassandraproject/web:latest
     ports:
-      - "5000:80"
+      - "5002:80"
       - "5001:443"
     environment:
       MYSQL_HOST: mysql
@@ -22,6 +22,7 @@ services:
     depends_on:
         - mysql
   mysql:
+    platform: linux/x86_64
     image: mysql:5.6
     environment:
       MYSQL_ROOT_PASSWORD: rootpassword
