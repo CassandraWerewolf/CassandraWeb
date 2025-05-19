@@ -11,7 +11,7 @@
 	$pagename = "show_player_stats.php";
 	$game = "/game/";
 
-	$player = $_REQUEST['player']; 
+	$player = $_REQUEST['player'];
 	if ( $player == "" ) {
 ?>
 <html>
@@ -54,7 +54,7 @@
 	$sql_games_played_stats = "SELECT games_played, rank FROM Users_game_ranks WHERE name = '$player';";
 
 	$sql_games_modded_stats = "SELECT games_moderated, rank FROM Users_modded_ranks WHERE name = '$player';";
-	
+
 	$sql_played_with = sprintf("select u.id, u.name, count(*) as num from Players_all p, Users u where p.user_id=u.id and p.game_id in (select g.id from Players p, Games g where p.game_id=g.id and g.status='Finished' and p.user_id=%s union select g.id from Replacements r, Games g where r.game_id=g.id and g.status='Finished' and r.replace_id=%s) group by u.id order by num desc",quote_smart($user_id),quote_smart($user_id));
 
 	$sql_current_games_signup = "SELECT Games.id, if(swf='Yes','When Full',DATE_FORMAT(start_date, '%b-%d-%y')) as start, if((datediff(now(), start_date) <=3 or automod_id is not null),0,1) as old_games  FROM Games, Players_all WHERE Players_all.user_id = $user_id AND Games.id = Players_all.game_id AND Games.status = 'Sign-up' ORDER BY old_games, swf, start_date;";
@@ -72,7 +72,7 @@
 	$sql_future_games_modded = "SELECT Games.id, if(swf='Yes','When Full',DATE_FORMAT(start_date, '%b-%d-%y')) as start FROM Games, Moderators WHERE Moderators.user_id = $user_id AND Moderators.game_id = Games.id AND Games.status = 'Sign-up' ORDER BY swf, start_date asc;";
 
 	$sql_last_games_modded = "SELECT Games.id, Games.thread_id FROM Games, Moderators, Users WHERE Users.name = '$player' AND Users.id = Moderators.user_id AND Moderators.game_id = Games.id AND Games.status = 'Finished' ORDER BY number DESC LIMIT 0, 5;";
-	 
+
 
 
 	#
@@ -210,10 +210,10 @@
 		'width' => '100%'
 	);
 
-	$table =& new HTML_Table($top_attrs);
-	$table->addRow(array("", "Total", "Rank")); 
-	$table->addRow(array("Games Played", "<a href='" . $player_link . "'>" . $games_played . "</a>", $games_played_rank)); 
-	$table->addRow(array("Games Modded", "<a href='" . $mod_link . "'>" . $games_modded . "</a>", $games_modded_rank)); 
+	$table = new HTML_Table($top_attrs);
+	$table->addRow(array("", "Total", "Rank"));
+	$table->addRow(array("Games Played", "<a href='" . $player_link . "'>" . $games_played . "</a>", $games_played_rank));
+	$table->addRow(array("Games Modded", "<a href='" . $mod_link . "'>" . $games_modded . "</a>", $games_modded_rank));
 	$table->addRow(array("Played with x other players", "<a href='".$with_link."'>".$played_with."</a>", ""));
 	$table->setRowType(0,"TH");
 	print "<table><tr><td valign='top'>\n";
@@ -243,20 +243,20 @@
 		  print "</td></tr></table>\n";
 
 
-	
+
 	print "\n<br></br>\n";
 	#if ( isset($username) ) {
 	#	if ( $username == $player ) {
 	#		print "<a href='${here}mystuff.php'>My Stuff</a><br />";
 	#	}
-	#}	
+	#}
 	print "<a href='${here}profile/$player'>Cassandra Profile</a><br />";
 	print "<a href='http://boardgamegeek.com/user/".$player."'>BGG Profile</a><br />";
     print "<a href='${here}social/user/$player'>Social Sites</a></br />";
 	$wotw_sql = sprintf("select thread_id from Wotw where user_id=%s",quote_smart($user_id));
 	$wotw_result = mysql_query($wotw_sql);
 	$wotw_c = 0;
- 	while ( $wotw_c < mysql_num_rows($wotw_result) ) {	
+ 	while ( $wotw_c < mysql_num_rows($wotw_result) ) {
 	  $wotw_thread = mysql_result($wotw_result,$wotw_c,0);
       print "<a href='http://boardgamegeek.com/thread/".$wotw_thread."'>Wolf of the Week Thread</a><br />";
 	  $wotw_c++;
@@ -269,38 +269,38 @@
 	);
 
 
-	$table_main =& new HTML_Table($attrs_main);
+	$table_main = new HTML_Table($attrs_main);
 
-	$table =& new HTML_Table($attrs);
+	$table = new HTML_Table($attrs);
 	$table->addCol($current_games_signup);
 	$table->addCol($games_signup_date);
 	$table->setRowType(0,"TH");
 	$table->setCellAttributes(0,0,"colspan='2'");
 	$table_main->setCellContents(0,0,$table->toHTML());
 
-	$table =& new HTML_Table($attrs);
+	$table = new HTML_Table($attrs);
 	$table->addCol($future_modded);
 	$table->addCol($future_modded_date);
 	$table->setRowType(0,"TH");
 	$table->setCellAttributes(0,0,"colspan='2'");
 	$table_main->setCellContents(1,0,$table->toHTML());
 
-	$table =& new HTML_Table($attrs);
+	$table = new HTML_Table($attrs);
 	$table->addCol($current_games_played);
 	$table->setRowType(0,"TH");
 	$table_main->setCellContents(0,2,$table->toHTML());
 
-	$table =& new HTML_Table($attrs);
+	$table = new HTML_Table($attrs);
 	$table->addCol($last_games_played);
 	$table->setRowType(0,"TH");
 	$table_main->setCellContents(1,2,$table->toHTML());
 
-	$table =& new HTML_Table($attrs);
+	$table = new HTML_Table($attrs);
 	$table->addCol($current_games_modded);
 	$table->setRowType(0,"TH");
 	$table_main->setCellContents(0,4,$table->toHTML());
 
-	$table =& new HTML_Table($attrs);
+	$table = new HTML_Table($attrs);
 	$table->addCol($last_games_modded);
 	$table->setRowType(0,"TH");
 	$table_main->setCellContents(1,4,$table->toHTML());

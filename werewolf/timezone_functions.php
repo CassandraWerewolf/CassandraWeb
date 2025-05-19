@@ -15,14 +15,14 @@ function timezone_changer($position="relative") {
   $output .= "<input type='button' name='submit' value='submit' onClick='calcTime()' />\n";
   $output .= "<input type='button' name='now' value='now' onClick='calcNow()' />\n";
   $output .= "&nbsp;&nbsp</div>\n";
-  
+
   return $output;
 }
 function timezone_chart($time="utc_timestamp()",$game_id="") {
   global $username;
   $dst = date('I');
   $format = "%W<br />%h:%i %p";
-  if ( $time == "" ) { $time="utc_timestamp()"; } 
+  if ( $time == "" ) { $time="utc_timestamp()"; }
   if ( $time != "utc_timestamp()" ) { $time = quote_smart($time); }
   $sql_tz = sprintf("select zone, description, date_format(date_add(%s, interval GMT hour), %s) as standard_time, date_format(date_add(%s, interval GMT+1 hour),%s) as daylight_time from Timezones order by GMT ",$time,quote_smart($format),$time,quote_smart($format));
   $result_tz = mysql_query($sql_tz);
@@ -59,7 +59,7 @@ function timezone_chart($time="utc_timestamp()",$game_id="") {
   $attrs = array (
     'class' => 'forum_table'
   );
-  $table =& new HTML_Table($attrs);  
+  $table = new HTML_Table($attrs);
   $col = array ("Zone", "Standard Time", "Daylight Time");
   $table->addCol($col);
   unset($col);
@@ -111,13 +111,13 @@ function timezone_js() {
     document.getElementById('get_time').style.visibility = 'hidden';
 	agent.call('','timezone_chart','changeTimes',"",game_id)
   }
-  
+
   function changeTimes(obj) {
-    var str = new String()
-    str = decodeURIComponent(obj.toString())
-	document.getElementById('tz_div').innerHTML=str
+    var str = "";
+    str = decodeURIComponent(obj.toString());
+	document.getElementById('tz_div').innerHTML=str;
   }
-  
+
   //-->
 </script>
 <?php
@@ -127,7 +127,7 @@ function calcTime($zone,$type,$time,$mer,$game_id="") {
   $sql = sprintf("select GMT from Timezones where zone=%s",quote_smart($zone));
   $result = mysql_query($sql);
   $gmt_offset = mysql_result($result,0,0);
-  list($hr, $mn) = split(":",$time);
+  list($hr, $mn) = explode(":",$time);
   if ( $mer == "pm" && $hr != "12") {
     $gmt_offset += 12;
   }

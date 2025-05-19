@@ -10,18 +10,49 @@ dbConnect();
 
 $_SESSION['url'] = $_SERVER['REQUEST_URI'];
 
-if ( isset($_POST['login']) ) {
+if (isset($_POST['login'])) {
   $uname = $_POST['uname'];
   $pwd = $_POST['pwd'];
-  $sql = sprintf("Select id from Users where name=%s",quote_smart($uname));
-  $result = mysql_query($sql);
-  $uid = mysql_result($result,0,0);
-  if ( $_POST['remember'] == "on" ) {
-    setcookie('cassy_uid', $uid, time()+60*60*24*365, '/; samesite=none', '', true, true);
-    setcookie('cassy_pwd', $pwd, time()+60*60*24*365, '/; samesite=none', '', true, true);
+  $sql = sprintf("Select id, password from Users where name=%s", quote_smart($uname));
+  $result = mysqli_query($dbcnx, $sql);
+
+  if (mysqli_num_rows($result) > 0) {
+    $user = mysqli_fetch_assoc($result);
+    $uid = $user['id'];
+    $stored_hash = $user['password'];
+
+    // Check if the password is stored as MD5 (legacy) or using password_hash
+    if (strlen($stored_hash) == 32) { // MD5 hash is 32 characters
+      $authenticated = (md5($pwd) == $stored_hash);
+
+      // If using old MD5 hash and authentication successful, update to new password_hash
+      if ($authenticated) {
+        $new_hash = password_hash($pwd, PASSWORD_DEFAULT);
+        $update_sql = sprintf("UPDATE Users SET password=%s WHERE id=%s",
+                             quote_smart($new_hash), quote_smart($uid));
+        mysqli_query($dbcnx, $update_sql);
+      }
+    } else {
+      // Using modern password hashing
+      $authenticated = password_verify($pwd, $stored_hash);
+    }
+
+    if ($authenticated) {
+      if ($_POST['remember'] == "on") {
+        setcookie('cassy_uid', $uid, time()+60*60*24*365, '/; samesite=none', '', true, true);
+        setcookie('cassy_pwd', $pwd, time()+60*60*24*365, '/; samesite=none', '', true, true);
+      } else {
+        setcookie('cassy_uid', $uid, 0, '/; samesite=none', '', true, true);
+        setcookie('cassy_pwd', $pwd, 0, '/; samesite=none', '', true, true);
+      }
+
+      $_SESSION['uid'] = $uid;
+      $_SESSION['pwd'] = $pwd;
+    } else {
+      $uid = null;
+    }
   } else {
-    setcookie('cassy_uid', $uid, 0, '/; samesite=none', '', true, true);
-    setcookie('cassy_pwd', $pwd, 0, '/; samesite=none', '', true, true);
+    $uid = null;
   }
 } else {
   $uid = (isset($_SESSION['uid']) ? $_SESSION['uid'] : (isset($_COOKIE['cassy_uid']) ? $_COOKIE['cassy_uid'] : null));
@@ -54,57 +85,107 @@ Cookies must be enabled for the login to work.
 exit;
 }
 
-$_SESSION['uid'] = $uid;
-$_SESSION['pwd'] = $pwd;
+// If we have a UID but no authenticated session yet, verify credentials
+if (!isset($_SESSION['authenticated']) || $_SESSION['authenticated'] !== true) {
+  $sql = sprintf("SELECT * FROM Users WHERE id=%s", quote_smart($uid));
+  $result = mysqli_query($dbcnx, $sql);
 
-$sql = sprintf("select * from Users where id=%s and password = MD5(%s)",quote_smart($uid),quote_smart($pwd));
-$result = mysql_query($sql);
-if ( !$result) {
-  unset ($_SESSION['uid']);
-  unset ($_SESSION['pwd']);
-  if ( isset($_COOKIE['cassy_uid']) ) {
-    setcookie ('cassy_uid',"",time()-3600,'/','',true, true);
+  if (!$result) {
+    unset($_SESSION['uid']);
+    unset($_SESSION['pwd']);
+    if (isset($_COOKIE['cassy_uid'])) {
+      setcookie('cassy_uid', "", time()-3600, '/', '', true, true);
+    }
+    if (isset($_COOKIE['cassy_pwd'])) {
+      setcookie('cassy_pwd', "", time()-3600, '/', '', true, true);
+    }
+    error("Database error #300 occurred while checking your login details.\\nIf this error persists, please e-mail cassandra.project@gmail.com");
   }
-  if ( isset($_COOKIE['cassy_pwd']) ) {
-    setcookie ('cassy_pwd',"",time()-3600,'/','',true, true);
+
+  if (mysqli_num_rows($result) == 0) {
+    unset($_SESSION['uid']);
+    unset($_SESSION['pwd']);
+    if (isset($_COOKIE['cassy_uid'])) {
+      setcookie('cassy_uid', "", time()-3600, '/', '', true, true);
+    }
+    if (isset($_COOKIE['cassy_pwd'])) {
+      setcookie('cassy_pwd', "", time()-3600, '/', '', true, true);
+    }
+    ?>
+    <html>
+    <head>
+    <title>Access Denied</title>
+    </head>
+    <body>
+    <h1>Access Denied</h1>
+    <p>Your user ID or password is incorrect, or you are not registered user on this site. You can either <a href='<?=$_SERVER['PHP_SELF'];?>'>try again</a> or <a href='signup.php'>request a (new) password</a>.</p>
+    </body>
+    </html>
+    <?php
+    exit;
   }
-  error ("Database error #300 occured while checking your login details.\\nIf this error persists, please e-mail cassandra.project@gmail.com");
+
+  $user = mysqli_fetch_assoc($result);
+  $stored_hash = $user['password'];
+
+  // Verify password
+  if (strlen($stored_hash) == 32) { // MD5 hash
+    $authenticated = (md5($pwd) == $stored_hash);
+
+    // Update to modern hash if login successful
+    if ($authenticated) {
+      $new_hash = password_hash($pwd, PASSWORD_DEFAULT);
+      $update_sql = sprintf("UPDATE Users SET password=%s WHERE id=%s",
+                           quote_smart($new_hash), quote_smart($uid));
+      mysqli_query($dbcnx, $update_sql);
+    }
+  } else {
+    $authenticated = password_verify($pwd, $stored_hash);
+  }
+
+  if (!$authenticated) {
+    unset($_SESSION['uid']);
+    unset($_SESSION['pwd']);
+    if (isset($_COOKIE['cassy_uid'])) {
+      setcookie('cassy_uid', "", time()-3600, '/', '', true, true);
+    }
+    if (isset($_COOKIE['cassy_pwd'])) {
+      setcookie('cassy_pwd', "", time()-3600, '/', '', true, true);
+    }
+    ?>
+    <html>
+    <head>
+    <title>Access Denied</title>
+    </head>
+    <body>
+    <h1>Access Denied</h1>
+    <p>Your user ID or password is incorrect, or you are not registered user on this site. You can either <a href='<?=$_SERVER['PHP_SELF'];?>'>try again</a> or <a href='signup.php'>request a (new) password</a>.</p>
+    </body>
+    </html>
+    <?php
+    exit;
+  }
+
+  $_SESSION['authenticated'] = true;
+  $username = $user['name'];
+  $level = $user['level'];
+} else {
+  $sql = sprintf("SELECT name, level FROM Users WHERE id=%s", quote_smart($uid));
+  $result = mysqli_query($dbcnx, $sql);
+  $user = mysqli_fetch_assoc($result);
+  $username = $user['name'];
+  $level = $user['level'];
 }
-if ( mysql_num_rows($result) == 0 ) {
-  unset ($_SESSION['uid']);
-  unset ($_SESSION['pwd']);
-  if ( isset($_COOKIE['cassy_uid']) ) {
-    setcookie ('cassy_uid',"",time()-3600,'/','',true, true);
-  }
-  if ( isset($_COOKIE['cassy_pwd']) ) {
-    setcookie ('cassy_pwd',"",time()-3600,'/','',true, true);
-  }
-?>
-<html>
-<head>
-<title>Access Denied</title>
-</head>
-<body>
-<h1>Access Denied</h1>
-<p>Your user ID or password is incorrect, or you are not registered user on this site.  You can either <a href='<?=$_SERVER['PHP_SELF'];?>'>try again</a> or <a href='signup.php'>request a (new) password</a>.</p>
-</body>
-</html>
-<?php
-exit;
-}
-$username = mysql_result($result,0,'name');
-$level = mysql_result($result,0,'level');
 
-if ( $level == 0 ) {
+if ($level == 0) {
 ?>
-
 <html>
 <head>
 <script language='javascript'>
 <!--
 <?php
-if ( $_SERVER['PHP_SELF'] != 'logout.php') {
-print " alert('This user id has been blocked from the Cassandra System')\n\n";
+if ($_SERVER['PHP_SELF'] != 'logout.php') {
+  print "alert('This user id has been blocked from the Cassandra System')\n\n";
 }
 ?>
 location.href='/logout.php'
@@ -116,38 +197,39 @@ location.href='/logout.php'
 </body>
 </html>
 <?php
-}
-
-function checkLevel($level,$num) {
-if ( $level <= 0 || $level > $num ) {
-?>
-<html>
-<head>
-<title>Pemission Denied</title>
-</head>
-<body>
-<p>You do not have high enough clearence level to access this page.</p>
-</body>
-</html>
-<?php
 exit;
 }
+
+function checkLevel($level, $num) {
+  if ($level <= 0 || $level > $num) {
+  ?>
+  <html>
+  <head>
+  <title>Permission Denied</title>
+  </head>
+  <body>
+  <p>You do not have high enough clearance level to access this page.</p>
+  </body>
+  </html>
+  <?php
+  exit;
+  }
 }
 
 function upgrading() {
-global $level;
-if ( $level <= 0 || $level > 1 ) {
-?>
-<html>
-<head>
-<title>Page being Upgraded</title>
-</head>
-<body>
-<p>This page is being upgraded, please be patient and try again later.</p>
-</body>
-</html>
-<?php
-exit;
-}
+  global $level;
+  if ($level <= 0 || $level > 1) {
+  ?>
+  <html>
+  <head>
+  <title>Page being Upgraded</title>
+  </head>
+  <body>
+  <p>This page is being upgraded, please be patient and try again later.</p>
+  </body>
+  </html>
+  <?php
+  exit;
+  }
 }
 ?>

@@ -31,7 +31,7 @@ function show_moderator($game_id) {
     $sql2 = sprintf("Select count(*) from Posts where game_id=%s and user_id='".$mod['id']."'",quote_smart($game_id));
     $result2=mysql_query($sql2);
     $num_post=mysql_result($result2,0,0);
-    if ( $count == 0 ) { 
+    if ( $count == 0 ) {
 	  $output = get_player_page($mod['name']);
 	  $output .= " <a href='$posts".$mod['name']."'>($num_post post)</a>";
 	} else {
@@ -104,8 +104,8 @@ function edit_dates($game_id) {
     $output .= "<input type='hidden' name='swf' value='$value' />\n";
   }
   $output .= "<input type=text name='start' value='".$date['start']."' />";
-  if ( $date['deadline_speed'] == "Fast" ) { 
-    $output .= time_dropdown('start_time',$date['start_time'],false,false); 
+  if ( $date['deadline_speed'] == "Fast" ) {
+    $output .= time_dropdown('start_time',$date['start_time'],false,false);
   } else {
     $output .= "<input type='hidden' name='start_time' value='00:00' />\n";
   }
@@ -173,7 +173,7 @@ function edit_speed($game_id) {
   $result=mysql_query($sql);
   $speed = mysql_result($result,0,0);
   $output .= "Speed: ";
-  $sql="show columns from Games where field='deadline_speed'"; 
+  $sql="show columns from Games where field='deadline_speed'";
   $result = mysql_query($sql);
   while ( $row=mysql_fetch_row($result)) {
     foreach(explode("','",substr($row[1],6,-2)) as $v) {
@@ -216,7 +216,7 @@ function edit_deadline($game_id) {
   $output .= "<tr><td colspan='2' align='center'><input type='button' name='submit' value='submit' onClick='submit_deadline()' /></td></tr>\n";
   $output .= "</table>\n";
   $output .= "</form>\n";
-  
+
   print $output;
 }
 
@@ -301,7 +301,7 @@ function createPlayer_table($edit,$game_id) {
   $show_alias_values = false;
   $alias_display = mysql_result($result,0,0);
   if ( $alias_display != 'None' ) { $show_alias = true; }
-  if ( $alias_display == 'Public' ) { $show_alias_values = true; } 
+  if ( $alias_display == 'Public' ) { $show_alias_values = true; }
   $is_automod = false;
   if ( mysql_result($result,0,1) != "" ) { $is_automod = true; }
 
@@ -311,7 +311,7 @@ function createPlayer_table($edit,$game_id) {
 
   $sql = sprintf("select Users.id as uid, name, role_name, `type`, side, death_phase, death_day, mod_comment, need_replace, player_alias, alias_color, automod_role_id from Users, Players, Roles where Users.id=Players.user_id and Players.role_id=Roles.id and game_id=%s order by name",quote_smart($game_id));
   $result = mysql_query($sql);
-  $edit_col[] = "Edit"; 
+  $edit_col[] = "Edit";
   $replace[] = "Repl";
   $players[] = "Players ($players_total)";
   $alias[] = "Alias";
@@ -328,7 +328,7 @@ function createPlayer_table($edit,$game_id) {
     if ( $edit ) { $edit_col[] = "<a href='javascript:edit_player(\"".$row['uid']."\",\"$count\")'><img src='/images/edit.png' border='0' /></a>"; }
 	if ( $row['need_replace'] != "" ) {
       // Player needs to be replaced
-	  $replace[] = "<a href='javascript:go_replace(\"".$row['uid']."\",\"I_replace\")' onMouseOver='show_hint(\"Click to Replace this Player\")' onMouseOut='hide_hint()'><img src='/images/i_replace.png' border='0' /></a>"; 
+	  $replace[] = "<a href='javascript:go_replace(\"".$row['uid']."\",\"I_replace\")' onMouseOver='show_hint(\"Click to Replace this Player\")' onMouseOut='hide_hint()'><img src='/images/i_replace.png' border='0' /></a>";
 	} else {
       if ( ($row['uid'] == $uid || $uid == $rep_id) || ( $edit && $status == "In Progress" ) ) {
         // Icon to request a replacement player
@@ -351,14 +351,14 @@ function createPlayer_table($edit,$game_id) {
 	if ( isset($moderator) && $moderator ) { $view = true; }
 	if ( isset($finished) && $finished ) { $view = true; }
 	if ( $edit ) { $view = true; }
-	if ( $show_alias && 
+	if ( $show_alias &&
 	     ($view || $viewown || $show_alias_values) )
 		{ $alias[] = $row['alias_color'] ? "<span style='color:".$row['alias_color'].";'>".$row['player_alias']."</span>" : $row['player_alias']; }
     else { $alias[] = "";}
 	if ( $view || $viewown) {
       $role_name[] = $row['role_name'];
 	  $role_type[] = $row['type'];
-	  $team[] = $row['side']; 
+	  $team[] = $row['side'];
 	  if ( $view ) {
         $role_id[] = $row['automod_role_id'];
 	    $comment[] = $row['mod_comment'];
@@ -381,7 +381,7 @@ function createPlayer_table($edit,$game_id) {
 	  'cellspacing' => '2'
   );
 
-  $table =& new HTML_Table($attrs);
+  $table = new HTML_Table($attrs);
 
   if ( $edit ) { $table->addCol($edit_col); }
   if ( $status == "In Progress" ) { $table->addCol($replace); }
@@ -418,7 +418,7 @@ function createPlayer_table($edit,$game_id) {
     $i++;
     $table->setHeaderContents(0,0+$i,"<div $open_comment onMouseOver='show_hint(\"Click to change all Aliases\")' onMouseOut='hide_hint()' onClick='edit_alias()' $close_comment>Alias</div>");
   }
-  if ( $is_automod ) { 
+  if ( $is_automod ) {
     $i++;
     $table->setHeaderContents(0,0+$i,"Automod ID");
   }
@@ -461,7 +461,7 @@ function display_player($name,$user_id,$game_id) {
 	$result2 = mysql_query($sql2);
 	$current_id = mysql_result($result2,mysql_num_rows($result2)-1,0);
 	$sql2 = sprintf("select count(*) from Posts where game_id=%s and user_id=%s",quote_smart($game_id),quote_smart($current_id));
-	$result2 = mysql_query($sql2);   
+	$result2 = mysql_query($sql2);
 	$current_num_post = mysql_result($result2,0,0);
   }
   $sql2 = sprintf("select death_phase, status from Players, Games where Players.game_id=Games.id and game_id=%s and user_id=%s",quote_smart($game_id),quote_smart($user_id));
@@ -486,7 +486,7 @@ function display_player($name,$user_id,$game_id) {
   $this_player .= get_player_page($name);
   $this_player .= " <a href='$posts$name'>($num_post posts)</a>".$replace;
 
-  return $this_player; 
+  return $this_player;
 }
 
 function find_Replacements($user_id,$game_id) {
@@ -501,7 +501,7 @@ function find_Replacements($user_id,$game_id) {
     $sql2 = sprintf("select count(*) from Posts where game_id=%s and user_id='".$rep['id']."'",quote_smart($game_id));
     $result2 = mysql_query($sql2);
     $num_post = mysql_result($result2,0,0);
-    if ( $count == 0 ) { 
+    if ( $count == 0 ) {
       $replace = "<br /> (replaced by ";
 	  $replace .= get_player_page($rep['name']);
 	  $replace .= " <a href='$posts".$rep['name']."'>($num_post posts)</a> on ".$rep['p'].$rep['number'];
@@ -535,7 +535,7 @@ function edit_player($user_id,$row,$game_id) {
 	$output .= "<td>".$rep['name']." on  ".$rep['period']." ".$rep['number'];
 	$output .= " - <a href='javascript:delete_replacement(\"".$rep['id']."\")'>delete</a></td></tr>\n";
   }
-  # Add a Replacement 
+  # Add a Replacement
   $output .= "<tr><td align='right'>Add Replacement:</td><td>";
   $output .= player_dropdown("new_rep");
   $output .= "<select name='rep_period'>";
@@ -550,7 +550,7 @@ function edit_player($user_id,$row,$game_id) {
 	$output .= "<tr><td align='right'>Alias:</td><td><input type='text' name='player_alias' value='".$data['player_alias']."' /><br /><input type='text' id='alias_color' name='alias_color' value='".$data['alias_color']."' size='8' /><a href='#' onClick='cp.select(document.editPlayer.alias_color,\"pick\"); return false;' name='pick' id='pick'><img src='/images/color_pick.gif' border='0' /></a></td></tr>";
   } else {
 	$output .= "<input type='hidden' name='player_alias' value='".$data['player_alias']."' />";
-	$output .= "<input type='hidden' name='alias_color' value='".$data['alias_color']."' />";	
+	$output .= "<input type='hidden' name='alias_color' value='".$data['alias_color']."' />";
   }
   # Change Role Name
   $output .= "<tr><td align='right'>Role Name:</td><td><input type='text' name='role_name' value='".$data['role_name']."' /></td></tr>";
@@ -658,7 +658,7 @@ function roletype_dropdown($name,$type) {
 	}
   }
   $output .= "</select><br />";
- 
+
   return $output;
 
 }
@@ -733,7 +733,7 @@ function edit_maxplayers($game_id) {
   $output .= "<input type='text' name='max_players' value='$max_players' />";
   $output .= "<input type='button' name='submit' value='submit' onClick='submit_maxplayers()' />";
   $output .= "</form>";
-  
+
   print $output;
 }
 
@@ -789,7 +789,7 @@ function edit_complex($game_id) {
   $output .= complex_dropdown($complex);
   $output .= "<input type='button' name='submit' value='submit' onClick='submit_complex()' />";
   $output .= "</form>";
-  
+
   print $output;
 }
 
@@ -820,7 +820,6 @@ function complex_dropdown($complex) {
     $output .= "<option value='' />";
     $output .= "<option value='Newbie' />Newbie";
     $output .= "<option value='Low' />Low";
-    $output .= "<option value='Medium' />Medium";
     $output .= "<option selected value='High' />High";
     $output .= "<option value='Extreme' />Extreme";
   } elseif ( $complex == "Extreme" ) {

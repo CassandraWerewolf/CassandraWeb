@@ -1,7 +1,7 @@
 <?php
 include_once 'php/common.php';
 
-class Games 
+class Games
 {
     // -------------------------------------------------------------------------
     // Setup
@@ -58,7 +58,7 @@ class Games
     public function get_games_in_standard_progress() {
         $sql = "Select id, number, title, TIME_FORMAT(lynch_time, '%l:%i %p') lynch_time, TIME_FORMAT(na_deadline, '%l:%i %p') na_deadline, thread_id from Games where status='In Progress' and deadline_speed='Standard' and number is not null order by start_date, number";
         $result = mysql_query($sql);
-    
+
         return $this->process_game_data($result);
     }
 
@@ -75,16 +75,16 @@ class Games
         $sql = "SELECT Games.id, winner FROM Games WHERE status='Finished' ";
 
         if($type == 'all') {
-            $sql .= " OR status='In Progress'"; 
+            $sql .= " OR status='In Progress'";
             $title = "All Games";
         } else if($type == 'evil') {
-            $sql .= " AND winner = 'evil'"; 
+            $sql .= " AND winner = 'evil'";
             $title = "All Games Won by Evil";
         } else if($type == 'good') {
-            $sql .= " AND winner = 'good'"; 
+            $sql .= " AND winner = 'good'";
             $title = "All Games Won by Good";
         } else if($type == 'other') {
-            $sql .= " AND winner = 'other'"; 
+            $sql .= " AND winner = 'other'";
             $title = "All Other Type Games";
         } else if ($type == 'in_progress') {
             $sql = "SELECT Games.id, phase, day FROM Games WHERE status='In Progress'";
@@ -97,9 +97,9 @@ class Games
         while ( $game_data = mysql_fetch_array($result) ) {
             $games[] = [
                 'info' => get_game($game_data['id'],"num, complex, title, mod"),
-                'phase' => $game_data['phase'],
-                'day' => $game_data['day'],
-                'winner' => $game_data['winner']
+                'phase' => isset($game_data['phase']) ? $game_data['phase'] : null,
+                'day' => isset($game_data['day']) ? $game_data['day'] : null,
+                'winner' => isset($game_data['winner']) ? $game_data['winner'] : null
             ];
         }
 
@@ -191,7 +191,7 @@ class Games
         if (isset($this->games_notifications)) {
             return $this->games_notifications;
         }
-        
+
         $this->games_notifications = [
             'signed_up' => [],
             'new_chat' => [],
@@ -220,7 +220,7 @@ class Games
                 $this->games_notifications['needs_replacement'][] = $game['game_id'];
             }
         }
-        
+
         return $this->games_notifications;
     }
 

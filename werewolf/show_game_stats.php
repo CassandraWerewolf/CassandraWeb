@@ -143,8 +143,10 @@ $close_comment = "";
 <?php display_menu(); ?>
 <h1><div id='name_span' <?=$open_comment;?> onMouseOver='show_hint("Click to Change Name")' onMouseOut='hide_hint()' onClick='edit_name()' <?=$close_comment;?>>
 <?php
-if ( $game['number'] != "" ) {
+if ( !empty($game['number']) ) {
   print $game['number'].") ";
+} elseif ( isset($game['id']) && $game['id'] > 0 ) {
+  print "*) ";
 }
 ?>
 <?=$game['title'];?>

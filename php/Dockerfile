@@ -1,19 +1,22 @@
-FROM php:5-apache
+FROM php:8.1-apache
 
 RUN a2enmod rewrite ssl
 RUN pear install Cache_Lite HTML_Table
-RUN docker-php-ext-install mysql mysqli
+RUN docker-php-ext-install mysqli
 RUN apt-get update && apt-get install -y \
     libwww-mechanize-perl \
     libxml-libxml-perl \
-    mysql-client \
-    python \
-    python-mysqldb \
-    python-sqlalchemy \
-    python-dateutil \
+    default-mysql-client \
+    python3-full \
+    python3-mysqldb \
+    python3-sqlalchemy \
+    python3-dateutil \
+    python-is-python3 \
     cpanminus \
     certbot \
-    python-certbot-apache
+    python3-certbot-apache
+
+# No need for pip install as we're using system packages now
 RUN cpanm String::Trigram
 RUN cpanm JSON
 RUN printf '[PHP]\ndate.timezone = "America/Chicago"\n' > $PHP_INI_DIR/conf.d/tzone.ini

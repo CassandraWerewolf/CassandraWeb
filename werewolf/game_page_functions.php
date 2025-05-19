@@ -50,7 +50,7 @@ function get_game_status($status,$parent_id) {
   $subthread = true;
  }
 
- $out = array($status,$subthread); 
+ $out = array($status,$subthread);
  return $out;
 }
 
@@ -58,7 +58,7 @@ function get_game_chat_status($game_id){
   $sql = sprintf("select count(*) from Chat_rooms where game_id=%s",quote_smart($game_id));
   $result = mysql_query($sql);
   $chats = mysql_result($result,0,0);
-  
+
   return $chats;
 }
 
@@ -75,7 +75,7 @@ function create_edit_div($edit,$id,$hint,$onclick,$content){
 
   return $output;
 }
- 
+
 function create_game_info_table($edit,$status,$subthread,$game_id){
   $output = "<table class='forum_table' border='0' >\n";
   #Moderators
@@ -94,7 +94,7 @@ function create_game_info_table($edit,$status,$subthread,$game_id){
 	$output .= "<table border='0' width='100%'><tr><td id='dates_td'>\n";
 	$output .= show_dates($game_id,$edit);
 	$output .= "</td><td align='right'>\n";
-    $output .= add_game_link($game_id); 
+    $output .= add_game_link($game_id);
 	$output .= "</td></tr></table>\n";
     $output .= "</td></tr>\n";
   }
@@ -233,7 +233,7 @@ function show_game_status($game_id,$edit='false') {
     $game = get_game_info($game_id,"game");
   }
   $output = "";
-  $content = $game['status']." - ".$game['phase']." ".$game['day']; 
+  $content = $game['status']." - ".$game['phase']." ".$game['day'];
   $output .= create_edit_div($edit,'status_div2',"Click to Edit Status",'get_edit_form("status_form")',$content);
   list ($status, $subthread) = get_game_status($game['status'],$game['parent_game_id']);
   if ( $subthread ) {
@@ -263,7 +263,7 @@ function show_extra_status_info($game_id) {
     if ( mysql_num_rows($result) > 0 ) {
       $next = mysql_result($result,0,0);
       $output .= "Next Post Scan at $next";
-    } 
+    }
   }
   if ( $game['status'] == "Sign-up" ) {
     $sql = sprintf("select count(*) from Players where game_id=%s",quote_smart($game_id));
@@ -279,7 +279,7 @@ function show_extra_status_info($game_id) {
       }
       $output .= "<a href='$domain/sign_me_up.php?action=remove&game_id=$game_id'>Remove me</a>";
     }
-  } 
+  }
   return $output;
 }
 
@@ -289,8 +289,9 @@ function show_deadlines($game_id,$edit='false') {
     $game = get_game_info($game_id,"game");
   }
   $output = "";
-  list($lynch,$x,$x) = split(":",$game['lynch_time']);
-  list($night,$x,$x) = split(":",$game['na_deadline']);
+  // Replace deprecated split() with explode()
+  list($lynch,$x) = explode(":",$game['lynch_time']);
+  list($night,$x) = explode(":",$game['na_deadline']);
   $content = "";
   if ( $lynch != "" ) { $content .= "Dusk: ".time_24($lynch)." BGG<br />"; }
   if ( $night != "" ) { $content .= "Dawn: ".time_24($night)." BGG"; }
@@ -435,7 +436,7 @@ function create_edit_area() {
   $output .= "<table class='forum_table' width='100%'>";
   $output .= "<tr><th> Edit </th></tr>";
   $output .= "<tr><td align='center'><div id='edit_space'>";
-  $output .= clear_editSpace(); 
+  $output .= clear_editSpace();
   $output .= "</div></td></tr>";
   $output .= "</table></div>";
   return $output;
@@ -471,7 +472,7 @@ function name_submit($game_id,$title) {
     $cache->clean('front-signup-fast-' . $game_id);
     $cache->clean('front-signup-swf-' . $game_id);
     $cache->remove('game-' . $game_id, 'front');
-    return show_name($game_id); 
+    return show_name($game_id);
 }
 
 function mod_form($game_id) {
@@ -500,7 +501,8 @@ function mod_form($game_id) {
 
 function mod_submit($game_id,$modlist) {
   $cache = init_cache();
-  $newidlist = split( ",", $modlist);
+  // Replace deprecated split() with explode()
+  $newidlist = explode(",", $modlist);
   sort($newidlist);
   $sql = sprintf("select user_id from Games, Moderators where Games.id = Moderators.game_id and Games.id=%s",quote_smart($game_id));
   $result = mysql_query($sql);
@@ -611,7 +613,7 @@ function status_form($game_id) {
   $result=mysql_query($sql);
   while ($row=mysql_fetch_row($result)) {
     foreach(explode("','",substr($row[1],6,-2)) as $v) {
-      $options[$v] = $v; 
+      $options[$v] = $v;
     }
   }
   $output .= create_dropdown('phase',$phase,$options);
@@ -654,8 +656,8 @@ function deadline_form($game_id) {
   $output .= "<form name='new_deadline'>\n";
   $lynch_db = $game['lynch_time'];
   $night_db = $game['na_deadline'];
-  list($lynch,$x) = split(":",$lynch_db);
-  list($night,$x) = split(":",$night_db);
+  list($lynch,$x) = explode(":",$lynch_db);
+  list($night,$x) = explode(":",$night_db);
   $output .= "<table>\n";
   $output .= "<tr><td>Dusk:</td><td>".time_dropdown_old('lynch',$lynch)."</td></tr>\n";
   $output .= "<tr><td>Dawn:</td><td>".time_dropdown_old('night',$night)."</td></tr>\n";
@@ -767,7 +769,7 @@ function winner_form ($game_id) {
   $output .= "<input type='button' name='submit' value='submit' onClick='submit_winner()' />\n";
   $output .= "<input type='button' name='cancel' value='cancel' onClick='clear_edit()' />\n";
   $output .= "</form>\n";
- 
+
   return $output;
 }
 
@@ -841,7 +843,7 @@ function subt_submit($game_id,$subthread_id,$action) {
     $st_game_id = mysql_result($result,0,0);
     $sql = "delete from Games where id ='$st_game_id'";
     $result = mysql_query($sql);
-  } 
+  }
   return show_subthreads($game_id);
 }
 
@@ -875,7 +877,7 @@ function vote_tally_form($game_id) {
   $output .= create_dropdown('tieb','lhlv',$options);
   $output .= "<input type='button' value='submit' onClick='javascript:submit_vote_tally(\"activate\")'></form>";
   $output .= "<br>Allow Nightfall votes? <input type='checkbox' name='allow_nightfall' id='allow_nightfall' checked=1 />";
-  $output .= "<br>Allow No Kill votes? <input type='checkbox' name='allow_nolynch' id='allow_nolynch' checked=1 />";  
+  $output .= "<br>Allow No Kill votes? <input type='checkbox' name='allow_nolynch' id='allow_nolynch' checked=1 />";
   return $output;
 }
 
@@ -1174,7 +1176,7 @@ function createPlayer_table($edit,$game_id) {
   $show_alias = false;
   $show_alias_values = false;
   if ( $game['alias_display'] != 'None' ) { $show_alias = true; }
-  if ( $game['alias_display'] == 'Public' ) { $show_alias_values = true; } 
+  if ( $game['alias_display'] == 'Public' ) { $show_alias_values = true; }
 print "VOTE: $show_alias <br />";
   $sql = sprintf("SELECT CASE WHEN Games.status =  'Sign-Up' THEN CONCAT( COUNT( * ) ,  '/', max_players ) ELSE CONCAT( SUM( CASE WHEN (death_phase IS NULL OR death_phase = 'Alive' OR death_phase = '') THEN 1 ELSE 0 END ) ,  '/', COUNT( * ) ) END FROM Players_r, Games WHERE Games.id =%s AND Players_r.game_id = Games.id",quote_smart($game_id));
   $result = mysql_query($sql);
@@ -1187,7 +1189,7 @@ print "VOTE: $show_alias <br />";
   $replace[] = "Repl";
   if ( $show_alias ) {
     $alias[] = "Alias";
-  } 
+  }
   $players[] = "Players ($players_total)";
   $role_name[] = "Role Name";
   $role_type[] = "Role Type";

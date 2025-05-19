@@ -121,15 +121,16 @@ function go_replace(user_id, action) {
 
 //-->
 </script>
-<script src='<?=$here;?>/assets/hint.js'></script>
+<script src='<?=$here;?>/assets/js/hint.js'></script>
 <?php
 $open_comment = "><!--";
 $close_comment = "--";
 if ( $edit )  {
 ?>
+<script src='/assets/js/color_picker.js'></script>
 <script src='<?=$here;?>edit_game.js'></script>
 <script src='<?=$here;?>mod_control.js'></script>
-<script src='<?=$here;?>/assets/js/validation.js'></script>
+<script src='/assets/js/validation.js'></script>
 <?php
 $open_comment = "";
 $close_comment = "";
@@ -141,8 +142,10 @@ $close_comment = "";
 <?php display_menu(); ?>
 <h1><div id='name_span' <?=$open_comment;?> onMouseOver='show_hint("Click to Change Name")' onMouseOut='hide_hint()' onClick='edit_name()' <?=$close_comment;?>>
 <?php
-if ( $game['number'] != "" ) {
+if ( !empty($game['number']) ) {
   print $game['number'].") ";
+} elseif ( isset($game['id']) && $game['id'] > 0 ) {
+  print "*) ";
 }
 ?>
 <?=$game['title'];?>
@@ -206,16 +209,26 @@ if ( $game['status'] == "Sign-up" ) {
 print "</td></tr></table>";
 ?>
 </td></tr>
+<tr><td><div <?=$open_comment;?>onMouseOver='show_hint("Click to Change Speed")' onMouseOut='hide_hint()' onClick='edit_speed()' <?=$close_comment;?>><b>Speed:</b></div></td>
+<td id='speed_td'><div <?=$open_comment;?> onMouseOver='show_hint("Click to Change Speed")' onMouseOut='hide_hint()' onClick='edit_speed()' <?=$close_comment;?>><?=$game['deadline_speed'];?></div></td>
+</tr>
 <tr><td><div <?=$open_comment;?>onMouseOver='show_hint("Click to Change Deadlines")' onMouseOut='hide_hint()' onClick='edit_deadline()' <?=$close_comment;?>><b>Deadlines:</b></div></td>
 <?php
-list($lynch,$x,$x) = split(":",$game['lynch_time']);
-list($night,$x,$x) = split(":",$game['na_deadline']);
+list($lynch,$lmin,$x) = split(":",$game['lynch_time']);
+list($night,$nmin,$x) = split(":",$game['na_deadline']);
+list($day_length,$dlmin,$x) = split(":",$game['day_length']);
+list($night_length,$nlmin,$x) = split(":",$game['night_length']);
 print "<td id='deadline_td'><div $open_comment onMouseOver='show_hint(\"Click to Change Deadlines\")' onMouseOut='hide_hint()' onClick='edit_deadline()' $close_comment>";
-if ( $lynch != "" ) {
-  print "Lynch: ".time_24($lynch)." BGG<br />";
-}
-if ( $night != "" ) {
-  print "Night Action: ".time_24($night)." BGG";
+if ( $game['deadline_speed'] == "Standard" ) {
+  if ( $lynch != "" ) {
+    print "Dusk: ".time_24($lynch,$lmin)." BGG<br />";
+  }
+  if ( $night != "" ) {
+    print "Dawn: ".time_24($night,$nmin)." BGG";
+  }
+} else {
+  print "Day Length: $day_length:$dlmin <br />\n";
+  print "Night Length: $night_length:$nlmin <br />\n";
 }
 print "</div>\n";
 ?>

@@ -2,15 +2,15 @@
 include_once "htaccess.php";
 /*
 --------------------------------------------------------------------
-Ajax Agent for PHP v.0.3. Copyright (c) 2006 ajaxagent.org. 
+Ajax Agent for PHP v.0.3. Copyright (c) 2006 ajaxagent.org.
 @author: Steve Hemmady, Anuta Udyawar <contact at ajaxagent dot org>
-This program is free software; you can redistribute it under the 
-terms of the GNU General Public License as published by the Free 
-Software Foundation; either version 2 of the License, or (at your 
-option) any later version. This program is distributed in the hope 
-that it will be useful, but WITHOUT ANY WARRANTY; without even the 
-implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR 
-PURPOSE. See the GNU General Public License for more info 
+This program is free software; you can redistribute it under the
+terms of the GNU General Public License as published by the Free
+Software Foundation; either version 2 of the License, or (at your
+option) any later version. This program is distributed in the hope
+that it will be useful, but WITHOUT ANY WARRANTY; without even the
+implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
+PURPOSE. See the GNU General Public License for more info
 at http://www.gnu.org/licenses/gpl.txt
 --------------------------------------------------------------------
 */
@@ -170,7 +170,7 @@ var JSON = {
 };
 
 
-// client-side agent implementation 
+// client-side agent implementation
 this_url = "<?php echo $_GET['this_url'] ?>";
 function Agent() {
   this.debug = false; // default
@@ -182,7 +182,7 @@ function Agent() {
     if(arguments.length<3) {
       alert("Incorrect number of parameters. Please check your function call");
       return;
-    } 
+    }
     aa_url=arguments[0];
     aa_sfunc=arguments[1];
     aa_cfunc=arguments[2];
@@ -216,11 +216,11 @@ function Agent() {
        alert('Agent unable to establish communication  :( ');
        return false;
     }
-    
+
     if((aa_sfunc==null)||(aa_sfunc=="")) {
       if(arguments[3]) aa_poststr=arguments[3];
     }
-    
+
     if((aa_cfunc==null)||(aa_cfunc=="")) {
       xmlHttpObject.open('POST', aa_url, false);
       xmlHttpObject.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
@@ -240,11 +240,11 @@ function Agent() {
                 }
                 catch (e) {
                   document.getElementById(aa_cfunc).value=result;
-                }               
+                }
               } else {
-                if (JSON.parse(result)) 
+                if (JSON.parse(result))
                   eval(aa_cfunc+"(JSON.parse(result));");
-                else 
+                else
                   eval(aa_cfunc+"(result);");
               }
            } else {
@@ -276,7 +276,7 @@ exit();
 /**********************************************************************/
 /****         FOLLOWING BLOCK BORROWED FROM JSON.PHP               ****/
 /**********************************************************************/
-  
+
 /* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4: */
 
 /**
@@ -431,7 +431,7 @@ class Services_JSON
             return mb_convert_encoding($utf16, 'UTF-8', 'UTF-16');
         }
 
-        $bytes = (ord($utf16{0}) << 8) | ord($utf16{1});
+        $bytes = (ord($utf16[0]) << 8) | ord($utf16[1]);
 
         switch(true) {
             case ((0x7F & $bytes) == $bytes):
@@ -484,17 +484,17 @@ class Services_JSON
             case 2:
                 // return a UTF-16 character from a 2-byte UTF-8 char
                 // see: http://www.cl.cam.ac.uk/~mgk25/unicode.html#utf-8
-                return chr(0x07 & (ord($utf8{0}) >> 2))
-                     . chr((0xC0 & (ord($utf8{0}) << 6))
-                         | (0x3F & ord($utf8{1})));
+                return chr(0x07 & (ord($utf8[0]) >> 2))
+                     . chr((0xC0 & (ord($utf8[0]) << 6))
+                         | (0x3F & ord($utf8[1])));
 
             case 3:
                 // return a UTF-16 character from a 3-byte UTF-8 char
                 // see: http://www.cl.cam.ac.uk/~mgk25/unicode.html#utf-8
-                return chr((0xF0 & (ord($utf8{0}) << 4))
-                         | (0x0F & (ord($utf8{1}) >> 2)))
-                     . chr((0xC0 & (ord($utf8{1}) << 6))
-                         | (0x7F & ord($utf8{2})));
+                return chr((0xF0 & (ord($utf8[0]) << 4))
+                         | (0x0F & (ord($utf8[1]) >> 2)))
+                     . chr((0xC0 & (ord($utf8[1]) << 6))
+                         | (0x7F & ord($utf8[2])));
         }
 
         // ignoring UTF-32 for now, sorry
@@ -539,7 +539,7 @@ class Services_JSON
                 */
                 for ($c = 0; $c < $strlen_var; ++$c) {
 
-                    $ord_var_c = ord($var{$c});
+                    $ord_var_c = ord($var[$c]);
 
                     switch (true) {
                         case $ord_var_c == 0x08:
@@ -562,18 +562,18 @@ class Services_JSON
                         case $ord_var_c == 0x2F:
                         case $ord_var_c == 0x5C:
                             // double quote, slash, slosh
-                            $ascii .= '\\'.$var{$c};
+                            $ascii .= '\\'.$var[$c];
                             break;
 
                         case (($ord_var_c >= 0x20) && ($ord_var_c <= 0x7F)):
                             // characters U-00000000 - U-0000007F (same as ASCII)
-                            $ascii .= $var{$c};
+                            $ascii .= $var[$c];
                             break;
 
                         case (($ord_var_c & 0xE0) == 0xC0):
                             // characters U-00000080 - U-000007FF, mask 110XXXXX
                             // see http://www.cl.cam.ac.uk/~mgk25/unicode.html#utf-8
-                            $char = pack('C*', $ord_var_c, ord($var{$c + 1}));
+                            $char = pack('C*', $ord_var_c, ord($var[$c + 1]));
                             $c += 1;
                             $utf16 = $this->utf82utf16($char);
                             $ascii .= sprintf('\u%04s', bin2hex($utf16));
@@ -583,8 +583,8 @@ class Services_JSON
                             // characters U-00000800 - U-0000FFFF, mask 1110XXXX
                             // see http://www.cl.cam.ac.uk/~mgk25/unicode.html#utf-8
                             $char = pack('C*', $ord_var_c,
-                                         ord($var{$c + 1}),
-                                         ord($var{$c + 2}));
+                                         ord($var[$c + 1]),
+                                         ord($var[$c + 2]));
                             $c += 2;
                             $utf16 = $this->utf82utf16($char);
                             $ascii .= sprintf('\u%04s', bin2hex($utf16));
@@ -594,9 +594,9 @@ class Services_JSON
                             // characters U-00010000 - U-001FFFFF, mask 11110XXX
                             // see http://www.cl.cam.ac.uk/~mgk25/unicode.html#utf-8
                             $char = pack('C*', $ord_var_c,
-                                         ord($var{$c + 1}),
-                                         ord($var{$c + 2}),
-                                         ord($var{$c + 3}));
+                                         ord($var[$c + 1]),
+                                         ord($var[$c + 2]),
+                                         ord($var[$c + 3]));
                             $c += 3;
                             $utf16 = $this->utf82utf16($char);
                             $ascii .= sprintf('\u%04s', bin2hex($utf16));
@@ -606,10 +606,10 @@ class Services_JSON
                             // characters U-00200000 - U-03FFFFFF, mask 111110XX
                             // see http://www.cl.cam.ac.uk/~mgk25/unicode.html#utf-8
                             $char = pack('C*', $ord_var_c,
-                                         ord($var{$c + 1}),
-                                         ord($var{$c + 2}),
-                                         ord($var{$c + 3}),
-                                         ord($var{$c + 4}));
+                                         ord($var[$c + 1]),
+                                         ord($var[$c + 2]),
+                                         ord($var[$c + 3]),
+                                         ord($var[$c + 4]));
                             $c += 4;
                             $utf16 = $this->utf82utf16($char);
                             $ascii .= sprintf('\u%04s', bin2hex($utf16));
@@ -619,11 +619,11 @@ class Services_JSON
                             // characters U-04000000 - U-7FFFFFFF, mask 1111110X
                             // see http://www.cl.cam.ac.uk/~mgk25/unicode.html#utf-8
                             $char = pack('C*', $ord_var_c,
-                                         ord($var{$c + 1}),
-                                         ord($var{$c + 2}),
-                                         ord($var{$c + 3}),
-                                         ord($var{$c + 4}),
-                                         ord($var{$c + 5}));
+                                         ord($var[$c + 1]),
+                                         ord($var[$c + 2]),
+                                         ord($var[$c + 3]),
+                                         ord($var[$c + 4]),
+                                         ord($var[$c + 5]));
                             $c += 5;
                             $utf16 = $this->utf82utf16($char);
                             $ascii .= sprintf('\u%04s', bin2hex($utf16));
@@ -798,7 +798,7 @@ class Services_JSON
                     for ($c = 0; $c < $strlen_chrs; ++$c) {
 
                         $substr_chrs_c_2 = substr($chrs, $c, 2);
-                        $ord_chrs_c = ord($chrs{$c});
+                        $ord_chrs_c = ord($chrs[$c]);
 
                         switch (true) {
                             case $substr_chrs_c_2 == '\b':
@@ -828,7 +828,7 @@ class Services_JSON
                             case $substr_chrs_c_2 == '\\/':
                                 if (($delim == '"' && $substr_chrs_c_2 != '\\\'') ||
                                    ($delim == "'" && $substr_chrs_c_2 != '\\"')) {
-                                    $utf8 .= $chrs{++$c};
+                                    $utf8 .= $chrs[++$c];
                                 }
                                 break;
 
@@ -841,7 +841,7 @@ class Services_JSON
                                 break;
 
                             case ($ord_chrs_c >= 0x20) && ($ord_chrs_c <= 0x7F):
-                                $utf8 .= $chrs{$c};
+                                $utf8 .= $chrs[$c];
                                 break;
 
                             case ($ord_chrs_c & 0xE0) == 0xC0:
@@ -888,7 +888,7 @@ class Services_JSON
                 } elseif (preg_match('/^\[.*\]$/s', $str) || preg_match('/^\{.*\}$/s', $str)) {
                     // array, or object notation
 
-                    if ($str{0} == '[') {
+                    if ($str[0] == '[') {
                         $stk = array(SERVICES_JSON_IN_ARR);
                         $arr = array();
                     } else {
@@ -927,7 +927,7 @@ class Services_JSON
                         $top = end($stk);
                         $substr_chrs_c_2 = substr($chrs, $c, 2);
 
-                        if (($c == $strlen_chrs) || (($chrs{$c} == ',') && ($top['what'] == SERVICES_JSON_SLICE))) {
+                        if (($c == $strlen_chrs) || (($chrs[$c] == ',') && ($top['what'] == SERVICES_JSON_SLICE))) {
                             // found a comma that is not inside a string, array, etc.,
                             // OR we've reached the end of the character list
                             $slice = substr($chrs, $top['where'], ($c - $top['where']));
@@ -944,7 +944,7 @@ class Services_JSON
                                 // element in an associative array,
                                 // for now
                                 $parts = array();
-                                
+
                                 if (preg_match('/^\s*(["\'].*[^\\\]["\'])\s*:\s*(\S.*),?$/Uis', $slice, $parts)) {
                                     // "name":value pair
                                     $key = $this->decode($parts[1]);
@@ -969,37 +969,37 @@ class Services_JSON
 
                             }
 
-                        } elseif ((($chrs{$c} == '"') || ($chrs{$c} == "'")) && ($top['what'] != SERVICES_JSON_IN_STR)) {
+                        } elseif ((($chrs[$c] == '"') || ($chrs[$c] == "'")) && ($top['what'] != SERVICES_JSON_IN_STR)) {
                             // found a quote, and we are not inside a string
-                            array_push($stk, array('what' => SERVICES_JSON_IN_STR, 'where' => $c, 'delim' => $chrs{$c}));
+                            array_push($stk, array('what' => SERVICES_JSON_IN_STR, 'where' => $c, 'delim' => $chrs[$c]));
                             //print("Found start of string at {$c}\n");
 
-                        } elseif (($chrs{$c} == $top['delim']) &&
+                        } elseif (($chrs[$c] == $top['delim']) &&
                                  ($top['what'] == SERVICES_JSON_IN_STR) &&
-                                 (($chrs{$c - 1} != '\\') ||
-                                 ($chrs{$c - 1} == '\\' && $chrs{$c - 2} == '\\'))) {
+                                 (($chrs[$c - 1] != '\\') ||
+                                 ($chrs[$c - 1] == '\\' && $chrs[$c - 2] == '\\'))) {
                             // found a quote, we're in a string, and it's not escaped
                             array_pop($stk);
                             //print("Found end of string at {$c}: ".substr($chrs, $top['where'], (1 + 1 + $c - $top['where']))."\n");
 
-                        } elseif (($chrs{$c} == '[') &&
+                        } elseif (($chrs[$c] == '[') &&
                                  in_array($top['what'], array(SERVICES_JSON_SLICE, SERVICES_JSON_IN_ARR, SERVICES_JSON_IN_OBJ))) {
                             // found a left-bracket, and we are in an array, object, or slice
                             array_push($stk, array('what' => SERVICES_JSON_IN_ARR, 'where' => $c, 'delim' => false));
                             //print("Found start of array at {$c}\n");
 
-                        } elseif (($chrs{$c} == ']') && ($top['what'] == SERVICES_JSON_IN_ARR)) {
+                        } elseif (($chrs[$c] == ']') && ($top['what'] == SERVICES_JSON_IN_ARR)) {
                             // found a right-bracket, and we're in an array
                             array_pop($stk);
                             //print("Found end of array at {$c}: ".substr($chrs, $top['where'], (1 + $c - $top['where']))."\n");
 
-                        } elseif (($chrs{$c} == '{') &&
+                        } elseif (($chrs[$c] == '{') &&
                                  in_array($top['what'], array(SERVICES_JSON_SLICE, SERVICES_JSON_IN_ARR, SERVICES_JSON_IN_OBJ))) {
                             // found a left-brace, and we are in an array, object, or slice
                             array_push($stk, array('what' => SERVICES_JSON_IN_OBJ, 'where' => $c, 'delim' => false));
                             //print("Found start of object at {$c}\n");
 
-                        } elseif (($chrs{$c} == '}') && ($top['what'] == SERVICES_JSON_IN_OBJ)) {
+                        } elseif (($chrs[$c] == '}') && ($top['what'] == SERVICES_JSON_IN_OBJ)) {
                             // found a right-brace, and we're in an object
                             array_pop($stk);
                             //print("Found end of object at {$c}: ".substr($chrs, $top['where'], (1 + $c - $top['where']))."\n");
@@ -1079,14 +1079,14 @@ if (class_exists('PEAR_Error')) {
     }
 
 }
-    
+
 // Server side Ajax Agent implimentation follows
 $agent = new Agent;
 if (isset($_POST['aa_afunc'])) $aa_afunc = $_POST['aa_afunc']; else $aa_afunc="";
 if (isset($_POST['aa_sfunc'])) $aa_sfunc = $_POST['aa_sfunc']; else $aa_sfunc="";
 if (isset($_POST['aa_event'])) $aa_event = $_POST['aa_event']; else $aa_event="";
 if (isset($_POST['aa_cfunc'])) $aa_cfunc = $_POST['aa_cfunc']; else $aa_cfunc="";
-if (isset($_POST['aa_sfunc_args'])) $aa_sfunc_args = $_POST['aa_sfunc_args']; 
+if (isset($_POST['aa_sfunc_args'])) $aa_sfunc_args = $_POST['aa_sfunc_args'];
 else $aa_sfunc_args="";
 
 if($_SERVER['REQUEST_URI']==null||$_SERVER['REQUEST_URI']=="") {
@@ -1098,11 +1098,11 @@ if($_SERVER['REQUEST_URI']==null||$_SERVER['REQUEST_URI']=="") {
 if($aa_afunc=="call") {
   $agent->call($aa_sfunc, $aa_cfunc, $aa_sfunc_args);
 }
-  
+
 if($aa_afunc=="listen") {
   $agent->listen($aa_event, $aa_cfunc, $aa_sfunc_args);
 }
-  
+
 class Agent {
   function call ($aa_sfunc, $aa_cfunc, $aa_sfunc_args) {
     $json = new Services_JSON();
@@ -1131,7 +1131,7 @@ class Agent {
     if(is_array($ret) || is_object($ret)) {
       $ret = $json->encode($ret);
       $ret = str_replace('\"', '"', $ret);
-      echo $ret; 
+      echo $ret;
     } else {
       echo $ret;
     }
@@ -1152,15 +1152,15 @@ class Agent {
 <!--
 /*
 --------------------------------------------------------------------
-Ajax Agent for PHP v.0.3. Copyright (c) 2006 ajaxagent.org. 
+Ajax Agent for PHP v.0.3. Copyright (c) 2006 ajaxagent.org.
 @author: Steve Hemmady, Anuta Udyawar <contact at ajaxagent dot org>
-This program is free software; you can redistribute it under the 
-terms of the GNU General Public License as published by the Free 
-Software Foundation; either version 2 of the License, or (at your 
-option) any later version. This program is distributed in the hope 
-that it will be useful, but WITHOUT ANY WARRANTY; without even the 
-implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR 
-PURPOSE. See the GNU General Public License for more info 
+This program is free software; you can redistribute it under the
+terms of the GNU General Public License as published by the Free
+Software Foundation; either version 2 of the License, or (at your
+option) any later version. This program is distributed in the hope
+that it will be useful, but WITHOUT ANY WARRANTY; without even the
+implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
+PURPOSE. See the GNU General Public License for more info
 at http://www.gnu.org/licenses/gpl.txt
 --------------------------------------------------------------------
 */

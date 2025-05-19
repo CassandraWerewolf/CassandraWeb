@@ -4,9 +4,9 @@ var $stime;
 var $etime;
 
 function get_microtime(){
-$tmp=split(" ",microtime());
-$rt=$tmp[0]+$tmp[1];
-return $rt;
+    $tmp = explode(" ", microtime());
+    $rt = $tmp[0] + $tmp[1];
+    return $rt;
 }
 
 function start_time(){

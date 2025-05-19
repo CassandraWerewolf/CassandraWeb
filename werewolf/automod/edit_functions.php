@@ -105,7 +105,7 @@ function create_info_table($template_id,$edit=false) {
   $output .= "</td></tr>\n";
   $output .= "<tr><td><b>Required from each grouping</b></td><td>\n";
   if ( $edit ) {
-    $output .= "This is used for game where not all roles are required.  You specify here how many roles in each set (1,2,3...N) are required. Where N is the number of numbers in the list given here.  For example in a 9 player game where you could have either a sorcerer or a cultist, and either a bodyguard or a martyr, you would set this value to '7,1,1'.  Then in the Role Table you would set Required role group to 1 for each of the standard roles, 2 for the sorcerer and cultist and 3 for bodyguard and martyr. The total must = the number of Players<br />\n"; 
+    $output .= "This is used for game where not all roles are required.  You specify here how many roles in each set (1,2,3...N) are required. Where N is the number of numbers in the list given here.  For example in a 9 player game where you could have either a sorcerer or a cultist, and either a bodyguard or a martyr, you would set this value to '7,1,1'.  Then in the Role Table you would set Required role group to 1 for each of the standard roles, 2 for the sorcerer and cultist and 3 for bodyguard and martyr. The total must = the number of Players<br />\n";
     $output .= "<input type='text' size='10' name='num_player_sets' value='".$template['num_player_sets']."' />";
   } else {
     $output .= $template['num_player_sets'];
@@ -146,14 +146,14 @@ function create_info_table($template_id,$edit=false) {
   $output .= "</td><td>";
   $checked = "";
   $nonedit_show = "";
-  if ( $template['random_tinker'] == 1 ) { 
-    $checked = "checked='checked'"; 
+  if ( $template['random_tinker'] == 1 ) {
+    $checked = "checked='checked'";
 	$nonedit_show .= "Random Tinker <br />";
   }
   if ( $edit ) { $output .= "<input type='checkbox' name='random_tinker' $checked />Random Tinker<br />"; }
   $checked = "";
-  if ( $template['random_whitehat'] == 1 ) { 
-    $checked = "checked='checked'"; 
+  if ( $template['random_whitehat'] == 1 ) {
+    $checked = "checked='checked'";
 	$nonedit_show .= "Random WhiteHat <br />";
   }
   if ( $edit ) { $output .= "<input type='checkbox' name='random_whitehat' $checked />Random WhiteHat<br />"; }
@@ -192,7 +192,7 @@ function expand_role_reveal($role_reveal) {
 	  return "Under development (don't use yet)";
 	break;
   }
-  
+
   return;
 }
 
@@ -232,9 +232,9 @@ function create_role_table($template_id,$edit=false,$add=0) {
   }
   $output .= "<table class='forum_table'>\n";
   $output .= "<tr>";
-  if ( $edit ) {  
+  if ( $edit ) {
     $output .= "<th>Copy</th>";
-    $output .= "<th>Delete</th>"; 
+    $output .= "<th>Delete</th>";
   }
   $output .= "<th>Role ID</th>";
   $output .= "<th>Role</th>";
@@ -329,7 +329,7 @@ function create_role_table($template_id,$edit=false,$add=0) {
 	#N0 Knows
 	$output .= "<td valign='top' $td_style>";
 	if ( $edit ) {
-	  $known_roles = split(",",$role['n0_knows']);
+	  $known_roles = explode(",",$role['n0_knows']);
 	  $role_list['none'] = "none";
 	  foreach ( $roles as $id => $name ) {
         $role_list[$id] = $name;
@@ -347,7 +347,7 @@ function create_role_table($template_id,$edit=false,$add=0) {
 	  $n0_options["user_choice"] = expand_n0_view('user_choice');
 	  $output .= create_dropdown("n0_view_$count",$role['n0_view'],$n0_options,"onChange='show_rand_box(\"$count\")'");
 	  $style = "visibility:visible; position:relative;";
-	  $selected_roles = split(",",$role['n0_view']);
+	  $selected_roles = explode(",",$role['n0_view']);
 	  foreach ( $selected_roles as $key => $value ) {
         $selected_roles[$key] = trim($value,"'");
 	  }
@@ -368,8 +368,8 @@ function create_role_table($template_id,$edit=false,$add=0) {
 	  $vr_options['on'] = "Positive Hit on:";
 	  $vr_options[''] = "No View";
 	  $output .= create_dropdown("view_result_$count",$role['view_result'],$vr_options,"onChange='show_positive_box(\"$count\")'");
-	  list($look_for,$see_as) = split(" as ",$role['view_result']);
-	  $look_choices = split(" or ",$look_for);
+	  list($look_for,$see_as) = explode(" as ",$role['view_result']);
+	  $look_choices = explode(" or ",$look_for);
 	  $style = "visibility:visible; position:relative;";
 	  if ( $role['view_result'] == "" ) {
 	    $style = "visibility:hidden; position:absolute;";
@@ -394,8 +394,8 @@ function create_role_table($template_id,$edit=false,$add=0) {
 	  if ( $see_as == "" ) { $is_free = false; }
 	  foreach ( $vr_see_options as $key => $value ) {
 	    if ( $key == "free" ) { continue; }
-        if ( $see_as == $key ) { 
-		  $is_free = false; 
+        if ( $see_as == $key ) {
+		  $is_free = false;
 		  $see_as = "";
 		  break;
 		}
@@ -471,7 +471,7 @@ function create_role_table($template_id,$edit=false,$add=0) {
     # Promotion
     $output .="<td valign='top' $td_style>";
     if ( $edit ) {
-	  $promotion_roles = split(",",$role['promotion']);
+	  $promotion_roles = explode(",",$role['promotion']);
 	  $role_list['none'] = "none";
 	  foreach ( $roles as $id => $name ) {
         $role_list[$id] = $name;
@@ -483,7 +483,7 @@ function create_role_table($template_id,$edit=false,$add=0) {
     } else {
       $output .= expand_promotion($role['promotion']);
       if ( $role['promotion_parity'] == "yes" ) { $output .= "(Parity status kept as is upon promotion)"; }
-    } 
+    }
     $output .="</td>";
 	# Require Role
 	$output .= "<td valign='top' $td_style>";
@@ -619,7 +619,7 @@ function create_role_table($template_id,$edit=false,$add=0) {
 		  $role_list[$id] = $name;
 		}
 		$output .= create_dropdown("promotion_${count}[]",'none',$role_list,"size='4'",true);
-        $output .= "<input type=checkbox name='promotion_parity_${count}[]' />keep current parity status after promotion"; 
+        $output .= "<input type=checkbox name='promotion_parity_${count}[]' />keep current parity status after promotion";
 	    $output .= "</td>";
 		$output .= "<td valign='top' $td_style>";
         for ( $i=1;$i<=$required_groups;$i++) {
@@ -670,7 +670,7 @@ function create_role_table($template_id,$edit=false,$add=0) {
 	$output .= "<b>Require Role:</b>This will be a drop down of numbers equal to the number of sets created in the 'Required from each grouping' row in the info table.  So if you have it set to (7,1,1) as per the example, you will have the option to put the roles into set 1, 2, or 3.  7 roles will be taken from set 1, 1 role will be taken from set 2, and 1 role will be taken from set 3.<br />";
 	$output .= "<b>Special Notes:</b> If you use a Passive priest or a Random Role Seer you don't need an Action Description or Game Action but you will need a View Result.  <br />";
   }
-  
+
   return $output;
 }
 
@@ -681,7 +681,7 @@ function expand_n0_knows($know) {
 	  return "None";
 	break;
 	default:
-	  $list = split(",",$know);
+	  $list = explode(",",$know);
 	  $output = "Will learn the id of: <br />";
 	  $count = 0;
 	  foreach ( $list as $r ) {
@@ -705,7 +705,7 @@ function expand_n0_view($view) {
 	  return "Player must choose N0 view";
 	break;
 	default:
-	  $list = split(",",$view);
+	  $list = explode(",",$view);
 	  $output = "Random but Not: ";
 	  $count = 0;
 	  foreach ( $list as $r ) {
@@ -723,8 +723,8 @@ function expand_n0_view($view) {
 function expand_view_result($view) {
   global $roles;
   if ( $view == "" ) { return ""; }
-  list($look_for,$see_as) = split(" as ",$view);
-  $look_choices = split(" or ",$look_for);
+  list($look_for,$see_as) = explode(" as ",$view);
+  $look_choices = explode(" or ",$look_for);
   $output = "Positive Hit on: ";
   $count = 0;
   foreach ( $look_choices as $look ) {
@@ -781,7 +781,7 @@ function expand_promotion($promote) {
 	  return "None";
 	break;
 	default:
-	  $list = split(",",$promote);
+	  $list = explode(",",$promote);
 	  $count = 0;
 	  foreach ( $list as $r ) {
 	    if ( $count > 0 ) { $output .= ", "; }
@@ -803,7 +803,7 @@ function get_ruleset($template_id,$edit=false) {
 	  $rules = preg_replace('/>/','&gt;',$rules);
 	}
   } else {
-    if ( $edit ) { 
+    if ( $edit ) {
 	  $rules = "";
 	} else {
       $rules = "No ruleset found for this template.";
