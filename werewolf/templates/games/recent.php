@@ -125,11 +125,12 @@
                     <td>
                         <?php 
                             echo implode(
+                                ', ',
                                 array_map(
                                     function($mod) { return "<a href='/player/$mod'>$mod</a>"; },
                                     array_values($game['mods']
                                 )
-                            ), ', ');
+                            ));
                         ?>
                     </td>
                     <td><?php echo ($game['swf'] == 'Yes' ? "When Full" : $game['start']) ?></td>
@@ -165,11 +166,12 @@
                     <td>
                         <?php 
                             echo implode(
+                                ', ',
                                 array_map(
                                     function($mod) { return "<a href='/player/$mod'>$mod</a>"; },
                                     array_values($game['mods']
                                     )
-                                ), ', ');
+                                ));
                                 ?>
                     </td>
                     <td><?php echo $game['start'] ?></td>
@@ -205,11 +207,12 @@
                     <td>
                         <?php 
                             echo implode(
+                                ', ',
                                 array_map(
                                     function($mod) { return "<a href='/player/$mod'>$mod</a>"; },
                                     array_values($game['mods']
                                 )
-                            ), ', ');
+                            ));
                         ?>
                     </td>
                     <td><?php echo $game['players_needed'] ?></td>
