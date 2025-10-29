@@ -306,17 +306,17 @@ function time_dropdown($name, $select="0:00", $mil_time=false, $need_js=true) {
 
 function time_24($hour, $min="00") {
     if ($hour == 0) {
-        return "12:${min}am";
+        return "12:{$min}am";
     }
     if ($hour < 12) {
-        return "$hour:${min}am";
+        return "$hour:{$min}am";
     }
     if ($hour == 12) {
-        return "$hour:${min}pm";
+        return "$hour:{$min}pm";
     }
     if ($hour > 12) {
         $hour -= 12;
-        return "$hour:${min}pm";
+        return "$hour:{$min}pm";
     }
 }
 
