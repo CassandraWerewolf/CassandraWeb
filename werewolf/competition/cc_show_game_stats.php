@@ -210,8 +210,8 @@ print "</td></tr></table>";
 </td></tr>
 <tr><td><div <?=$open_comment;?>onMouseOver='show_hint("Click to Change Deadlines")' onMouseOut='hide_hint()' onClick='edit_deadline()' <?=$close_comment;?>><b>Deadlines:</b></div></td>
 <?php
-list($lynch,$x,$x) = split(":",$game['lynch_time']);
-list($night,$x,$x) = split(":",$game['na_deadline']);
+list($lynch,$x,$x) = explode(":",$game['lynch_time']);
+list($night,$x,$x) = explode(":",$game['na_deadline']);
 print "<td id='deadline_td'><div $open_comment onMouseOver='show_hint(\"Click to Change Deadlines\")' onMouseOut='hide_hint()' onClick='edit_deadline()' $close_comment>";
 if ( $lynch != "" ) {
   print "Dusk: ".time_24($lynch)." BGG<br />";

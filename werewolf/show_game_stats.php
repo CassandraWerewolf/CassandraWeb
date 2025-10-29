@@ -1,5 +1,4 @@
 <?php
-
 include "php/accesscontrol.php";
 include_once "php/db.php";
 include_once "php/common.php";
@@ -215,10 +214,10 @@ print "</td></tr></table>";
 </tr>
 <tr><td><div <?=$open_comment;?>onMouseOver='show_hint("Click to Change Deadlines")' onMouseOut='hide_hint()' onClick='edit_deadline()' <?=$close_comment;?>><b>Deadlines:</b></div></td>
 <?php
-list($lynch,$lmin,$x) = split(":",$game['lynch_time']);
-list($night,$nmin,$x) = split(":",$game['na_deadline']);
-list($day_length,$dlmin,$x) = split(":",$game['day_length']);
-list($night_length,$nlmin,$x) = split(":",$game['night_length']);
+list($lynch,$lmin,$x) = explode(":",$game['lynch_time']);
+list($night,$nmin,$x) = explode(":",$game['na_deadline']);
+list($day_length,$dlmin,$x) = explode(":",$game['day_length']);
+list($night_length,$nlmin,$x) = explode(":",$game['night_length']);
 print "<td id='deadline_td'><div $open_comment onMouseOver='show_hint(\"Click to Change Deadlines\")' onMouseOut='hide_hint()' onClick='edit_deadline()' $close_comment>";
 if ( $game['deadline_speed'] == "Standard" ) {
   if ( $lynch != "" ) {
