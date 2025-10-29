@@ -82,7 +82,7 @@
 	$row = mysql_fetch_row($res_games_played_stats);
 	$games_played = $row[0];
 	$games_played_rank = $row[1];
-	mysql_free_result($res_games_played_stats);
+	mysqli_free_result($res_games_played_stats);
 
 	#
 	# get games modded stats
@@ -91,14 +91,14 @@
 	$row = mysql_fetch_row($res_games_modded_stats);
 	$games_modded = $row[0];
 	$games_modded_rank = $row[1];
-	mysql_free_result($res_games_modded_stats);
+	mysqli_free_result($res_games_modded_stats);
 
 	#
 	# get players played with
 	#
 	$res_played_with = dbGetResult($sql_played_with);
 	$played_with = mysql_num_rows($res_played_with);
-	mysql_free_result($res_played_with);
+	mysqli_free_result($res_played_with);
 
 	#
 	# get current games signed-up for
@@ -112,7 +112,7 @@
 		$current_games_signup[] = get_game($row['id'],'complex, title, mod');
 		$games_signup_date[] = $row['start'];
 	}
-	mysql_free_result($res);
+	mysqli_free_result($res);
 
 	#
 	# get current games played
@@ -124,7 +124,7 @@
 	    $sql = "select count(*) from Posts, Users where Posts.user_id=Users.id and game_id='".$row['id']."' and name='$player'";
 		$posts = mysql_query($sql);
 		$num_post = mysql_result($posts,0,0);
-		mysql_free_result($posts);
+		mysqli_free_result($posts);
 		#$current_games_played[] = "<a href='$game".$row['thread_id']."'>".$row['number'].") ".$row['title']."</a> <a href='$game".$row['thread_id']."/$player'>($num_post posts)</a>";
 		if ( $uid == $user_id ) {
 		  $current_games_played[] = get_game($row['id'],'num, chat, title, mod')."<a href='$game".$row['thread_id']."/$player'>($num_post posts)</a>";
@@ -132,7 +132,7 @@
 		  $current_games_played[] = get_game($row['id'],'num, title, mod')."<a href='$game".$row['thread_id']."/$player'>($num_post posts)</a>";
 		}
 	}
-	mysql_free_result($res);
+	mysqli_free_result($res);
 
 	#
 	# get last games played
@@ -143,11 +143,11 @@
 	    $sql = "select count(*) from Posts, Users where Posts.user_id=Users.id and game_id='".$row['id']."' and name='$player'";
 		$posts = mysql_query($sql);
 		$num_post = mysql_result($posts,0,0);
-		mysql_free_result($posts);
+		mysqli_free_result($posts);
 		#$last_games_played[] = "<a href='$game".$row['thread_id']."'>".$row['number'].") ".$row['title']."</a> <a href='$game".$row['thread_id']."/$player'>($num_post posts)</a>";
 		$last_games_played[] = get_game($row['id'],'num, title')."<a href='$game".$row['thread_id']."/$player'>($num_post posts)</a>";
 	}
-	mysql_free_result($res);
+	mysqli_free_result($res);
 
 	#
 	# get current games modded
@@ -159,7 +159,7 @@
 	    $sql = "select count(*) from Posts, Users where Posts.user_id=Users.id and game_id='".$row['id']."' and name='$player'";
 		$posts = mysql_query($sql);
 		$num_post = mysql_result($posts,0,0);
-		mysql_free_result($posts);
+		mysqli_free_result($posts);
 		#$current_games_modded[] = "<a href='$game".$row['thread_id']."'>".$row['number'].") ".$row['title']."</a> <a href='$game".$row['thread_id']."/$player'>($num_post posts)</a>";
 		if ( $uid == $user_id ) {
 		  $current_games_modded[] = get_game($row['id'],'num, chat, title')."<a href='$game".$row['thread_id']."/$player'>($num_post posts)</a>";
@@ -167,7 +167,7 @@
 		  $current_games_modded[] = get_game($row['id'],'num, title')."<a href='$game".$row['thread_id']."/$player'>($num_post posts)</a>";
 		}
 	}
-	mysql_free_result($res);
+	mysqli_free_result($res);
 
 	#
 	# get future modded games
@@ -181,7 +181,7 @@
 		$future_modded[] = get_game($row['id'],'complex, title');
 		$future_modded_date[] = $row['start'];
 	}
-	mysql_free_result($res);
+	mysqli_free_result($res);
 
 	#
 	# get last games modded
@@ -192,11 +192,11 @@
 	    $sql = "select count(*) from Posts, Users where Posts.user_id=Users.id and game_id='".$row['id']."' and name='$player'";
 		$posts = mysql_query($sql);
 		$num_post = mysql_result($posts,0,0);
-		mysql_free_result($posts);
+		mysqli_free_result($posts);
 		#$last_games_modded[] = "<a href='$game".$row['thread_id']."'>".$row['number'].") ".$row['title']."</a> <a href='$game".$row['thread_id']."/$player'>($num_post posts)</a>";
 		$last_games_modded[] = get_game($row['id'],'num, title')."<a href='$game".$row['thread_id']."/$player'>($num_post posts)</a>";
 	}
-	mysql_free_result($res);
+	mysqli_free_result($res);
 
 	$top_attrs = array(
 		'border' => '0',

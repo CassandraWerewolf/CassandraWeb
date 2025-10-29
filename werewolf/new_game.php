@@ -121,7 +121,7 @@ foreach ( $_POST['moderator'] as $id ) {
 $result = mysql_query("select name from Users where id=$id");
 $name = mysql_fetch_array($result);
 print "$name[0]<br />";
-mysql_free_result($result);
+mysqli_free_result($result);
 }
 ?></td>
 </tr>
@@ -135,7 +135,7 @@ $result = mysql_query("select name from Users where id=$id");
 $name = mysql_fetch_array($result);
 print "$name[0]<br />";
 $count++;
-mysql_free_result($result);
+mysqli_free_result($result);
 }
 print "($count Players)";
 ?></td>
@@ -205,7 +205,7 @@ $result = mysql_query("select * from Users order by name");
 while ( $Users = mysql_fetch_array($result) ) { 
   print "<option value='".$Users['id']."' />".$Users['name']."\n";
 }
-mysql_free_result($result);
+mysqli_free_result($result);
 ?>
   </select></td>
 </tr>
@@ -218,7 +218,7 @@ $result = mysql_query("select * from Users order by name");
 while ( $Users = mysql_fetch_array($result) ) {
   print "<option value='".$Users['id']."' />".$Users['name']."\n";
 }
-mysql_free_result($result);
+mysqli_free_result($result);
 ?>
   </select></td>
 </tr>

@@ -31,7 +31,7 @@ print "<tr></td><td>";
 print get_player_page($player['name']);
 print "</td></tr>";
 }
-mysql_free_result($result);
+mysqli_free_result($result);
 ?>
 </table>
 </td>
@@ -47,7 +47,7 @@ print "<tr></td><td>";
 print get_player_page($player['name']);
 print "</td></tr>";
 }
-mysql_free_result($result);
+mysqli_free_result($result);
 ?>
 </table>
 </td>
