@@ -199,8 +199,8 @@ function edit_deadline($game_id) {
   $day_length = mysql_result($result,0,2);
   $night_length = mysql_result($result,0,3);
   $speed = mysql_result($result,0,4);
-  #list($lynch,$lmin) = split(":",$lynch_db);
-  #list($night,$nmin) = split(":",$night_db);
+  #list($lynch,$lmin) = explode(":",$lynch_db);
+  #list($night,$nmin) = explode(":",$night_db);
   $output .= "<table>\n";
   if ( $speed == "Standard" ) {
     $output .= "<tr><td>Dusk:</td><td>".time_dropdown('lynch',$lynch,false,false)."</td></tr>\n";

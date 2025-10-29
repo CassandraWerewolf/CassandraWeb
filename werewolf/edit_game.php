@@ -28,7 +28,7 @@ case 'e_moderator':
 
 # Edit database with new Moderator list and return text to original.
 case 's_moderator':
-  $newidlist = split( ",", $_REQUEST['modlist']);
+  $newidlist = explode( ",", $_REQUEST['modlist']);
   sort($newidlist);
   $sql = sprintf("select user_id from Games, Moderators where Games.id = Moderators.game_id and Games.id=%s",quote_smart($game_id));
   $result = mysql_query($sql);
@@ -182,10 +182,10 @@ case 's_moderator':
       $sql = sprintf("select lynch_time, na_deadline, day_length, night_length from Games where id=%s",quote_smart($game_id));
       $result = mysql_query($sql);
       $deadlines = mysql_fetch_array($result);
-      list($lynch,$lmin,$x) = split(":",$deadlines['lynch_time']);
-      list($night,$nmin,$x) = split(":",$deadlines['na_deadline']);
-      list($day_length,$dlmin,$x) = split(":",$deadlines['day_length']);
-      list($night_length,$nlmin,$x) = split(":",$deadlines['night_length']);
+      list($lynch,$lmin,$x) = explode(":",$deadlines['lynch_time']);
+      list($night,$nmin,$x) = explode(":",$deadlines['na_deadline']);
+      list($day_length,$dlmin,$x) = explode(":",$deadlines['day_length']);
+      list($night_length,$nlmin,$x) = explode(":",$deadlines['night_length']);
       if ( $_REQUEST['speed'] == "Standard" ) {
         if ( $lynch != "" ) {
           print "Dusk: ".time_24($lynch,$lmin)." BGG<br />";
@@ -222,8 +222,8 @@ case 's_moderator':
       $result = mysql_query($sql);
       $speed = mysql_result($result,0,0);
       if ( $speed == "Standard" ) { 
-         list($lynch,$lmin,$x) = split(":",$_REQUEST['lynch']);
-         list($night,$nmin,$x) = split(":",$_REQUEST['night']);    
+         list($lynch,$lmin,$x) = explode(":",$_REQUEST['lynch']);
+         list($night,$nmin,$x) = explode(":",$_REQUEST['night']);
          print "Dusk: ".time_24($lynch,$lmin)." BGG<br />";
          print "Dawn: ".time_24($night,$nmin)." BGG";
       } else {
@@ -453,8 +453,8 @@ case 's_moderator':
   case 's_alias':
     $sql = sprintf("select Users.id from Users, Players where Users.id=Players.user_id and game_id=%s order by name",quote_smart($game_id));
 	$result = mysql_query($sql);
-	$aliases = split(",", $_REQUEST['aliases']);
-	$colors = split(",", $_REQUEST['colors']);
+	$aliases = explode(",", $_REQUEST['aliases']);
+	$colors = explode(",", $_REQUEST['colors']);
 	$i = 0;
 	while ( $user = mysql_fetch_array($result) ) {
       $sql2 = sprintf("update Players set player_alias=%s, alias_color=%s where user_id=%s and game_id=%s",quote_smart($aliases[$i]),quote_smart($colors[$i]),quote_smart($user['id']), quote_smart($game_id));
@@ -474,7 +474,7 @@ case 's_moderator':
   case 's_rolename':
     $sql = sprintf("select Users.id from Users, Players where Users.id=Players.user_id and game_id=%s order by name",quote_smart($game_id));
 	$result = mysql_query($sql);
-	$rnames = split(",", $_REQUEST['rnames']);
+	$rnames = explode(",", $_REQUEST['rnames']);
 	$i = 0;
 	while ( $user = mysql_fetch_array($result) ) {
       $sql2 = sprintf("update Players set role_name=%s where user_id=%s and game_id=%s",quote_smart($rnames[$i]),quote_smart($user['id']), quote_smart($game_id));
@@ -494,7 +494,7 @@ case 's_moderator':
   case 's_roletype':
     $sql = sprintf("select Users.id from Users, Players where Users.id=Players.user_id and game_id=%s order by name",quote_smart($game_id));
 	$result = mysql_query($sql);
-	$rtypes = split(",", $_REQUEST['rtypes']);
+	$rtypes = explode(",", $_REQUEST['rtypes']);
 	$i = 0;
 	while ( $user = mysql_fetch_array($result) ) {
 	  $sql2 = sprintf("update Players set role_id=%s where user_id=%s and game_id=%s",quote_smart($rtypes[$i]), $user['id'], quote_smart($game_id));
@@ -514,7 +514,7 @@ case 's_moderator':
   case 's_team':
     $sql = sprintf("select Users.id from Users, Players where Users.id=Players.user_id and game_id=%s order by name",quote_smart($game_id));
 	$result = mysql_query($sql);
-	$teams = split(",", $_REQUEST['teams']);
+	$teams = explode(",", $_REQUEST['teams']);
 	$i = 0;
     while ( $user = mysql_fetch_array($result) ) {
       $sql2 = sprintf("update Players set side=%s  where user_id='".$user['id']."' and game_id=%s",quote_smart($teams[$i]), quote_smart($game_id));
@@ -553,8 +553,8 @@ case 's_moderator':
   case 's_deaths':
     $sql = sprintf("select Users.id from Users, Players where Users.id=Players.user_id and game_id=%s order by name",quote_smart($game_id));
 	$result = mysql_query($sql);
-	$phases = split(",", $_REQUEST['phases']);
-	$days = split(",", $_REQUEST['days']);
+	$phases = explode(",", $_REQUEST['phases']);
+	$days = explode(",", $_REQUEST['days']);
 	$i = 0;
     while ( $user = mysql_fetch_array($result) ) {
 	  if ( $days[$i] == "" ) { 

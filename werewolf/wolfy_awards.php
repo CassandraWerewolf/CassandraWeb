@@ -56,7 +56,7 @@ while ( $year = mysql_fetch_array($result) ) {
 	$game_names[] = "<a href='/game/".$games['thread_id']."'>".$games['title']."</a> $modlist\n";
   }
   
-  $table =& new HTML_Table("class='forum_table'");
+  $table = new HTML_Table("class='forum_table'");
   $table->addCol($player_awards);
   $table->addCol($player_names);
   $table->addCol($game_awards);

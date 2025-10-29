@@ -17,7 +17,7 @@ if (isset($_GET['action']) && $_GET['action'] == "read_all") {
   exit;
 }
 
-$room_lp = split(",",$_GET['room_id']);
+$room_lp = explode(",",$_GET['room_id']);
 if ( isset ($_GET['game_id']) ) {
   // Brodcast message.  Create a room loop.
   $sql = sprintf ("select id from Chat_rooms where game_id=%s",quote_smart($_GET['game_id']));

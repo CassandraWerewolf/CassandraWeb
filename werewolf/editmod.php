@@ -35,7 +35,7 @@ if ( $state == 'open' ) {
   print $output;
 } else {
 
-  $newidlist = split( ",", $_REQUEST['q']);
+  $newidlist = explode( ",", $_REQUEST['q']);
   sort($newidlist);
   $game_id = $_REQUEST['gameid'];
 

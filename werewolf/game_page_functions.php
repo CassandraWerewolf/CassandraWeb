@@ -289,7 +289,6 @@ function show_deadlines($game_id,$edit='false') {
     $game = get_game_info($game_id,"game");
   }
   $output = "";
-  // Replace deprecated split() with explode()
   list($lynch,$x) = explode(":",$game['lynch_time']);
   list($night,$x) = explode(":",$game['na_deadline']);
   $content = "";
@@ -501,7 +500,6 @@ function mod_form($game_id) {
 
 function mod_submit($game_id,$modlist) {
   $cache = init_cache();
-  // Replace deprecated split() with explode()
   $newidlist = explode(",", $modlist);
   sort($newidlist);
   $sql = sprintf("select user_id from Games, Moderators where Games.id = Moderators.game_id and Games.id=%s",quote_smart($game_id));
@@ -1252,7 +1250,7 @@ print "VOTE: $show_alias <br />";
       'cellspacing' => '2'
   );
 
-  $table =& new HTML_Table($attrs);
+  $table = new HTML_Table($attrs);
 
   if ( $edit ) { $table->addCol($edit_col); }
   if ( $status == "In Progress" ) { $table->addCol($replace); }
