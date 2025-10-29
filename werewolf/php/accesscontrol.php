@@ -35,17 +35,25 @@ if (isset($_POST['login'])) {
     } else {
       // Using modern password hashing
       $authenticated = password_verify($pwd, $stored_hash);
-    }
+    }*/
 
     if ($authenticated) {
+      $options = [
+        'expires' => time()+60*60*24*365,
+        'path' => '/', 
+        'domain' => '',
+        'secure' => true,
+        'httponly' => true,
+        'samesite' => 'None' // None || Lax  || Strict
+      ];
       if ($_POST['remember'] == "on") {
-        setcookie('cassy_uid', $uid, time()+60*60*24*365, '/; samesite=none', '', true, true);
-        setcookie('cassy_pwd', $pwd, time()+60*60*24*365, '/; samesite=none', '', true, true);
+        setcookie('cassy_uid', $uid, $options);
+        setcookie('cassy_pwd', $pwd, $options);
       } else {
-        setcookie('cassy_uid', $uid, 0, '/; samesite=none', '', true, true);
-        setcookie('cassy_pwd', $pwd, 0, '/; samesite=none', '', true, true);
+        $options['expires'] = 0;
+        setcookie('cassy_uid', $uid, $options);
+        setcookie('cassy_pwd', $pwd, $options);
       }
-
       $_SESSION['uid'] = $uid;
       $_SESSION['pwd'] = $pwd;
     } else {
