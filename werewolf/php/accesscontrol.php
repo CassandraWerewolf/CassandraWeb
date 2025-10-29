@@ -35,7 +35,7 @@ if (isset($_POST['login'])) {
     } else {
       // Using modern password hashing
       $authenticated = password_verify($pwd, $stored_hash);
-    }*/
+    }
 
     if ($authenticated) {
       $options = [
