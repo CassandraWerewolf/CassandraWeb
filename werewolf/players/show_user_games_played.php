@@ -1,5 +1,4 @@
 <?php
-
 include_once "../setup.php";
 
 include      ROOT_PATH . "/php/accesscontrol.php";
@@ -138,7 +137,7 @@ $sub_total = 0;
 while ( $data = mysql_fetch_array($result) ) {
   $i = $order[$data['result']];
   switch ($data['side']) {
-  case Evil:
+  case "Evil":
 	  $percentage = "";
 	  $this_total = $sub_total;
 	  if ( $data['result'] == 'Total' ) {
@@ -153,7 +152,7 @@ while ( $data = mysql_fetch_array($result) ) {
 	  }
 	  $evil[$i] = $data['count']." $percentage";;
 	  break;
-	case Good:
+	case "Good":
 	  $percentage = "";
 	  $this_total = $sub_total;
 	  if ( $data['result'] == 'Total' ) {
@@ -168,7 +167,7 @@ while ( $data = mysql_fetch_array($result) ) {
 	  }
 	  $good[$i] = $data['count']." $percentage";;
 	  break;
-	case Other:
+	case "Other":
 	  $percentage = "";
 	  $this_total = $sub_total;
 	  if ( $data['result'] == 'Total' ) {
@@ -190,7 +189,7 @@ $attrs = array (
 	'cellpadding' => '2'
 );
 
-$table =& new HTML_Table($attrs);
+$table = new HTML_Table($attrs);
 
 $table->addCol($results);
 $table->addCol($all);
