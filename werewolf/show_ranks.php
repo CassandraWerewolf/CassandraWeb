@@ -28,7 +28,7 @@ $result = mysql_query($sql);
 while ( $player = mysql_fetch_array($result) ) {
 print "<tr></td><td>".get_player_page($player['name'])."</td><td><a href='$site/player/".$player['name']."/games_played'>".$player['games_played']."</a></td><td>".$player['rank']."</td></tr>";
 }
-mysql_free_result($result);
+mysqli_free_result($result);
 ?>
 </table>
 </td>
@@ -42,7 +42,7 @@ $result = mysql_query($sql);
 while ( $player = mysql_fetch_array($result) ) {
 print "<tr></td><td>".get_player_page($player['name'])."</td><td><a href='$site/player/".$player['name']."/games_modded'>".$player['games_moderated']."</a></td><td>".$player['rank']."</td></tr>";
 }
-mysql_free_result($result);
+mysqli_free_result($result);
 ?>
 </table>
 </td>
