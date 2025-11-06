@@ -1,4 +1,10 @@
-#!/bin/sh
+#!/bin/bash
+set -euo pipefail
+# Enable xtrace when DEBUG_COLLECT=1 for verbose troubleshooting
+if [ "${DEBUG_COLLECT:-0}" = "1" ]; then
+	set -x
+fi
+
 PROG_DIR=/opt/werewolf
 MYSQL_PROG="/usr/bin/mysql -h ${MYSQL_HOST} -D ${MYSQL_DATABASE} -u ${MYSQL_USER} -p${MYSQL_PASSWORD} -s"
 THREAD_PROG=$PROG_DIR/get_thread.py
@@ -25,8 +31,9 @@ vt_sql="SELECT auto_vt from Games where id= "
 tally_sql="Select updated_tally from Games where id= "
 set_tally_sql="Update Games set updated_tally = 0 where id= "
 
-for game in $game_id
-do
+echo "[collect_posts] Games to process: $game_id"
+
+for game in $game_id; do
 	votes_file=/tmp/${pid}_${game}_votes.tmp
 
 	thread_id=`/bin/echo "$thread_sql $game;" | $MYSQL_PROG`
@@ -38,6 +45,7 @@ do
 	fi
 
 	ret=`/bin/echo "$dump_time_sql $game;" | $MYSQL_PROG`
+	echo "[collect_posts] Game $game → thread $thread_id, since article $article"
 	$THREAD_PROG $thread_id $article
 
 	# scan for votes if enabled
