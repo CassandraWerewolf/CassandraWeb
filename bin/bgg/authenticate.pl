@@ -13,15 +13,14 @@ die $usage unless ($#ARGV >= 1);
 my $username = shift;
 my $password = shift;
 
-# CREATE USER AGENT
+# CREATE USER AGENT 
 my $agent = LWP::UserAgent->new(
-#    agent => 'CassandraWerewolf/1.0 https://cassandrawerewolf.com',
-    agent => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36',
+    agent => 'CassandraWerewolf/1.0 https://cassandrawerewolf.com',
     cookie_jar => {}
 );
 
 # compose the request
-my $json = "{
+my $json = "{ 
     \"credentials\": {
         \"username\": \"$username\",
         \"password\": \"$password\"
@@ -30,7 +29,7 @@ my $json = "{
 
 # send request
 my $request = HTTP::Request->new('POST', $url);
-$request->header(
+$request->header( 
     'Content-Type' => 'application/json',
     'Referer' => 'https://boardgamegeek.com/'
 );
