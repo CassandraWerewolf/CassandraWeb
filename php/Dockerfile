@@ -10,7 +10,6 @@ FROM php:8.5.12-apache-trixie
 #  - Python 3 libraries for bin/get_thread.py
 #  - GD build dependencies (only tools/games2png uses GD)
 #  - openssl, to create the self-signed dev certificate below
-#  - ssss (ssss-split/ssss-combine), used by tools/shamir
 # OPcache is built into PHP 8.5, so it is not installed as a separate extension.
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
@@ -20,7 +19,7 @@ RUN apt-get update \
         cpanminus make \
         python3 python3-sqlalchemy python3-pymysql python3-dateutil \
         libfreetype-dev libpng-dev libjpeg62-turbo-dev \
-        openssl ssss \
+        openssl \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install -j"$(nproc)" mysqli gd \
     && cpanm --notest String::Trigram \
