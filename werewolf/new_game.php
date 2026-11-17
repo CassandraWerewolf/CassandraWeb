@@ -35,7 +35,7 @@ foreach ( $old_players as $player_id ) {
 
 # Insert new players into the database and add them to the game.
 if ( $new_players != "" ) {
-  $new_players_list = split ( ", ", $new_players );
+  $new_players_list = explode ( ", ", $new_players );
   foreach ( $new_players_list as $name ) {
     $result = mysql_query("insert into Users ( id, name ) values ( NULL , '$name' )");
     $player_id = mysql_insert_id();

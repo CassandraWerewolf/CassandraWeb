@@ -2,7 +2,7 @@
 
 <table class="games-list forum_table">
     <tr>
-        <th><?php echo $games_list['title'] ?> (<?php echo count($games_list['games']) ?>)</th>
+        <th><?php echo $games_list['title'] ?> (<?php echo count($games_list['games'] ?? []) ?>)</th>
         <th>
             <?php 
             if ($type == 'missing_info') { 

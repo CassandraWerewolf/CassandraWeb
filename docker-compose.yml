@@ -1,37 +1,87 @@
-version: '3'
+# Local development: PHP 8.5 web app + MariaDB 12.3.
+#   docker compose up -d --build      -> http://localhost:5000
+# First start loads the schema and stored routines from sql/ into an empty database.
+# To load real data later, import a dump with:
+#   docker compose exec -T db mariadb -uroot -prootpassword werewolf < dump.sql
+# These passwords are for local development only.
 services:
   web:
-    image: cassandraproject/web:latest
+    build:
+      context: .
+      dockerfile: ./php/Dockerfile
+      # Build steps use the host's network. Works around container DNS failing in the dev VM.
+      network: host
+    image: cassandraweb:dev
     ports:
       - "5000:80"
       - "5001:443"
     environment:
-      MYSQL_HOST: mysql
+      MYSQL_HOST: db
       MYSQL_DATABASE: werewolf
       MYSQL_USER: dbuser
       MYSQL_PASSWORD: userpassword
       BGG_USERNAME: 'Cassandra Project'
       BGG_PASSWORD: nopassword
-    build:
-      context: .
-      dockerfile: ./php/Dockerfile
     volumes:
       - ./werewolf:/var/www/html
       - ./bin:/opt/werewolf
-      - ./php/dev-sites:/etc/apache2/sites-enabled
+      - ./php/dev-sites:/etc/apache2/sites-enabled:ro
     depends_on:
-        - mysql
-  mysql:
-    image: mysql:5.6
+      db:
+        condition: service_healthy
+    restart: unless-stopped
+
+  # The BGG post collector. Not started by default, because it contacts BoardGameGeek.
+  # Start it with: docker compose --profile scripts up -d
+  scripts:
+    image: cassandraweb:dev
+    profiles: ["scripts"]
     environment:
-      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_HOST: db
       MYSQL_DATABASE: werewolf
       MYSQL_USER: dbuser
       MYSQL_PASSWORD: userpassword
+      BGG_USERNAME: 'Cassandra Project'
+      BGG_PASSWORD: nopassword
     volumes:
-      - ./sql/werewolf_schema.sql:/docker-entrypoint-initdb.d/werewolf1.sql
-      - ./sql/werewolf_data.sql:/docker-entrypoint-initdb.d/werewolf2.sql
-      - ./sql/werewolf_routines.sql:/docker-entrypoint-initdb.d/werewolf3.sql
-      - cassy-mysql-data:/var/lib/mysql
+      - ./werewolf:/var/www/html
+      - ./bin:/opt/werewolf
+    command:
+      - /bin/bash
+      - -c
+      - |
+        while :; do
+          /opt/werewolf/run_collect_posts.sh
+          sleep 60
+        done
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: unless-stopped
+
+  db:
+    image: mariadb:12.3.3-noble
+    # Match the old MySQL 5.6 behavior the code expects: non-strict SQL mode
+    # (allows zero dates and loose inserts) and long GROUP_CONCAT results.
+    command:
+      - --sql-mode=NO_ENGINE_SUBSTITUTION
+      - --group-concat-max-len=65535
+    environment:
+      MARIADB_ROOT_PASSWORD: rootpassword
+      MARIADB_DATABASE: werewolf
+      MARIADB_USER: dbuser
+      MARIADB_PASSWORD: userpassword
+      TZ: 'America/Chicago'
+    volumes:
+      - ./sql/werewolf_schema.sql:/docker-entrypoint-initdb.d/1-schema.sql:ro
+      - ./sql/werewolf_routines.sql:/docker-entrypoint-initdb.d/2-routines.sql:ro
+      - db-data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+    restart: unless-stopped
+
 volumes:
-  cassy-mysql-data:
+  db-data:

@@ -166,7 +166,7 @@ $time = $sth_time->fetchrow_hashref();
 	  $mech->form_name('send_message');
 	  $mech->set_fields('bggpwd' => $bgg_pswd);
 	  $mech->set_fields('subject' => 'Auto-Mod Game Starting');
-	  $mech->set_fields('message' => "Auto-Mod Game http://www.boardgamegeek.com/thread/$thread_id is starting.  Please view the Cassy page to see your role and the Cassy chat to learn any N0 information your role may need. http://cassandrawerewolf.com/game/$thread_id");
+	  $mech->set_fields('message' => "Auto-Mod Game https://www.boardgamegeek.com/thread/$thread_id is starting.  Please view the Cassy page to see your role and the Cassy chat to learn any N0 information your role may need. http://cassandrawerewolf.com/game/$thread_id");
 	  $mech->click_button(name => 'submit');
 	  # Post Dawn if the N0 views are random.
 	  if ( $template->{'random_n0'} eq "yes" ) {

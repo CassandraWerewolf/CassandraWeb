@@ -22,7 +22,7 @@ my $cookie_jar = HTTP::Cookies->new(
   );
 
 $mech = WWW::Mechanize->new(autocheck => 1, cookie_jar => $cookie_jar);
-$mech->get('http://boardgamegeek.com/login');
+$mech->get('https://boardgamegeek.com/login');
 $mech->form_number(0);
 $mech->field('username',$player);
 $mech->field('password',$password);

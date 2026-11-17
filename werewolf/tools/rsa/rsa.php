@@ -1,5 +1,13 @@
 <?php
-echo json_encode($_GET['function']($_GET));
+// Only the functions defined in this file may be called; previously the URL
+// could name any PHP function.
+$allowed = array('get_pkeys', 'rsa_pub_enc', 'rsa_priv_dec');
+$function = $_GET['function'] ?? '';
+if (!in_array($function, $allowed, true)) {
+	http_response_code(400);
+	exit('Unknown function');
+}
+echo json_encode($function($_GET));
 exit();
 
 function get_pkeys($data) {

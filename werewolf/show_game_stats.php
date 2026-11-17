@@ -164,7 +164,7 @@ if ( $game['number'] != "" ) {
 if ( !$subthread ) {
 ?>
 <tr><td><div <?=$open_comment;?>onMouseOver='show_hint("Click to Edit Dates")' onMouseOut='hide_hint()' onClick='edit_dates()' <?=$close_comment;?>><b>Dates: </b></div></td>
-<td><table border='0' width='100%'><tr><td id='date_td'><?php show_dates($game['id']); ?></td><td align='right'><? print add_game_link($game['id']); ?></td></tr></table>
+<td><table border='0' width='100%'><tr><td id='date_td'><?php show_dates($game['id']); ?></td><td align='right'><?php print add_game_link($game['id']); ?></td></tr></table>
 </td></tr>
 <?php
 }
@@ -213,10 +213,10 @@ print "</td></tr></table>";
 </tr>
 <tr><td><div <?=$open_comment;?>onMouseOver='show_hint("Click to Change Deadlines")' onMouseOut='hide_hint()' onClick='edit_deadline()' <?=$close_comment;?>><b>Deadlines:</b></div></td>
 <?php
-list($lynch,$lmin,$x) = split(":",$game['lynch_time']);
-list($night,$nmin,$x) = split(":",$game['na_deadline']);
-list($day_length,$dlmin,$x) = split(":",$game['day_length']);
-list($night_length,$nlmin,$x) = split(":",$game['night_length']);
+list($lynch,$lmin,$x) = explode(":",$game['lynch_time']);
+list($night,$nmin,$x) = explode(":",$game['na_deadline']);
+list($day_length,$dlmin,$x) = explode(":",$game['day_length']);
+list($night_length,$nlmin,$x) = explode(":",$game['night_length']);
 print "<td id='deadline_td'><div $open_comment onMouseOver='show_hint(\"Click to Change Deadlines\")' onMouseOut='hide_hint()' onClick='edit_deadline()' $close_comment>";
 if ( $game['deadline_speed'] == "Standard" ) {
   if ( $lynch != "" ) {
@@ -505,11 +505,11 @@ function clear_edit() {
   if ( $result ) { $article_id = mysql_result($result,0,0); }
 ?>
 
-<br /><a id='game_link' href="http://www.boardgamegeek.com/thread/<?=$game_thread_id;?>">Go to Game Thread</a> 
+<br /><a id='game_link' href="https://www.boardgamegeek.com/thread/<?=$game_thread_id;?>">Go to Game Thread</a> 
 <?php
 if ( $status != "Sign-up" ) {
 ?>
-: <a href='http://www.boardgamegeek.com/article/<?=$article_id;?>#<?=$article_id;?>'>Last retrieved post</a>
+: <a href='https://www.boardgamegeek.com/article/<?=$article_id;?>#<?=$article_id;?>'>Last retrieved post</a>
 <?php
 }
 ?>
@@ -558,7 +558,7 @@ if ( $result ) {
 if ( $num_awards > 0 ) {
   print "<table class='forum_table'><tr><th>Wolfy Awards</th></tr>\n";
 while ( $award = mysql_fetch_array($result) ) {
-  print "<tr><td><a href='http://www.boardgamegeek.com/article/".$award['award_post']."#".$award['award_post']."'>".$award['award']." (".$award['year'].")</a></td></tr>\n";
+  print "<tr><td><a href='https://www.boardgamegeek.com/article/".$award['award_post']."#".$award['award_post']."'>".$award['award']." (".$award['year'].")</a></td></tr>\n";
 }
   print "</table>\n";
 }

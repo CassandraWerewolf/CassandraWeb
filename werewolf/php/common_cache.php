@@ -86,19 +86,19 @@ function get_game($game_id,$parameters="title"){
   $output = "";
   foreach ( $parms as $parm) {
   switch($parm){
-    case num:
+    case 'num':
 	  if ( !is_numeric($game['number']) ) { $game['number'] = "*"; }
 	  $output .= $game['number'].") ";
 	break;
-	case title:
+	case 'title':
 	  $output .= "<a href='/game/".$game['thread_id']."'>".$game['title']."</a> ";
 	break;
-	case complex:
+	case 'complex':
 	  if ( $game['complex'] != "" ) {
         $output .= "<img src='/images/".$game['complex']."_small.png' /> ";
 	  }
 	break;
-	case full:
+	case 'full':
 	  $sql = sprintf("select count(*) from Players where game_id=%s",quote_smart($game_id));
 	  $result = mysql_query($sql);
 	  $num_players = mysql_result($result,0,0);
@@ -106,14 +106,14 @@ function get_game($game_id,$parameters="title"){
 	  if ( $num_players == $game['max_players'] ) { $full = "Full/$num_players"; }
 	  $output .= "($full) ";
 	break;
-	case post:
+	case 'post':
 	  $sql = sprintf("select count(*) from Posts where game_id=%s",quote_smart($game_id));
 	  $result = mysql_query($sql);
 	  $num_posts = mysql_result($result,0,0);
 	  $output .= "<a href='/game/".$game['thread_id']."/all'>($num_posts posts)</a> ";
 	break;
-	case mod:
-	case mod_np:
+	case 'mod':
+	case 'mod_np':
 	  $sql = sprintf("select name from Users, Moderators where Users.id=Moderators.user_id and game_id=%s",quote_smart($game_id));
 	  $result = mysql_query($sql);
 	  $mod_num = mysql_num_rows($result);
@@ -128,7 +128,7 @@ function get_game($game_id,$parameters="title"){
 	  }
       $output .= $modlist." ";
 	break;
-	case in:
+	case 'in':
 	  if ( isset($uid) ) {
 	    $sql = sprintf("select * from Users_game_all where game_id=%s and user_id=%s",quote_smart($game_id),quote_smart($uid));
 	    $result = mysql_query($sql);
@@ -137,7 +137,7 @@ function get_game($game_id,$parameters="title"){
 	    }
 	  }
 	break;
-	case chat:
+	case 'chat':
 	  if ( isset($uid) ) {
         #$sql = sprintf("select count(*) from Chat_users, Chat_rooms, Chat_messages where Chat_users.room_id=Chat_rooms.id and Chat_rooms.id=Chat_messages.room_id and Chat_messages.post_time >= Chat_users.last_view and Chat_messages.post_time > Chat_users.open and Chat_messages.post_time < if(Chat_users.close is null, now(), Chat_users.close) and Chat_rooms.game_id=%s and Chat_users.user_id=%s",quote_smart($game_id),quote_smart($uid));
         $sql = sprintf("select null from Chat_users, Chat_rooms, Chat_messages where Chat_users.room_id=Chat_rooms.id and Chat_rooms.id=Chat_messages.room_id and Chat_messages.post_time >= Chat_users.last_view and Chat_messages.post_time > Chat_users.open and Chat_messages.post_time < if(Chat_users.close is null, now(), Chat_users.close) and Chat_rooms.game_id=%s and Chat_users.user_id=%s limit 1",quote_smart($game_id),quote_smart($uid));

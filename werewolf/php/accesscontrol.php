@@ -16,13 +16,16 @@ if ( isset($_POST['login']) ) {
   $sql = sprintf("Select id from Users where name=%s",quote_smart($uname));
   $result = mysql_query($sql);
   $uid = mysql_result($result,0,0);
-  if ( $_POST['remember'] == "on" ) {
-    setcookie('cassy_uid', $uid, time()+60*60*24*365, '/; samesite=none', '', true, true);
-    setcookie('cassy_pwd', $pwd, time()+60*60*24*365, '/; samesite=none', '', true, true);
-  } else {
-    setcookie('cassy_uid', $uid, 0, '/; samesite=none', '', true, true);
-    setcookie('cassy_pwd', $pwd, 0, '/; samesite=none', '', true, true);
-  }
+  // PHP 7.3+ sets SameSite through the options array (PHP 8 rejects ";" in the path).
+  $cookie_options = array(
+    'expires'  => ( ($_POST['remember'] ?? '') == "on" ) ? time()+60*60*24*365 : 0,
+    'path'     => '/',
+    'secure'   => true,
+    'httponly' => true,
+    'samesite' => 'None',
+  );
+  setcookie('cassy_uid', $uid, $cookie_options);
+  setcookie('cassy_pwd', $pwd, $cookie_options);
 } else {
   $uid = (isset($_SESSION['uid']) ? $_SESSION['uid'] : (isset($_COOKIE['cassy_uid']) ? $_COOKIE['cassy_uid'] : null));
   $pwd = (isset($_SESSION['pwd']) ? $_SESSION['pwd'] : (isset($_COOKIE['cassy_pwd']) ? $_COOKIE['cassy_pwd'] : null));

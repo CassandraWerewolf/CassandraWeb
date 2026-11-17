@@ -94,15 +94,15 @@ $bio = mysql_fetch_array($result_bio);
 <!--Empty Div used for hint popup-->
 </div>
 <a href='<?=$here;?>player/<?=$player;?>'>Cassandra Stats</a><br />
-<a href='http://boardgamegeek.com/user/<?=$player;?>'>BGG Profile</a><br />
-<a href='<?=${here};?>social/user/<?=$player;?>'>Social Sites</a></br />
+<a href='https://boardgamegeek.com/user/<?=$player;?>'>BGG Profile</a><br />
+<a href='<?=$here;?>social/user/<?=$player;?>'>Social Sites</a></br />
 
 <?php
 $wotw_sql = sprintf("select thread_id from Wotw where user_id=%s",quote_smart($id));
 $wotw_result = mysql_query($wotw_sql);
 if ( mysql_num_rows($wotw_result) == 1 ) {
   $wotw_thread = mysql_result($wotw_result,0,0);
-  print "<a href='http://boardgamegeek.com/thread/".$wotw_thread."'>Wolf of the Week Thread</a><br />"; 
+  print "<a href='https://boardgamegeek.com/thread/".$wotw_thread."'>Wolf of the Week Thread</a><br />"; 
 }
 ?>
 <a href='<?=$here;?>send_geekmail.php?to=<?=$player;?>'>Send GeekMail</a>
@@ -117,19 +117,19 @@ while ( $col = mysql_fetch_array($result_col)) {
   $comment = $col['Comment'];
   $hint_comment = $comment;
   switch($field) {
-    case user_id:
+    case 'user_id':
 	  continue 2;
 	break;
-    case mbti:
+    case 'mbti':
       $hint_comment = "MBTI"; 
 	break;
-	case b_date:
+	case 'b_date':
 	  $comment = "Age";
 	  $sql = sprintf("select TIMESTAMPDIFF(YEAR, b_date, CURDATE()) from Bio where user_id=%s",quote_smart($id));
       $result = mysql_query($sql);
 	  $bio['b_date'] = mysql_result($result,0,0);
 	break;
-	case time_zone:
+	case 'time_zone':
 	  if ( $bio['time_zone'] != "" ) {
         $sql = sprintf("select concat('(GMT',if(GMT>0,' +',''),if(GMT=0,'',concat(if(GMT<0,' ',''),GMT)),') ',description) as text from Timezones where zone=%s",quote_smart($bio['time_zone']));
 	    $result = mysql_query($sql);
@@ -170,6 +170,6 @@ setHint()
 </script>
 <table><td width='300' valign='top'>
 <div style='border:solid 1px #b0b0b0; padding:5px;'>
-<script language="javascript" src="http://www.boardgamegeek.com/jswidget.php?username=<?=$player;?>&numitems=5&header=1&text=title&images=small-fixed&show=recentplays&imagesonly=1&imagepos=left"></script></div></table>
+<script language="javascript" src="https://www.boardgamegeek.com/jswidget.php?username=<?=$player;?>&numitems=5&header=1&text=title&images=small-fixed&show=recentplays&imagesonly=1&imagepos=left"></script></div></table>
 </body>
 </html>

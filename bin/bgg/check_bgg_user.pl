@@ -4,7 +4,7 @@
 use strict;
 use WWW::Mechanize;
 
-my $url='http://boardgamegeek.com/user'; 
+my $url='https://boardgamegeek.com/user'; 
 
 die "\nUsage $0 user\n\n" unless ($#ARGV == 0);
 my $user = shift;

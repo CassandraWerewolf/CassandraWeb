@@ -289,8 +289,8 @@ function show_deadlines($game_id,$edit='false') {
     $game = get_game_info($game_id,"game");
   }
   $output = "";
-  list($lynch,$x,$x) = split(":",$game['lynch_time']);
-  list($night,$x,$x) = split(":",$game['na_deadline']);
+  list($lynch,$x,$x) = explode(":",$game['lynch_time']);
+  list($night,$x,$x) = explode(":",$game['na_deadline']);
   $content = "";
   if ( $lynch != "" ) { $content .= "Dusk: ".time_24($lynch)." BGG<br />"; }
   if ( $night != "" ) { $content .= "Dawn: ".time_24($night)." BGG"; }
@@ -500,7 +500,7 @@ function mod_form($game_id) {
 
 function mod_submit($game_id,$modlist) {
   $cache = init_cache();
-  $newidlist = split( ",", $modlist);
+  $newidlist = explode( ",", $modlist);
   sort($newidlist);
   $sql = sprintf("select user_id from Games, Moderators where Games.id = Moderators.game_id and Games.id=%s",quote_smart($game_id));
   $result = mysql_query($sql);
@@ -654,8 +654,8 @@ function deadline_form($game_id) {
   $output .= "<form name='new_deadline'>\n";
   $lynch_db = $game['lynch_time'];
   $night_db = $game['na_deadline'];
-  list($lynch,$x) = split(":",$lynch_db);
-  list($night,$x) = split(":",$night_db);
+  list($lynch,$x) = explode(":",$lynch_db);
+  list($night,$x) = explode(":",$night_db);
   $output .= "<table>\n";
   $output .= "<tr><td>Dusk:</td><td>".time_dropdown_old('lynch',$lynch)."</td></tr>\n";
   $output .= "<tr><td>Dawn:</td><td>".time_dropdown_old('night',$night)."</td></tr>\n";
@@ -1095,7 +1095,7 @@ function assign_roles_form($game_id) {
   $output .= "<tr><th>Enter the Names of all Roles</th><th>hide</th></tr>\n";
   $i=0;
   while ( $player = mysql_fetch_array($result) ) {
-    $output .= "<tr><td align='center'><input type='text' name='role_$i' value='".$player{'role_name'}."' /></td><td><input type='checkbox' name='hide_$i' /></td></tr>\n";
+    $output .= "<tr><td align='center'><input type='text' name='role_$i' value='".$player['role_name']."' /></td><td><input type='checkbox' name='hide_$i' /></td></tr>\n";
     $i++;
   }
     $output .= "<tr><td align='center' colspan='2'><input type='submit' name='submit_assign_roles' value='submit' /></td></tr>\n";
@@ -1250,7 +1250,7 @@ print "VOTE: $show_alias <br />";
       'cellspacing' => '2'
   );
 
-  $table =& new HTML_Table($attrs);
+  $table = new HTML_Table($attrs);
 
   if ( $edit ) { $table->addCol($edit_col); }
   if ( $status == "In Progress" ) { $table->addCol($replace); }

@@ -2,7 +2,7 @@
 header("Content-type: image/png");
 
 include_once "../../setup.php";
-include_once(ROOT_PATH . "php/db.php");
+include_once(ROOT_PATH . "/php/db.php");
 
 // Set the enviroment variable for GD
 putenv('GDFONTPATH=' . realpath('.'));
@@ -41,7 +41,7 @@ $white = imagecolorallocate($im, 255, 255, 255);
 $black = imagecolorallocate($im, 0, 0, 0);
 
 // Add the text
-magettftext($im, $fontsize, 0, 0, abs($size[5]), $black, $font, $text);
+imagettftext($im, $fontsize, 0, 0, abs($size[5]), $black, $font, $text);
 
 // Using imagepng() results in clearer text compared with 
 imagepng($im);

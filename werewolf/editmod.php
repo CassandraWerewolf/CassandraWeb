@@ -5,7 +5,7 @@ dbConnect();
 
 $state =  $_REQUEST['state'];
 if ( $state == 'open' ) {
-  $modlist = split ( ", ", $_REQUEST['q'] );
+  $modlist = explode ( ", ", $_REQUEST['q'] );
 
   $output = "<form name='change_mod'>\n";
   $output .= "<select name='moderator[]' size='4' multiple>\n";
@@ -35,7 +35,7 @@ if ( $state == 'open' ) {
   print $output;
 } else {
 
-  $newidlist = split( ",", $_REQUEST['q']);
+  $newidlist = explode( ",", $_REQUEST['q']);
   sort($newidlist);
   $game_id = $_REQUEST['gameid'];
 

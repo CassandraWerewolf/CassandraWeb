@@ -33,14 +33,14 @@ while ( $year = mysql_fetch_array($result) ) {
   $sql_players = sprintf("select award, name, award_post from Wolfy_players, Wolfy_awards, Users where Wolfy_players.award_id=Wolfy_awards.id and Wolfy_players.user_id = Users.id and year=%s order by IF(Wolfy_awards.id=33, 100, Wolfy_awards.id)",$year[0]);
   $result_players = mysql_query($sql_players);
   while ( $players = mysql_fetch_array($result_players) ) {
-    $player_awards[] = "<a href='http://www.boardgamegeek.com/article/".$players['award_post']."#".$players['award_post']."'>".$players['award']."</a>\n";
+    $player_awards[] = "<a href='https://www.boardgamegeek.com/article/".$players['award_post']."#".$players['award_post']."'>".$players['award']."</a>\n";
 	$player_names[] = "<a href='/player/".$players['name']."'>".$players['name']."</a>\n";
   }
 
   $sql_games = sprintf("select award, title, award_post, thread_id, Games.id from Wolfy_games, Wolfy_awards, Games where Wolfy_games.award_id=Wolfy_awards.id and Wolfy_games.game_id = Games.id and year=%s order by IF(Wolfy_awards.id=18, 100, Wolfy_awards.id)",$year[0]);
   $result_games = mysql_query($sql_games);
   while ( $games = mysql_fetch_array($result_games) ) {
-    $game_awards[] = "<a href='http://www.boardgamegeek.com/article/".$games['award_post']."#".$games['award_post']."'>".$games['award']."</a>\n";
+    $game_awards[] = "<a href='https://www.boardgamegeek.com/article/".$games['award_post']."#".$games['award_post']."'>".$games['award']."</a>\n";
 	$sql_m = sprintf("select name from Users, Moderators where Users.id=Moderators.user_id and game_id=%s",$games['id']);
 	$result_m = mysql_query($sql_m);
 	$mod_num = mysql_num_rows($result_m);
@@ -56,7 +56,7 @@ while ( $year = mysql_fetch_array($result) ) {
 	$game_names[] = "<a href='/game/".$games['thread_id']."'>".$games['title']."</a> $modlist\n";
   }
   
-  $table =& new HTML_Table("class='forum_table'");
+  $table = new HTML_Table("class='forum_table'");
   $table->addCol($player_awards);
   $table->addCol($player_names);
   $table->addCol($game_awards);

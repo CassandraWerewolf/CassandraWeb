@@ -15,10 +15,10 @@ $body =~ s/\\\'/\'/g;
 my $subject = shift;
 if (defined($subject)) {$subject =~ s/\\\'/\'/g;}
 
-my $url = "http://boardgamegeek.com/article/create/region/1/$forum_id";
+my $url = "https://boardgamegeek.com/article/create/region/1/$forum_id";
 
 my $mech = WWW::Mechanize->new(autocheck => 1, cookie_jar => {});
-$mech->get('http://boardgamegeek.com/login');
+$mech->get('https://boardgamegeek.com/login');
 $mech->form_number(1);
 $mech->field('username',$player);
 $mech->field('password',$password);

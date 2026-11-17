@@ -94,9 +94,9 @@ if ( $edit ) {
 $sql = sprintf("select max(article_id) as a_id from Posts where game_id=%s",$game['id']);
 $result = mysql_query($sql);
 if ( $result ) { $article_id = mysql_result($result,0,0); }
-print "<br /><a id='game_link' href='http://www.boardgamegeek.com/thread/$thread_id'>Go to Game Thread</a>\n";
+print "<br /><a id='game_link' href='https://www.boardgamegeek.com/thread/$thread_id'>Go to Game Thread</a>\n";
 if ( $status != "Sign-up" ) {
-  print ": <a href='http://www.boardgamegeek.com/article/$article_id#$article_id'>Last retrieved post</a>\n";
+  print ": <a href='https://www.boardgamegeek.com/article/$article_id#$article_id'>Last retrieved post</a>\n";
 }
 print "<br />\n";
 if ( $game['auto_vt'] != "No" ) {
@@ -129,7 +129,7 @@ if ( $result ) {
 if ( $num_awards > 0 ) {
   print "<table class='forum_table'><tr><th>Wolfy Awards</th></tr>\n";
 while ( $award = mysql_fetch_array($result) ) {
-  print "<tr><td><a href='http://www.boardgamegeek.com/article/".$award['award_post']."#".$award['award_post']."'>".$award['award']." (".$award['year'].")</a></td></tr>\n";
+  print "<tr><td><a href='https://www.boardgamegeek.com/article/".$award['award_post']."#".$award['award_post']."'>".$award['award']." (".$award['year'].")</a></td></tr>\n";
 }
   print "</table>\n";
 }

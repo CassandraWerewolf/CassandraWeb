@@ -29,11 +29,11 @@ $subject = shift;
 if (defined($subject)) {$subject =~ s/\\\'/\'/g;}
 
 if ( $action eq "reply" ) {
-$url = "http://boardgamegeek.com/thread/$id";
+$url = "https://boardgamegeek.com/thread/$id";
 } elsif ( $action eq "edit" ) {
-$url = "http://boardgamegeek.com/article/edit/$id";
+$url = "https://boardgamegeek.com/article/edit/$id";
 } elsif ( $action eq "new" ) {
-$url = "http://boardgamegeek.com/article/create/region/1/$id";
+$url = "https://boardgamegeek.com/article/create/region/1/$id";
 }
 else{
 die $usage;
@@ -52,7 +52,7 @@ if($action eq "reply")
 	$mech->get($url);
 	$page = $mech->content;
 	$page =~ /recommendstatus_article(\d+)\'/;
-	$url = "http://boardgamegeek.com/article/reply/$1";
+	$url = "https://boardgamegeek.com/article/reply/$1";
 }
 
 # get post submit page

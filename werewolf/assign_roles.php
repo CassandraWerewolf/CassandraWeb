@@ -77,7 +77,7 @@ $num_players = mysql_num_rows($result);
 <?php
 $i=0;
 while ( $player = mysql_fetch_array($result) ) {
-  print "<tr><td align='center'><input type='text' name='role_$i' value='".$player{'role_name'}."' /></td><td><input type='checkbox' name='hide_$i' /></td></tr>\n";
+  print "<tr><td align='center'><input type='text' name='role_$i' value='".$player['role_name']."' /></td><td><input type='checkbox' name='hide_$i' /></td></tr>\n";
   $i++;
 }
 ?>

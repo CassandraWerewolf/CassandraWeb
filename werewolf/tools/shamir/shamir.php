@@ -1,5 +1,13 @@
 <?php
-echo json_encode($_GET['function']($_GET));
+// Only the functions defined in this file may be called; previously the URL
+// could name any PHP function.
+$allowed = array('get_shares', 'get_secret');
+$function = $_GET['function'] ?? '';
+if (!in_array($function, $allowed, true)) {
+    http_response_code(400);
+    exit('Unknown function');
+}
+echo json_encode($function($_GET));
 exit();
 
 function get_shares($data) {
@@ -12,7 +20,7 @@ function get_shares($data) {
         $ident = (isset($data['ident']) && !empty($data['ident'])) ? " -w " . escapeshellarg($data['ident']) : "";
         $output = null;
 	    $k = array();
-        $cmd = sprintf('echo %s | /usr/local/bin/ssss-split -Q -t %d -n %d %s', escapeshellarg($data['secret']), $data['num_thresh'], $data['num_shares'], $ident);
+        $cmd = sprintf('echo %s | /usr/bin/ssss-split -Q -t %d -n %d %s', escapeshellarg($data['secret']), $data['num_thresh'], $data['num_shares'], $ident);
         $output = shell_exec($cmd);
         $k['shares_list'] = $output;
         #$k['shares_list'] = $ident;
@@ -25,7 +33,7 @@ function get_secret($data) {
     isset($data['shares_list']) && !empty($data['shares_list']) &&
     $data['num_thresh'] <= 50 && strlen($data['shares_list']) <=15000) {
 	    $k = array();
-        $cmd = sprintf('echo %s | /usr/local/bin/ssss-combine -Q -t %d 2>&1', escapeshellarg($data['shares_list']), $data['num_thresh']);
+        $cmd = sprintf('echo %s | /usr/bin/ssss-combine -Q -t %d 2>&1', escapeshellarg($data['shares_list']), $data['num_thresh']);
         $output = array();
         exec($cmd, $output);
         $k['secret'] = str_replace("'", "", $output[1]); 

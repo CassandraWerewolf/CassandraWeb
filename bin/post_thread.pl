@@ -28,18 +28,18 @@ $subject = shift;
 if (defined($subject)) {$subject =~ s/\\\'/\'/g;}
 
 if ( $action eq "reply" ) {
-$url = "http://boardgamegeek.com/thread/$id";
+$url = "https://boardgamegeek.com/thread/$id";
 } elsif ( $action eq "edit" ) {
-$url = "http://boardgamegeek.com/article/edit/$id";
+$url = "https://boardgamegeek.com/article/edit/$id";
 } elsif ( $action eq "new" ) {
-$url = "http://boardgamegeek.com/article/create/region/1/$id";
+$url = "https://boardgamegeek.com/article/create/region/1/$id";
 }
 else{
 die $usage;
 }
 
 $mech = WWW::Mechanize->new(autocheck => 1, cookie_jar => {});
-$mech->get('http://boardgamegeek.com/login');
+$mech->get('https://boardgamegeek.com/login');
 $mech->form_number(1);
 $mech->field('username',$player);
 $mech->field('password',$password);
@@ -52,7 +52,7 @@ if($action eq "reply")
 	$mech->get($url);
 	$page = $mech->content;
 	$page =~ /recommendstatus_article(\d+)\'/;
-	$url = "http://boardgamegeek.com/article/reply/$1";
+	$url = "https://boardgamegeek.com/article/reply/$1";
 }
 
 # get post submit page

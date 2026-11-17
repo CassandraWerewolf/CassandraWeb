@@ -14,7 +14,7 @@ die "\nUsage $0 article_id\n\n" unless ($#ARGV == 0);
 $article_id = shift;
 
 $mech = WWW::Mechanize->new(autocheck => 1, cookie_jar => {}, timeout=> 300);
-#$mech->get('http://boardgamegeek.com/login');
+#$mech->get('https://boardgamegeek.com/login');
 #$mech->form_name('the_form');
 #$mech->field('username','Cassandra Project');
 #$mech->field('password', $ENV{'BGG_PASSWORD'});

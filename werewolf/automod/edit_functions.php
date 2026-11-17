@@ -182,10 +182,10 @@ function create_info_table($template_id,$edit=false) {
 
 function expand_role_reveal($role_reveal) {
   switch($role_reveal) {
-    case yes:
+    case 'yes':
 	  return "Yes";
 	break;
-	case no:
+	case 'no':
 	  return "No";
 	break;
 	default:
@@ -329,7 +329,7 @@ function create_role_table($template_id,$edit=false,$add=0) {
 	#N0 Knows
 	$output .= "<td valign='top' $td_style>";
 	if ( $edit ) {
-	  $known_roles = split(",",$role['n0_knows']);
+	  $known_roles = explode(",",$role['n0_knows']);
 	  $role_list['none'] = "none";
 	  foreach ( $roles as $id => $name ) {
         $role_list[$id] = $name;
@@ -347,7 +347,7 @@ function create_role_table($template_id,$edit=false,$add=0) {
 	  $n0_options["user_choice"] = expand_n0_view('user_choice');
 	  $output .= create_dropdown("n0_view_$count",$role['n0_view'],$n0_options,"onChange='show_rand_box(\"$count\")'");
 	  $style = "visibility:visible; position:relative;";
-	  $selected_roles = split(",",$role['n0_view']);
+	  $selected_roles = explode(",",$role['n0_view']);
 	  foreach ( $selected_roles as $key => $value ) {
         $selected_roles[$key] = trim($value,"'");
 	  }
@@ -368,8 +368,8 @@ function create_role_table($template_id,$edit=false,$add=0) {
 	  $vr_options['on'] = "Positive Hit on:";
 	  $vr_options[''] = "No View";
 	  $output .= create_dropdown("view_result_$count",$role['view_result'],$vr_options,"onChange='show_positive_box(\"$count\")'");
-	  list($look_for,$see_as) = split(" as ",$role['view_result']);
-	  $look_choices = split(" or ",$look_for);
+	  list($look_for,$see_as) = explode(" as ",$role['view_result']);
+	  $look_choices = explode(" or ",$look_for);
 	  $style = "visibility:visible; position:relative;";
 	  if ( $role['view_result'] == "" ) {
 	    $style = "visibility:hidden; position:absolute;";
@@ -471,7 +471,7 @@ function create_role_table($template_id,$edit=false,$add=0) {
     # Promotion
     $output .="<td valign='top' $td_style>";
     if ( $edit ) {
-	  $promotion_roles = split(",",$role['promotion']);
+	  $promotion_roles = explode(",",$role['promotion']);
 	  $role_list['none'] = "none";
 	  foreach ( $roles as $id => $name ) {
         $role_list[$id] = $name;
@@ -681,7 +681,7 @@ function expand_n0_knows($know) {
 	  return "None";
 	break;
 	default:
-	  $list = split(",",$know);
+	  $list = explode(",",$know);
 	  $output = "Will learn the id of: <br />";
 	  $count = 0;
 	  foreach ( $list as $r ) {
@@ -705,7 +705,7 @@ function expand_n0_view($view) {
 	  return "Player must choose N0 view";
 	break;
 	default:
-	  $list = split(",",$view);
+	  $list = explode(",",$view);
 	  $output = "Random but Not: ";
 	  $count = 0;
 	  foreach ( $list as $r ) {
@@ -723,8 +723,8 @@ function expand_n0_view($view) {
 function expand_view_result($view) {
   global $roles;
   if ( $view == "" ) { return ""; }
-  list($look_for,$see_as) = split(" as ",$view);
-  $look_choices = split(" or ",$look_for);
+  list($look_for,$see_as) = explode(" as ",$view);
+  $look_choices = explode(" or ",$look_for);
   $output = "Positive Hit on: ";
   $count = 0;
   foreach ( $look_choices as $look ) {
@@ -781,7 +781,7 @@ function expand_promotion($promote) {
 	  return "None";
 	break;
 	default:
-	  $list = split(",",$promote);
+	  $list = explode(",",$promote);
 	  $count = 0;
 	  foreach ( $list as $r ) {
 	    if ( $count > 0 ) { $output .= ", "; }

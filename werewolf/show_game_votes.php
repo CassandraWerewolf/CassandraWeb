@@ -94,7 +94,7 @@ print "</div>";
 <?php
 
 function vote_table($game_id,$player) {
-  $bgg_article = "http://boardgamegeek.com/article/";
+  $bgg_article = "https://boardgamegeek.com/article/";
 
   $output = "";
   $sql_days = sprintf("select distinct day from Votes_log where game_id=%s order by day desc",$game_id);

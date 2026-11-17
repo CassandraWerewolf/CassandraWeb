@@ -133,7 +133,7 @@ function notify_moderator($game_id,$action="",$username="") {
     $message .= "\n$username was $action.\n";
   }
 
-  $message .= "\nGo to Game: http://www.boardgamegeek.com/thread/$thread_id\n";
+  $message .= "\nGo to Game: https://www.boardgamegeek.com/thread/$thread_id\n";
 
   BGG::authAsCassy()->send_geekmail($to, $subject, $message) ;
 }

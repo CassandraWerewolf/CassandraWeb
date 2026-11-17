@@ -1,53 +1,106 @@
-version: '3'
+# Production stack for Docker Swarm (deployed as stack "cassandraweb" through Portainer).
+#
+# Images are built ON the Vultr host (x86_64) from this repo, not pulled from Docker Hub:
+#   docker build -f php/Dockerfile -t cassandraweb:<tag> .
+# then set CASSY_IMAGE=cassandraweb:<tag> in the stack's environment variables.
+#
+# Secrets come from the stack's environment variables in Portainer (never commit them):
+#   MYSQL_PASSWORD, MYSQL_ROOT_PASSWORD, BGG_USERNAME, BGG_PASSWORD, BGG_API_TOKEN
+#
+# Swarm ignores `restart:` and `depends_on`; restarts are set with deploy.restart_policy.
+# "version" is obsolete for Compose but kept for older `docker stack deploy` tooling.
+version: '3.9'
+
+x-app-env: &app-env
+  MYSQL_HOST: db
+  MYSQL_DATABASE: werewolf
+  MYSQL_USER: dbuser
+  MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+  BGG_USERNAME: ${BGG_USERNAME}
+  BGG_PASSWORD: ${BGG_PASSWORD}
+  TZ: 'America/Chicago'
+
 services:
   web:
-    image: cassandraproject/web:latest
+    image: ${CASSY_IMAGE:?set CASSY_IMAGE to the locally built image tag}
     ports:
       - "80:80"
       - "443:443"
     environment:
-      MYSQL_HOST: mysql
-      MYSQL_DATABASE: werewolf
-      MYSQL_USER: dbuser
-      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
-      BGG_USERNAME: ${BGG_USERNAME}
-      BGG_PASSWORD: ${BGG_PASSWORD}
-      TZ: 'America/Chicago'
+      <<: *app-env
     volumes:
-      - /etc/certs:/etc/letsencrypt/live
-      - /etc/certs_archive:/etc/letsencrypt/archive
-    depends_on:
-      - mysql
-  scripts:
-    image: cassandraproject/web:latest
-    environment:
-      MYSQL_HOST: mysql
-      MYSQL_DATABASE: werewolf
-      MYSQL_USER: dbuser
-      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
-      BGG_USERNAME: ${BGG_USERNAME}
-      BGG_PASSWORD: ${BGG_PASSWORD}
-      TZ: 'America/Chicago'
+      - certs_data:/etc/letsencrypt:ro
+      # Automod rulesets are edited through the site; keep them across redeploys.
+      # On first use the volume is filled with the rulesets from the image.
+      - automod_rulesets:/var/www/html/automod/rulesets
     deploy:
       restart_policy:
+        condition: any
         delay: 10s
-    command:
-        - /bin/bash
-        - -c
-        - |
-          /opt/werewolf/run_collect_posts.sh > /dev/null 2>&1
-          /usr/bin/php /var/www/html/process_physics.php > /dev/null 2>&1
-          /opt/werewolf/run_automod.sh > /dev/null
-  mysql:
-    image: mysql:5.6
-    command: --group-concat-max-len=65535
-    volumes:
-      - mysql-data:/var/lib/mysql
+
+  scripts:
+    image: ${CASSY_IMAGE:?set CASSY_IMAGE to the locally built image tag}
     environment:
-      MYSQL_ROOT_PASSWORD: ${MYSQL_PASSWORD}
-      MYSQL_DATABASE: werewolf
-      MYSQL_USER: dbuser
-      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      <<: *app-env
+      BGG_API_TOKEN: ${BGG_API_TOKEN}
+    # Same loop as the previous prod stack: physics and automod were commented out there.
+    command:
+      - /bin/bash
+      - -c
+      - |
+        while :
+        do
+          /opt/werewolf/run_collect_posts.sh
+        #  /usr/local/bin/php /var/www/html/process_physics.php > /dev/null 2>&1
+        #  /opt/werewolf/run_automod.sh
+          sleep 1m
+        done
+    deploy:
+      restart_policy:
+        condition: any
+        delay: 10s
+
+  db:
+    image: mariadb:12.3.3-noble
+    # Match the old MySQL 5.6 behavior the code expects: non-strict SQL mode
+    # and long GROUP_CONCAT results.
+    command:
+      - --sql-mode=NO_ENGINE_SUBSTITUTION
+      - --group-concat-max-len=65535
+    environment:
+      MARIADB_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MARIADB_DATABASE: werewolf
+      MARIADB_USER: dbuser
+      MARIADB_PASSWORD: ${MYSQL_PASSWORD}
       TZ: 'America/Chicago'
+    volumes:
+      # New volume. The old MySQL 5.6 volume (cassandraweb_mysql-data) is left untouched for rollback.
+      - mariadb_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 10s
+      timeout: 5s
+      retries: 30
+    # No ports: the database is only reachable from the other services in this stack.
+    deploy:
+      restart_policy:
+        condition: any
+        delay: 10s
+
+  certbot:
+    image: certbot/dns-cloudflare:v5.10.0
+    volumes:
+      - certs_data:/etc/letsencrypt
+      - /root/.secrets/certbot/cloudflare.ini:/root/.secrets/cloudflare.ini:ro
+    # Same as before: certificates are renewed by hand with `docker exec … certbot renew`.
+    entrypoint: sh
+    command: -c "sleep infinity"
+    deploy:
+      restart_policy:
+        condition: any
+        delay: 10s
+
 volumes:
-  mysql-data:
+  certs_data:
+  mariadb_data:
+  automod_rulesets:

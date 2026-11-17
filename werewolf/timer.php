@@ -4,7 +4,7 @@ var $stime;
 var $etime;
 
 function get_microtime(){
-$tmp=split(" ",microtime());
+$tmp=explode(" ",microtime());
 $rt=$tmp[0]+$tmp[1];
 return $rt;
 }

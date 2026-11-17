@@ -59,7 +59,7 @@ function timezone_chart($time="utc_timestamp()",$game_id="") {
   $attrs = array (
     'class' => 'forum_table'
   );
-  $table =& new HTML_Table($attrs);  
+  $table = new HTML_Table($attrs);  
   $col = array ("Zone", "Standard Time", "Daylight Time");
   $table->addCol($col);
   unset($col);
@@ -127,7 +127,7 @@ function calcTime($zone,$type,$time,$mer,$game_id="") {
   $sql = sprintf("select GMT from Timezones where zone=%s",quote_smart($zone));
   $result = mysql_query($sql);
   $gmt_offset = mysql_result($result,0,0);
-  list($hr, $mn) = split(":",$time);
+  list($hr, $mn) = explode(":",$time);
   if ( $mer == "pm" && $hr != "12") {
     $gmt_offset += 12;
   }

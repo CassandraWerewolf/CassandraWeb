@@ -20,7 +20,6 @@ include_once "../menu.php";
 <li><a href='automod_running.php'>Running Automod Games</a></li>
 <li><a href='automod_post.php'>Post to All Automod games</a></li>
 <li><a href='clean_cache.php'>Clean the cache</a></li>
-<li><a href='eaccel.php'>EAccelerator Control Panel</a></li>
 <li><a href='reset_cal.php'>Reset Calendar</a></li>
 <li><a href='update_calendar.php'>Update Calendar</a> (This is the script Cassy Calls)</li>
 </ul>

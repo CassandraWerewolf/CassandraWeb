@@ -105,10 +105,10 @@ if ( $player == 'all'  || $player == 'users' ) {
 <tr>
 <td align='right'>
 <span class='forum_date'>
-<a href='http://www.boardgamegeek.com/article/<?=$row['article_id'];?>#<?=$row['article_id'];?>'><img src="//cf.geekdo-static.com/images/icon_minipost.gif" border=0></a>
+<a href='https://www.boardgamegeek.com/article/<?=$row['article_id'];?>#<?=$row['article_id'];?>'><img src="//cf.geekdo-static.com/images/icon_minipost.gif" border=0></a>
 Posted <?=$row['post_date'];?> 
-[<A href="http://www.boardgamegeek.com/article/reply/<?=$row['article_id'];?>">Reply</A>]
-[<A href="http://www.boardgamegeek.com/article/quote/<?=$row['article_id'];?>">Quote</A>]
+[<A href="https://www.boardgamegeek.com/article/reply/<?=$row['article_id'];?>">Reply</A>]
+[<A href="https://www.boardgamegeek.com/article/quote/<?=$row['article_id'];?>">Quote</A>]
 </span>
 </td>
 </tr>

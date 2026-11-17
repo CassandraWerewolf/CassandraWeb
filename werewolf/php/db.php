@@ -1,5 +1,7 @@
 <?php //db.php library
 
+require_once __DIR__ . "/mysql_compat.php";
+
 $dbhost = getenv('MYSQL_HOST');
 $dbuser = getenv('MYSQL_USER');
 $dbpass = getenv('MYSQL_PASSWORD');
@@ -32,9 +34,7 @@ function dbGetResultRowCount($res) {
 }
 
 function quote_smart($value) {
-  if ( get_magic_quotes_gpc()) {
-    $value = stripslashes($value);
-  }
+  // Magic quotes no longer exist (removed in PHP 5.4/8.0), so no stripslashes() here.
   if ( ! is_numeric($value)) {
     $value = "'".mysql_real_escape_string($value)."'";
   }
