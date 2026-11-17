@@ -24,7 +24,7 @@ function rss($url)
 	foreach ($rss->items as $item ) {
 		$html .=   "<tr><td bgcolor=#ffffff>";
 		$html .=   "<a href=$item[link] target=_blank style='{font-weight:normal;text-decoration:none}'>";
-		$html .=   $item[title];
+		$html .=   $item['title'];
 		$html .=   "</a></td></tr>";
 	}		
 	$html .=   "</table>";

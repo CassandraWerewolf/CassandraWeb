@@ -1,0 +1,67 @@
+#!/bin/sh
+# cassy-deploy: deploys one published build of CassandraWeb to the Swarm stack.
+#
+# Installed on the server as /usr/local/bin/cassy-deploy and used as the FORCED COMMAND
+# for the GitHub Actions deploy key (see deploy/README.md). Whatever the client asks to
+# run arrives in $SSH_ORIGINAL_COMMAND; it must be exactly one 40-character commit SHA.
+#
+# Steps: pull cassandraproject/web:<sha>, update the web and scripts services one at a time
+# (Swarm rolls a service back by itself if its new container fails), then check the site.
+# If the site check fails, both services are rolled back to the previous version.
+set -eu
+
+REPO="cassandraproject/web"
+SERVICES="cassandraweb_web cassandraweb_scripts"
+SITE="https://cassandrawerewolf.com/"
+LOG="${HOME}/deploys.log"
+
+log() { echo "[cassy-deploy $(date -u +%Y-%m-%dT%H:%M:%SZ)] $*"; }
+
+SHA="${SSH_ORIGINAL_COMMAND:-${1:-}}"
+case "$SHA" in
+  ""|*[!0-9a-f]*) log "refusing: input is not a commit SHA"; exit 2 ;;
+esac
+if [ "${#SHA}" -ne 40 ]; then
+  log "refusing: expected a 40-character commit SHA"; exit 2
+fi
+IMAGE="$REPO:$SHA"
+
+# Only one deploy at a time.
+exec 9>/run/lock/cassy-deploy.lock
+if ! flock -n 9; then
+  log "another deploy is already running"; exit 3
+fi
+
+log "pulling $IMAGE"
+docker pull --quiet "$IMAGE" >/dev/null
+
+for service in $SERVICES; do
+  log "updating $service"
+  if ! docker service update --quiet --detach=false --image "$IMAGE" \
+         --update-failure-action rollback --update-monitor 30s "$service" >/dev/null; then
+    log "update of $service failed; Swarm rolled it back. Stopping."
+    echo "$(date -u +%Y-%m-%dT%H:%M:%SZ) FAILED (service update) $IMAGE" >> "$LOG"
+    exit 1
+  fi
+done
+
+# The site must answer with 200 within about a minute.
+code="none"
+for attempt in 1 2 3 4 5 6; do
+  code=$(curl -s -o /dev/null -w '%{http_code}' --max-time 10 \
+           --resolve cassandrawerewolf.com:443:127.0.0.1 "$SITE" || echo "none")
+  [ "$code" = "200" ] && break
+  sleep 10
+done
+
+if [ "$code" != "200" ]; then
+  log "site check failed (last answer: $code); rolling back both services"
+  for service in $SERVICES; do
+    docker service rollback --quiet --detach=false "$service" >/dev/null || true
+  done
+  echo "$(date -u +%Y-%m-%dT%H:%M:%SZ) FAILED (site check $code), rolled back $IMAGE" >> "$LOG"
+  exit 1
+fi
+
+log "deployed $IMAGE"
+echo "$(date -u +%Y-%m-%dT%H:%M:%SZ) OK $IMAGE" >> "$LOG"

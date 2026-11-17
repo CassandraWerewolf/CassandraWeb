@@ -210,7 +210,7 @@
 		'width' => '100%'
 	);
 
-	$table =& new HTML_Table($top_attrs);
+	$table = new HTML_Table($top_attrs);
 	$table->addRow(array("", "Total", "Rank")); 
 	$table->addRow(array("Games Played", "<a href='" . $player_link . "'>" . $games_played . "</a>", $games_played_rank)); 
 	$table->addRow(array("Games Modded", "<a href='" . $mod_link . "'>" . $games_modded . "</a>", $games_modded_rank)); 
@@ -232,10 +232,10 @@
 	  print "<table class='forum_table'><tr><th><a href='/wolfy_awards.php'>Wolfy Awards</a></th></tr>\n";
 	  }
 	  while ( $award = mysql_fetch_array($result_award_p) ) {
-	    print "<tr><td><a href='http://www.boardgamegeek.com/article/".$award['award_post']."#".$award['award_post']."'>".$award['award']." (".$award['year'].")</a></td></tr>\n";
+	    print "<tr><td><a href='https://www.boardgamegeek.com/article/".$award['award_post']."#".$award['award_post']."'>".$award['award']." (".$award['year'].")</a></td></tr>\n";
 		}
 	  while ( $award = mysql_fetch_array($result_award_g) ) {
-	    print "<tr><td><a href='http://www.boardgamegeek.com/article/".$award['award_post']."#".$award['award_post']."'>".$award['award']." (".$award['year'].")</a> - For <a href='/game/".$award['thread_id']."'>".$award['title']."</a></td></tr>\n";
+	    print "<tr><td><a href='https://www.boardgamegeek.com/article/".$award['award_post']."#".$award['award_post']."'>".$award['award']." (".$award['year'].")</a> - For <a href='/game/".$award['thread_id']."'>".$award['title']."</a></td></tr>\n";
 		}
 		if ( $num_awards > 0 ) {
 		  print "</table>\n";
@@ -251,14 +251,14 @@
 	#	}
 	#}	
 	print "<a href='${here}profile/$player'>Cassandra Profile</a><br />";
-	print "<a href='http://boardgamegeek.com/user/".$player."'>BGG Profile</a><br />";
+	print "<a href='https://boardgamegeek.com/user/".$player."'>BGG Profile</a><br />";
     print "<a href='${here}social/user/$player'>Social Sites</a></br />";
 	$wotw_sql = sprintf("select thread_id from Wotw where user_id=%s",quote_smart($user_id));
 	$wotw_result = mysql_query($wotw_sql);
 	$wotw_c = 0;
  	while ( $wotw_c < mysql_num_rows($wotw_result) ) {	
 	  $wotw_thread = mysql_result($wotw_result,$wotw_c,0);
-      print "<a href='http://boardgamegeek.com/thread/".$wotw_thread."'>Wolf of the Week Thread</a><br />";
+      print "<a href='https://boardgamegeek.com/thread/".$wotw_thread."'>Wolf of the Week Thread</a><br />";
 	  $wotw_c++;
 	}
 	print "<a href='${here}send_geekmail.php?to=$player'>Send GeekMail</a>";
@@ -269,38 +269,38 @@
 	);
 
 
-	$table_main =& new HTML_Table($attrs_main);
+	$table_main = new HTML_Table($attrs_main);
 
-	$table =& new HTML_Table($attrs);
+	$table = new HTML_Table($attrs);
 	$table->addCol($current_games_signup);
 	$table->addCol($games_signup_date);
 	$table->setRowType(0,"TH");
 	$table->setCellAttributes(0,0,"colspan='2'");
 	$table_main->setCellContents(0,0,$table->toHTML());
 
-	$table =& new HTML_Table($attrs);
+	$table = new HTML_Table($attrs);
 	$table->addCol($future_modded);
 	$table->addCol($future_modded_date);
 	$table->setRowType(0,"TH");
 	$table->setCellAttributes(0,0,"colspan='2'");
 	$table_main->setCellContents(1,0,$table->toHTML());
 
-	$table =& new HTML_Table($attrs);
+	$table = new HTML_Table($attrs);
 	$table->addCol($current_games_played);
 	$table->setRowType(0,"TH");
 	$table_main->setCellContents(0,2,$table->toHTML());
 
-	$table =& new HTML_Table($attrs);
+	$table = new HTML_Table($attrs);
 	$table->addCol($last_games_played);
 	$table->setRowType(0,"TH");
 	$table_main->setCellContents(1,2,$table->toHTML());
 
-	$table =& new HTML_Table($attrs);
+	$table = new HTML_Table($attrs);
 	$table->addCol($current_games_modded);
 	$table->setRowType(0,"TH");
 	$table_main->setCellContents(0,4,$table->toHTML());
 
-	$table =& new HTML_Table($attrs);
+	$table = new HTML_Table($attrs);
 	$table->addCol($last_games_modded);
 	$table->setRowType(0,"TH");
 	$table_main->setCellContents(1,4,$table->toHTML());

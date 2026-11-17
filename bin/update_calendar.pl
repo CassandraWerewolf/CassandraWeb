@@ -20,7 +20,7 @@ exit;
 }
 
 # Log into Cassy Web pages
-$mech = WWW::Mechanize->new(autocheck => 1, cookie_jar => {});
+$mech = WWW::Mechanize->new(agent => 'CassandraWerewolf/1.0 https://cassandrawerewolf.com', autocheck => 1, cookie_jar => {});
 $mech->get('http://cassandrawerewolf.com/index.php?login=true');
 $mech->form_name('login_cassy');
 $mech->set_fields('uname' => $bgg_user);

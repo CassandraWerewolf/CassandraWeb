@@ -125,7 +125,7 @@ function clear_edit(game_id) {
 		'class' => 'forum_table'
 	);
 
-	$table =& new HTML_Table($attrs);
+	$table = new HTML_Table($attrs);
 
 	$table->addCol($games_modded_names);
     $table->addCol($games_modded_comment);

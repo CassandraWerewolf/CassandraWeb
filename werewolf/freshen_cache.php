@@ -1,5 +1,10 @@
 #!/usr/bin/php
 <?php
+// Command-line script only (it reads $argv); refuse web requests.
+if (PHP_SAPI !== 'cli') {
+  http_response_code(404);
+  exit;
+}
 
 include_once("php/common.php");
 

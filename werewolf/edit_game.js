@@ -308,7 +308,7 @@ xmlHttp.open("GET", url , false)
 xmlHttp.send(null)
 
 myLink = document.getElementById('game_link')
-myLink.href = "http://www.boardgamegeek.com/thread/"+th
+myLink.href = "https://www.boardgamegeek.com/thread/"+th
 
 alert("Since you changed the thread_id the page you are on is no longer a valid page, so hiting refresh will not work.")
 } 

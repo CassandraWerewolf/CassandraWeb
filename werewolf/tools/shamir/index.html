@@ -1,21 +1,14 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<!DOCTYPE html>
+<html lang="en">
 
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Shamir's Secret Sharing Algoritm</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Shamir's Secret Sharing Algorithm</title>
     <link rel="stylesheet" type="text/css" href="/assets/css/styles.css" />
     <link rel="stylesheet" type="text/css" href="/assets/css/mycss.css" />
+    <style>#sss_status { font-weight: bold; min-height: 1.2em; }</style>
 
-    <!--[if IE]>
-        <style type="text/css">
-        .clear {
-          zoom: 1;
-          display: block;
-        }
-        </style>
-        <![endif]-->
 
 </head>
 
@@ -26,6 +19,7 @@
             <!-- Defining the header section of the page with the appropriate tag -->
             <h1>Secret Sharing</h1>
             <h3>Shamir's Algorithm</h3>
+            <p>Runs entirely in your browser. Secrets and shares are never sent to the server.</p>
         </div>
         <div class="section" id="articles">
             <!-- A new section with the articles -->
@@ -35,7 +29,7 @@
                 <div class="articleBody clear">
                     <fieldset>
                         <p>
-                            <label for="num_shares">Number of Shares (&lt;50)</label>
+                            <label for="num_shares">Number of Shares (2 to 50)</label>
                             <textarea id="num_shares" rows="1" cols="3"></textarea>
                         </p>
                         <p>
@@ -43,21 +37,22 @@
                             <textarea id="num_thresh" rows="1" cols="3"></textarea>
                         </p>
                         <p>
-                            <label for="ident">Identifier (Optional and &lt;=20 characters)</label>
+                            <label for="ident">Identifier (optional, up to 20 characters, no spaces)</label>
                             <textarea id="ident" rows="1" cols="20"></textarea>
                         </p>
                         <p>
-                            <label for="secret">Secret (&lt;255 charaters)</label>
+                            <label for="secret">Secret (up to 255 characters)</label>
                             <textarea id="secret" cols="125" rows="3"></textarea>
                         </p>
                         <p>
-                            <label for="shares_list">Shares (&lt;15000 characters)</label>
+                            <label for="shares_list">Shares (one per line)</label>
                             <textarea id="shares_list" cols="125" rows="20"></textarea>
                         </p>
-                        <button id="get_shares">Get Shares</button>
-                        <button id="get_secret">Get Secret</button>
-                        <button id="reset">Reset</button>
+                        <button type="button" id="get_shares">Get Shares</button>
+                        <button type="button" id="get_secret">Get Secret</button>
+                        <button type="button" class="reset">Reset</button>
                     </fieldset>
+                    <p id="sss_status" role="status"></p>
                 </div>
             </div>
             <!-- Article 1 end -->
@@ -70,8 +65,11 @@
 
     <!-- JavaScript Includes -->
 
-    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
-    <script type="text/javascript" src="shamir.js"></script>
+    <!-- The vendored library imports its random-number helper by package name; map it to the local file. -->
+    <script type="importmap">
+      { "imports": { "shamir-secret-sharing/csprng": "./vendor/shamir-secret-sharing-0.0.4/csprng.js" } }
+    </script>
+    <script type="module" src="shamir.js"></script>
 </body>
 
 </html>

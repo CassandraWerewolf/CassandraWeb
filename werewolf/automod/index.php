@@ -39,7 +39,7 @@ while ( $template = mysql_fetch_array($result) ) {
 ?>
 </table>
 <a href='/automod/new_template.php'>Create a new template</a>
-<p><a href='http://boardgamegeek.com/thread/168792'>BGG Forum Discussion</a></p>
+<p><a href='https://boardgamegeek.com/thread/168792'>BGG Forum Discussion</a></p>
 </div>
 </body>
 </html>

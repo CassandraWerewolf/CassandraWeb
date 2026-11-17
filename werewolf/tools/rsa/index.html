@@ -1,21 +1,14 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<!DOCTYPE html>
+<html lang="en">
 
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>RSA Encryption</title>
     <link rel="stylesheet" type="text/css" href="/assets/css/styles.css" />
     <link rel="stylesheet" type="text/css" href="/assets/css/mycss.css" />
+    <style>html { scroll-behavior: smooth; } #rsa_status { font-weight: bold; min-height: 1.2em; }</style>
 
-    <!--[if IE]>
-        <style type="text/css">
-        .clear {
-          zoom: 1;
-          display: block;
-        }
-        </style>
-        <![endif]-->
 
 </head>
 
@@ -26,6 +19,7 @@
             <!-- Defining the header section of the page with the appropriate tag -->
             <h1>RSA</h1>
             <h3>Public Key Cryptography</h3>
+            <p>Runs entirely in your browser. Keys and messages are never sent to the server.</p>
             <div class="nav clear">
                 <!-- The nav link semantically marks your main site navigation -->
                 <ul>
@@ -53,8 +47,8 @@
                             <label for="pub_key">Public Key (publish)</label>
                             <textarea id="pub_key" class="rsa_text"></textarea>
                         </p>
-                        <button id="get_pkeys">Private/Public Keys</button>
-                        <button id="reset">Reset</button>
+                        <button type="button" id="get_pkeys">Private/Public Keys</button>
+                        <button type="button" class="reset">Reset</button>
                     </fieldset>
 
                 </div>
@@ -80,14 +74,15 @@
                             <label for="cipher_text">Ciphertext</label>
                             <textarea id="cipher_text" class="rsa_text"></textarea>
                         </p>
-                        <button id="rsa_pub_enc">Encrypt</button>
-                        <button id="rsa_priv_dec">Decrypt</button>
-                        <button id="reset">Reset</button>
+                        <button type="button" id="rsa_pub_enc">Encrypt</button>
+                        <button type="button" id="rsa_priv_dec">Decrypt</button>
+                        <button type="button" class="reset">Reset</button>
                     </fieldset>
                 </div>
             </div>
 
             <!-- Article 2 end -->
+            <p id="rsa_status" role="status"></p>
         </div>
 
         <div class="footer">
@@ -99,9 +94,7 @@
 
     <!-- JavaScript Includes -->
 
-    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
-    <script type="text/javascript" src="jquery.scrollTo-min.js"></script>
-    <script type="text/javascript" src="rsa.js"></script>
+    <script type="module" src="rsa.js"></script>
 </body>
 
 </html>

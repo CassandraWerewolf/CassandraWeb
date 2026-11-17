@@ -12,6 +12,14 @@ exit;
 
 $id = $_REQUEST['user_id'];
 $field = $_REQUEST['field'];
+// $field is used as a column name in SQL, so only allow known Bio columns.
+$allowed_fields = array('avatar', 'max_messages', 'rl_name', 'location', 'Nemesis',
+  'mbti', 'email_addr', 'chat_color', 'name_origin', 'free_hours', 'job', 'family',
+  'religion', 'comments', 'b_date', 'gender', 'time_zone', 'twitter_name');
+if ( ! in_array($field, $allowed_fields, true) ) {
+  http_response_code(400);
+  exit("Unknown profile field.");
+}
 $sql = "show full columns from Bio";
 $result = mysql_query($sql);
 while ( $bio = mysql_fetch_array($result) ) {
@@ -31,39 +39,39 @@ if ( $_REQUEST['q'] == "edit" ) {
   $result_field = mysql_query($sql_field);
   $value = mysql_result($result_field,0,0);
   switch ( $field ) {
-  case max_messages:
+  case 'max_messages':
     print "<input type='text' size='6' name='$field' value='$value' />\n";
   break;
-  case rl_name:
-  case location:
-  case Nemesis:
-  case mbti:
-  case email_addr:
+  case 'rl_name':
+  case 'location':
+  case 'Nemesis':
+  case 'mbti':
+  case 'email_addr':
     print "<input type='text' size='36' name='$field' value='$value' />\n";
   break;
-  case chat_color:
+  case 'chat_color':
     print "<input type='text' size='8' name='$field' value='$value' /><a href='#' onClick='cp.select(document.edit_form.$field,\"pick\"); return false;' name='pick' id='pick'><img src='/images/color_pick.gif' border='0' /></a>\n";
   break;
-  case name_origin:
-  case free_hours:
-  case job:
-  case family:
-  case religion:
-  case comments:
+  case 'name_origin':
+  case 'free_hours':
+  case 'job':
+  case 'family':
+  case 'religion':
+  case 'comments':
     print "<textarea cols='50' rows='6' name='$field' >$value</textarea>\n";
   break;
-  case b_date:
+  case 'b_date':
     if ( $value == "" ) { $value = "yyyy-mm-dd"; }
     print "<input type='text' size='10' name='$field' value='$value' />\n";
   break;
-  case gender:
+  case 'gender':
 	$select_m = "";
 	$select_f = "";
 	if ( $value == "M" ) { $select_m = "selected"; } 
 	if ( $value == "F" ) { $select_f = "selected"; } 
     print "<select name='$field'><option value='' /><option $select_m value='M' />M<option $select_f value='F' />F</select>\n";
   break;
-  case time_zone:
+  case 'time_zone':
     print "<select name='$field'><option value=''/>\n";
     $sql_tz = "select zone, concat('(GMT',if(GMT>0,' +',''),if(GMT=0,'',concat(if(GMT<0,' ',''),GMT)),') ',description) as text from Timezones order by zone DESC";
     $result_tz = mysql_query($sql_tz);
@@ -74,7 +82,7 @@ if ( $_REQUEST['q'] == "edit" ) {
     }
     print "</select>\n";
   break;
-  case twitter_name:
+  case 'twitter_name':
     print "<input type='text' size='50' name='$field' value='$value' />\n";
   break;
   }
@@ -85,10 +93,5 @@ if ( $_REQUEST['q'] == "edit" ) {
   $sql = sprintf("update Bio set %s = %s where user_id=%s",$field,quote_smart($_REQUEST['value']),quote_smart($id));
   $result = mysql_query($sql);
   print show_field($id,$field);
-
-	if($field == 'twitter_name') {
-		$command = "twitter/tw.pl follow " . quote_smart($_REQUEST['value']);
-		system($command);
-	}
 }
 ?>

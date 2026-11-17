@@ -22,7 +22,7 @@
             <li><a href='/wotw.php'>Wolf of the Week List</a></li>
             <li><a href='/wolfy_awards.php'>Wolfy Awards</a></li>
             <li><a href='/ranks.php'>Player and moderator Ranks</a></li>
-            <li><a href='http://boardgamegeek.com/thread/225928'>Player Picture Thread</a> (<a href='game/225928'>By Player</a>)</li>
+            <li><a href='https://boardgamegeek.com/thread/225928'>Player Picture Thread</a> (<a href='game/225928'>By Player</a>)</li>
             <li><a href='/timezones.php'>Player Timezone Chart</a></li>
             <li><a href='/social/'>Find WW players Elsewhere</a></li>
             <?php if ( isset($username) ) { ?>

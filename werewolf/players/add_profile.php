@@ -79,28 +79,28 @@ while ( $col = mysql_fetch_array($result_col) ) {
   print "<tr><td>".$col['Comment'];
   $star = "";
   switch ( $col['Field'] ) {
-    case rl_name:
-	case location:
-	case mbti:
-	case email_addr:
+    case 'rl_name':
+	case 'location':
+	case 'mbti':
+	case 'email_addr':
       print "</td><td><input type='text' size='36' name='".$col['Field']."' value='' /></td></tr>\n";
     break;
-	case name_origin:
-	case free_hours:
-	case job:
-	case family:
-	case religion:
-	case comments:
+	case 'name_origin':
+	case 'free_hours':
+	case 'job':
+	case 'family':
+	case 'religion':
+	case 'comments':
 	  print "</td><td><textarea cols='30' name='".$col['Field']."' value=''></textarea></td></tr>\n";
 	break;
-    case b_date:
+    case 'b_date':
       print "(will be shown as age)</td><td><input type='text' size='10' name='".$col['Field']."' value='yyyy-mm-dd' /></td></tr>\n";
     break;
-	case gender:
+	case 'gender':
 	  print "*";
 	  print "</td><td><select name='".$col['Field']."'><option /><option />M<option />F</select></td></tr>";
 	break;
-	case time_zone:
+	case 'time_zone':
 	  print "*";
 	  print "</td><td><select name='".$col['Field']."'><option value=''/>\n";
       $sql_tz = "select zone, concat('(GMT',if(GMT>0,' +',''),if(GMT=0,'',concat(if(GMT<0,' ',''),GMT)),') ',description) as text from Timezones order by zone DESC";

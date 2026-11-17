@@ -50,8 +50,8 @@ if ($level == 1 || $level == 2)
 $sql = "select user_id, num, date_format(start_date,'%b %e, %Y') as start_date, thread_id from Wotw order by num desc";
 $result = mysql_query($sql);
 while ( $row = mysql_fetch_array($result) ) {
-  print "<tr><td align='center'><a href='http://www.boardgamegeek.com/thread/".$row['thread_id']."'>".$row['num']."</a></td>\n";
-  print "<td align='center'><a href='http://www.boardgamegeek.com/thread/".$row['thread_id']."'>".$row['start_date']."</a></td>\n";
+  print "<tr><td align='center'><a href='https://www.boardgamegeek.com/thread/".$row['thread_id']."'>".$row['num']."</a></td>\n";
+  print "<td align='center'><a href='https://www.boardgamegeek.com/thread/".$row['thread_id']."'>".$row['start_date']."</a></td>\n";
   print "<td>";
   print get_player_page($row['user_id']);
   print "</td>\n</tr>\n";

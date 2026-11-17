@@ -11,12 +11,21 @@ class BGG
     public function __construct() {
     }
 
+    // Build a shell command for one of the bin/bgg scripts. Every argument is
+    // passed through escapeshellarg(), so text like $(...) or `...` in a message,
+    // title or form field is handed to the script literally and never run by
+    // the shell. (The old code used "double quotes", which allowed command injection.)
+    private static function cmd($script, ...$args) {
+        return self::SCRIPT_PATH . $script . ' ' . implode(' ', array_map(
+            function ($a) { return escapeshellarg((string) $a); }, $args));
+    }
+
     public static function auth($username, $password) {
         $instance = new self();
         $instance->username = $username;
         $instance->password = $password;
-        exec(self::SCRIPT_PATH . "authenticate.pl \"$username\" \"$password\"", $output);
-        $instance->geekauth = $output[0];
+        exec(self::cmd("authenticate.pl", $username, $password), $output);
+        $instance->geekauth = $output[0] ?? '';
         return $instance;
     }
 
@@ -29,14 +38,14 @@ class BGG
     // Auth required functions
 
     public function send_geekmail($to, $subject, $message) {
-        system(self::SCRIPT_PATH . "send_geekmail.pl \"$this->username\" \"$this->password\" \"$to\" \"$subject\" \"$message\" > /dev/null &", $retval);
+        system(self::cmd("send_geekmail.pl", $this->username, $this->password, $to, $subject, $message) . " > /dev/null &", $retval);
     }
 
     public function reply_thread($thread_id, $body) {
         $article_id = self::get_article_id_by_thread_id($thread_id);
-        exec(self::SCRIPT_PATH . "reply_thread.pl \"$this->geekauth\" \"$thread_id\" \"$article_id\" \"$body\"", $response);
-        $article = json_decode($response[0], true);
-        return $article['id'];
+        exec(self::cmd("reply_thread.pl", $this->geekauth, $thread_id, $article_id, $body), $response);
+        $article = json_decode($response[0] ?? '', true);
+        return $article['id'] ?? null;
     }
 
     public function reply_thread_quick($thread_id, $body) {
@@ -44,31 +53,31 @@ class BGG
     }
 
     public function edit_post($article_id, $body) {
-        system(self::SCRIPT_PATH . "edit_article.pl \"$this->geekauth\" \"$article_id\" \"$body\" >/dev/null &", $retval);
+        system(self::cmd("edit_article.pl", $this->geekauth, $article_id, $body) . " >/dev/null &", $retval);
     }
 
     public function create_thread($title,$message,$forum_id='8') {
-        $article_id = system(self::SCRIPT_PATH . "create_thread.pl \"$this->username\" \"$this->password\" \"$forum_id\" \"$message\" \"$title\"" , $retval);
+        $article_id = system(self::cmd("create_thread.pl", $this->username, $this->password, $forum_id, $message, $title), $retval);
         return self::get_thread_id_by_article_id($article_id);
     }
     
     // No oauth required functions
 
     public function is_bgg_user($username) {
-        exec(self::SCRIPT_PATH . "check_bgg_user.pl \"$username\"", $output);
-        return $output[0];
+        exec(self::cmd("check_bgg_user.pl", $username), $output);
+        return $output[0] ?? null;
     }
 
     public function get_thread_id_by_article_id($article_id) {
-        exec(self::SCRIPT_PATH . "retrieve_thread.pl \"$article_id\"", $response);
-        $thread = json_decode($response[0], true);
-        return $thread['source']['id'];
+        exec(self::cmd("retrieve_thread.pl", $article_id), $response);
+        $thread = json_decode($response[0] ?? '', true);
+        return $thread['source']['id'] ?? null;
     }
 
     public function get_article_id_by_thread_id($thread_id) {
-        exec(self::SCRIPT_PATH . "retrieve_articles.pl \"$thread_id\"", $response);
-        $thread = json_decode($response[0], true);
-        return $thread['articles'][0]['id'];
+        exec(self::cmd("retrieve_articles.pl", $thread_id), $response);
+        $thread = json_decode($response[0] ?? '', true);
+        return $thread['articles'][0]['id'] ?? null;
     }
 }
 
@@ -133,7 +142,7 @@ function notify_moderator($game_id,$action="",$username="") {
     $message .= "\n$username was $action.\n";
   }
 
-  $message .= "\nGo to Game: http://www.boardgamegeek.com/thread/$thread_id\n";
+  $message .= "\nGo to Game: https://www.boardgamegeek.com/thread/$thread_id\n";
 
   BGG::authAsCassy()->send_geekmail($to, $subject, $message) ;
 }

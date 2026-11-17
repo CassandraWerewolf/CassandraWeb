@@ -1,6 +1,6 @@
 [size=24][COLOR=#b8860b][b][Center]APOCALYPSE[/center][/b][/COLOR][/size]
 
-[b][size=10][Center]This template was loosely based on [url=http://www.boardgamegeek.com/user/woodjh]woodjh[/url]'s [url=http://cassandrawerewolf.com/game/316196]Homeland[/url] game.[/center][/size][/b]
+[b][size=10][Center]This template was loosely based on [url=https://www.boardgamegeek.com/user/woodjh]woodjh[/url]'s [url=http://cassandrawerewolf.com/game/316196]Homeland[/url] game.[/center][/size][/b]
 
 
 r{Disclaimer: this automod template is still in test phase. Balance is not guaranteed. Suggestions to improve the roleset and other comments are welcome!}r
