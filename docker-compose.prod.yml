@@ -1,8 +1,9 @@
 # Production stack for Docker Swarm (deployed as stack "cassandraweb" through Portainer).
 #
-# Images are built ON the Vultr host (x86_64) from this repo, not pulled from Docker Hub:
-#   docker build -f php/Dockerfile -t cassandraweb:<tag> .
-# then set CASSY_IMAGE=cassandraweb:<tag> in the stack's environment variables.
+# Releases are automatic: every push to main is built by GitHub Actions, published as
+# cassandraproject/web:<sha> and :main, and deployed by deploy/cassy-deploy (see deploy/README.md).
+# Set CASSY_IMAGE=cassandraproject/web:main in the stack's environment variables, so that
+# "Update the stack" in Portainer uses the newest main build.
 #
 # Secrets come from the stack's environment variables in Portainer (never commit them):
 #   MYSQL_PASSWORD, MYSQL_ROOT_PASSWORD, BGG_USERNAME, BGG_PASSWORD, BGG_API_TOKEN

@@ -1,0 +1,89 @@
+# Build, check, publish and deploy CassandraWeb.
+#
+# Runs ONLY for pushes to main. Other branches are never built, published or deployed;
+# test them in the dev VM before merging.
+#
+#   1. build   - builds the x86 image from php/Dockerfile and syntax-checks every PHP file
+#   2. publish - pushes cassandraproject/web:<commit sha> and :main to Docker Hub
+#   3. deploy  - SSHes to the server as the restricted "deploy" user; its key can only run
+#                /usr/local/bin/cassy-deploy <sha> (see deploy/README.md)
+#
+# Secrets used:
+#   repository:              DOCKER_USER, DOCKER_PASSWORD (a Docker Hub access token)
+#   environment "production": DEPLOY_HOST, DEPLOY_SSH_KEY, DEPLOY_KNOWN_HOSTS
+name: Build and deploy
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+# Never run two deploys at once; a newer push waits for the running one to finish.
+concurrency:
+  group: production-deploy
+  cancel-in-progress: false
+
+env:
+  IMAGE: cassandraproject/web
+
+jobs:
+  build:
+    name: Build, check and publish
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Check out the commit
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Build the image (x86_64)
+        run: docker build --pull -f php/Dockerfile -t "$IMAGE:$GITHUB_SHA" .
+
+      - name: Gate - PHP 8.5 syntax check of every PHP file
+        run: |
+          docker run --rm "$IMAGE:$GITHUB_SHA" sh -c '
+            find /var/www/html -name "*.php" -print0 | xargs -0 -n1 php -l > /tmp/lint.txt 2>&1
+            status=$?
+            grep -v "^No syntax errors" /tmp/lint.txt || true
+            exit $status'
+
+      - name: Log in to Docker Hub
+        env:
+          DOCKER_USER: ${{ secrets.DOCKER_USER }}
+          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+        run: printf '%s' "$DOCKER_PASSWORD" | docker login --username "$DOCKER_USER" --password-stdin
+
+      - name: Publish :<sha> and :main
+        run: |
+          docker tag "$IMAGE:$GITHUB_SHA" "$IMAGE:main"
+          docker push "$IMAGE:$GITHUB_SHA"
+          docker push "$IMAGE:main"
+
+      - name: Log out of Docker Hub
+        if: always()
+        run: docker logout
+
+  deploy:
+    name: Deploy to production
+    needs: build
+    runs-on: ubuntu-24.04
+    environment: production
+    steps:
+      - name: Deploy over SSH (restricted deploy key)
+        env:
+          DEPLOY_HOST: ${{ secrets.DEPLOY_HOST }}
+          DEPLOY_SSH_KEY: ${{ secrets.DEPLOY_SSH_KEY }}
+          DEPLOY_KNOWN_HOSTS: ${{ secrets.DEPLOY_KNOWN_HOSTS }}
+        run: |
+          install -m 700 -d ~/.ssh
+          printf '%s\n' "$DEPLOY_SSH_KEY" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          printf '%s\n' "$DEPLOY_KNOWN_HOSTS" > ~/.ssh/known_hosts
+          # The server's forced command receives "$GITHUB_SHA" as its only input.
+          ssh -i ~/.ssh/deploy_key -o IdentitiesOnly=yes -o StrictHostKeyChecking=yes \
+              -o UserKnownHostsFile=~/.ssh/known_hosts -o ConnectTimeout=20 \
+              "deploy@$DEPLOY_HOST" "$GITHUB_SHA"
+
+      - name: Remove the deploy key from the runner
+        if: always()
+        run: rm -f ~/.ssh/deploy_key
