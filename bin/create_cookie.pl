@@ -21,7 +21,7 @@ my $cookie_jar = HTTP::Cookies->new(
     autosave => 1,
   );
 
-$mech = WWW::Mechanize->new(autocheck => 1, cookie_jar => $cookie_jar);
+$mech = WWW::Mechanize->new(agent => 'CassandraWerewolf/1.0 https://cassandrawerewolf.com', autocheck => 1, cookie_jar => $cookie_jar);
 $mech->get('https://boardgamegeek.com/login');
 $mech->form_number(0);
 $mech->field('username',$player);

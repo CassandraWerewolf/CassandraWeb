@@ -16,7 +16,7 @@ $dbh = DBI->connect("DBI:mysql:database=$ENV{'MYSQL_DATABASE'};host=$ENV{'MYSQL_
 
 # Log into BGG Web pages to make sure it is up and available.
 print "Login to BGG\n";
-$mech = WWW::Mechanize->new(autocheck => 1, quiet => 1, cookie_jar => {});
+$mech = WWW::Mechanize->new(agent => 'CassandraWerewolf/1.0 https://cassandrawerewolf.com', autocheck => 1, quiet => 1, cookie_jar => {});
 $mech->get('https://boardgamegeek.com/login');
 if(!$mech->success()) {
   print "ERROR: cannot retrieve BGG login page\n";
@@ -34,7 +34,7 @@ if($mech->form_number(1)) {
 
 # Log into Cassy Web pages to make sure they are up and available.
 print "Log into Cassy\n";
-$mech = WWW::Mechanize->new(autocheck => 1, cookie_jar => {});
+$mech = WWW::Mechanize->new(agent => 'CassandraWerewolf/1.0 https://cassandrawerewolf.com', autocheck => 1, cookie_jar => {});
 $mech->get('http://52.55.166.81/index.php?login=true');
 if (!$mech->success()) {
   print "ERROR: cannot retrieve Cassy login page\n";

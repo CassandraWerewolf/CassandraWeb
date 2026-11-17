@@ -43,7 +43,7 @@ die $usage;
 my $cookie_jar = HTTP::Cookies->new;
 $cookie_jar->load($cookie);
 
-$mech = WWW::Mechanize->new(autocheck => 1,onwarn => undef,onerror => undef, quiet => 1, cookie_jar => $cookie_jar);
+$mech = WWW::Mechanize->new(agent => 'CassandraWerewolf/1.0 https://cassandrawerewolf.com', autocheck => 1,onwarn => undef,onerror => undef, quiet => 1, cookie_jar => $cookie_jar);
 
 # get the article id of the first post in the thread to sub in for the 
 # reply to article_id

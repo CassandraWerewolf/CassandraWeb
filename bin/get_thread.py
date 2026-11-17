@@ -124,18 +124,16 @@ def main(argv=None):
     # HTTPS, so the BGG API token in the Authorization header is never sent unencrypted.
     url = 'https://boardgamegeek.com/xmlapi2/thread?id=' + threadid + '&minarticleid=' + articleid
 
+    # BGG's Cloudflare rule only allows this exact User-Agent, so always send it.
+    headers = {'User-Agent': 'CassandraWerewolf/1.0 https://cassandrawerewolf.com'}
+
     # If a BGG API token is provided, include it as a Bearer token in the
     # Authorization header. This prevents 401 Unauthorized responses from
     # endpoints that require application auth.
     bgg_token = os.getenv('BGG_API_TOKEN')
     if bgg_token:
-        req = Request(url, headers={
-            'Authorization': f'Bearer {bgg_token}',
-            'User-Agent': 'CassandraWerewolf/1.0'
-        })
-        response = urlopen(req)
-    else:
-        response = urlopen(url)
+        headers['Authorization'] = f'Bearer {bgg_token}'
+    response = urlopen(Request(url, headers=headers))
 
     # create the xml iterator around the article element and insert each
     # article into the database

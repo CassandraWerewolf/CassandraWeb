@@ -13,7 +13,7 @@ my $bgg = 'https://boardgamegeek.com';
 die "\nUsage $0 username\n\n" unless ($#ARGV == 0);
 $username = shift;
 
-$mech = WWW::Mechanize->new(autocheck => 1, cookie_jar => {}, timeout=> 300);
+$mech = WWW::Mechanize->new(agent => 'CassandraWerewolf/1.0 https://cassandrawerewolf.com', autocheck => 1, cookie_jar => {}, timeout=> 300);
 
 # get first page
 $url = "https://boardgamegeek.com/user/$username";

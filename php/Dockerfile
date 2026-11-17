@@ -5,7 +5,8 @@ FROM php:8.5.12-apache-trixie
 
 # OS packages:
 #  - mariadb-client(-compat): the `mariadb` and `mysql` command-line clients used by bin/*.sh
-#  - Perl modules used by bin/*.pl (DBD::mysql from Debian is built against the MariaDB client library)
+#  - Perl modules used by bin/*.pl (DBD::mysql from Debian is built against the MariaDB client library);
+#    liblwp-protocol-https-perl lets LWP/WWW::Mechanize fetch https:// URLs (all BGG URLs are https)
 #  - Python 3 libraries for bin/get_thread.py
 #  - GD build dependencies (only tools/games2png uses GD)
 #  - openssl, to create the self-signed dev certificate below
@@ -14,7 +15,8 @@ FROM php:8.5.12-apache-trixie
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
         mariadb-client mariadb-client-compat \
-        libdbd-mysql-perl libwww-mechanize-perl libxml-libxml-perl libjson-perl libswitch-perl \
+        libdbd-mysql-perl libwww-mechanize-perl liblwp-protocol-https-perl \
+        libxml-libxml-perl libjson-perl libswitch-perl \
         cpanminus make \
         python3 python3-sqlalchemy python3-pymysql python3-dateutil \
         libfreetype-dev libpng-dev libjpeg62-turbo-dev \

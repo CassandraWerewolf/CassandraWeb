@@ -13,7 +13,7 @@ die $usage unless ($#ARGV >= 1);
 $player = shift;
 $password = shift;
 
-$mech = WWW::Mechanize->new(autocheck => 1, quiet => 1, cookie_jar => {});
+$mech = WWW::Mechanize->new(agent => 'CassandraWerewolf/1.0 https://cassandrawerewolf.com', autocheck => 1, quiet => 1, cookie_jar => {});
 $mech->get('https://boardgamegeek.com/login');
 if(!$mech->success()) {
 	print "ERROR: cannot retrieve login page\n";
