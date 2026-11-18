@@ -1,8 +1,8 @@
 # Local development: PHP 8.5 web app + MariaDB 12.3.
 #   docker compose up -d --build      -> http://localhost:5000
-# First start loads the schema and stored routines from sql/ into an empty database.
-# To load real data later, import a dump with:
-#   docker compose exec -T db mariadb -uroot -prootpassword werewolf < dump.sql
+# First start loads the schema, the data dump (sql/werewolf_data.sql) and then the
+# stored routines and triggers into an empty database. To reload, wipe the volume:
+#   docker compose down -v && docker compose up -d
 # These passwords are for local development only.
 services:
   web:
@@ -74,7 +74,9 @@ services:
       TZ: 'America/Chicago'
     volumes:
       - ./sql/werewolf_schema.sql:/docker-entrypoint-initdb.d/1-schema.sql:ro
-      - ./sql/werewolf_routines.sql:/docker-entrypoint-initdb.d/2-routines.sql:ro
+      # Data loads before the routines so the triggers don't fire on imported rows.
+      - ./sql/werewolf_data.sql:/docker-entrypoint-initdb.d/2-data.sql:ro
+      - ./sql/werewolf_routines.sql:/docker-entrypoint-initdb.d/3-routines.sql:ro
       - db-data:/var/lib/mysql
     healthcheck:
       test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]

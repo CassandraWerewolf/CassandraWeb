@@ -5,6 +5,7 @@ header("Last-Modified: " . gmdate( "D, d M Y H:i:s" ) . "GMT" );
 header("Cache-Control: no-cache, must-revalidate" );
 header("Pragma: no-cache" );
 
+include_once "php/accesscontrol.php";
 include_once "edit_game_functions.php";
 include_once "php/bgg.php";
 include_once "php/common.php";
@@ -16,7 +17,20 @@ clear_editSpace();
 exit;
 }
 
-$game_id = $_REQUEST['game_id'];
+$game_id = (int) ($_REQUEST['game_id'] ?? 0);
+
+// Only the game's moderators may edit it. Users at level 1-2 may also edit
+// finished games, which matches who gets the edit links on game_page.php.
+$sql = sprintf("select status from Games where id=%s", quote_smart($game_id));
+$result = mysql_query($sql);
+$game_status = ( $result && mysql_num_rows($result) == 1 ) ? mysql_result($result,0,0) : null;
+$can_edit = $game_status !== null && $level != 0
+  && ( is_moderator((int) $uid, $game_id) || ( $level <= 2 && $game_status == 'Finished' ) );
+if ( ! $can_edit ) {
+  http_response_code(403);
+  print "You are not allowed to edit this game.";
+  exit;
+}
 
 switch ( $_REQUEST['q'] ) {
 
@@ -267,11 +281,13 @@ case 's_moderator':
 
 # Delete a Sub-Thread
   case 'd_subthread':
-    $sql = sprintf("select id from Games where thread_id=%s",quote_smart($_REQUEST['thread_id']));
+    // Only delete a sub-thread of this game, never another game with that thread id.
+    $sql = sprintf("select id from Games where thread_id=%s and parent_game_id=%s and status='Sub-Thread'",quote_smart($_REQUEST['thread_id']),quote_smart($game_id));
 	$result = mysql_query($sql);
-	$st_game_id = mysql_result($result,0,0);
-	$sql = "delete from Games where id ='$st_game_id'";
-	$result = mysql_query($sql);
+	if ( $result && mysql_num_rows($result) == 1 ) {
+	  $sql = sprintf("delete from Games where id=%s",quote_smart(mysql_result($result,0,0)));
+	  $result = mysql_query($sql);
+	}
 	# The following is no longer needed because of sql triggers
 	#$sql = "delete from Moderators where game_id='$st_game_id'";
 	#$result = mysql_query($sql);

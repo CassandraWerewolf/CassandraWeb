@@ -31,7 +31,12 @@ $message{subject}=$subject;
 $message{body}=$body;
 
 # authenticate
-my $geekauth = `/opt/werewolf/bgg/authenticate.pl "$from" $passwd`;
+# Run the script with an argument list, not through a shell: the password comes
+# from a web form, and a shell would run any $(...) or ; inside it.
+open(my $auth, '-|', '/opt/werewolf/bgg/authenticate.pl', $from, $passwd)
+    or die "Cannot run authenticate.pl: $!\n";
+my $geekauth = do { local $/; <$auth> } // '';
+close($auth);
 
 $agent->post($mail_url, \%message, Referer => 'https://boardgamegeek.com/geekmail', Authorization => "GeekAuth $geekauth");
 

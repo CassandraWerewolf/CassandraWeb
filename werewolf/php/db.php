@@ -33,6 +33,18 @@ function dbGetResultRowCount($res) {
 	return $row_count;
 }
 
+// Runs a parameterised query: put ? in $sql for each value in $params.
+// The values are sent separately from the SQL, so they can't change the query.
+// Returns a result for SELECT, true for other statements, or false on error,
+// so the result works with the mysql_* functions in mysql_compat.php.
+function db_query($sql, array $params = []) {
+  $link = __mysql_compat_link();
+  if ( ! $link ) {
+    return false;
+  }
+  return mysqli_execute_query($link, $sql, $params);
+}
+
 function quote_smart($value) {
   // Magic quotes no longer exist (removed in PHP 5.4/8.0), so no stripslashes() here.
   if ( ! is_numeric($value)) {
