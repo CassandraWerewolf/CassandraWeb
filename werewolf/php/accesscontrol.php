@@ -95,6 +95,10 @@ if ( mysql_num_rows($result) == 0 ) {
 <?php
 exit;
 }
+// From here on $uid is the user's id as a number, taken from the database row,
+// never the raw text of the cookie (MariaDB would accept '5 or ...' as user 5).
+$uid = (int) mysql_result($result,0,'id');
+$_SESSION['uid'] = $uid;
 $username = mysql_result($result,0,'name');
 $level = mysql_result($result,0,'level');
 
