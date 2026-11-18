@@ -17,7 +17,7 @@
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `AM_roles` (
-  `id` int(3) unsigned zerofill NOT NULL,
+  `id` int(3) unsigned zerofill NOT NULL AUTO_INCREMENT,
   `template_id` int(2) NOT NULL,
   `role_id` int(2) unsigned zerofill NOT NULL,
   `side` enum('Good','Evil','Other') NOT NULL,
@@ -45,7 +45,7 @@ CREATE TABLE `AM_roles` (
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `AM_template` (
-  `id` int(2) unsigned zerofill NOT NULL,
+  `id` int(2) unsigned zerofill NOT NULL AUTO_INCREMENT,
   `owner_id` smallint(4) unsigned zerofill NOT NULL,
   `name` varchar(80) NOT NULL,
   `description` text NOT NULL,
@@ -146,7 +146,7 @@ CREATE TABLE `CC_players` (
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `Chat_message_actions` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `message_id` int(11) NOT NULL,
   `type_id` int(11) NOT NULL,
   `target_id` int(11) NOT NULL,
@@ -162,7 +162,7 @@ CREATE TABLE `Chat_message_actions` (
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `Chat_messages` (
-  `id` int(11) unsigned NOT NULL,
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `room_id` int(5) NOT NULL,
   `user_id` int(3) NOT NULL,
   `message` text NOT NULL,
@@ -180,7 +180,7 @@ CREATE TABLE `Chat_messages` (
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `Chat_rooms` (
-  `id` int(5) unsigned zerofill NOT NULL,
+  `id` int(5) unsigned zerofill NOT NULL AUTO_INCREMENT,
   `game_id` int(4) unsigned zerofill NOT NULL,
   `name` varchar(60) NOT NULL,
   `lock` enum('Off','On','Secure') NOT NULL DEFAULT 'Off',
@@ -222,7 +222,7 @@ CREATE TABLE `Chat_users` (
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `Exits` (
-  `id` int(5) unsigned zerofill NOT NULL,
+  `id` int(5) unsigned zerofill NOT NULL AUTO_INCREMENT,
   `game_id` int(4) unsigned zerofill NOT NULL,
   `name` varchar(60) NOT NULL,
   `travel_text` text,
@@ -240,7 +240,7 @@ CREATE TABLE `Exits` (
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `Game_day_log` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `game_id` int(11) NOT NULL,
   `phase` enum('day','night') NOT NULL DEFAULT 'night',
   `day` int(11) NOT NULL DEFAULT '0',
@@ -256,7 +256,7 @@ CREATE TABLE `Game_day_log` (
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `Game_orders` (
-  `id` int(5) unsigned zerofill NOT NULL,
+  `id` int(5) unsigned zerofill NOT NULL AUTO_INCREMENT,
   `user_id` int(3) NOT NULL,
   `game_id` int(4) NOT NULL,
   `desc` varchar(50) NOT NULL,
@@ -277,7 +277,7 @@ CREATE TABLE `Game_orders` (
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `Game_series` (
-  `id` int(5) unsigned zerofill NOT NULL,
+  `id` int(5) unsigned zerofill NOT NULL AUTO_INCREMENT,
   `name` varchar(50) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `name` (`name`)
@@ -291,7 +291,7 @@ CREATE TABLE `Game_series` (
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `Games` (
-  `id` int(4) unsigned zerofill NOT NULL,
+  `id` int(4) unsigned zerofill NOT NULL AUTO_INCREMENT,
   `number` int(4) DEFAULT NULL,
   `start_date` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `end_date` datetime DEFAULT NULL,
@@ -353,7 +353,7 @@ CREATE TABLE `Games` (
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `Item_orders` (
-  `id` int(5) unsigned zerofill NOT NULL,
+  `id` int(5) unsigned zerofill NOT NULL AUTO_INCREMENT,
   `user_id` int(5) unsigned zerofill NOT NULL,
   `game_id` int(5) unsigned zerofill NOT NULL,
   `item_id` int(5) unsigned zerofill NOT NULL,
@@ -373,7 +373,7 @@ CREATE TABLE `Item_orders` (
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `Item_templates` (
-  `id` int(5) unsigned zerofill NOT NULL,
+  `id` int(5) unsigned zerofill NOT NULL AUTO_INCREMENT,
   `game_id` int(4) unsigned zerofill NOT NULL,
   `name` varchar(60) NOT NULL,
   `description` text CHARACTER SET latin1 COLLATE latin1_spanish_ci,
@@ -394,7 +394,7 @@ CREATE TABLE `Item_templates` (
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `Items` (
-  `id` int(5) unsigned zerofill NOT NULL,
+  `id` int(5) unsigned zerofill NOT NULL AUTO_INCREMENT,
   `template_id` int(5) unsigned zerofill NOT NULL,
   `game_id` int(4) unsigned zerofill NOT NULL,
   `name` varchar(60) NOT NULL,
@@ -433,7 +433,7 @@ CREATE TABLE `Loc_exits` (
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `Locations` (
-  `id` int(5) unsigned zerofill NOT NULL,
+  `id` int(5) unsigned zerofill NOT NULL AUTO_INCREMENT,
   `game_id` int(4) unsigned zerofill NOT NULL,
   `name` varchar(60) NOT NULL,
   `description` text,
@@ -492,7 +492,7 @@ SET character_set_client = @saved_cs_client;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `Move_orders` (
-  `id` int(5) unsigned zerofill NOT NULL,
+  `id` int(5) unsigned zerofill NOT NULL AUTO_INCREMENT,
   `user_id` int(4) unsigned zerofill NOT NULL,
   `game_id` int(4) unsigned zerofill NOT NULL,
   `exit_id` int(5) unsigned zerofill NOT NULL,
@@ -510,7 +510,7 @@ CREATE TABLE `Move_orders` (
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `Physics_processing` (
-  `id` int(5) unsigned zerofill NOT NULL,
+  `id` int(5) unsigned zerofill NOT NULL AUTO_INCREMENT,
   `game_id` int(4) unsigned zerofill NOT NULL,
   `type` enum('item','movement') NOT NULL,
   `frequency` enum('7daily','5daily','hourly','2hourly','30mins','15mins','immediate') NOT NULL,
@@ -638,7 +638,7 @@ SET character_set_client = @saved_cs_client;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `Post_collect_slots` (
-  `id` bigint(20) NOT NULL,
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `game_id` int(10) unsigned DEFAULT NULL,
   `minute` tinyint(3) unsigned NOT NULL,
   `run_order` tinyint(4) NOT NULL,
@@ -694,7 +694,7 @@ CREATE TABLE `Replacements` (
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `Roles` (
-  `id` int(2) unsigned zerofill NOT NULL,
+  `id` int(2) unsigned zerofill NOT NULL AUTO_INCREMENT,
   `type` varchar(50) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`)
 );
@@ -707,7 +707,7 @@ CREATE TABLE `Roles` (
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `Social_sites` (
-  `id` smallint(4) unsigned zerofill NOT NULL,
+  `id` smallint(4) unsigned zerofill NOT NULL AUTO_INCREMENT,
   `site_name` varchar(200) NOT NULL,
   `url` varchar(200) DEFAULT NULL,
   `category` enum('Chatting','Gaming','Social Media','Personal','Other') NOT NULL,
@@ -738,7 +738,7 @@ CREATE TABLE `Social_users` (
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `Stats` (
-  `id` int(3) unsigned zerofill NOT NULL,
+  `id` int(3) unsigned zerofill NOT NULL AUTO_INCREMENT,
   `title` varchar(100) NOT NULL DEFAULT 'Untitled',
   `sql` text NOT NULL,
   PRIMARY KEY (`id`)
@@ -752,7 +752,7 @@ CREATE TABLE `Stats` (
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `Tally` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `game_id` int(11) NOT NULL,
   `day` int(11) NOT NULL,
   `votee` int(11) DEFAULT NULL,
@@ -859,7 +859,7 @@ CREATE TABLE `Timezones` (
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `Update_calendar` (
-  `id` int(5) unsigned zerofill NOT NULL,
+  `id` int(5) unsigned zerofill NOT NULL AUTO_INCREMENT,
   `action` enum('add','delete','update') NOT NULL,
   `calendar_id` text,
   `game_id` int(4) DEFAULT NULL,
@@ -874,7 +874,7 @@ CREATE TABLE `Update_calendar` (
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `Users` (
-  `id` int(3) unsigned zerofill NOT NULL,
+  `id` int(3) unsigned zerofill NOT NULL AUTO_INCREMENT,
   `name` varchar(50) NOT NULL DEFAULT '',
   `password` varchar(255) NOT NULL DEFAULT 'none',
   `level` enum('0','1','2','3') NOT NULL DEFAULT '3',
@@ -957,7 +957,7 @@ SET character_set_client = @saved_cs_client;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `Users_ngrams` (
-  `id` bigint(20) unsigned NOT NULL,
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `user_id` bigint(20) unsigned NOT NULL,
   `n` smallint(5) unsigned NOT NULL,
   `position` smallint(5) unsigned NOT NULL,
@@ -1027,7 +1027,7 @@ SET character_set_client = @saved_cs_client;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `Votes` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `game_id` int(11) NOT NULL,
   `article_id` int(11) NOT NULL,
   `day` int(11) NOT NULL,
@@ -1069,7 +1069,7 @@ SET character_set_client = @saved_cs_client;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `Wolfy_awards` (
-  `id` int(2) unsigned zerofill NOT NULL,
+  `id` int(2) unsigned zerofill NOT NULL AUTO_INCREMENT,
   `award` varchar(50) NOT NULL,
   PRIMARY KEY (`id`)
 );
@@ -1112,7 +1112,7 @@ CREATE TABLE `Wolfy_players` (
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `Wotw` (
-  `id` int(3) unsigned zerofill NOT NULL,
+  `id` int(3) unsigned zerofill NOT NULL AUTO_INCREMENT,
   `user_id` int(3) unsigned zerofill NOT NULL,
   `num` int(3) NOT NULL,
   `start_date` date NOT NULL,
