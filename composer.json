@@ -1,0 +1,21 @@
+{
+    "name": "cassandrawerewolf/cassandraweb",
+    "description": "CassandraWeb. Composer is used only for dev tools (Psalm); the app itself has no Composer dependencies and vendor/ is never copied into the image.",
+    "type": "project",
+    "require": {
+        "php": "~8.5.0"
+    },
+    "require-dev": {
+        "vimeo/psalm": "6.20.11"
+    },
+    "config": {
+        "platform": {
+            "php": "8.5.12"
+        },
+        "sort-packages": true,
+        "allow-plugins": {},
+        "audit": {
+            "abandoned": "report"
+        }
+    }
+}
