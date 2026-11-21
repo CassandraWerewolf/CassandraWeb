@@ -171,7 +171,7 @@ var JSON = {
 
 
 // client-side agent implementation 
-this_url = "<?php echo $_GET['this_url'] ?>";
+this_url = <?php echo json_encode((string) ($_GET['this_url'] ?? ''), JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP); ?>;
 function Agent() {
   this.debug = false; // default
   this.call = function () {

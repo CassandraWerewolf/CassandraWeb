@@ -147,9 +147,38 @@ function notify_moderator($game_id,$action="",$username="") {
   BGG::authAsCassy()->send_geekmail($to, $subject, $message) ;
 }
 
+// "Remember BGG password": the password is kept in an HttpOnly cookie in the
+// user's own browser (not in the database). It is never printed into a page:
+// forms show a "(saved)" placeholder, and a blank field means "use the saved one".
+
+// Returns the BGG password for this POST: what was typed, or the saved cookie if
+// the field was left blank. Saves it when "remember" is ticked. Only a POSTed form
+// can save it (a GET link can't). Call before any output, because it may set a cookie.
+function bgg_password_from_post() {
+  if ( ($_SERVER['REQUEST_METHOD'] ?? '') !== 'POST' ) {
+    return '';
+  }
+  $typed = (string) ($_POST['bggpwd'] ?? '');
+  $pwd = ( $typed !== '' ) ? $typed : (string) ($_COOKIE['bgg_password'] ?? '');
+  if ( ($_POST['remember'] ?? '') == 'on' && $pwd !== '' ) {
+    setcookie('bgg_password', $pwd, time()+60*60*24*365, '/', '', true, true);
+  }
+  return $pwd;
+}
+
+// Extra attribute for the BGG password <input>: a "(saved)" placeholder when one is remembered.
+function bgg_password_placeholder() {
+  return ( (string) ($_COOKIE['bgg_password'] ?? '') !== '' ) ? " placeholder='(saved)'" : "";
+}
+
+// Escapes text for HTML (attributes and element content). Existing entities such
+// as &amp; are left alone, so text that was already escaped displays the same.
+function bgg_html($text) {
+  return htmlspecialchars((string) $text, ENT_QUOTES, 'UTF-8', false);
+}
+
 function geekmail_form($to="",$subject="",$message="") {
   global $username;
-  $bggpwd = $_COOKIE['bgg_password'];
 
   $output = "<script language='javascript'>\n";
   $output .= "<!--\n";
@@ -162,13 +191,13 @@ function geekmail_form($to="",$subject="",$message="") {
   $output .= "<h2>Compose GeekMail</h2>\n";
   $output .= "<form name='send_message' method='post' action='/send_geekmail.php'>\n";
   $output .= "<table class='forum_table'>\n";
-  $output .= "<tr><td>BGG Password:</td><td><input type='password' name='bggpwd' value='$bggpwd' /></td></tr>\n";
+  $output .= "<tr><td>BGG Password:</td><td><input type='password' name='bggpwd' value=''" . bgg_password_placeholder() . " /></td></tr>\n";
   $output .= "<tr><td></td><td><input type='checkbox' name='remember' />Remember BGG password. <a href='javascript:bgg_pwd_note()'>Read First</a></td></tr>\n";
-  $output .= "<tr><td>To:</td><td><input type='text' name='to' value='$to' size='59'/></td></tr>\n";
-  $output .= "<tr><td>Subject:</td><td><input type='text' name='subject' value='$subject' size='59' /></td></tr>\n";
+  $output .= "<tr><td>To:</td><td><input type='text' name='to' value='" . bgg_html($to) . "' size='59'/></td></tr>\n";
+  $output .= "<tr><td>Subject:</td><td><input type='text' name='subject' value='" . bgg_html($subject) . "' size='59' /></td></tr>\n";
   $output .= "<tr><td>Message:</td><td><textarea name='message' rows='10' cols='50'>";
-  if ( $to != "" ) { $output .= "cc:$to\n";}
-  if ( $message != "" ) { $output .= "$message\n";}
+  if ( $to != "" ) { $output .= "cc:" . bgg_html($to) . "\n";}
+  if ( $message != "" ) { $output .= bgg_html($message) . "\n";}
   $output .= "</textarea></td></tr>\n";
   $output .= "<tr><td colspan='2' align='center'><input type='submit' name='submit' value='submit' /></td></tr>\n";
   $output .= "</table></form>\n";
