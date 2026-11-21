@@ -795,7 +795,9 @@ function expand_promotion($promote) {
 }
 
 function get_ruleset($template_id,$edit=false) {
-  $file = "rulesets/${template_id}_ruleset.txt";
+  $template_id = (int) $template_id;
+  // Ruleset files use at least two digits: 01_ruleset.txt ... 240_ruleset.txt
+  $file = sprintf('rulesets/%02d_ruleset.txt', $template_id);
   if ( file_exists($file) ) {
     $rules = file_get_contents($file);
 	if ( ! $edit ) {
@@ -852,7 +854,7 @@ function update_info($data,$template_id) {
 
 function update_rules($rules,$template_id) {
   $rules = safe_html($rules,"<lynch><night><tiebreaker>");
-  $file = "rulesets/${template_id}_ruleset.txt";
+  $file = sprintf('rulesets/%02d_ruleset.txt', (int) $template_id);
   file_put_contents($file,$rules);
 
   return;

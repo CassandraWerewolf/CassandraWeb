@@ -13,9 +13,10 @@ dbConnect();
 
 #checkLevel($level,1);
 
-$template_id = $_REQUEST['template_id'];
+// Template ids are integers; casting also keeps the id safe in file paths and HTML.
+$template_id = (int) ($_REQUEST['template_id'] ?? 0);
 
-if ( $template_id == "" ) {
+if ( $template_id <= 0 ) {
 ?>
 <html>
 <head>
@@ -33,8 +34,21 @@ Please hit your browsers back button.
 exit;
 }
 
-# Check to see if Edits are being made.
+# Get Template Information
+$sql = sprintf("select * from AM_template where id=%s",quote_smart($template_id));
+$result = mysql_query($sql);
+$template = mysql_fetch_array($result);
+
+$owner = false;
+$edit = false;
+if ( $template && ( $template['owner_id'] == $uid || $level == 1 ) ) { $owner = true; }
+if ( $owner && $template['mode'] == "Edit" ) { $edit = true; }
+
+# Check to see if Edits are being made. Only the owner (or an admin) may save.
 if ( isset($_POST['submit']) ) {
+  if ( ! $owner ) {
+    error("You can only change templates you own.");
+  }
   if ( isset($_POST['name']) ) {
     update_name($_POST['name'],$template_id);
   }
@@ -49,18 +63,6 @@ if ( isset($_POST['submit']) ) {
   }
   error("Template has been changed");
 }
-
-
-
-# Get Template Information
-$sql = sprintf("select * from AM_template where id=%s",quote_smart($template_id));
-$result = mysql_query($sql);
-$template = mysql_fetch_array($result);
-
-$owner = false;
-$edit = false;
-if ( $template['owner_id'] == $uid || $level == 1 ) { $owner = true; }
-if ( $owner && $template['mode'] == "Edit" ) { $edit = true; }
 
 ?>
 <html>

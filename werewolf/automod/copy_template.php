@@ -5,7 +5,7 @@ include_once "../php/db.php";
 
 dbConnect();
 
-$old_template_id=$_REQUEST['template_id'];
+$old_template_id = (int) ($_REQUEST['template_id'] ?? 0);
 
 # Copy AM_template table
 $sql = sprintf("select * from AM_template where id=%s",quote_smart($old_template_id));
@@ -27,8 +27,9 @@ while ( $roles = mysql_fetch_array($result) ) {
 }
 
 # Copy ruleset
-$old_file = "rulesets/${old_template_id}_ruleset.txt";
-$new_file = "rulesets/${new_template_id}_ruleset.txt";
+// Ruleset files use at least two digits: 01_ruleset.txt ... 240_ruleset.txt
+$old_file = sprintf('rulesets/%02d_ruleset.txt', $old_template_id);
+$new_file = sprintf('rulesets/%02d_ruleset.txt', $new_template_id);
 if ( file_exists($old_file) ) {
   copy($old_file,$new_file);
 }
