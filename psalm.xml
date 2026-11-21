@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<psalm
+    phpVersion="8.5"
+    errorLevel="1"
+    findUnusedCode="false"
+    findUnusedBaselineEntry="false"
+    errorBaseline="psalm-baseline.xml"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns="https://getpsalm.org/schema/config"
+    xsi:schemaLocation="https://getpsalm.org/schema/config vendor/vimeo/psalm/config.xsd"
+>
+    <!--
+      Psalm config for the `php-taint` CI job (security workflow).
+      Used only in taint-analysis mode (the taint-analysis CLI flag).
+      Taint analysis follows user input ($_GET, $_POST, $_COOKIE, ...) into sinks:
+      SQL, shell commands, HTML output, file paths, and so on.
+      (XML comments can't contain two hyphens in a row, so CLI flags aren't
+      written out here; see the docs for the exact commands.)
+
+      psalm-baseline.xml holds the issues that existed when this was added, so CI
+      fails only on NEW ones. See docs/security/ci-security-setup.md for how to
+      run it locally and how to update the baseline.
+    -->
+    <projectFiles>
+        <directory name="werewolf"/>
+        <ignoreFiles>
+            <directory name="vendor"/>
+        </ignoreFiles>
+    </projectFiles>
+</psalm>

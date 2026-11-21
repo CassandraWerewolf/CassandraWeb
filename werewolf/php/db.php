@@ -19,6 +19,12 @@ function dbConnect($db="werewolf") {
   return $dbcnx;
 }
 
+/**
+ * Runs $sql as-is. Prefer db_query() with ? placeholders for any value that
+ * comes from a user.
+ *
+ * @psalm-taint-sink sql $sql
+ */
 function dbGetResult($sql) {
 	$res = mysql_query($sql);
 	if (!$res) {
@@ -37,6 +43,8 @@ function dbGetResultRowCount($res) {
 // The values are sent separately from the SQL, so they can't change the query.
 // Returns a result for SELECT, true for other statements, or false on error,
 // so the result works with the mysql_* functions in mysql_compat.php.
+// Only $sql is a sink: user values belong in $params, never in $sql.
+/** @psalm-taint-sink sql $sql */
 function db_query($sql, array $params = []) {
   $link = __mysql_compat_link();
   if ( ! $link ) {
