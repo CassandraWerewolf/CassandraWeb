@@ -1,5 +1,5 @@
 # Local development: PHP 8.5 web app + MariaDB 12.3.
-#   docker compose up -d --build      -> http://localhost:5000
+#   docker compose up -d --build      -> http://localhost:8080
 # First start loads the schema, the data dump (sql/werewolf_data.sql) and then the
 # stored routines and triggers into an empty database. To reload, wipe the volume:
 #   docker compose down -v && docker compose up -d
@@ -9,12 +9,10 @@ services:
     build:
       context: .
       dockerfile: ./php/Dockerfile
-      # Build steps use the host's network. Works around container DNS failing in the dev VM.
-      network: host
     image: cassandraweb:dev
     ports:
-      - "5000:80"
-      - "5001:443"
+      - "8080:80"
+      - "8443:443"
     environment:
       MYSQL_HOST: db
       MYSQL_DATABASE: werewolf

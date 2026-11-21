@@ -75,7 +75,6 @@ services:
       MARIADB_PASSWORD: ${MYSQL_PASSWORD}
       TZ: 'America/Chicago'
     volumes:
-      # New volume. The old MySQL 5.6 volume (cassandraweb_mysql-data) is left untouched for rollback.
       - mariadb_data:/var/lib/mysql
     healthcheck:
       test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
