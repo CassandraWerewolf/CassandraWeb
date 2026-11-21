@@ -47,17 +47,25 @@ $action = $_GET['action'];
     }
   }
 }
+
+// "from" is the game page to go back to (mod_control.js sends REQUEST_URI, e.g. /game/1234).
+// Only allow a path on this site: no other sites (//evil, /\evil) and no javascript: URLs.
+$from = (string) ($_GET['from'] ?? '/');
+if ( ! preg_match('#^/(?![/\\\\])#', $from) ) {
+  $from = '/';
+}
 ?>
 <html>
 <head>
 <script language='javascript'>
 <!--
-//location.href='<?=$_GET['from'];?>'
+//location.href=<?=json_encode($from, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP);?>
+
 //-->
 </script>
 </head>
 <body>
-Please return to your <a href='<?=$_GET['from'];?>'>game page.</a>
+Please return to your <a href='<?=htmlspecialchars($from, ENT_QUOTES, 'UTF-8');?>'>game page.</a>
 </body>
 </html>
 

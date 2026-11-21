@@ -8,13 +8,10 @@ include_once "php/common.php";
 
 $cache = init_cache();
 
-if ( $_REQUEST['remember'] == "on" ) {
-   setcookie('bgg_password', $_REQUEST['bggpwd'], time()+60*60*24*365, '/', '', true, true);
-}
+// Typed password, or the remembered one if the field was left blank (POST only).
+$bgg_password = bgg_password_from_post();
 
 dbConnect();
-
-$bggpwd = $_COOKIE['bgg_password'];
 
 if ( $_GET['action'] == "add" ) {
   $sql = sprintf ("insert into Players ( user_id, game_id, update_time ) values ( %s, %s, now() )",quote_smart($uid),quote_smart($_GET['game_id']));
@@ -49,9 +46,9 @@ function bgg_pwd_note() {
 <body>
 <h1>Post a message in the sign-up thread</h1>
 <form name='post_message' method='post' action='<?=$_SERVER['PHP_SELF'];?>' >
-<input type='hidden' name='thread_id' value='<?=$thread_id;?>' />
+<input type='hidden' name='thread_id' value='<?=bgg_html($thread_id);?>' />
 <table class='forum_table'>
-<tr><td>BGG Password:</td><td><input type='password' name='bggpwd' value='<?=$bggpwd;?>' /></td></tr>
+<tr><td>BGG Password:</td><td><input type='password' name='bggpwd' value=''<?=bgg_password_placeholder();?> /></td></tr>
 <tr><td></td><td><input type='checkbox' name='remember' />
 <?php
 if ($uid == 1525) {
@@ -108,7 +105,7 @@ if ( isset($_REQUEST['submit']) ) {
 $thread_id = $_REQUEST['thread_id'];
 $message = $_REQUEST['message'];
 print "<!--";
-$bgg_user = BGG::auth($username, $_REQUEST['bggpwd']);
+$bgg_user = BGG::auth($username, $bgg_password);
 $bgg_user->reply_thread_quick($_REQUEST['thread_id'],$message);
 print "-->";
 
@@ -122,7 +119,7 @@ location.href='/game/<?=$thread_id;?>'
 </script>
 </head>
 <body>
-<?=$message;?><br />
+<?=bgg_html($message);?><br />
 Return to <a href='/game/<?=$thread_id;?>'>Game Page</a>
 </body>
 </html>

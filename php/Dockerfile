@@ -40,6 +40,12 @@ RUN mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini" \
         'expose_php = Off' \
         '; Not used by this app; disabling it removes PHP2Shell-related attack surface.' \
         'session.upload_progress.enabled = 0' \
+        '; Session cookie: hidden from JavaScript, HTTPS only, not sent on cross-site' \
+        '; requests; and only session ids the server created are accepted.' \
+        'session.cookie_httponly = 1' \
+        'session.cookie_secure = 1' \
+        'session.cookie_samesite = Lax' \
+        'session.use_strict_mode = 1' \
         > "$PHP_INI_DIR/conf.d/zz-cassandra.ini"
 
 # Some scripts call /usr/bin/php; the official image installs PHP in /usr/local/bin.
