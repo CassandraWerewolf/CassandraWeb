@@ -1,7 +1,7 @@
 # CassandraWeb image, used for both the `web` and `scripts` services.
 # PHP 8.5.12 includes the fixes for CVE-2026-109618/109619 ("PHP2Shell").
 # Keep the tag pinned to an exact version; never use a floating tag like php:8-apache.
-FROM php:8.5.12-apache-trixie
+FROM php:8.5.13RC1-apache-trixie
 
 # OS packages kept at runtime:
 #  - mariadb-client(-compat): the `mariadb` and `mysql` command-line clients used by bin/*.sh
