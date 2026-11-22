@@ -155,8 +155,10 @@ jobs:
           PUSH_BEFORE: ${{ github.event.before }}
           PUSH_AFTER: ${{ github.sha }}
         run: |
-          # Which commits to scan. The values come from GitHub, but they're passed through
-          # env vars (not ${{ }} in the script) so nothing in them can change this script.
+          # Which commits to scan. The values come from GitHub, but they're passed in as env
+          # vars (never as GitHub expressions inside this script), so nothing in them can
+          # change the script. Note: GitHub evaluates its expression syntax anywhere in a
+          # run script, even in comments, so don't write it here.
           range=""
           case "$EVENT" in
             pull_request) range="$PR_BASE..$PR_HEAD" ;;
