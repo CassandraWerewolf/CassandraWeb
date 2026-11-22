@@ -11,7 +11,10 @@ FROM php:8.5.12-apache-trixie
 #  - GD build dependencies (only tools/games2png uses GD)
 #  - openssl, to create the self-signed dev certificate below
 # OPcache is built into PHP 8.5, so it is not installed as a separate extension.
+# `apt-get upgrade` applies Debian security fixes that are newer than the base image
+# (the official image is only rebuilt every so often, e.g. Apache 2.4.71 in Nov 2026).
 RUN apt-get update \
+    && apt-get upgrade -y --no-install-recommends \
     && apt-get install -y --no-install-recommends \
         mariadb-client mariadb-client-compat \
         libdbd-mysql-perl libwww-mechanize-perl liblwp-protocol-https-perl \
