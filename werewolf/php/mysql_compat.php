@@ -39,6 +39,7 @@ function mysql_set_charset($charset, $link = null) {
   return $link ? mysqli_set_charset($link, $charset) : false;
 }
 
+/** @psalm-taint-sink sql $query */
 function mysql_query($query, $link = null) {
   $link = __mysql_compat_link($link);
   return $link ? mysqli_query($link, $query) : false;
@@ -49,6 +50,14 @@ function mysql_error($link = null) {
   return $link ? mysqli_error($link) : 'No database connection';
 }
 
+/**
+ * Deliberately NOT treated as SQL-safe by Psalm. Psalm's built-in stub marks
+ * mysqli_real_escape_string() as an SQL escape, which would hide string-built
+ * SQL; "unescape" puts the taint back. Escaping only protects quoted values,
+ * so new code should use db_query() with ? placeholders instead.
+ *
+ * @psalm-taint-unescape sql
+ */
 function mysql_real_escape_string($string, $link = null) {
   $link = __mysql_compat_link($link);
   return mysqli_real_escape_string($link, (string) $string);

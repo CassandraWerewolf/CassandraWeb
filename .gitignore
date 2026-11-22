@@ -3,3 +3,5 @@
 notes.md
 .vscode/settings.json
 node_modules
+# Composer dev tools (Psalm); installed by CI and by `composer install`, never committed
+/vendor/

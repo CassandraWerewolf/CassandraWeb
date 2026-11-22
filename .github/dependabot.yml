@@ -1,0 +1,58 @@
+# Dependabot version updates (security updates are turned on separately in
+# Settings -> Advanced Security; see docs/security/ci-security-setup.md, Part A).
+#
+# Weekly, at most 5 open PRs per ecosystem. Minor and patch bumps are grouped
+# into one PR per ecosystem; major bumps arrive as their own PRs.
+# Every Dependabot PR still goes through the normal review + VM test before merge.
+version: 2
+
+updates:
+  # Dev tools only (Psalm); the app itself has no Composer dependencies.
+  - package-ecosystem: composer
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+    open-pull-requests-limit: 5
+    groups:
+      composer-minor-patch:
+        patterns: ["*"]
+        update-types: [minor, patch]
+
+  # Base images in Dockerfiles.
+  - package-ecosystem: docker
+    directories:
+      - /php
+      - /scripts
+    schedule:
+      interval: weekly
+      day: monday
+    open-pull-requests-limit: 5
+    groups:
+      docker-minor-patch:
+        patterns: ["*"]
+        update-types: [minor, patch]
+
+  # Images in docker-compose.yml and docker-compose.prod.yml (mariadb, certbot).
+  - package-ecosystem: docker-compose
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+    open-pull-requests-limit: 5
+    groups:
+      compose-minor-patch:
+        patterns: ["*"]
+        update-types: [minor, patch]
+
+  # Actions in .github/workflows/; Dependabot keeps the SHA pins and version comments in sync.
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+    open-pull-requests-limit: 5
+    groups:
+      actions-minor-patch:
+        patterns: ["*"]
+        update-types: [minor, patch]
