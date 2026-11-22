@@ -15,7 +15,9 @@ if ( isset($_POST['submit']) ) {
   $bgg_cassy = BGG::authAsCassy();
   $_POST['title'] = safe_html($_POST['title']);
   $title = "Auto-mod: ".$_POST['title'];
-  $message = file_get_contents("rulesets/".$_POST['template']."_ruleset.txt");
+  // Template ids are integers; ruleset files use at least two digits (01_ruleset.txt).
+  $_POST['template'] = (int) ($_POST['template'] ?? 0);
+  $message = file_get_contents(sprintf('rulesets/%02d_ruleset.txt', $_POST['template']));
   $message .= file_get_contents("notice.txt");
   if ( $_POST['tie_break'] == 'lhv' ) {
     $tiebreaker = "longest held vote";
