@@ -82,3 +82,87 @@ Notes:
 - A deliberately bad test commit on a throwaway branch fails the relevant jobs: for example, string-built SQL with `$_GET` input for Psalm, and a fake AWS-style key for gitleaks. Then delete that branch.
 - `README` or `docs/security/` has a short note on how to run each check locally.
 - Todd adds the jobs as required status checks (Part A, last step).
+
+---
+
+## Running the checks locally
+
+The `security` workflow ([.github/workflows/security.yml](../../.github/workflows/security.yml)) runs four checks on every PR. You can run the same checks yourself before you push. All you need is Docker (in the dev VM, for example) and a checkout of your branch. Don't use `~/cassy-test`, because that checkout belongs to `pr-test`.
+
+Run everything from the repo's top folder. First, load the exact tool versions that CI uses. This line reads the pinned images from the workflow file, so the commands below always match CI:
+
+```sh
+eval "$(sed -nE 's/^[[:space:]]+((PHP|COMPOSER|TRIVY|GITLEAKS)_IMAGE): (.+)$/export \1=\3/p' .github/workflows/security.yml)"
+```
+
+### `deps`: known vulnerabilities in Composer packages
+
+```sh
+docker run --rm --user "$(id -u):$(id -g)" -e COMPOSER_HOME=/tmp -v "$PWD":/app -w /app \
+  "$COMPOSER_IMAGE" composer audit --locked
+```
+
+The check passes when the output says `No security vulnerability advisories found`. Today `composer.json` only lists dev tools (Psalm); the app itself has no Composer packages.
+
+### `php-taint`: user input reaching SQL, HTML, files, and so on
+
+This check installs Psalm into `vendor/`, which git ignores, then runs the taint analysis. It takes about 30 seconds.
+
+```sh
+docker run --rm --user "$(id -u):$(id -g)" -e COMPOSER_HOME=/tmp -v "$PWD":/app -w /app \
+  "$COMPOSER_IMAGE" composer install --no-scripts --no-interaction --no-progress
+docker run --rm --user "$(id -u):$(id -g)" -v "$PWD":/app -w /app \
+  "$PHP_IMAGE" php vendor/bin/psalm --taint-analysis --no-progress --no-cache
+```
+
+The check passes when the output says `No errors found!`. Any error it prints is a **new** issue, one that isn't in `psalm-baseline.xml`. Psalm prints the path the input takes, from `$_GET` or `$_POST` to where it's used.
+
+- **SQL:** build queries with `db_query()` and `?` placeholders (see `werewolf/php/db.php`). String-built SQL fails this check, even when it uses `quote_smart()` or `mysql_real_escape_string()`. That's deliberate: escaping only protects quoted values.
+- **HTML:** wrap output in `htmlspecialchars($value, ENT_QUOTES, 'UTF-8')`. For a value inside `<script>`, use `json_encode($value, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP)`.
+
+**Updating the baseline.** After a PR that fixes old issues, shrink the baseline so the fixed issues can't come back unnoticed:
+
+```sh
+docker run --rm --user "$(id -u):$(id -g)" -v "$PWD":/app -w /app \
+  "$PHP_IMAGE" php vendor/bin/psalm --taint-analysis --no-progress --no-cache --update-baseline
+```
+
+`--update-baseline` only removes entries; it never adds new ones. Don't use `--set-baseline` to make a failing PR pass. That rewrites the baseline from scratch and would silently accept the new issue. Only regenerate it on purpose, review the diff, and explain the change in the PR.
+
+When you're done, `rm -rf vendor` removes the installed tools.
+
+### `trivy`: vulnerable packages and misconfigurations
+
+This check scans the repo files, then builds the web image locally (it's never pushed) and scans it too. The image build takes a few minutes.
+
+```sh
+docker run --rm -v "$PWD":/src:ro -w /src "$TRIVY_IMAGE" fs \
+  --scanners vuln,misconfig --severity HIGH,CRITICAL --ignore-unfixed \
+  --ignorefile .trivyignore.yaml --exit-code 1 .
+docker build --pull -f php/Dockerfile -t cassandraweb:security-scan .
+docker run --rm -v "$PWD":/src:ro -w /src -v /var/run/docker.sock:/var/run/docker.sock:ro \
+  "$TRIVY_IMAGE" image --scanners vuln --severity HIGH,CRITICAL --ignore-unfixed \
+  --ignorefile .trivyignore.yaml --exit-code 1 cassandraweb:security-scan
+docker rmi cassandraweb:security-scan
+```
+
+Both scans pass when the summary table shows `0` in every column (or `-` for "not scanned").
+
+- **Image findings** are usually fixed in `php/Dockerfile`. A newer base image tag picks up fixes, and so does a rebuild, because the Dockerfile runs `apt-get upgrade`.
+- **Accepting a finding** instead of fixing it means adding it to `.trivyignore.yaml`. Each entry needs a `statement` saying why it's safe, and an `expired_at` date no more than 90 days away. After that date Trivy reports the finding again, so it gets looked at in the quarterly review.
+
+### `secrets`: credentials committed to git
+
+This check scans the whole history of your checkout. It needs a real clone with its `.git` folder, not a copy of the files.
+
+```sh
+docker run --rm --user "$(id -u):$(id -g)" -v "$PWD":/repo:ro "$GITLEAKS_IMAGE" \
+  git /repo --redact --no-banner --gitleaks-ignore-path /repo/.gitleaksignore
+```
+
+To scan only your branch's commits, as CI does for a PR, add `--log-opts="origin/main..HEAD"`.
+
+The check passes when the output says `no leaks found`. `--redact` hides the secret values in the output.
+
+- **If gitleaks finds a real credential**, removing it in a new commit isn't enough. The repo is public, so the old commit stays readable. **Revoke or rotate the credential first**, then add the finding's fingerprint to `.gitleaksignore`, with a comment saying what was rotated and when. A fingerprint has the form `<commit>:<file>:<rule>:<line>` and never contains the secret.
+- **For a false positive** (sample data, test keys), add the fingerprint with a comment saying why it's safe.

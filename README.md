@@ -67,6 +67,9 @@ when you need it.
 
 1. Make your change on a branch and open a pull request against `main`.
 2. Test it locally (see above) before asking for review. A code owner reviews every PR.
+   Every PR also runs the `security` checks (dependency audit, Psalm taint analysis, Trivy,
+   gitleaks). To run them yourself first, see
+   [Running the checks locally](docs/security/ci-security-setup.md#running-the-checks-locally).
 3. **Merging to `main` deploys to production automatically.** GitHub Actions builds the image,
    checks the syntax of every PHP file, publishes it to Docker Hub, and rolls it out to the server.
    Other branches are never deployed.
