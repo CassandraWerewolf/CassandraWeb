@@ -1,0 +1,25 @@
+# Gitleaks findings in git history that have been reviewed. Used by the
+# `secrets` job in .github/workflows/security.yml.
+#
+# Each line is a finding's fingerprint: <commit>:<file>:<rule>:<line>.
+# A fingerprint never contains the secret itself. Old commits can't be changed
+# (the repo is public, so rewriting history wouldn't un-leak anything), so a
+# real secret is fixed by revoking/rotating it, then listed here with a note.
+#
+# Never add a fingerprint without a comment saying why it's safe.
+
+# Third-party OAuth library test fixtures (the library's published sample RSA
+# key and tokens, not credentials for anything). Only in the 2019 initial
+# commit; werewolf/oauth/ has since been removed from the tree. Reviewed 2026-11-22.
+e302663c80b599eb164db1fb37883682cc04b356:werewolf/oauth/OAuth_TestServer.php:private-key:13
+e302663c80b599eb164db1fb37883682cc04b356:werewolf/oauth/tests/Mock_OAuthSignatureMethod_RSA_SHA1.php:private-key:11
+e302663c80b599eb164db1fb37883682cc04b356:werewolf/oauth/tests/OAuthRequestTest.php:generic-api-key:70
+e302663c80b599eb164db1fb37883682cc04b356:werewolf/oauth/tests/OAuthRequestTest.php:generic-api-key:265
+e302663c80b599eb164db1fb37883682cc04b356:werewolf/oauth/tests/OAuthRequestTest.php:generic-api-key:278
+e302663c80b599eb164db1fb37883682cc04b356:werewolf/oauth/tests/OAuthRequestTest.php:generic-api-key:295
+
+# REAL BGG API token, committed into docker-compose.yml on the public branch
+# feature/authheader (2025-11-06). Found by gitleaks 2026-11-21: a new token was
+# put in the Portainer stack (BGG_API_TOKEN), checked working, and the old one
+# was REVOKED on 2026-11-21. The value in this old commit no longer works.
+c7954850fdfec4d35ac70178172e8e69c3c0842c:docker-compose.yml:generic-api-key:38
