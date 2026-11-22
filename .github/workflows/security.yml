@@ -1,0 +1,176 @@
+# Security checks for CassandraWeb (see docs/security/ci-security-setup.md).
+#
+# Runs on every PR, on pushes to main, weekly (Monday) and by hand. Four jobs, each a
+# required status check on main:
+#   deps      - composer audit: known advisories in composer.lock (dev tools only today)
+#   php-taint - Psalm taint analysis: user input reaching SQL, HTML, shell, files, ...
+#               Fails only on issues that are NOT in psalm-baseline.xml.
+#   trivy     - Trivy: vulnerable packages and misconfigurations in the repo files and in
+#               the web image (built here, never pushed). HIGH/CRITICAL with a fix only.
+#               Reviewed exceptions: .trivyignore.yaml
+#   secrets   - gitleaks: credentials in git history. PRs: the PR's commits; pushes: the
+#               pushed commits; weekly/manual: full history. Reviewed: .gitleaksignore
+#
+# Safety rules (keep them when editing):
+#   - Trigger is pull_request, never pull_request_target. No secrets are used anywhere.
+#   - Permissions are read-only; only the trivy job may write to the Security tab.
+#   - Every tool runs from an image pinned by digest; every action is pinned by commit SHA.
+#     Dependabot (github-actions) keeps the action pins current; bump the image digests
+#     below by hand during the quarterly review.
+name: security
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  schedule:
+    - cron: '17 6 * * 1'   # Mondays 06:17 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+# A newer run for the same PR or branch replaces an older one that's still running.
+concurrency:
+  group: security-${{ github.event_name }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  PHP_IMAGE: php:8.5.12-cli-trixie@sha256:50956f094e90a716d43bea28087d447555ad80510e386ab8c9c10d8c70d781a9
+  COMPOSER_IMAGE: composer:2.11.2@sha256:50ea4d33fdcde1adb0f045547295faa1548b33872e5f789dae5b02ce2fb5de93
+  TRIVY_IMAGE: aquasec/trivy:0.76.2@sha256:8f6bb947dbc528902e11f2f5be52f7b519f6a39d5d148f41166f2040499768fb
+  GITLEAKS_IMAGE: ghcr.io/gitleaks/gitleaks:v8.30.1@sha256:c00b6bd0aeb3071cbcb79009cb16a60dd9e0a7c60e2be9ab65d25e6bc8abbb7f
+
+jobs:
+  deps:
+    name: deps
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - name: Check out the commit
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: composer audit (fails on any advisory)
+        run: |
+          docker run --rm --user "$(id -u):$(id -g)" -e COMPOSER_HOME=/tmp \
+            -v "$PWD":/app -w /app "$COMPOSER_IMAGE" \
+            composer audit --locked --no-interaction
+
+  php-taint:
+    name: php-taint
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - name: Check out the commit
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Install Psalm (composer.lock, dev tools only)
+        run: |
+          docker run --rm --user "$(id -u):$(id -g)" -e COMPOSER_HOME=/tmp \
+            -v "$PWD":/app -w /app "$COMPOSER_IMAGE" \
+            composer install --no-scripts --no-interaction --no-progress --prefer-dist
+
+      - name: Psalm taint analysis (fails on issues not in psalm-baseline.xml)
+        run: |
+          docker run --rm --user "$(id -u):$(id -g)" -v "$PWD":/app -w /app "$PHP_IMAGE" \
+            php vendor/bin/psalm --taint-analysis --no-progress --no-cache --output-format=github
+
+  trivy:
+    name: trivy
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    permissions:
+      contents: read
+      security-events: write   # upload results to the Security tab (public repo)
+    env:
+      # Same settings for every scan: only HIGH/CRITICAL problems that have a fix.
+      TRIVY_SEVERITY: HIGH,CRITICAL
+      TRIVY_IGNORE_UNFIXED: 'true'
+      TRIVY_IGNOREFILE: /src/.trivyignore.yaml
+      TRIVY_CACHE_DIR: /cache
+      # Fork PRs get a read-only token, so they can't upload to the Security tab.
+      CAN_UPLOAD: ${{ github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository }}
+    steps:
+      - name: Check out the commit
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Build the web image (local only, never pushed)
+        run: docker build --pull -f php/Dockerfile -t cassandraweb:security-scan .
+
+      - name: Prepare the Trivy runner
+        run: |
+          mkdir -p "$RUNNER_TEMP/trivy-cache" "$RUNNER_TEMP/sarif"
+          # One command for every scan below: repo mounted read-only, shared DB cache,
+          # Docker socket read-only so Trivy can read the local image.
+          echo "TRIVY=docker run --rm -e TRIVY_SEVERITY -e TRIVY_IGNORE_UNFIXED -e TRIVY_IGNOREFILE -e TRIVY_CACHE_DIR -v $PWD:/src:ro -w /src -v $RUNNER_TEMP/trivy-cache:/cache -v $RUNNER_TEMP/sarif:/sarif -v /var/run/docker.sock:/var/run/docker.sock:ro $TRIVY_IMAGE" >> "$GITHUB_ENV"
+
+      - name: Write SARIF for the Security tab
+        run: |
+          $TRIVY fs --quiet --scanners vuln,misconfig --format sarif --output /sarif/trivy-repo.sarif .
+          $TRIVY image --quiet --scanners vuln --format sarif --output /sarif/trivy-image.sarif cassandraweb:security-scan
+
+      - name: Upload repo results to the Security tab
+        if: env.CAN_UPLOAD == 'true'
+        uses: github/codeql-action/upload-sarif@33d7b85da1a04171e211befe2c739303b9a4c066 # v4.39.3
+        with:
+          sarif_file: ${{ runner.temp }}/sarif/trivy-repo.sarif
+          category: trivy-repo
+
+      - name: Upload image results to the Security tab
+        if: env.CAN_UPLOAD == 'true'
+        uses: github/codeql-action/upload-sarif@33d7b85da1a04171e211befe2c739303b9a4c066 # v4.39.3
+        with:
+          sarif_file: ${{ runner.temp }}/sarif/trivy-image.sarif
+          category: trivy-image
+
+      - name: Gate - repo files (vulnerable packages, misconfigurations)
+        run: $TRIVY fs --quiet --scanners vuln,misconfig --exit-code 1 --format table .
+
+      - name: Gate - web image (vulnerable OS and language packages)
+        if: always()
+        run: $TRIVY image --quiet --scanners vuln --exit-code 1 --format table cassandraweb:security-scan
+
+  secrets:
+    name: secrets
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - name: Check out the full history
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: gitleaks (fails on any finding not in .gitleaksignore)
+        env:
+          EVENT: ${{ github.event_name }}
+          PR_BASE: ${{ github.event.pull_request.base.sha }}
+          PR_HEAD: ${{ github.event.pull_request.head.sha }}
+          PUSH_BEFORE: ${{ github.event.before }}
+          PUSH_AFTER: ${{ github.sha }}
+        run: |
+          # Which commits to scan. The values come from GitHub, but they're passed through
+          # env vars (not ${{ }} in the script) so nothing in them can change this script.
+          range=""
+          case "$EVENT" in
+            pull_request) range="$PR_BASE..$PR_HEAD" ;;
+            push)
+              # A brand-new branch has no "before" commit (all zeros): scan everything.
+              if [ -n "$PUSH_BEFORE" ] && [ "${PUSH_BEFORE//0/}" != "" ]; then
+                range="$PUSH_BEFORE..$PUSH_AFTER"
+              fi ;;
+          esac
+          args=(git /repo --redact --no-banner --exit-code 1 --gitleaks-ignore-path /repo/.gitleaksignore)
+          if [ -n "$range" ]; then
+            echo "Scanning commits $range"
+            args+=(--log-opts="$range")
+          else
+            echo "Scanning the full history"
+          fi
+          docker run --rm --user "$(id -u):$(id -g)" -v "$PWD":/repo:ro "$GITLEAKS_IMAGE" "${args[@]}"
