@@ -117,6 +117,8 @@ docker run --rm --user "$(id -u):$(id -g)" -v "$PWD":/app -w /app \
 
 The check passes when the output says `No errors found!`. Any error it prints is a **new** issue, one that isn't in `psalm-baseline.xml`. Psalm prints the path the input takes, from `$_GET` or `$_POST` to where it's used.
 
+**Where to look:** Psalm reports SQL issues at the *sink*, the place the query finally runs. That's usually `werewolf/php/db.php` or `werewolf/php/mysql_compat.php`, not the file you changed. So on a PR, the red annotation may not appear next to your change. Open the failed `php-taint` job's log instead. The path listed under the error shows your file and line, where the `$_GET`/`$_POST` value was put into the SQL.
+
 - **SQL:** build queries with `db_query()` and `?` placeholders (see `werewolf/php/db.php`). String-built SQL fails this check, even when it uses `quote_smart()` or `mysql_real_escape_string()`. That's deliberate: escaping only protects quoted values.
 - **HTML:** wrap output in `htmlspecialchars($value, ENT_QUOTES, 'UTF-8')`. For a value inside `<script>`, use `json_encode($value, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP)`.
 
