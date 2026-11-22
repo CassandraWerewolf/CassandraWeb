@@ -3,13 +3,22 @@
 # Keep the tag pinned to an exact version; never use a floating tag like php:8-apache.
 FROM php:8.5.12-apache-trixie
 
-# OS packages:
+# OS packages kept at runtime:
 #  - mariadb-client(-compat): the `mariadb` and `mysql` command-line clients used by bin/*.sh
 #  - Perl modules used by bin/*.pl (DBD::mysql from Debian is built against the MariaDB client library);
 #    liblwp-protocol-https-perl lets LWP/WWW::Mechanize fetch https:// URLs (all BGG URLs are https)
 #  - Python 3 libraries for bin/get_thread.py
-#  - GD build dependencies (only tools/games2png uses GD)
 #  - openssl, to create the self-signed dev certificate below
+# Build-only packages, removed again at the end of this RUN:
+#  - libfreetype-dev, libpng-dev, libjpeg62-turbo-dev: headers to compile the GD extension
+#    (only tools/games2png uses GD); their runtime libraries are kept
+#  - cpanminus, make: to install the String::Trigram Perl module (pure Perl)
+#  - the base image's compilers ($PHPIZE_DEPS: gcc, g++, autoconf, make, ...)
+# The running site never compiles anything. To add a PHP extension or a CPAN module later,
+# install what it needs in the "build-only" step below, before the clean-up.
+# The clean-up follows the official php image's pattern: mark everything "automatic", restore
+# the packages that were wanted before the build step, keep every package that a shared
+# library of PHP, its extensions or Apache's libphp.so links against, then purge the rest.
 # OPcache is built into PHP 8.5, so it is not installed as a separate extension.
 # `apt-get upgrade` applies Debian security fixes that are newer than the base image
 # (the official image is only rebuilt every so often, e.g. Apache 2.4.71 in Nov 2026).
@@ -19,13 +28,23 @@ RUN apt-get update \
         mariadb-client mariadb-client-compat \
         libdbd-mysql-perl libwww-mechanize-perl liblwp-protocol-https-perl \
         libxml-libxml-perl libjson-perl libswitch-perl \
-        cpanminus make \
         python3 python3-sqlalchemy python3-pymysql python3-dateutil \
-        libfreetype-dev libpng-dev libjpeg62-turbo-dev \
         openssl \
+    && savedAptMark="$(apt-mark showmanual)" \
+    && apt-get install -y --no-install-recommends \
+        cpanminus make \
+        libfreetype-dev libpng-dev libjpeg62-turbo-dev \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install -j"$(nproc)" mysqli gd \
     && cpanm --notest String::Trigram \
+    && apt-mark auto '.*' > /dev/null \
+    && apt-mark manual $savedAptMark > /dev/null \
+    && apt-mark auto autoconf dpkg-dev file g++ gcc libc6-dev make pkg-config re2c > /dev/null \
+    && find /usr/local /usr/lib/apache2/modules -type f \( -executable -o -name '*.so' \) -exec ldd '{}' ';' 2>/dev/null \
+        | awk '/=>/ { so = $(NF-1); if (index(so, "/usr/local/") == 1) { next }; gsub("^/(usr/)?", "", so); printf "*%s\n", so }' \
+        | sort -u | xargs -r dpkg-query --search | grep -v '^diversion ' | cut -d: -f1 | sort -u \
+        | xargs -r apt-mark manual > /dev/null \
+    && apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false \
     && rm -rf /var/lib/apt/lists/* /root/.cpanm
 
 # Apache: URL rewriting (used by .htaccess files) and TLS; hide version details.
