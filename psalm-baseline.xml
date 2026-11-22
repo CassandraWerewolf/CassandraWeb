@@ -1,16 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <files psalm-version="6.20.11@fca8e037ed356b9fc1afc213902e82dfad418eba">
-  <file src="werewolf/admin/automod_post.php">
-    <TaintedCookie>
-      <code><![CDATA[$_REQUEST['bggpwd']]]></code>
-    </TaintedCookie>
-    <TaintedHtml>
-      <code><![CDATA[$bggpwd]]></code>
-    </TaintedHtml>
-    <TaintedTextWithQuotes>
-      <code><![CDATA[$bggpwd]]></code>
-    </TaintedTextWithQuotes>
-  </file>
   <file src="werewolf/assign_roles.php">
     <TaintedHtml>
       <code><![CDATA[$game_id]]></code>
@@ -26,81 +15,6 @@
     <TaintedTextWithQuotes>
       <code><![CDATA[$sql]]></code>
       <code><![CDATA[$sql]]></code>
-    </TaintedTextWithQuotes>
-  </file>
-  <file src="werewolf/automod/copy_template.php">
-    <TaintedFile>
-      <code><![CDATA[$old_file]]></code>
-    </TaintedFile>
-  </file>
-  <file src="werewolf/automod/delete.php">
-    <TaintedFile>
-      <code><![CDATA[$file]]></code>
-    </TaintedFile>
-  </file>
-  <file src="werewolf/automod/edit_functions.php">
-    <TaintedFile>
-      <code><![CDATA[$file]]></code>
-      <code><![CDATA[$file]]></code>
-    </TaintedFile>
-  </file>
-  <file src="werewolf/automod/new.php">
-    <TaintedFile>
-      <code><![CDATA["rulesets/".$_POST['template']."_ruleset.txt"]]></code>
-    </TaintedFile>
-    <TaintedHtml>
-      <code><![CDATA[create_dropdown('deadline_speed','Standard',$deadline_speed,"onChange='show_deadlines()'")]]></code>
-      <code><![CDATA[time_dropdown('day_length','01:00',true)]]></code>
-      <code><![CDATA[time_dropdown('lynch','16:00')]]></code>
-      <code><![CDATA[time_dropdown('night','17:00')]]></code>
-      <code><![CDATA[time_dropdown('night_length','0:30',true)]]></code>
-      <code><![CDATA[time_dropdown('s_time')]]></code>
-    </TaintedHtml>
-    <TaintedTextWithQuotes>
-      <code><![CDATA[create_dropdown('deadline_speed','Standard',$deadline_speed,"onChange='show_deadlines()'")]]></code>
-      <code><![CDATA[time_dropdown('day_length','01:00',true)]]></code>
-      <code><![CDATA[time_dropdown('lynch','16:00')]]></code>
-      <code><![CDATA[time_dropdown('night','17:00')]]></code>
-      <code><![CDATA[time_dropdown('night_length','0:30',true)]]></code>
-      <code><![CDATA[time_dropdown('s_time')]]></code>
-    </TaintedTextWithQuotes>
-  </file>
-  <file src="werewolf/automod/new_template.php">
-    <TaintedHtml>
-      <code><![CDATA["<b>Template Name:</b> ".create_title('0',true,false)]]></code>
-      <code><![CDATA[create_info_table('0',true)]]></code>
-    </TaintedHtml>
-    <TaintedTextWithQuotes>
-      <code><![CDATA["<b>Template Name:</b> ".create_title('0',true,false)]]></code>
-      <code><![CDATA[create_info_table('0',true)]]></code>
-    </TaintedTextWithQuotes>
-  </file>
-  <file src="werewolf/automod/template.php">
-    <TaintedHtml>
-      <code><![CDATA["<a href='javascript:setup_edit(\"create_info_table\",\"info_td\",\"$template_id\")'>"]]></code>
-      <code><![CDATA["<a href='javascript:setup_edit(\"create_role_table\",\"role_td\",\"$template_id\")'>"]]></code>
-      <code><![CDATA["<a href='javascript:setup_edit(\"create_title\",\"title_td\",\"$template_id\")'>"]]></code>
-      <code><![CDATA["<a href='javascript:setup_edit(\"get_ruleset\",\"ruleset\",\"$template_id\")'>"]]></code>
-      <code><![CDATA["<input type='button' name='delete' value='Delete' onClick='delete_me(\"$template_id\")' />"]]></code>
-      <code><![CDATA[$template_id]]></code>
-      <code><![CDATA[create_info_table($template_id)]]></code>
-      <code><![CDATA[create_role_table($template_id)]]></code>
-      <code><![CDATA[create_title($template_id)]]></code>
-      <code><![CDATA[get_ruleset($template_id)]]></code>
-      <code><![CDATA[mode_select($template_id)]]></code>
-    </TaintedHtml>
-    <TaintedTextWithQuotes>
-      <code><![CDATA["<a href='javascript:setup_edit(\"create_info_table\",\"info_td\",\"$template_id\")'>"]]></code>
-      <code><![CDATA["<a href='javascript:setup_edit(\"create_role_table\",\"role_td\",\"$template_id\")'>"]]></code>
-      <code><![CDATA["<a href='javascript:setup_edit(\"create_title\",\"title_td\",\"$template_id\")'>"]]></code>
-      <code><![CDATA["<a href='javascript:setup_edit(\"get_ruleset\",\"ruleset\",\"$template_id\")'>"]]></code>
-      <code><![CDATA["<input type='button' name='delete' value='Delete' onClick='delete_me(\"$template_id\")' />"]]></code>
-      <code><![CDATA[$template_id]]></code>
-      <code><![CDATA[create_info_table($template_id)]]></code>
-      <code><![CDATA[create_role_table($template_id)]]></code>
-      <code><![CDATA[create_title($template_id)]]></code>
-      <code><![CDATA[get_ruleset($template_id)]]></code>
-      <code><![CDATA[mode_select($template_id)]]></code>
     </TaintedTextWithQuotes>
   </file>
   <file src="werewolf/competition/cc_challenge.php">
@@ -165,22 +79,10 @@
     <TaintedHtml>
       <code><![CDATA[$_POST['thread_id']]]></code>
       <code><![CDATA[$_POST['thread_id']]]></code>
-      <code><![CDATA[create_dropdown('deadline_speed','Standard',$deadline_speed,"onChange='show_deadlines()'")]]></code>
-      <code><![CDATA[time_dropdown('day_length','01:00',true)]]></code>
-      <code><![CDATA[time_dropdown('lynch','16:00')]]></code>
-      <code><![CDATA[time_dropdown('night','17:00')]]></code>
-      <code><![CDATA[time_dropdown('night_length','0:30',true)]]></code>
-      <code><![CDATA[time_dropdown('s_time')]]></code>
     </TaintedHtml>
     <TaintedTextWithQuotes>
       <code><![CDATA[$_POST['thread_id']]]></code>
       <code><![CDATA[$_POST['thread_id']]]></code>
-      <code><![CDATA[create_dropdown('deadline_speed','Standard',$deadline_speed,"onChange='show_deadlines()'")]]></code>
-      <code><![CDATA[time_dropdown('day_length','01:00',true)]]></code>
-      <code><![CDATA[time_dropdown('lynch','16:00')]]></code>
-      <code><![CDATA[time_dropdown('night','17:00')]]></code>
-      <code><![CDATA[time_dropdown('night_length','0:30',true)]]></code>
-      <code><![CDATA[time_dropdown('s_time')]]></code>
     </TaintedTextWithQuotes>
   </file>
   <file src="werewolf/delete_game.php">
@@ -229,13 +131,9 @@
   </file>
   <file src="werewolf/edit_game_functions.php">
     <TaintedHtml>
-      <code><![CDATA[$output]]></code>
-      <code><![CDATA[$output]]></code>
       <code><![CDATA[$table->toHTML()]]></code>
     </TaintedHtml>
     <TaintedTextWithQuotes>
-      <code><![CDATA[$output]]></code>
-      <code><![CDATA[$output]]></code>
       <code><![CDATA[$table->toHTML()]]></code>
     </TaintedTextWithQuotes>
   </file>
@@ -277,22 +175,6 @@
       <code><![CDATA[timezone_chart("",$game['id'])]]></code>
     </TaintedTextWithQuotes>
   </file>
-  <file src="werewolf/geekmail.php">
-    <TaintedHtml>
-      <code><![CDATA[geekmail_form($to)]]></code>
-    </TaintedHtml>
-    <TaintedTextWithQuotes>
-      <code><![CDATA[geekmail_form($to)]]></code>
-    </TaintedTextWithQuotes>
-  </file>
-  <file src="werewolf/geekmail_chat.php">
-    <TaintedHtml>
-      <code><![CDATA[geekmail_form($to,$subject,$message)]]></code>
-    </TaintedHtml>
-    <TaintedTextWithQuotes>
-      <code><![CDATA[geekmail_form($to,$subject,$message)]]></code>
-    </TaintedTextWithQuotes>
-  </file>
   <file src="werewolf/get_user_post.php">
     <TaintedHtml>
       <code><![CDATA["<p>$player did not post in this game.</p>\n"]]></code>
@@ -313,12 +195,10 @@
   </file>
   <file src="werewolf/missing_warning.php">
     <TaintedHtml>
-      <code><![CDATA[$_GET['from']]]></code>
-      <code><![CDATA[$_GET['from']]]></code>
+      <code><![CDATA[json_encode($from, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP)]]></code>
     </TaintedHtml>
     <TaintedTextWithQuotes>
-      <code><![CDATA[$_GET['from']]]></code>
-      <code><![CDATA[$_GET['from']]]></code>
+      <code><![CDATA[json_encode($from, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP)]]></code>
     </TaintedTextWithQuotes>
   </file>
   <file src="werewolf/move_to_signup.php">
@@ -369,11 +249,16 @@
       <code><![CDATA[$aa_sfunc]]></code>
     </TaintedCallable>
     <TaintedHtml>
-      <code><![CDATA[$_GET['this_url']]]></code>
+      <code><![CDATA[json_encode((string) ($_GET['this_url'] ?? ''), JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP)]]></code>
     </TaintedHtml>
     <TaintedTextWithQuotes>
-      <code><![CDATA[$_GET['this_url']]]></code>
+      <code><![CDATA[json_encode((string) ($_GET['this_url'] ?? ''), JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP)]]></code>
     </TaintedTextWithQuotes>
+  </file>
+  <file src="werewolf/php/bgg.php">
+    <TaintedCookie>
+      <code><![CDATA[$pwd]]></code>
+    </TaintedCookie>
   </file>
   <file src="werewolf/php/common.php">
     <TaintedHtml>
@@ -1652,11 +1537,9 @@
   <file src="werewolf/pm_players.php">
     <TaintedHtml>
       <code><![CDATA[$game_id]]></code>
-      <code><![CDATA[geekmail_form($to)]]></code>
     </TaintedHtml>
     <TaintedTextWithQuotes>
       <code><![CDATA[$game_id]]></code>
-      <code><![CDATA[geekmail_form($to)]]></code>
     </TaintedTextWithQuotes>
   </file>
   <file src="werewolf/replace.php">
@@ -1682,17 +1565,6 @@
       <code><![CDATA[$hidden]]></code>
     </TaintedTextWithQuotes>
   </file>
-  <file src="werewolf/send_geekmail.php">
-    <TaintedCookie>
-      <code><![CDATA[$_REQUEST['bggpwd']]]></code>
-    </TaintedCookie>
-    <TaintedHtml>
-      <code><![CDATA[geekmail_form($_REQUEST['to'],$_REQUEST['message'])]]></code>
-    </TaintedHtml>
-    <TaintedTextWithQuotes>
-      <code><![CDATA[geekmail_form($_REQUEST['to'],$_REQUEST['message'])]]></code>
-    </TaintedTextWithQuotes>
-  </file>
   <file src="werewolf/show_game_stats.php">
     <TaintedHtml>
       <code><![CDATA["Dawn: ".time_24($night,$nmin)." BGG"]]></code>
@@ -1714,28 +1586,13 @@
     </TaintedTextWithQuotes>
   </file>
   <file src="werewolf/sign_me_up.php">
-    <TaintedCookie>
-      <code><![CDATA[$_REQUEST['bggpwd']]]></code>
-    </TaintedCookie>
     <TaintedHtml>
-      <code><![CDATA[$bggpwd]]></code>
-      <code><![CDATA[$message]]></code>
       <code><![CDATA[$thread_id]]></code>
       <code><![CDATA[$thread_id]]></code>
     </TaintedHtml>
     <TaintedTextWithQuotes>
-      <code><![CDATA[$bggpwd]]></code>
-      <code><![CDATA[$message]]></code>
       <code><![CDATA[$thread_id]]></code>
       <code><![CDATA[$thread_id]]></code>
-    </TaintedTextWithQuotes>
-  </file>
-  <file src="werewolf/social/new_social.php">
-    <TaintedHtml>
-      <code><![CDATA[create_dropdown('category','Other',$list)]]></code>
-    </TaintedHtml>
-    <TaintedTextWithQuotes>
-      <code><![CDATA[create_dropdown('category','Other',$list)]]></code>
     </TaintedTextWithQuotes>
   </file>
   <file src="werewolf/social/new_user.php">
@@ -1756,12 +1613,10 @@
   </file>
   <file src="werewolf/vote_tally.php">
     <TaintedHtml>
-      <code><![CDATA[$_GET['from']]]></code>
-      <code><![CDATA[$_GET['from']]]></code>
+      <code><![CDATA[json_encode($from, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP)]]></code>
     </TaintedHtml>
     <TaintedTextWithQuotes>
-      <code><![CDATA[$_GET['from']]]></code>
-      <code><![CDATA[$_GET['from']]]></code>
+      <code><![CDATA[json_encode($from, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP)]]></code>
     </TaintedTextWithQuotes>
   </file>
   <file src="werewolf/wolfy_awards.php">
