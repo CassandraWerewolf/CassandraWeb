@@ -1,0 +1,28 @@
+# Trivy findings we have reviewed and accepted. Used by the `trivy` job in
+# .github/workflows/security.yml (passed with --ignorefile .trivyignore.yaml).
+#
+# Rules:
+#  - Every entry needs a `statement` (why it's acceptable) and an `expired_at`
+#    date. After that date Trivy reports the finding again, so it gets
+#    re-reviewed; renew or fix it during the quarterly review
+#    (docs/security/quarterly-review.md).
+#  - Prefer fixing over ignoring. Never add an entry just to make CI pass.
+
+misconfigurations:
+  - id: DS-0002
+    paths:
+      - php/Dockerfile
+    statement: >-
+      "Image user should not be root". The official php:*-apache image starts
+      Apache's main process as root so it can bind ports 80/443 and read the
+      TLS keys, then runs every worker that handles requests as www-data.
+      Reviewed 2026-11-22.
+    expired_at: 2027-02-20
+
+  - id: DS-0002
+    paths:
+      - scripts/Dockerfile
+    statement: >-
+      Unused one-line stub (FROM debian:buster-slim); nothing builds it.
+      Planned: delete the file in its own PR. Reviewed 2026-11-22.
+    expired_at: 2027-02-20
