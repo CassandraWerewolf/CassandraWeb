@@ -10,7 +10,7 @@ my $usage="\nUsage $0 article_id\n\n";
 die $usage unless ($#ARGV == 0);
 my $article_id = shift;
 
-my $url = "https://api.geekdo.com/api/articles/$article_id";
+my $url = "https://api.geekdo.com/api/article/$article_id";
 
 # CREATE USER AGENT
 my $agent = LWP::UserAgent->new(
@@ -20,7 +20,7 @@ my $agent = LWP::UserAgent->new(
 
 # send request
 my $response = $agent->get(
-    $url, 
+    $url,
     Referer => 'https://boardgamegeek.com/'
 );
 
